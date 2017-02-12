@@ -2,5 +2,7 @@ package com.dms.util;
 
 public class Test {
 
-	void disp(){}
+	public static void main(String args[]){
+		System.out.println("Test Msg");
+	}
 }
