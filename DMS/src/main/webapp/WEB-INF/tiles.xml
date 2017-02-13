@@ -5,17 +5,18 @@
   
    <!-- Base Definition -->
    <definition name="base-definition"
-       template="/WEB-INF/pages/ApplicationLayout.jsp">  
+       template="/WEB-INF/pages/commons/ApplicationLayout.jsp">  
        <put-attribute name="title" value="" />  
-       <!-- <put-attribute name="header" value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />  
-       <put-attribute name="menu" value="/WEB-INF/views/tiles/template/defaultMenu.jsp" /> -->  
+       <put-attribute name="header" value="/WEB-INF/pages/commons/DefaultHeader.jsp" /> 
+       <put-attribute name="leftmenubar" value="/WEB-INF/pages/commons/LeftMenubar.jsp" />
+       <put-attribute name="menufooter" value="/WEB-INF/pages/commons/MenuFooter.jsp" />
        <put-attribute name="body" value="" />  
-       <!-- <put-attribute name="footer" value="/WEB-INF/views/tiles/template/defaultFooter.jsp" /> -->  
+       <put-attribute name="footer" value="/WEB-INF/pages/commons/DefaultFooter.jsp" />  
    </definition>  
   
    <definition name="index" extends="base-definition">  
-       <put-attribute name="title" value="Welcome" />  
-       <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />  
+      <put-attribute name="title" value="Home" />  
+      <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />  
    </definition>  
   
 </tiles-definitions>
