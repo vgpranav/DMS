@@ -3590,7 +3590,7 @@ form:after {
 }
 .login_content form input[type="submit"],
 #content form .submit {
-    float: left;
+    /* float: left; */
     margin-left: 38px
 }
 .button a {

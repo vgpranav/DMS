@@ -14,6 +14,18 @@
        <put-attribute name="footer" value="/WEB-INF/pages/commons/DefaultFooter.jsp" />  
    </definition>  
   
+  <definition name="welcome" template="/WEB-INF/pages/welcome.jsp">
+         <put-attribute name="header" value="/WEB-INF/pages/commons/DefaultHeader.jsp" />
+  	      <put-attribute name="title" value="Welcome" />  
+  	      <put-attribute name="footer" value="/WEB-INF/pages/commons/DefaultFooter.jsp" />  
+  </definition>
+  
+  <definition name="login" template="/WEB-INF/pages/login.jsp">
+         <put-attribute name="header" value="/WEB-INF/pages/commons/DefaultHeader.jsp" />
+  	      <put-attribute name="title" value="Login" />  
+  	      <put-attribute name="footer" value="/WEB-INF/pages/commons/DefaultFooter.jsp" />  
+  </definition>
+  
    <definition name="index" extends="base-definition">  
       <put-attribute name="title" value="Home" />  
       <put-attribute name="body" value="/WEB-INF/pages/index.jsp" />  

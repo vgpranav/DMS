@@ -1,5 +1,4 @@
-<html>
-<body>
-<h2>Hello World!</h2>
-</body>
-</html>
+<%
+	response.setStatus(response.SC_MOVED_TEMPORARILY);
+	response.setHeader("Location",request.getContextPath()+"/welcome.do"); 
+%>

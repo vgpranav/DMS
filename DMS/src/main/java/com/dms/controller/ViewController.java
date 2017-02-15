@@ -10,14 +10,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class ViewController {
 
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ViewController.class);
-
-	@RequestMapping(value = "/syscheck", method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	public String getWelcomePage(){
+		return "welcome";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String getLoginPage(){
+		return "login";
+	}
+	
+	 
+	@RequestMapping(value = "/authenticateUser", method = RequestMethod.POST)
 	public String welcome(ModelMap model) {
-
 		logger.error("[welcome] counter : {}", "123");
-		
 		System.out.println("Hello");
-
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "index";
 
