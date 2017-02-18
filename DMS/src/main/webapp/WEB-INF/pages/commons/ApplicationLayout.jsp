@@ -13,14 +13,8 @@
 
     <title><tiles:insertAttribute name="title" /> | Document Management System</title>
 
-    <!-- Bootstrap -->
-    <link href="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="<%= request.getContextPath() %>/resources/theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- bootstrap-daterangepicker -->
-    <link href="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="<%= request.getContextPath() %>/resources/theme/build/css/custom.min.css" rel="stylesheet">
+	<tiles:insertAttribute name="imports" />
+	
   </head>
 
   <body class="nav-md">
@@ -42,7 +36,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>Pranav VG</h2>
+               <h2>${sessionScope.userObject.firstName} ${sessionScope.userObject.lastName}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -77,23 +71,8 @@
         <!-- /footer content -->
         
       </div>
-    </div>
-
-    <!-- jQuery -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-    <!-- iCheck -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/iCheck/icheck.min.js"></script>
-    <!-- DateJS -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/DateJS/build/date.js"></script>
-     <!-- bootstrap-daterangepicker -->
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/moment/min/moment.min.js"></script>
-    <script src="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- Custom Theme Scripts -->
-    <script src="<%= request.getContextPath() %>/resources/theme/build/js/custom.min.js"></script>
+    </div> 
+   		<tiles:insertAttribute name="importJScript" />       
   </body>
 </html>
  

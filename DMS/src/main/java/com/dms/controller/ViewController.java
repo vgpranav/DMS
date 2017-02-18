@@ -1,10 +1,20 @@
 package com.dms.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.dms.beans.User;
+import com.dms.dao.LoginDao;
+
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 public class ViewController {
@@ -21,15 +31,39 @@ public class ViewController {
 		return "login";
 	}
 	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String getLogout(){
+		return "login";
+	}
+	
 	 
 	@RequestMapping(value = "/authenticateUser", method = RequestMethod.POST)
-	public String welcome(ModelMap model) {
-		logger.error("[welcome] counter : {}", "123");
-		System.out.println("Hello");
-		// Spring uses InternalResourceViewResolver and return back index.jsp
-		return "index";
+	public ModelAndView welcome(ModelMap model,@RequestAttribute User user,HttpServletRequest request,HttpServletResponse response) {
+ 		LoginDao loginDao = new LoginDao();
+ 		ModelAndView mv = null;
+ 		User authenticatedUser = null;
+		try{
+			authenticatedUser = loginDao.authenticateUser(user,authenticatedUser);
+			if(authenticatedUser!=null){
+				if(authenticatedUser.getActive()==1){
+					mv = new ModelAndView("home");
+					request.getSession().setAttribute("userObject",authenticatedUser);
+				} else {
+					mv = new ModelAndView("login");
+					request.setAttribute("errorMessage","Account is Locked. Please contact Administrator");
+				} 
+			} else {
+				mv = new ModelAndView("login");
+				request.setAttribute("errorMessage", "Invalid Username/Password");
+			}
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
 
 	}
+	
+	
 
 	
 }
