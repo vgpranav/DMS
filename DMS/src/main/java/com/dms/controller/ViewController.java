@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.Doctype;
+import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
+import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
 
@@ -81,7 +84,7 @@ public class ViewController {
 	}
 	
 	@RequestMapping(value = "/saveSociety", method = RequestMethod.POST)
-	public ModelAndView saveSociety(
+	public ModelAndView saveSociety(@ModelAttribute Society society
 			/*@Valid Society customer,
 			BindingResult bindingResult, 
 			Model model*/){
@@ -90,9 +93,26 @@ public class ViewController {
 		List<SocietyType> socTypes=null;
 		SocietyDao documentDao = new SocietyDao();
 		try{
+			society = documentDao.insertOrUpdateSociety(society);
 			socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
 			mv = new ModelAndView("addSociety");
 			mv.addObject("societytypeList", socTypes);
+			mv.addObject("error","Society Added");
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/addDoctype", method = RequestMethod.GET)
+	public ModelAndView addDoctype(){
+		ModelAndView mv = null;
+		List<Doctype> docTypes=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+			mv = new ModelAndView("addDoctype");
+			mv.addObject("docTypesList",docTypes);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}

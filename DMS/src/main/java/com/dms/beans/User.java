@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class User {
 
+	private int userid;
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -68,11 +69,19 @@ public class User {
 		this.mobileNo = mobileNo;
 	}
 
-	@Override
-	public String toString() {
-		return "User [firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", password="
-				+ password + ", createDate=" + createDate + ", active=" + active + ", mobileNo=" + mobileNo + "]";
+	public int getUserid() {
+		return userid;
 	}
 
-	
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
+				+ ", mobileNo=" + mobileNo + "]";
+	}
+
 }

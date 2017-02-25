@@ -4,11 +4,10 @@ import java.util.Date;
 
 public class Society {
 	
-	private int societyid;
-	private int societytypeid;
-	
+	private long societyid;
+	private long societytypeid;
 	private String societyname;
-	private int societyprofileid;
+	private long societyprofileid;
 	private String addressline1; 
 	private String addressline2; 
 	private String ward; 
@@ -17,13 +16,19 @@ public class Society {
 	private String pincode; 
 	private String createdby; 
 	private Date createdon;
+	private int isactive;
 	
-	
-	public int getSocietyid() {
+	public long getSocietyid() {
 		return societyid;
 	}
-	public void setSocietyid(int societyid) {
+	public void setSocietyid(long societyid) {
 		this.societyid = societyid;
+	}
+	public long getSocietytypeid() {
+		return societytypeid;
+	}
+	public void setSocietytypeid(long societytypeid) {
+		this.societytypeid = societytypeid;
 	}
 	public String getSocietyname() {
 		return societyname;
@@ -31,10 +36,10 @@ public class Society {
 	public void setSocietyname(String societyname) {
 		this.societyname = societyname;
 	}
-	public int getSocietyprofileid() {
+	public long getSocietyprofileid() {
 		return societyprofileid;
 	}
-	public void setSocietyprofileid(int societyprofileid) {
+	public void setSocietyprofileid(long societyprofileid) {
 		this.societyprofileid = societyprofileid;
 	}
 	public String getAddressline1() {
@@ -84,13 +89,12 @@ public class Society {
 	}
 	public void setCreatedon(Date createdon) {
 		this.createdon = createdon;
+	} 
+	public int getIsactive() {
+		return isactive;
 	}
-	
-	public int getSocietytypeid() {
-		return societytypeid;
-	}
-	public void setSocietytypeid(int societytypeid) {
-		this.societytypeid = societytypeid;
+	public void setIsactive(int isactive) {
+		this.isactive = isactive;
 	}
 	
 	@Override
@@ -98,9 +102,8 @@ public class Society {
 		return "Society [societyid=" + societyid + ", societytypeid=" + societytypeid + ", societyname=" + societyname
 				+ ", societyprofileid=" + societyprofileid + ", addressline1=" + addressline1 + ", addressline2="
 				+ addressline2 + ", ward=" + ward + ", district=" + district + ", state=" + state + ", pincode="
-				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + "]";
+				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive + "]";
 	}
-	
 	
 	
 }

@@ -2,14 +2,15 @@ package com.dms.beans;
 
 public class SocietyType {
 
-	private int societytypeid;
+	private long societytypeid;
 	private String societytypename;
 	private String societytypedesc;
 	private int isactive;
-	public int getSocietytypeid() {
+	
+	public long getSocietytypeid() {
 		return societytypeid;
 	}
-	public void setSocietytypeid(int societytypeid) {
+	public void setSocietytypeid(long societytypeid) {
 		this.societytypeid = societytypeid;
 	}
 	public String getSocietytypename() {
@@ -30,6 +31,7 @@ public class SocietyType {
 	public void setIsactive(int isactive) {
 		this.isactive = isactive;
 	}
+	
 	@Override
 	public String toString() {
 		return "SocietyType [societytypeid=" + societytypeid + ", societytypename=" + societytypename
@@ -38,6 +40,4 @@ public class SocietyType {
 	
 	
 	
-	
-	 
 }

@@ -10,8 +10,8 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addSociety.do">Create Society</a></li>
-		                      <li><a href="index2.html">Dummy Link</a></li>
-		                      <li><a href="index3.html">Dummy Link</a></li>
+		                      <li><a href="addDoctype.do">Create Doctype</a></li>
+		                      <li><a href="addDocSubType">Create Doc Subtype</a></li>
 		                    </ul>
 		                  </li>
 		                  
