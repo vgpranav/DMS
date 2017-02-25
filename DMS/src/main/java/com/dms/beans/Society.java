@@ -6,6 +6,7 @@ public class Society {
 	
 	private int societyid;
 	private int societytypeid;
+	
 	private String societyname;
 	private int societyprofileid;
 	private String addressline1; 

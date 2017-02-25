@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="col-md-7 col-sm-7 col-xs-12">
-				<form id="addSocietyForm" data-parsley-validate class="form-horizontal form-label-left">
+				<form id="addSocietyForm" data-parsley-validate class="form-horizontal form-label-left" action="saveSociety.do" method="post">
 	 				
 	 				<div class="form-group">
 		                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">	
@@ -85,7 +85,7 @@
 	                </div>
 	                
 	                <div class="form-group">
-		                <label   col-md-4 col-sm-4 col-xs-12" for="first-name">	
+		                <label class="control-label col-md-4 col-sm-4 col-xs-12" for="first-name">	
 		                	Pincode <span class="required">*</span> 
 		                </label>
 		                <div class="col-md-8 col-sm-8 col-xs-12">
@@ -105,9 +105,8 @@
 				     <div align="center">Search Society</div> 
 					<div class="form-group" >
 	               		 <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
-		                	<input type="text" id="first-name" required="required" class="form-control col-md-12 col-xs-12">
+		                	<input type="text" id="searchText" name="searchText" placeholder="Enter Society Name" required="required" class="form-control col-md-12 col-xs-12">
 		                </div>
-		                
 	               </div>
 			</div>
 			
@@ -115,3 +114,30 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+	$(document).ready(function(){
+		
+		$( "#searchText").autocomplete({
+			 source: function (request, response) {
+		            $.getJSON("${pageContext. request. contextPath}/societyAutosuggest.do", {
+		            	searchText: request.term,
+		            }, response);
+		        },
+			focus: function () {
+		       // prevent value inserted on focus
+		       return false;
+		   },
+		   select: function (event, ui) {
+		       var thisValue = ui.item.value;
+		       var str = thisValue.split("--");
+		       for (var i = 0; i < str.length; i++) {
+		       	 ui.item.value=str[0]; 
+		       }
+			}
+		});
+		
+	});
+
+</script>

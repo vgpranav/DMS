@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,7 +40,7 @@ public class ViewController {
 	
 	 
 	@RequestMapping(value = "/authenticateUser", method = RequestMethod.POST)
-	public ModelAndView welcome(ModelMap model,@RequestAttribute User user,HttpServletRequest request,HttpServletResponse response) {
+	public ModelAndView welcome(ModelMap model,@ModelAttribute User user,HttpServletRequest request,HttpServletResponse response) {
  		LoginDao loginDao = new LoginDao();
  		ModelAndView mv = null;
  		User authenticatedUser = null;
@@ -65,7 +65,6 @@ public class ViewController {
 
 	}
 	
-	
 	@RequestMapping(value = "/addSociety", method = RequestMethod.GET)
 	public ModelAndView addSociety(){
 		ModelAndView mv = null;
@@ -81,6 +80,22 @@ public class ViewController {
 		return mv;
 	}
 	
-
-	
+	@RequestMapping(value = "/saveSociety", method = RequestMethod.POST)
+	public ModelAndView saveSociety(
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		
+		ModelAndView mv = null;
+		List<SocietyType> socTypes=null;
+		SocietyDao documentDao = new SocietyDao();
+		try{
+			socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
+			mv = new ModelAndView("addSociety");
+			mv.addObject("societytypeList", socTypes);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
 }

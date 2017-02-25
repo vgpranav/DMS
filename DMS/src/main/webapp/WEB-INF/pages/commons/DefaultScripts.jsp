@@ -15,6 +15,8 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/pnotify/dist/pnotify.buttons.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/pnotify/dist/pnotify.nonblock.js"></script>
 
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery-ui-1.12.1/jquery-ui.js"></script>
+
 <script>
 	function notify(type,title,message,delay){
 		new PNotify({

@@ -1,0 +1,45 @@
+package com.dms.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.dms.beans.Society;
+import com.dms.dao.SocietyDao;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Controller
+public class AjaxController {
+
+	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(AjaxController.class);
+
+	@RequestMapping(value = "/societyAutosuggest.do", method = RequestMethod.GET, headers="Accept=*/*",  produces="application/json")
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody
+	List<String> ajaxEmployeeIDSearch(@RequestParam("searchText") String searchText) {
+		SocietyDao societyDao = new SocietyDao();
+		List<String> codeList1 = new ArrayList<String>();
+		try {
+		List<Society> societyList = societyDao.getSocietyAutosuggest(searchText);
+		for (int i = 0; i < societyList.size(); i++) {
+			Society soc = (Society) societyList.get(i);
+			String name = soc.getSocietyid() + "--" + soc.getSocietyname();
+			codeList1.add(i, name);
+			}
+		}
+		catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return codeList1;
+	}
+}
