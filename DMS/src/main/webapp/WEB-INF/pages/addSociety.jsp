@@ -107,6 +107,7 @@
 	               		 <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
 		                	<input type="text" id="first-name" required="required" class="form-control col-md-12 col-xs-12">
 		                </div>
+		                
 	               </div>
 			</div>
 			
