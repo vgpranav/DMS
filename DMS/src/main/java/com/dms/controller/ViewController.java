@@ -118,4 +118,25 @@ public class ViewController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = "/saveDocumentType", method = RequestMethod.POST)
+	public ModelAndView saveDocumentType(@ModelAttribute Doctype doctype
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		
+		ModelAndView mv = null;
+		List<Doctype> docTypes=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			doctype = documentDao.insertOrUpdateDocType(doctype);
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+			mv = new ModelAndView("addDoctype");
+			mv.addObject("docTypesList",docTypes);
+			mv.addObject("error","Doctype Added");
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
 }

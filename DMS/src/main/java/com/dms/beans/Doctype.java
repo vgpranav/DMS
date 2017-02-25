@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class Doctype {
 
-	private int doctypeid;
+	private long doctypeid;
 	private String doctypename;
 	private String doctypedesc;
 	private int active;
 	private String createdby;
 	private Date createdon;
-	public int getDoctypeid() {
+	public long getDoctypeid() {
 		return doctypeid;
 	}
-	public void setDoctypeid(int doctypeid) {
+	public void setDoctypeid(long doctypeid) {
 		this.doctypeid = doctypeid;
 	}
 	public String getDoctypename() {

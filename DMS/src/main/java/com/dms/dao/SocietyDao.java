@@ -69,13 +69,13 @@ public class SocietyDao {
 
 	public Society insertOrUpdateSociety(Society society) {
 		Connection conn = null;
-		ResultSetHandler<Long> rsh;
+		ResultSetHandler<Object> rsh;
 		long societyId=0L;
 		long societyProfileId=0L;
 		try{
 			qr = new QueryRunner();
 			conn = ConnectionPoolManager.getInstance().getConnection();
-			rsh = new ScalarHandler<Long>();
+			rsh = new ScalarHandler<Object>();
 			Object obj = qr.insert(conn,DMSQueries.insertNewSociety,rsh,
 					society.getSocietytypeid(),
 					society.getSocietyname(),

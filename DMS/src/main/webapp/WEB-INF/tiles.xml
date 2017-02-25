@@ -46,6 +46,11 @@
       <put-attribute name="title" value="Add Society" />  
       <put-attribute name="body" value="/WEB-INF/pages/addSociety.jsp" />   
    </definition> 
+   
+   <definition name="addDoctype" extends="base-definition">  
+      <put-attribute name="title" value="Add Document Type" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addDoctype.jsp" />   
+   </definition> 
     
   
     
