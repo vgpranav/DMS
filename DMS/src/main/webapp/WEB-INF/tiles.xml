@@ -35,6 +35,19 @@
    <definition name="home" extends="base-definition">  
       <put-attribute name="title" value="Home" />  
       <put-attribute name="body" value="/WEB-INF/pages/homepage.jsp" />   
-   </definition>  
+   </definition> 
+   
+   <definition name="home" extends="base-definition">  
+      <put-attribute name="title" value="Home" />  
+      <put-attribute name="body" value="/WEB-INF/pages/homepage.jsp" />   
+   </definition> 
+   
+   <definition name="addSociety" extends="base-definition">  
+      <put-attribute name="title" value="Add Society" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addSociety.jsp" />   
+   </definition> 
+    
+  
+    
   
 </tiles-definitions>

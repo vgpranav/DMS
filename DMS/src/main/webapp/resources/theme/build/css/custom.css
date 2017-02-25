@@ -5,6 +5,10 @@ html , body{
  
 }
  
+ .required {
+ 	color:red !important;
+ }
+ 
 .full-width {
 	
  width:100%;
@@ -2169,6 +2173,8 @@ span.section {
 .form-horizontal .control-label {
     padding-top: 8px
 }
+
+ 
 .form-control:focus {
     border-color: #CCD0D7;
     box-shadow: none !important
@@ -2179,8 +2185,13 @@ legend {
 }
 .form-horizontal .form-group {
     margin-right: 0;
-    margin-left: 0
-}
+    margin-left: 0;
+   }
+   
+ .form-horizontal .form-group > div {
+     padding-left: 2px !important;
+ }
+ 
 .form-control-feedback {
     margin-top: 8px;
     height: 23px;

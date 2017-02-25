@@ -1,5 +1,7 @@
 package com.dms.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.SocietyType;
 import com.dms.beans.User;
 import com.dms.dao.LoginDao;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
+import com.dms.dao.SocietyDao;
 
 @Controller
 public class ViewController {
@@ -63,6 +65,21 @@ public class ViewController {
 
 	}
 	
+	
+	@RequestMapping(value = "/addSociety", method = RequestMethod.GET)
+	public ModelAndView addSociety(){
+		ModelAndView mv = null;
+		List<SocietyType> socTypes=null;
+		SocietyDao documentDao = new SocietyDao();
+		try{
+			socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
+			mv = new ModelAndView("addSociety");
+			mv.addObject("societytypeList", socTypes);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
 	
 
 	

@@ -7,7 +7,7 @@
 <!-- bootstrap-daterangepicker -->
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <!-- Custom Theme Style -->
-<link href="<%= request.getContextPath() %>/resources/theme/build/css/custom.min.css" rel="stylesheet">
+<link href="<%= request.getContextPath() %>/resources/theme/build/css/custom.css" rel="stylesheet">
 
 
 
