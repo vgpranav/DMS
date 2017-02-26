@@ -8,7 +8,7 @@
 			<div class="row x_title">
 				<div class="col-md-6">
 					<h3>
-						Add Document Type<small></small>
+						Add Document Sub Type<small></small>
 					</h3>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 				<div class="col-md-12 col-sm-12 col-xs-12">
  			<hr/>
 			<div class="table-responsive">
-                      <table class="table table-striped jambo_table bulk_action">
+                      <table class="table table-striped jambo_table bulk_action" id="thetable">
                         <thead>
                           <tr class="headings">
                             <th class="column-title">Document SubType Name</th>
@@ -124,40 +124,14 @@
                     </div>
                   </div>
 					
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> 
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> 
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> aaaaaaaaaaaaa
-
 			<div class="clearfix"></div>
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$('#thetable').DataTable();
+	});
+
+</script>

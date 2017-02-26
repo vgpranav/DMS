@@ -1,5 +1,6 @@
 package com.dms.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.FormFields;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
+import com.dms.util.CommomUtility;
 
 @Controller
 public class ViewController {
@@ -187,18 +190,25 @@ public class ViewController {
 	@RequestMapping(value = "/addFormFields", method = RequestMethod.GET)
 	public ModelAndView addFormFields(){
 		ModelAndView mv = null;
-		List<Doctype> docTypes=null;
 		List<DocSubType> docSubType=null;
+		List<Integer> seqList= new ArrayList<Integer>();
 		DocumentDao documentDao = new DocumentDao();
 		try{
 			docSubType = documentDao.getAllDocumentSubTypes(docSubType);
-			docTypes = documentDao.getAllDocumentTypes(docTypes);
-			mv = new ModelAndView("addDocSubtype");
+			mv = new ModelAndView("addFormFields");
 			mv.addObject("docSubTypeList",docSubType);
-			mv.addObject("docTypesList",docTypes);
+			
+			int maxConfigval = Integer.parseInt(CommomUtility.getConfig("maxseqno"));
+			for(int i=1;i<=maxConfigval;i++){
+				seqList.add(i);
+			}
+			
+			mv.addObject("seqList",seqList);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
 		return mv;
 	}
+	
+	
 }

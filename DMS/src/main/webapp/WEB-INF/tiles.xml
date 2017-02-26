@@ -53,10 +53,13 @@
    </definition> 
     
     <definition name="addDocSubtype" extends="base-definition">  
-      <put-attribute name="title" value="Add Document Type" />  
+      <put-attribute name="title" value="Add Document Sub Type" />  
       <put-attribute name="body" value="/WEB-INF/pages/addDocSubtype.jsp" />   
-   </definition> 
-  
+    </definition> 
     
+    <definition name="addFormFields" extends="base-definition">  
+      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addFormFields.jsp" />   
+    </definition> 
   
 </tiles-definitions>

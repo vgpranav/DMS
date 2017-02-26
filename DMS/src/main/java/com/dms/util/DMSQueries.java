@@ -14,6 +14,9 @@ public class DMSQueries {
 	public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
 	public static String getAllDocumentSubTypes = "select * from docsubtype" ;
 	public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active) values (?,?,?,?,?)";
+	public static String getConfigValue = "select configvalue from config where configkey=?";
+	public static String insertNewFormField = "insert into formstructure(docsubtypeid,fieldname,fieldtype,datatype,sequence,active,createdby) values (?,?,?,?,?,?,?)";
+	public static String getAllDocumentFormFieldsBySubTypes = "select * from formstructure where docsubtypeid=?";
 	
 	
 }

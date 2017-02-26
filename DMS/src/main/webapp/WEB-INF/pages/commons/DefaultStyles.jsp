@@ -16,6 +16,7 @@
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
 
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+<link href="<%= request.getContextPath() %>/resources/theme/vendors/datatables.net-bs/css/dataTables.bootstrap.css" rel="stylesheet">
 
 
 <!-- jQuery -->

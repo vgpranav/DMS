@@ -6,13 +6,19 @@ import java.util.List;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.DocSubType;
+import com.dms.beans.Doctype;
+import com.dms.beans.FormFields;
 import com.dms.beans.Society;
+import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -42,4 +48,37 @@ public class AjaxController {
 		}
 		return codeList1;
 	}
+	
+	
+	@RequestMapping(value = "/saveFormFields", method = RequestMethod.GET)
+	public @ResponseBody
+	FormFields saveDocumentType(@ModelAttribute FormFields formFields
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			formFields = documentDao.insertOrUpdateFormFields(formFields);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return formFields;
+	}
+	
+	@RequestMapping(value = "/getFieldsForDocSubtype", method = RequestMethod.GET)
+	public @ResponseBody
+	List<FormFields> getFieldsForDocSubtype(@ModelAttribute FormFields formField
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		DocumentDao documentDao = new DocumentDao();
+		List<FormFields> formFields=null;
+		try{
+			formFields = documentDao.getFieldsForDocSubtype(formField.getDocsubtypeid(),formFields);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return formFields;
+	}
+	
 }

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.FormFields;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -125,5 +126,60 @@ public class DocumentDao {
 			}
 		}
 	return docSubType;
+}
+
+	public FormFields insertOrUpdateFormFields(FormFields formFields) {
+		Connection conn = null;
+		ResultSetHandler<Object> rsh;
+		long fieldid = 0L;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new ScalarHandler<Object>();
+			Object obj  = qr.insert(conn, DMSQueries.insertNewFormField,rsh,
+					formFields.getDocsubtypeid(),
+					formFields.getFieldname(),
+					formFields.getFieldtype(),
+					formFields.getDatatype(),
+					formFields.getSequence(),
+					formFields.getActive(),
+					formFields.getCreatedby()
+					);
+			
+			fieldid = CommomUtility.convertToLong(obj);
+			formFields.setFieldid(fieldid);
+		}catch(Exception e){
+			logger.error("Error Saving Doctype :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return formFields;
+}
+
+	public List<FormFields> getFieldsForDocSubtype(long docSubtypeid, List<FormFields> formFields) {
+		Connection conn = null;
+		ResultSetHandler<List<FormFields>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<FormFields>(FormFields.class);
+			formFields = qr.query(conn, DMSQueries.getAllDocumentFormFieldsBySubTypes,rsh,docSubtypeid);
+		}catch(Exception e){
+			logger.error("Error fetching form fields :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+		System.out.println(formFields);
+	return formFields;
 }
 }
