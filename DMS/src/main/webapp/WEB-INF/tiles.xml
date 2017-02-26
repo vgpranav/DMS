@@ -52,6 +52,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/addDoctype.jsp" />   
    </definition> 
     
+    <definition name="addDocSubtype" extends="base-definition">  
+      <put-attribute name="title" value="Add Document Type" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addDocSubtype.jsp" />   
+   </definition> 
   
     
   

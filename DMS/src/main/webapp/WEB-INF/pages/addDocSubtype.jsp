@@ -15,35 +15,48 @@
 			
 			<div class="row">
 			<div class="col-md-6 col-md-offset-3 col-sm-offset-3 col-sm-6 col-xs-12">
- 				<form id="addSocietyForm" data-parsley-validate
-					class="form-horizontal form-label-left" action="saveDocumentType.do"
+ 				<form id="addDocSubTypeForm" data-parsley-validate
+					class="form-horizontal form-label-left" action="saveDocumentSubType.do"
 					method="post">
 
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Document Name <span class="required">*</span>
+							for="first-name">Document Name <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="doctypename" name="doctypename"
+							<input type="text" id="docsubtypename" name="docsubtypename"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Document Description <span class="required">*</span>
+							for="first-name">Document Description <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="doctypedesc" name="doctypedesc"
+							<input type="text" id="docsubtypedesc" name="docsubtypedesc"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Status <span class="required">*</span>
+							for="first-name">Parent Document <span class="required">*</span>
 						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:7px;">
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<select name="doctypeid" class="form-control">
+							<c:forEach items="${docTypesList}" var="myItem" varStatus="loopStatus">
+								<option value="${myItem.doctypeid}">${myItem.doctypename}</option>
+							</c:forEach>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Status<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:6px;">
 							<input type="radio" name="active" value="1"> Active
 							<input type="radio" name="active" value="0"> Inactive
 						</div>
@@ -75,8 +88,9 @@
                       <table class="table table-striped jambo_table bulk_action">
                         <thead>
                           <tr class="headings">
-                            <th class="column-title">Document Type</th>
+                            <th class="column-title">Document SubType Name</th>
                             <th class="column-title">Document Description </th>
+                            <th class="column-title">Parent Document </th>
                             <th class="column-title">Created By </th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
@@ -88,19 +102,20 @@
                         </thead>
 
                         <tbody>
-                        	<c:forEach items="${docTypesList}" var="myItem" varStatus="loopStatus">
+                        	<c:forEach items="${docSubTypeList}" var="myItem" varStatus="loopStatus">
 								<c:if test="${loopStatus.index%2==0}">
 									<tr class="even pointer">
 								</c:if>
 								<c:if test="${loopStatus.index%2!=0}">
 									<tr class="odd pointer">
 								</c:if>
-									<td class=" ">${myItem.doctypename}</td>
-									<td class=" ">${myItem.doctypedesc}</td>
+									<td class=" ">${myItem.docsubtypename}</td>
+									<td class=" ">${myItem.docsubtypedesc}</td>
+									<td class=" ">${myItem.doctypeid}</td>
 									<td class=" ">${myItem.createdby}</td>
 									<td class=" ">${myItem.createdon}</td>
 									<td class=" ">${myItem.active}</td>								
-									<td class=" ">${myItem.doctypeid}</td>
+									<td class=" ">${myItem.docsubtypeid}</td>
 								</tr>
 							</c:forEach>
                         </tbody>

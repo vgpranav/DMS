@@ -12,6 +12,8 @@ public class DMSQueries {
 	
 	
 	public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
+	public static String getAllDocumentSubTypes = "select * from docsubtype" ;
+	public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active) values (?,?,?,?,?)";
 	
 	
 }

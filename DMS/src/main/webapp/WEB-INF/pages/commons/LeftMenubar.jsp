@@ -11,7 +11,8 @@
 		                    <ul class="nav child_menu">
 		                      <li><a href="addSociety.do">Create Society</a></li>
 		                      <li><a href="addDoctype.do">Create Doctype</a></li>
-		                      <li><a href="addDocSubType">Create Doc Subtype</a></li>
+		                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
+		                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
 		                    </ul>
 		                  </li>
 		                  

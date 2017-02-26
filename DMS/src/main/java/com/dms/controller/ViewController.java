@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
@@ -134,6 +135,67 @@ public class ViewController {
 			mv = new ModelAndView("addDoctype");
 			mv.addObject("docTypesList",docTypes);
 			mv.addObject("error","Doctype Added");
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/addDocSubType", method = RequestMethod.GET)
+	public ModelAndView addDocSubType(){
+		ModelAndView mv = null;
+		List<Doctype> docTypes=null;
+		List<DocSubType> docSubType=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			docSubType = documentDao.getAllDocumentSubTypes(docSubType);
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+			mv = new ModelAndView("addDocSubtype");
+			mv.addObject("docSubTypeList",docSubType);
+			mv.addObject("docTypesList",docTypes);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	
+	@RequestMapping(value = "/saveDocumentSubType", method = RequestMethod.POST)
+	public ModelAndView saveDocumentType(@ModelAttribute DocSubType docSubType
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		
+		ModelAndView mv = null;
+		List<Doctype> docTypes=null;
+		List<DocSubType> docSubTypes=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			docSubType = documentDao.insertOrUpdateDocSubType(docSubType);
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+			docSubTypes = documentDao.getAllDocumentSubTypes(docSubTypes);
+			mv = new ModelAndView("addDocSubtype");
+			mv.addObject("docTypesList",docTypes);
+			mv.addObject("docSubTypeList",docSubTypes);
+			mv.addObject("error","Doc Sub Type Added");
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/addFormFields", method = RequestMethod.GET)
+	public ModelAndView addFormFields(){
+		ModelAndView mv = null;
+		List<Doctype> docTypes=null;
+		List<DocSubType> docSubType=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			docSubType = documentDao.getAllDocumentSubTypes(docSubType);
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+			mv = new ModelAndView("addDocSubtype");
+			mv.addObject("docSubTypeList",docSubType);
+			mv.addObject("docTypesList",docTypes);
 		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
