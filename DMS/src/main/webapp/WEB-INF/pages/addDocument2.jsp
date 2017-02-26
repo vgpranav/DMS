@@ -16,12 +16,10 @@
 			<div class="row">
 			<div class="col-md-6 col-md-offset-3 col-sm-offset-3 col-sm-6 col-xs-12">
  				<form id="addDocSubTypeForm" data-parsley-validate
-					class="form-horizontal form-label-left" action="addDocument2.do"
+					class="form-horizontal form-label-left" action="addDocument3.do"
 					method="post">
 
 					<c:forEach items="${formFieldsList}" var="myItem" varStatus="loopStatus">
-						<%-- <c:if test="${myItem.index%2==0}">
-						</c:if> --%>
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"
 								for="first-name"> ${myItem.fieldname} 
@@ -32,23 +30,21 @@
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input 
 									type="text" 
-									id="doctypedesc" 
-									name="doctypedesc"
-									<c:if test="${myItem.fieldtype=='mandatory'}">
-										required="required"
-									</c:if>
-									 
-									<c:if test="${myItem.datatype=='date'}">
-										class="form-control col-md-7 col-xs-12 customdatepicker"
-										readonly
-									</c:if>
-									<c:if test="${myItem.datatype!='date'}">
-										class="form-control col-md-7 col-xs-12"
-									</c:if>
-									>
+									id="${myItem.fieldid}" 
+									name="${myItem.fieldid}"
+										<c:if test="${myItem.fieldtype=='mandatory'}">
+											required="required"
+										</c:if>
+										<c:if test="${myItem.datatype=='date'}">
+											class="form-control col-md-7 col-xs-12 customdatepicker"
+											readonly
+										</c:if>
+										<c:if test="${myItem.datatype!='date'}">
+											class="form-control col-md-7 col-xs-12"
+										</c:if> 
+								/>
 							</div>
 						</div>
-					
 					</c:forEach>
 					 
 					<div class="form-group" align="right">
