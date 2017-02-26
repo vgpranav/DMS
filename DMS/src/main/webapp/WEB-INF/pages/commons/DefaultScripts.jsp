@@ -18,7 +18,7 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery-ui-1.12.1/jquery-ui.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/datatables.net/js/jquery.dataTables.js"></script>
-
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script>
 	function notify(type,title,message,delay){
 		new PNotify({

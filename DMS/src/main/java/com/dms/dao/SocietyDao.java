@@ -114,6 +114,28 @@ public class SocietyDao {
 		}
 	return null;
 }
+
+
+	public List<Society> getSocietyListforUser(List<Society> societyList) {
+		Connection conn = null;
+		ResultSetHandler<List<Society>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Society>(Society.class);
+			societyList = qr.query(conn, DMSQueries.getAllActiveSocietyForUser,rsh);
+		}catch(Exception e){
+			logger.error("Error fetching Society List :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return societyList;
+}
 	
 	
 	

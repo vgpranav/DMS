@@ -17,6 +17,14 @@ public class DMSQueries {
 	public static String getConfigValue = "select configvalue from config where configkey=?";
 	public static String insertNewFormField = "insert into formstructure(docsubtypeid,fieldname,fieldtype,datatype,sequence,active,createdby) values (?,?,?,?,?,?,?)";
 	public static String getAllDocumentFormFieldsBySubTypes = "select * from formstructure where docsubtypeid=?";
+	public static String getAllActiveSocietyForUser = "select * from society where isactive=1";
+	
+	public static String getAllDoctypeFromSocid = "select d.doctypeid,d.doctypename from doctype d,societydocmapping m,society s "
+													+ "where d.doctypeid = m.doctypeid and m.societyid = s.societyid "
+													+ "and s.isactive = 1 and s.societyid=? ";
+	public static String getAllDocSubTypeFromDocid = "select * from docsubtype where doctypeid = ?";
+	
+	
 	
 	
 }

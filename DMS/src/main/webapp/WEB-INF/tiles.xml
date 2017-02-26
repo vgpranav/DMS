@@ -61,5 +61,18 @@
       <put-attribute name="title" value="Add Form Fields" />  
       <put-attribute name="body" value="/WEB-INF/pages/addFormFields.jsp" />   
     </definition> 
+    
+    <definition name="addDocument1" extends="base-definition">  
+      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addDocument1.jsp" />   
+    </definition> 
+    
+    <definition name="addDocument2" extends="base-definition">  
+      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addDocument2.jsp" />   
+    </definition> 
+    
+    
+    
   
 </tiles-definitions>

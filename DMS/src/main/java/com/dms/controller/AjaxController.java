@@ -81,4 +81,36 @@ public class AjaxController {
 		return formFields;
 	}
 	
+	@RequestMapping(value = "/getDoctypeBySocId", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Doctype> getDoctypeBySocId(@ModelAttribute Society society
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		DocumentDao documentDao = new DocumentDao();
+		List<Doctype> doctypes=null;
+		try{
+			doctypes = documentDao.getDoctypeBySocId(society.getSocietyid(),doctypes);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return doctypes;
+	}
+	
+	@RequestMapping(value = "/getDocSubtypeByDocId", method = RequestMethod.GET)
+	public @ResponseBody
+	List<DocSubType> getDocSubtypeByDocId(@ModelAttribute DocSubType docSubType
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		DocumentDao documentDao = new DocumentDao();
+		List<DocSubType> docSubTypes=null;
+		try{
+			docSubTypes = documentDao.getDocSubtypeByDocId(docSubType.getDoctypeid(),docSubTypes);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return docSubTypes;
+	}
+	
 }

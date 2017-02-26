@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.Document;
 import com.dms.beans.FormFields;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
@@ -210,5 +211,35 @@ public class ViewController {
 		return mv;
 	}
 	
+	@RequestMapping(value = "/addDocument1", method = RequestMethod.GET)
+	public ModelAndView addDocument1(){
+		ModelAndView mv = null;
+		List<Society> societyList=null;
+		SocietyDao societyDao = new SocietyDao();
+		try{
+			societyList = societyDao.getSocietyListforUser(societyList);
+			mv = new ModelAndView("addDocument1");
+			mv.addObject("societyList",societyList);
+ 		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/addDocument2", method = RequestMethod.POST)
+	public ModelAndView addDocument2(@ModelAttribute Document document){
+		ModelAndView mv = null;
+		List<FormFields> formFields=null;
+		DocumentDao documentDao = new DocumentDao();
+		try{
+			formFields = documentDao.getFieldsForDocSubtype(document.getDocsubtypeid(),formFields);
+			mv = new ModelAndView("addDocument2");
+			mv.addObject("formFieldsList",formFields);
+			mv.addObject("document",document);
+ 		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
 	
 }

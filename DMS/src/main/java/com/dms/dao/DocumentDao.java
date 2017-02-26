@@ -182,4 +182,46 @@ public class DocumentDao {
 		System.out.println(formFields);
 	return formFields;
 }
+
+	public List<Doctype> getDoctypeBySocId(long societyid, List<Doctype> doctypes) {
+		Connection conn = null;
+		ResultSetHandler<List<Doctype>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Doctype>(Doctype.class);
+			doctypes = qr.query(conn, DMSQueries.getAllDoctypeFromSocid,rsh,societyid);
+		}catch(Exception e){
+			logger.error("Error getting doctypes by soc id :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return doctypes;
+}
+
+	public List<DocSubType> getDocSubtypeByDocId(long doctypeid, List<DocSubType> docSubTypes) {
+		Connection conn = null;
+		ResultSetHandler<List<DocSubType>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<DocSubType>(DocSubType.class);
+			docSubTypes = qr.query(conn, DMSQueries.getAllDocSubTypeFromDocid,rsh,doctypeid);
+		}catch(Exception e){
+			logger.error("Error getting doctypes by soc id :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return docSubTypes;
+}
 }
