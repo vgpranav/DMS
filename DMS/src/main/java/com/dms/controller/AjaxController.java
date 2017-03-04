@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.Document;
 import com.dms.beans.FormFields;
 import com.dms.beans.Society;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class AjaxController {
@@ -113,4 +110,19 @@ public class AjaxController {
 		return docSubTypes;
 	}
 	
+	@RequestMapping(value = "/getDocumentListForView", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Document> getDocumentListForView(@ModelAttribute Document document
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		DocumentDao documentDao = new DocumentDao();
+		List<Document> documents=null;
+		try{
+			documents = documentDao.getDocumentListForView(document,documents);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return documents;
+	}
 }

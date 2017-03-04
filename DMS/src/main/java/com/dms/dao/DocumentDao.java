@@ -3,6 +3,7 @@ package com.dms.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.Document;
 import com.dms.beans.FormFields;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
@@ -224,4 +226,89 @@ public class DocumentDao {
 		}
 	return docSubTypes;
 }
+
+	public long saveDocumentHeadAndDetails(Map<String, String> params) {
+		Connection conn = null;
+		String societyid="";
+		String doctypeid="";
+		String docsubtypeid="";
+		long documentId = 0;
+		try{
+			
+			if(params.containsKey("societyid"))
+				societyid = params.get("societyid");
+			if(params.containsKey("doctypeid"))
+				doctypeid = params.get("doctypeid");
+			if(params.containsKey("docsubtypeid"))
+				docsubtypeid = params.get("docsubtypeid");
+			
+			if(societyid.length()<1 || doctypeid.length()<1 || docsubtypeid.length()<1)
+				return 0;
+			else {
+				qr = new QueryRunner();
+				conn = ConnectionPoolManager.getInstance().getConnection();
+				conn.setAutoCommit(false);
+				
+				Object obj = qr.insert(conn, DMSQueries.insertDocHead,new ScalarHandler<Object>(),
+						societyid,
+						doctypeid,
+						docsubtypeid,
+		    			123);
+		    	 
+				documentId = CommomUtility.convertToLong(obj);
+				
+				if(documentId!=0){
+					for ( String key : params.keySet() ) {
+					    if(!key.equals("UserId")) {
+					    	qr.insert(conn, DMSQueries.insertDocDetails,new ScalarHandler<Object>(),
+					    			documentId,
+					    			key,
+					    			params.get(key),
+					    			123);
+					    }
+					}
+					conn.commit();
+				}
+				else
+					conn.rollback();
+			}
+		}catch(Exception e){
+			logger.error("Error saving doctypes :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return documentId;
+}
+
+	public List<Document> getDocumentListForView(Document document, List<Document> documents) {
+		Connection conn = null;
+		ResultSetHandler<List<Document>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Document>(Document.class);
+			documents = qr.query(conn, DMSQueries.getDocumentListForView,rsh,
+					document.getSocietyid(),
+					document.getDoctypeid(),
+					document.getDocsubtypeid()
+					);
+		}catch(Exception e){
+			logger.error("Error getDocumentListForView :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return documents;
+}
+	
+
 }

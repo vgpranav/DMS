@@ -23,8 +23,11 @@ public class DMSQueries {
 													+ "where d.doctypeid = m.doctypeid and m.societyid = s.societyid "
 													+ "and s.isactive = 1 and s.societyid=? ";
 	public static String getAllDocSubTypeFromDocid = "select * from docsubtype where doctypeid = ?";
-	
-	
-	
+	public static String insertDocDetails = "insert into documentdetails(documentid,datakey,datavalue,createdby) values (?,?,?,?)";
+	public static String insertDocHead = "insert into document(societyid,doctypeid,docsubtypeid,createdby) values (?,?,?,?)";
+	public static String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description, "
+												+ " d.documentid, d.createdby,d.createdon  from formstructure f,documentdetails d,document doc "
+												+ " where f.fieldid = d.datakey  and d.documentid = doc.documentid  and doc.societyid=? and doc.doctypeid=? and doc.docsubtypeid=? "
+												+ " group by d.documentid order by f.sequence "; 
 	
 }

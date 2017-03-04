@@ -24,7 +24,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addDocument1.do">Add Document</a></li>
-		                      <li><a href="index2.html">Dummy Link</a></li>
+		                      <li><a href="viewDocument.do">View Document</a></li>
 		                      <li><a href="index3.html">Dummy Link</a></li>
 		                    </ul>
 		                  </li>

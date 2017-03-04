@@ -22,13 +22,16 @@
 			</OBJECT> -->
 				<APPLET code="uk.co.mmscomputing.application.imageviewer.MainApp.class"
 				type="applet" width="100%" style="min-height: 500px !important"
-				ARCHIVE="mysql-connector-java-5.0.8-bin.jar,classes12.jar">
-					<PARAM name="DepartmentId" value="0903000001"> 
-					<PARAM name="UserId" value="1"> 
-					<PARAM name="dbaseip" value="1"> 
-					<PARAM name="dbuid" value="1"> 
-					<PARAM name="dbpwd" value="1"> 
-					<PARAM name="dbase" value="1">
+				ARCHIVE="mysql-connector-java-5.0.8-bin.jar,classes12.jar,commons-net-3.6.jar">
+					<PARAM name="societyid" value="${societyid}"> 
+					<PARAM name="doctypeid" value="${doctypeid}"> 
+					<PARAM name="docsubtypeid" value="${docsubtypeid}"> 
+					<PARAM name="documentId" value="${documentId}"> 
+					<PARAM name="userid" value="1"> 
+					<PARAM name="dbaseip" value="127.0.0.1:3306"> 
+					<PARAM name="dbuid" value="root"> 
+					<PARAM name="dbpwd" value="12345"> 
+					<PARAM name="dbase" value="dms">
 					<PARAM name="java_arguments" value="-Xmx1000m -Dsun.java2d.noddraw=true"> 
 				</APPLET>
  			</div>

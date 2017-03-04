@@ -238,6 +238,7 @@ public class ViewController {
 			mv = new ModelAndView("addDocument2");
 			mv.addObject("formFieldsList",formFields);
 			mv.addObject("document",document);
+			
  		}catch(Exception e){
 			logger.error(e.getMessage());
 		}
@@ -246,12 +247,42 @@ public class ViewController {
 	
 	@RequestMapping(value = "/addDocument3", method = RequestMethod.POST)
 	public ModelAndView addDocument3(@RequestParam Map<String, String> params){
+		long detailsSaved=0;
+		long headId;
+		DocumentDao ddao = new DocumentDao();
 		
 		System.out.println(params);
 		
 		ModelAndView mv = null;
 		try{
+			
+			detailsSaved = ddao.saveDocumentHeadAndDetails(params);
+			
 			mv = new ModelAndView("addDocument3");
+			if(params.containsKey("societyid"))
+				mv.addObject("societyid",params.get("societyid"));
+			if(params.containsKey("doctypeid"))
+				mv.addObject("doctypeid",params.get("doctypeid"));
+			if(params.containsKey("docsubtypeid"))
+				mv.addObject("docsubtypeid",params.get("docsubtypeid"));
+
+			mv.addObject("documentId",detailsSaved);
+			
+ 		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
+	
+	@RequestMapping(value = "/viewDocument", method = RequestMethod.GET)
+	public ModelAndView viewDocument(){
+		ModelAndView mv = null;
+		List<Society> societyList=null;
+		SocietyDao societyDao = new SocietyDao();
+		try{
+			societyList = societyDao.getSocietyListforUser(societyList);
+			mv = new ModelAndView("viewDocument");
+			mv.addObject("societyList",societyList);
  		}catch(Exception e){
 			logger.error(e.getMessage());
 		}

@@ -77,6 +77,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/addDocument3.jsp" />   
     </definition> 
     
+     <definition name="viewDocument" extends="base-definition">  
+      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewDocument.jsp" />   
+    </definition> 
     
     
   

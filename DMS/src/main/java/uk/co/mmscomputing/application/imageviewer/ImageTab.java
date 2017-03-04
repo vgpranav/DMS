@@ -36,7 +36,17 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
   static public final String fileOpenID="uk.co.mmscomputing.file.open.dir";
   static public final String fileSaveID="uk.co.mmscomputing.file.save.dir";
   private java.awt.List optionsList;
-  String depid="", userid="", dbaseip="", dbuid="", dbpwd="", dbase="",dtype="",docid="",section = "",Year = "",equipname="";
+
+  String societyid = "";
+  String doctypeid = "";
+  String docsubtypeid = "";
+  String documentId="";
+  String userid = ""; 
+  String dbaseip = "";
+  String dbuid = "";
+  String dbpwd = "";
+  String dbase = ""; 
+  
   protected Properties   properties;
   protected JTabbedPane  images;
   protected JFileChooser openfc;
@@ -52,21 +62,16 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
   public ImageTab(Properties properties){
 	
     this.properties=properties;
-    depid = properties.getProperty("DepartmentId").toString();
-    section = properties.getProperty("section").toString();
-    userid = properties.getProperty("UserId").toString();
-    docid = properties.getProperty("DocId")==null?".":properties.getProperty("DocId").toString();
-    dbaseip = properties.getProperty("dbaseip").toString();
-    dbuid = properties.getProperty("dbuid").toString();
-    dbpwd = properties.getProperty("dbpwd").toString();
-    dbase = properties.getProperty("dbase").toString();
-    dtype= properties.getProperty("dtype").toString();
+    societyid 		= properties.getProperty("societyid")== null ? "1":properties.getProperty("societyid").toString();
+    doctypeid 		= properties.getProperty("doctypeid")== null ? "1":properties.getProperty("doctypeid").toString();
+    docsubtypeid 	= properties.getProperty("docsubtypeid")== null ? "1":properties.getProperty("docsubtypeid").toString();
+    documentId 		= properties.getProperty("documentId")== null ? "1":properties.getProperty("documentId").toString();
+    userid 			= properties.getProperty("userid")== null ? "1":properties.getProperty("userid").toString();
+    dbaseip 		= properties.getProperty("dbaseip")== null ? "127.0.0.1:3306":properties.getProperty("dbaseip").toString();
+    dbuid 			= properties.getProperty("dbuid")== null ? "root":properties.getProperty("dbuid").toString();
+    dbpwd 			= properties.getProperty("dbpwd")== null ? "12345":properties.getProperty("dbpwd").toString();
+    dbase 			= properties.getProperty("dbase")== null ? "dms":properties.getProperty("dbase").toString();
     
-    equipname = docid;
-   
-    System.out.println("deptid-"+depid);
-    System.out.println("section-"+section);
-    System.out.println("Equipment id-"+equipname);
     setLayout(new BorderLayout());
 
     
@@ -85,69 +90,22 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     setSaveDir(properties.getProperty(fileSaveID,userdir));
   }
   
-  private  void connectToDB() {
+  private  void connectToDB() { 
 	    try {
-	      
 	      DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-	      String database = "jdbc:oracle:thin:@"+dbaseip+":1521:"+dbase;
+	      String database = "jdbc:mysql://"+dbaseip+"/"+dbase;
 	      con = DriverManager.getConnection(database,dbuid,dbpwd);
 	      //empValues.setText("Connected to the Database. Fetching Values from DEPT Tables.\n");
 	    } catch (SQLException ex)     {
 	      System.out.println("Connection Error =  "  + ex.toString());
 	    }
-  }
+   }
   
-  
-  
-  /*public  void fetchValues() {
-	   try {
-		connectToDB();
-	    Statement stmt = con.createStatement();
-	    //StringBuffer allRowValues = new StringBuffer();
-	    ResultSet rset=null;
-	    int counter = 1;
-	    if(depid.equals("0805000001")||depid.equals("0705000001"))
-	    {
-	     //rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE where s_department_id = '"+depid+"' and S_DOCUMENT_TYPE='"+dtype+"' ");
-	      rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE where s_department_id = '"+depid+"' order by S_DOCUMENT_TYPE_ID");
-		   	 
-	    
-	    }
-	    else if(depid.equals("1107000001"))
-	    {
-		    //  rset = stmt.executeQuery("SELECT b.s_sub_document_type||'('||A.S_DOCUMENT_TYPE||')' as S_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE A,TBL_SUB_DOCUMENT_TYPE B ,TBL_HRD_DOC_MAPPING C WHERE A.S_DOCUMENT_TYPE_ID=B.S_DOCUMENT_TYPE_ID AND "+ 
-	    	//" B.S_SUB_DOCUMENT_TYPE_ID=C.S_SUB_DOCUMENT_TYPE_ID AND C.S_ESS_USER_ID='"+userid+"' AND A.S_DEPARTMENT_ID='1107000001'");
-		      
-		      rset = stmt.executeQuery("SELECT b.n_sub_document_code||'-'||b.s_sub_document_type as S_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE A,TBL_SUB_DOCUMENT_TYPE B ,TBL_HRD_DOC_MAPPING C WHERE A.S_DOCUMENT_TYPE_ID=B.S_DOCUMENT_TYPE_ID AND A.S_DOCUMENT_TYPE_ID='"+dtype+"' and"+ 
-		  	    	" B.S_SUB_DOCUMENT_TYPE_ID=C.S_SUB_DOCUMENT_TYPE_ID AND C.S_ESS_USER_ID='"+userid+"' AND A.S_DEPARTMENT_ID='1107000001' order by b.n_sub_document_code||'-'||b.s_sub_document_type");
-	    }else if(depid.equals("1208000002")){
-	    	 rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE FROM TBL_CV_DOC_TYPE ORDER BY S_DOCUMENT_TYPE");
-			   
-	    }else if(depid.equals("1200000001")){
-	    	 rset = stmt.executeQuery("SELECT B.S_SUB_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE A,TBL_SUB_DOCUMENT_TYPE B WHERE A.S_DOCUMENT_TYPE_ID = B.S_DOCUMENT_TYPE_ID  AND A.S_DOCUMENT_TYPE_ID = '"+section+"'  ORDER BY b.n_sub_document_code");
-			   
-	    } else
-	    {
-		     rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE FROM TBL_DOCUMENT_TYPE where s_department_id = '"+depid+"' order by S_DOCUMENT_TYPE_ID");
-		   	  	
-		    }
-	   
-	     
-	     while (rset.next())
-	    {
-	      cbox.addItem(rset.getString(1));
-	      //allRowValues.append("ROW " + counter +  ":  ENAME = " + rset.getString(1) + " &  ENO = " + rset.getString(2) + "\n");
-	      counter++;
-	    }
-	    //empValues.setText(allRowValues.toString());
-	    rset.close();
-	    stmt.close();
-	    con.close();
-	  } catch (SQLException ex) 
+  public  void fetchValues() {
 	  {
-	    System.out.println("Error While Fetching Values =  "  +  ex.toString());
+	    System.out.println("Fetch Doc Called");
 	  }
-  }*/
+  }
   
   public void setOpenDir(String path){
     //new File(path).mkdirs();
@@ -163,7 +121,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     JPanel buttonPanel=new JPanel();
     cbox = new JComboBox();
     cbox1 = new JComboBox();
-    //fetchValues();
+    fetchValues();
     fillComboYearnew();
     buttonPanel.setLayout(new GridLayout(0,1));
     JLabel jl = new JLabel();
@@ -171,7 +129,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     jl.setText("Select Document Type:");
     buttonPanel.add(jl);
     buttonPanel.add(cbox);
-    if(depid.equals("1200000001")){
+    if(true){
     	  j2.setText("Select Year:");
     	    buttonPanel.add(j2);
     	    buttonPanel.add(cbox1);
@@ -207,8 +165,8 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
   public  void fillComboYearnew()
   {
   		int i = 0;
-  	int nYear = 1994;
-  	for(i = 1; i <= 25; i++ )
+  	int nYear = 1990;
+  	for(i = 1; i <= 30; i++ )
   	{
   		 cbox1.addItem(nYear);			
   		nYear = nYear + 1;
@@ -251,39 +209,9 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
           new Thread(){
             public void run(){
               try{
-            	  
             	  String filename = "";
             	     //save(savefc.getSelectedFile().getPath());
-            	  try {
-            		  connectToDB();
-        		    Statement stmt = con.createStatement();
-        		    ResultSet rset = null;
-        		     if(depid.equals("1107000001"))
-        		     {
-        		    	 rset = stmt.executeQuery("SELECT b.S_SUB_DOCUMENT_TYPE_ID  as S_DOCUMENT_TYPE_ID FROM TBL_DOCUMENT_TYPE A,TBL_SUB_DOCUMENT_TYPE B ,TBL_HRD_DOC_MAPPING C WHERE A.S_DOCUMENT_TYPE_ID=B.S_DOCUMENT_TYPE_ID AND "+
-        		    			 	"B.S_SUB_DOCUMENT_TYPE_ID=C.S_SUB_DOCUMENT_TYPE_ID AND b.n_sub_document_code||'-'||b.s_sub_document_type ='" + cbox.getItemAt(cbox.getSelectedIndex()) + "' AND A.S_DEPARTMENT_ID='"+depid+"'");
-        		    }else if(depid.equals("1208000002")){
-        		    	 rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE_ID FROM TBL_CV_DOC_TYPE where S_DOCUMENT_TYPE = '" + cbox.getItemAt(cbox.getSelectedIndex()) + "'");
-        		    }else if(depid.equals("1200000001")){
-        		    	 rset = stmt.executeQuery("SELECT b.S_SUB_DOCUMENT_TYPE_ID as S_DOCUMENT_TYPE_ID FROM TBL_DOCUMENT_TYPE A,TBL_SUB_DOCUMENT_TYPE B WHERE A.S_DOCUMENT_TYPE_ID = B.S_DOCUMENT_TYPE_ID  AND B.S_SUB_DOCUMENT_TYPE = '" + cbox.getItemAt(cbox.getSelectedIndex()) + "'  ORDER BY b.n_sub_document_code");
-        				   
-        		    }
-        		     else
-        		     {
-        		        rset = stmt.executeQuery("SELECT S_DOCUMENT_TYPE_ID FROM TBL_DOCUMENT_TYPE where S_DOCUMENT_TYPE = '" + cbox.getItemAt(cbox.getSelectedIndex()) + "' and s_department_id = '"+depid+"'");
-        	        		 
-        		     }
-        		     while (rset.next())
-        		    {
-        		    	filename = rset.getString("S_DOCUMENT_TYPE_ID");
-        		    }
-        		    rset.close();
-        		    stmt.close();
-        		    con.close();
-        		  } catch (SQLException ex) 
-        		  {
-        			  System.out.println("Error While Fetching Values =  "  +  ex.toString());
-        		  }
+            	  filename = String.valueOf(System.currentTimeMillis());
             	  save("C:\\DMS\\" + filename,filename);
             	 // p.setEnabled(true);
               }catch(Exception e){
@@ -485,12 +413,12 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     	writer.writeToSequence(getIIOImage(writer,iwp,ip.getImage()),iwp);
     	writer.endWriteSequence();*/
     	
-     //---------------------------- FTP for EOLIFETIME----------------------------//
-      if(depid.equals("1200000001"))  
+      if(true)  
       {
     	long first_start_time = System.currentTimeMillis(); 
     	 
-    	System.out.println("=== EO LIFETIME ===");
+    	System.out.println("=== DMS ===");
+    	
     	try
     	{
     	FtpWrapper ftp = new FtpWrapper();
@@ -512,14 +440,13 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 	    	long ftp_end_time = System.currentTimeMillis();  
 	    	System.out.println("C::FTP Connected in :: "+(ftp_end_time-first_start_time)/1000+" Secs");
 	    	
-	    	
 	    	long cur_time = System.currentTimeMillis();  
 			ftp.setPassiveMode(true);
 			ftp.binary();
 			
 			ftp.setBufferSize(1024000);
 			
-			ftpDirectoryForDownloadingFile = "/EO_LIFETIME/";
+			ftpDirectoryForDownloadingFile = "/DMS/";
 			ftp.changeWorkingDirectory(ftpDirectoryForDownloadingFile);
 			long cur_end_time = System.currentTimeMillis();  
 			System.out.println("C::FTP Dir Set in :: "+(cur_end_time-first_start_time)/1000+" Secs");
@@ -531,39 +458,15 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
         
         	int pages = images.getTabCount();
         	String filenamearr[] = new String[pages];
-        	
-        	PreparedStatement PSfilename = con.prepareStatement("SELECT C_EO_LIFETIME.NEXTVAL as filename FROM SYS.DUAL CONNECT BY LEVEL <= ?");
-        	PSfilename.setObject(1, pages);
-        	ResultSet RSfilename =  PSfilename.executeQuery();
-        	
+        	 	
         	int fnameptr=0;
-      	    while(RSfilename.next())
+      	    while(fnameptr<pages)
       	    {
-      	    	filenamearr[fnameptr] = RSfilename.getObject("filename").toString();
+      	    	filenamearr[fnameptr] = String.valueOf(fnameptr);
       	    	fnameptr++;
       	    }
-      	    RSfilename.close();
-      	    PSfilename.close();
-			
+      	   
       	    int displaySeq=1;
-      	    String getMaxSQL =  " SELECT MAX(N_DISPLAY_SEQ) as maxseq "+
-      	    					" FROM (SELECT N_DISPLAY_SEQ FROM TBL_EO_LIFETIME_DETAIL WHERE S_EQUIPMENT_ID=? and S_SUB_DOCUMENT_TYPE_ID=? "+
-      	    					" UNION ALL "+
-      	    					" SELECT N_DISPLAY_SEQ FROM TBL_EO_LIFETIME_OFFLINE WHERE S_EQUIPMENT_ID=? and S_SUB_DOCUMENT_TYPE_ID=?) ";
-      	    
-    	    PreparedStatement getMaxDispSeq = con.prepareStatement(getMaxSQL);
-    	    getMaxDispSeq.setObject(1, equipname);
-    	    getMaxDispSeq.setObject(2, fileType);
-    	    getMaxDispSeq.setObject(3, equipname);
-    	    getMaxDispSeq.setObject(4, fileType);
-    	    ResultSet RSmaxDispSeq = getMaxDispSeq.executeQuery();
-    	    if(RSmaxDispSeq.next())
-    	    {
-    	    	displaySeq = RSmaxDispSeq.getInt("maxseq");
-    	    }
-    	    RSmaxDispSeq.close();
-    	    getMaxDispSeq.close();
-    	    displaySeq++;
     	    
         for(int i=1; i<=images.getTabCount(); i++)
         {
@@ -628,12 +531,12 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 				try{
 					
 					
-					String unixFileName = equipname+"-"+fileType+"-"+newfilename+"-"+System.currentTimeMillis()+".jpg";
+					String unixFileName = societyid+"-"+doctypeid+"-"+docsubtypeid+"-"+System.currentTimeMillis()+".jpg";
 					
 					long file_st_time = System.currentTimeMillis();				
-					boolean filestatus = ftp.uploadFile(filepath, "/EO_LIFETIME/"+unixFileName);
+					boolean filestatus = ftp.uploadFile(filepath, "/DMS/"+unixFileName);
 					long file_end_time = System.currentTimeMillis();
-					System.out.println("C::File "+newfilename+".jpg uploaded in :: "+(file_end_time-first_start_time)/1000+" Secs");
+					System.out.println("C::File "+unixFileName+".jpg uploaded in :: "+(file_end_time-first_start_time)/1000+" Secs");
 					
 					long permission_st_time = System.currentTimeMillis();
 					boolean retVal = ftp.sendSiteCommand("chmod 777 "+unixFileName);
@@ -643,33 +546,36 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 					//System.out.println("File Uploaded "+filestatus+" \nFile permission set "+retVal);
 		      	  
 				    long insert_st_time = System.currentTimeMillis();
-					String insertQuery = "INSERT INTO TBL_EO_LIFETIME_OFFLINE (S_DETAIL_ID,s_equipment_id,S_SUB_DOCUMENT_TYPE_ID,S_DOCUMENT_LINK,S_SCANNED_BY,S_YEAR,S_STATUS,N_PENDING,N_DISPLAY_SEQ) " 
-				        +" VALUES (?,?,?,?,?,?,'0','1',?)"; 
-					PreparedStatement prepStmt = con.prepareStatement(insertQuery);
-					prepStmt.setObject(1,newfilename);	
-				    prepStmt.setObject(2,equipname);	
-				    prepStmt.setObject(3,fileType);	
-				    prepStmt.setObject(4,unixFileName);
-				    prepStmt.setObject(5,userid);	
-				    prepStmt.setObject(7,displaySeq);	
-				    displaySeq++;
+					
+				    String insertQuery = "insert into files (societyid,doctypeid,docsubtypeid,documentid,filename,filepath,mimetype)"
+				    				   + " values (?,?,?,?,?,?,?)"; 
 				    
-				    if(depid.equals("1200000001")){
+					PreparedStatement prepStmt = con.prepareStatement(insertQuery);
+					prepStmt.setObject(1,societyid);	
+				    prepStmt.setObject(2,doctypeid);	
+				    prepStmt.setObject(3,docsubtypeid);	
+				    prepStmt.setObject(4,documentId);
+				    prepStmt.setObject(5,unixFileName);	
+				    prepStmt.setObject(6,filepath);	
+				    prepStmt.setObject(7,"");	
+				    
+				   /* if(depid.equals("1200000001")){
 				      	 prepStmt.setObject(6,cbox1.getSelectedItem());
 				    }else{
 				    	 prepStmt.setObject(6,docid);
-				    }
+				    }*/
 				    boolean insFlag = prepStmt.execute();
 				    System.out.println("insFlag :: "+insFlag);
 				    
-				    prepStmt.close();
+				    prepStmt.close(); 
+				    
 				    long insert_end_time = System.currentTimeMillis();
 		      	    System.out.println("C::Data Inserted in :: "+(insert_end_time-first_start_time)/1000+" Secs");
 				    
 				    q.setEnabled(true);
 				}catch (Exception sqlExp) {
 					mssg = sqlExp.toString();
-					
+					System.out.println(sqlExp.getMessage());
 				}
 		    
 	            from.close();
@@ -682,7 +588,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 	       
 	       
         	}
-        con.close();
+        //##con.close();
         if(ftp != null){
 			long ftpd_st_time = System.currentTimeMillis();
 			ftp.logout();
@@ -704,170 +610,11 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
       }     
       //---------------------------- FTP for EOLIFETIME----------------------------//
       else
-      {
-      for(int i=1; i<=images.getTabCount(); i++){
-    	  	String filepath = "";
-    	  	
-    	  	if (filename.lastIndexOf(".") == -1)
-    	  	{
-    	  		filepath  = filename + "-" + i;
-    	  	}
-    	  	else
-    	  	{
-    	  		filepath = filename.substring(0, filename.lastIndexOf(".")) + "-" + i;
-    	  	}
-    	  	filepath = filepath + ".jpg";//filename.substring(filename.indexOf("."), filename.length());
-    	  	File file=new File(filepath);
-    	  	if(file.exists()){file.delete();}
-	        ios=ImageIO.createImageOutputStream(file);
-	        
-	        writer.setOutput(ios);
-	        writer.prepareWriteSequence(null);
-	        JScrollPane sp=(JScrollPane)images.getComponentAt(i - 1);
-	        ImagePanel ip=(ImagePanel)sp.getViewport().getView();
-	        //ip.setSize(ip.getWidth() / 5, ip.getHeight() / 5);
-	        writer.writeToSequence(getIIOImage(writer,iwp,ip.getImage()),iwp);
-	        writer.endWriteSequence();
-	        ios.close();
-	        ios=null;
-	       
-	        File tempFileRef  = new File(filepath);
-	        String name = tempFileRef.getName();
-            String userSeparator="\\";            
-            name = name.substring(name.lastIndexOf(userSeparator)+1,name.length());    
-            if (name.toLowerCase().endsWith("jpg"))
-			{
-	            InputStream from = null; // Stream to read from source
-	            //FileOutputStream to = null; // Stream to write to destination
-				from = new FileInputStream(tempFileRef); // Create input stream
-				//to = new FileOutputStream(servlet.getDatabaseProperty("uploadfilepath")+"\\"+Departmenttxt+"\\"+DocNotxt+"\\"+name); // Create output stream
-				InputStream blogimage = new FileInputStream(tempFileRef);
-				//String fileLink = servlet.getDatabaseProperty("linkpath")+Departmenttxt+"/"+DocNotxt+"/"+name;
-		    	//String fileType = name.substring(0,name.indexOf("-"));
-				String DetailId = "";
-				try{
-					//DetailId = NewCodeGenerate("TBL_DOCUMENT_DETAIL");
-				}catch (Exception sqlExp) {
-					sqlExp.printStackTrace();
-					//Exception exp = new Exception("EXECUTE_QUERY_ERROR", sqlExp);
-					//throw exp;
-				}
-				try{
-					String sqlQuery ="";
-					if(depid.equals("1107000001"))
-					{
-					    sqlQuery = "INSERT INTO TEMP_DETAIL_HRD(S_DETAIL_ID,S_USER_ID,S_SUB_DOCUMENT_TYPE_ID,S_IMAGE,S_DOCUMENT_ID) VALUES (S_HRD_DETAIL_SEQ.NEXTVAL,?,?,?,?)";
-					}
-					else if(depid.equals("1107000002"))
-					{
-						sqlQuery = "INSERT INTO TEMP_DETAIL_EIIPL(S_DETAIL_ID,S_USER_ID,S_DOCUMENT_TYPE_ID,S_IMAGE,S_DOCUMENT_ID) VALUES (S_EIIPL_DETAIL_SEQ.NEXTVAL,?,?,?,?)";	
-	
-					}
-					else if(depid.equals("1208000002"))
-					{
-						
-						sqlQuery = "INSERT INTO TEMP_DETAIL_CV(S_DETAIL_ID,S_USER_ID,S_DOCUMENT_TYPE_ID,S_IMAGE,S_DOCUMENT_ID) VALUES (S_CV_DETAIL_SEQ.NEXTVAL,?,?,?,?)";	
-	
-					}else if(depid.equals("1200000001")){
-					
-						sqlQuery = "INSERT INTO TEMP_DETAIL_EO_NEW(S_DETAIL_ID,S_USER_ID,S_SUB_DOCUMENT_TYPE_ID,S_IMAGE,S_YEAR) VALUES (C_EO_LIFETIME.NEXTVAL,?,?,?,?)";	
-						
-        			 }
-					else
-					{
-						 sqlQuery = "INSERT INTO TEMP_DETAIL(S_DETAIL_ID,S_USER_ID,S_DOCUMENT_TYPE_ID,S_IMAGE,S_DOCUMENT_ID) VALUES (S_FIN_DETAIL_SEQ.NEXTVAL,?,?,?,?)";	
-						 //sqlQuery = "{call PROC_NEW_FIN_DETAILS1(?,?,?,?)}";	
-					}
-					
-					connectToDB();
-					
-					/*PreparedStatement prepStmt = con.prepareStatement(sqlQuery);
-					//prepStmt.setObject(1,DetailId);	
-				    prepStmt.setObject(1,userid);	
-				    prepStmt.setObject(2,fileType);	
-				    prepStmt.setBinaryStream(3,blogimage,(int)tempFileRef.length());
-				    if(depid.equals("1200000001")){
-				      	 prepStmt.setObject(4,cbox1.getSelectedItem());
-				    }else{
-				    	 prepStmt.setObject(4,docid);
-				    }
-				    prepStmt.executeQuery();
-				    prepStmt.close();*/
-				    
-					CallableStatement calls = con.prepareCall(sqlQuery);					
-			   	    calls.setObject(1,userid);
-			   	    calls.setObject(2,fileType);
-			   	    calls.setBinaryStream(3,blogimage,(int)tempFileRef.length());
-			   	    
-			   	    System.out.println("UID "+userid+" &Ftype "+fileType);
-			   	 
-			   	    if(depid.equals("1200000001")){
-			   	    	calls.setObject(4,cbox1.getSelectedItem());
-			   	    }else{
-			   	    	calls.setObject(4,docid);
-			   	    }
-			   	    
-			   	    calls.execute();
-				    blogimage.close();
-				    file.delete();
-			   	    calls.close();
-
-				    
-				    //prepStmt.close();
-        		    
-        		    
-        		   
-
-            		    
-        		    
-        		    con.close();
-        		    q.setEnabled(true);
-				}catch (Exception sqlExp) {
-					mssg = sqlExp.toString();
-					//Exception exp = new Exception("EXECUTE_QUERY_ERROR", sqlExp);
-					//throw exp;
-				}
-		    	//Vector<Comparable> tranVector = new Vector<Comparable>();
-				//tranVector.add(servlet.getDatabaseProperty("uploadfilepath")+"\\"+request.getAttribute("Departmenttxt")+"\\"+request.getAttribute("DocNotxt")+"\\"+name);
-				//tranVector.add(name.substring(0,name.indexOf("-") - 1));
-				//fileList.add(z, tranVector);
-				//itemList = itemList + servlet.getDatabaseProperty("linkpath")+Departmenttxt+"/"+DocNotxt+"/"+name + "|";
-	            /*byte[] buffer = new byte[4096]; // To hold file contents
-	            int bytes_read; // How many bytes in buffer
-                while ((bytes_read = from.read(buffer)) != -1)
-	            {
-	              	to.write(buffer, 0, bytes_read); // write
-	            }
-	            to.flush();
-	            to.close();*/
-	            from.close();
-			    
-	            success = tempFileRef.delete();
-	            p.enable();
-	            if (!success)
-	            	System.out.println("Cannot delete");
-			}
-	        /*URL url = new URL( "http://172.18.17.141:7001/DMS/Upload/a"+i+".jpg" );
-	        HttpURLConnection urlcon = (HttpURLConnection) url.openConnection( );
-	        urlcon.setRequestMethod("POST");
-//	        file type is image
-	        urlcon.setRequestProperty("Content-type", "image/jpg");
-	        urlcon.setDoOutput(true);
-	        //urlcon.setDoInput(true);
-	        JScrollPane sp=(JScrollPane)images.getComponentAt(i - 1);
-	        ImagePanel ip=(ImagePanel)sp.getViewport().getView();
-	        BufferedImage img = ip.getImage();
-//	         urlcon.setDoInput(true);
-//	        now just need to write my image to the output stream
-	        ImageIO.write((RenderedImage)img, "jpg", urlcon.getOutputStream());  
-	        */
-	        //String imagePath= uploader.upload(filepath,"image/jpeg");		      
-      	}
-      }
+      {}
       
       //-------------SCAN LOG------------------//
         
-	    int pages = images.getTabCount();
+	   /* int pages = images.getTabCount();
 	    long save_time = (System.currentTimeMillis()-time)/1000;
 		PreparedStatement psScanLog;
 		try {
@@ -878,11 +625,11 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 			psScanLog.setObject(3,pages);
 			psScanLog.execute();
 			psScanLog.close();
-			con.close();
+			//##con.close();
 		} catch (Exception e) 
 		{
 			e.printStackTrace();
-		}
+		}*/
 		
 	    //-------------SCAN LOG------------------//
       
@@ -932,7 +679,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 					    
 	        		    //rset.close();
 	        		    prepStmt.close();
-	        		    con.close();
+	        		    //##con.close();
 					}catch (SQLException sqlExp) {
 						sqlExp.printStackTrace();
 						//Exception exp = new Exception("EXECUTE_QUERY_ERROR", sqlExp);
@@ -1106,7 +853,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 				rs.close();
 			}
 			if (con != null) {
-				con.close();
+				//##con.close();
 				con = null;                
 			}
 		} catch (Exception e) {
@@ -1114,7 +861,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 			ps1 = null;
 			rs = null;
 			if (con != null) {
-				con.close();
+				//##con.close();
 				con = null;
 			}
 		}

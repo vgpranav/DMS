@@ -1,4 +1,4 @@
-package uk.co.mmscomputing.application.imageviewer;
+package com.dms.util;
 
 /* 
  */

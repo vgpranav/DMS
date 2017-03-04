@@ -18,7 +18,12 @@
  				<form id="addDocSubTypeForm" data-parsley-validate
 					class="form-horizontal form-label-left" action="addDocument3.do"
 					method="post">
-
+					
+					<input type="hidden" name ="societyid" value="${document.societyid}">
+					<input type="hidden" name ="doctypeid" value="${document.doctypeid}">
+					<input type="hidden" name ="docsubtypeid" value="${document.docsubtypeid}">
+					
+					
 					<c:forEach items="${formFieldsList}" var="myItem" varStatus="loopStatus">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"

@@ -7,7 +7,7 @@ import uk.co.mmscomputing.util.*;
 
 public class MainApp extends UtilMainApp{
 
-  public MainApp(){                     // need this in every applet application class
+  public MainApp(){     
     super();
     ImageIO.scanForPlugins();
   }
@@ -29,7 +29,7 @@ protected JPanel getCenterPanel(Properties properties)throws Exception{
   public static void main(String[] argv){
     try{
     	MainApp app=new MainApp("Multi Page Image Viewer [2005-09-22]", argv);
-    	System.gc();//////////////////////////this statement is added by shree on 15/08/2013 to test garbage collection\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+    	System.gc();
     }catch(Exception e){
       e.printStackTrace();
     }

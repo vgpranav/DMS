@@ -8,8 +8,10 @@ public class Document {
 	private long societyid;
 	private long doctypeid;
 	private long docsubtypeid;
+	private String description;
 	private String createdby;
 	private Date createdon;
+	
 	
 	public long getDocumentid() {
 		return documentid;
@@ -47,11 +49,19 @@ public class Document {
 	public void setCreatedon(Date createdon) {
 		this.createdon = createdon;
 	}
-	
+	  
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	@Override
 	public String toString() {
 		return "Document [documentid=" + documentid + ", societyid=" + societyid + ", doctypeid=" + doctypeid
-				+ ", docsubtypeid=" + docsubtypeid + ", createdby=" + createdby + ", createdon=" + createdon + "]";
+				+ ", docsubtypeid=" + docsubtypeid + ", description=" + description + ", createdby=" + createdby
+				+ ", createdon=" + createdon + "]";
 	}
 
+	
 }
