@@ -29,6 +29,9 @@ public class DMSQueries {
 												+ " d.documentid, d.createdby,d.createdon  from formstructure f,documentdetails d,document doc "
 												+ " where f.fieldid = d.datakey  and d.documentid = doc.documentid  and doc.societyid=? and doc.doctypeid=? and doc.docsubtypeid=? "
 												+ " group by d.documentid order by f.sequence ";
-	public static String getDocPathsByDocId = "select * from files where documentid = ?"; 
-	
+	public static String getDocPathsByDocId = "select * from files where documentid = ?";
+	public static String insertNewUser = "insert into user (firstName,lastName,password,createdBy,mobileNo) values (?,?,?,?,?)";
+	public static String insertNewUserProfile = "insert into userprofile(userid,flatno,wing,floor,tower,occupancy,alternateno,email,aadharno,jointowners,purchasedate,possessiondate,builtuparea,carpetarea,parkingtype,vehicletype,parkingallotmentno,societyid) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String getMembersForSociety = "select * from userprofile up,user u where up.userid = u.userid and up.societyid=?"; 
+	 
 }

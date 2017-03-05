@@ -11,8 +11,10 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.slf4j.LoggerFactory;
 
+import com.dms.beans.Files;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
+import com.dms.beans.Userprofile;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -135,6 +137,96 @@ public class SocietyDao {
 			}
 		}
 	return societyList;
+}
+
+
+	public Userprofile saveMemberDetails(Userprofile userprofile) {
+		Connection conn = null;
+		ResultSetHandler<Object> rsh;
+		long userId=0L;
+		long userProfileId=0L;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new ScalarHandler<Object>();
+			conn.setAutoCommit(false);
+			
+			Object obj = qr.insert(conn,DMSQueries.insertNewUser,rsh,
+					userprofile.getFirstName(),
+					userprofile.getLastName(),
+					userprofile.getPassword(),
+					123,
+					userprofile.getMobileNo()
+					);
+			
+			userId = CommomUtility.convertToLong(obj);
+			
+			if(userId!=0L){
+				Object obj1 = qr.insert(conn,DMSQueries.insertNewUserProfile,rsh,
+						userId,
+						userprofile.getFlatno(),
+						userprofile.getWing(),
+						userprofile.getFloor(),
+						userprofile.getTower(),
+						userprofile.getOccupancy(),
+						userprofile.getAlternateno(),
+						userprofile.getEmail(),
+						userprofile.getAadharno(),
+						userprofile.getJointowners(),
+						userprofile.getPurchasedate(),
+						userprofile.getPossessiondate(),
+						userprofile.getBuiltuparea(),
+						userprofile.getCarpetarea(),
+						userprofile.getParkingtype(),
+						userprofile.getVehicletype(),
+						userprofile.getParkingallotmentno(),
+						userprofile.getSocietyid()
+						);
+				userProfileId = CommomUtility.convertToLong(obj1);
+				
+			}
+			conn.commit();
+			
+			userprofile.setUserid(userId);
+			userprofile.setUserprofileid(userProfileId);
+			
+			return userprofile;
+			
+		}catch(Exception e){
+			logger.error("Error getting soc list :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return null;
+}
+
+
+	public List<Userprofile> getMembersForSociety(String societyid, List<Userprofile> profiles) {
+		Connection conn = null;
+		ResultSetHandler<List<Userprofile>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Userprofile>(Userprofile.class);
+			profiles = qr.query(conn, DMSQueries.getMembersForSociety,rsh,
+					societyid
+					);
+		}catch(Exception e){
+			logger.error("Error getMembersForSociety :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return profiles;
 }
 	
 	

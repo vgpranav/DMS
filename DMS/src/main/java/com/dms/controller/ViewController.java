@@ -303,4 +303,19 @@ public class ViewController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value = "/createCommittee", method = RequestMethod.GET)
+	public ModelAndView createCommittee(){
+		ModelAndView mv = null;
+		List<Society> societyList=null;
+		SocietyDao societyDao = new SocietyDao();
+		try{
+			societyList = societyDao.getSocietyListforUser(societyList);
+			mv = new ModelAndView("createCommittee");
+			mv.addObject("societyList",societyList);
+ 		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return mv;
+	}
 }

@@ -18,6 +18,7 @@ import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.FormFields;
 import com.dms.beans.Society;
+import com.dms.beans.Userprofile;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
 
@@ -124,5 +125,37 @@ public class AjaxController {
 			logger.error(e.getMessage());
 		}
 		return documents;
+	}
+	
+	@RequestMapping(value = "/saveMemberDetails", method = RequestMethod.GET)
+	public @ResponseBody
+	Userprofile saveMemberDetails(@ModelAttribute Userprofile userprofile
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		SocietyDao societyDao = new SocietyDao();
+		try{
+			System.out.println("userprofile :: "+userprofile);
+			userprofile = societyDao.saveMemberDetails(userprofile);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return userprofile;
+	}
+	
+	@RequestMapping(value = "/getMembersForSociety", method = RequestMethod.GET)
+	public @ResponseBody
+	List<Userprofile> getMembersForSociety(@ModelAttribute Userprofile userprofile
+			/*@Valid Society customer,
+			BindingResult bindingResult, 
+			Model model*/){
+		SocietyDao societyDao = new SocietyDao();
+		List<Userprofile> profiles=null;
+		try{
+			profiles = societyDao.getMembersForSociety(userprofile.getSocietyid(),profiles);
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		return profiles;
 	}
 }

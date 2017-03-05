@@ -87,6 +87,11 @@
       <put-attribute name="body" value="/WEB-INF/pages/addMember.jsp" />   
     </definition> 
     
+    <definition name="createCommittee" extends="base-definition">  
+      <put-attribute name="title" value="Create Committee" />  
+      <put-attribute name="body" value="/WEB-INF/pages/CreateCommittee.jsp" />   
+    </definition> 
+    
     
   
 </tiles-definitions>

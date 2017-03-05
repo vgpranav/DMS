@@ -19,6 +19,7 @@ import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
+import com.dms.beans.Userprofile;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -334,6 +335,4 @@ public class DocumentDao {
 		}
 	return docs;
 }
-	
-
 }
