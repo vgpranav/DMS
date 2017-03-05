@@ -27,7 +27,7 @@ public class LoginDao {
 			qr = new QueryRunner();
 			conn = ConnectionPoolManager.getInstance().getConnection();
 			rsh = new BeanHandler<User>(User.class);
-			authenticatedUser = qr.query(conn,DMSQueries.authenticateUser, rsh,user.getUserName(),user.getPassword());
+			authenticatedUser = qr.query(conn,DMSQueries.authenticateUser, rsh,user.getMobileNo(),user.getPassword());
 		}catch(Exception e){
 			logger.error("Error authenticating user :: "+e.getMessage());
 			e.printStackTrace();

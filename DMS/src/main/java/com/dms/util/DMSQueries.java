@@ -2,7 +2,7 @@ package com.dms.util;
 
 public class DMSQueries {
 
-	public static String authenticateUser = "select * from user where userName=? and password=?";  // and active=1
+	public static String authenticateUser = "select * from user where mobileNo=? and password=?";  // and active=1
 	public static String getAllActiveSocietyTypes = "select * from societytypemaster where isactive=1";
 	public static String getAllSociety = "select * from society";
 	public static String getAllDocumentTypes = "SELECT * FROM doctype order by doctypename";
@@ -28,6 +28,7 @@ public class DMSQueries {
 	public static String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description, "
 												+ " d.documentid, d.createdby,d.createdon  from formstructure f,documentdetails d,document doc "
 												+ " where f.fieldid = d.datakey  and d.documentid = doc.documentid  and doc.societyid=? and doc.doctypeid=? and doc.docsubtypeid=? "
-												+ " group by d.documentid order by f.sequence "; 
+												+ " group by d.documentid order by f.sequence ";
+	public static String getDocPathsByDocId = "select * from files where documentid = ?"; 
 	
 }

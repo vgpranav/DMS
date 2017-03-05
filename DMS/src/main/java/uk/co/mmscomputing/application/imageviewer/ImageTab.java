@@ -63,6 +63,9 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 	
     this.properties=properties;
     societyid 		= properties.getProperty("societyid")== null ? "1":properties.getProperty("societyid").toString();
+    
+    
+    //societyid 		= properties.getProperty("societyid")== null ? "1":properties.getProperty("societyid").toString();
     doctypeid 		= properties.getProperty("doctypeid")== null ? "1":properties.getProperty("doctypeid").toString();
     docsubtypeid 	= properties.getProperty("docsubtypeid")== null ? "1":properties.getProperty("docsubtypeid").toString();
     documentId 		= properties.getProperty("documentId")== null ? "1":properties.getProperty("documentId").toString();
@@ -71,6 +74,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     dbuid 			= properties.getProperty("dbuid")== null ? "root":properties.getProperty("dbuid").toString();
     dbpwd 			= properties.getProperty("dbpwd")== null ? "12345":properties.getProperty("dbpwd").toString();
     dbase 			= properties.getProperty("dbase")== null ? "dms":properties.getProperty("dbase").toString();
+    
     
     setLayout(new BorderLayout());
 
@@ -547,8 +551,8 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 		      	  
 				    long insert_st_time = System.currentTimeMillis();
 					
-				    String insertQuery = "insert into files (societyid,doctypeid,docsubtypeid,documentid,filename,filepath,mimetype)"
-				    				   + " values (?,?,?,?,?,?,?)"; 
+				    String insertQuery = "insert into files (societyid,doctypeid,docsubtypeid,documentid,filename,filepath,mimetype,createdby)"
+				    				   + " values (?,?,?,?,?,?,?,?)"; 
 				    
 					PreparedStatement prepStmt = con.prepareStatement(insertQuery);
 					prepStmt.setObject(1,societyid);	
@@ -556,8 +560,9 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 				    prepStmt.setObject(3,docsubtypeid);	
 				    prepStmt.setObject(4,documentId);
 				    prepStmt.setObject(5,unixFileName);	
-				    prepStmt.setObject(6,filepath);	
+				    prepStmt.setObject(6,"/DMS/"+unixFileName);	
 				    prepStmt.setObject(7,"");	
+				    prepStmt.setObject(8,userid);	
 				    
 				   /* if(depid.equals("1200000001")){
 				      	 prepStmt.setObject(6,cbox1.getSelectedItem());

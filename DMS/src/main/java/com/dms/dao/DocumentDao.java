@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
+import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
@@ -308,6 +310,29 @@ public class DocumentDao {
 			}
 		}
 	return documents;
+}
+
+	public List<Files> getDocPathsByDocId(String documentId, List<Files> docs) {
+		Connection conn = null;
+		ResultSetHandler<List<Files>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Files>(Files.class);
+			docs = qr.query(conn, DMSQueries.getDocPathsByDocId,rsh,
+					documentId
+					);
+		}catch(Exception e){
+			logger.error("Error getDocumentListForView :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return docs;
 }
 	
 

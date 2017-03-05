@@ -27,7 +27,7 @@
             <form method="post" action="authenticateUser.do">
               <h1>Login Here</h1>
               <div>
-                <input type="text" name="userName" class="form-control" placeholder="Username"/>
+                <input type="text" name="mobileNo" class="form-control" placeholder="Mobile No"/>
               </div>
               <div>
                 <input type="password" name ="password" class="form-control" placeholder="Password" />

@@ -120,15 +120,15 @@ abstract public class UtilMainApp extends JApplet{
 public void init(){
     try{
     	//properties.clear();
-    	String DepartmentId = "0904000001";
-		String UserId = "91009291";
-		String dbaseip = "172.18.16.108";
-		String dbuid = "dms";
-		String dbpwd = "intranet";
-		String dbase = "dms";
-		String dtype = ".";
-		String DocId = ".";
-		String section = ".";
+    	String societyid = "";
+    	String doctypeid = "";
+    	String docsubtypeid = "";
+    	String documentId="";
+    	String userid = ""; 
+    	String dbaseip = "";
+    	String dbuid = "";
+    	String dbpwd = "";
+    	String dbase = ""; 
 		/*String DepartmentId = "";
 		String UserId = "";
 		String dbaseip = "";
@@ -137,30 +137,30 @@ public void init(){
 		String dbase = "";*/
     	try{
     		
-    		DepartmentId = getParameter("DepartmentId") == null ? DepartmentId : getParameter("DepartmentId");
-    		UserId = getParameter("UserId") == null ? DepartmentId : getParameter("UserId");
-    		dbaseip = getParameter("dbaseip") == null ? DepartmentId : getParameter("dbaseip");
-    		dbuid = getParameter("dbuid") == null ? DepartmentId : getParameter("dbuid");
-    		dbpwd = getParameter("dbpwd") == null ? DepartmentId : getParameter("dbpwd");
+    		societyid = getParameter("societyid") == null ? societyid : getParameter("societyid");
+    		doctypeid = getParameter("doctypeid") == null ? doctypeid : getParameter("doctypeid");
+    		docsubtypeid = getParameter("docsubtypeid") == null ? docsubtypeid : getParameter("docsubtypeid");
+    		documentId = getParameter("documentId") == null ? documentId : getParameter("documentId");
+    		userid = getParameter("userid") == null ? userid : getParameter("userid");
+    		dbaseip = getParameter("dbaseip") == null ? dbaseip : getParameter("dbaseip");
+    		dbuid = getParameter("dbuid") == null ? dbuid : getParameter("dbuid");
+    		dbpwd = getParameter("dbpwd") == null ? dbpwd : getParameter("dbpwd");
     		dbase = getParameter("dbase") == null ? dbase : getParameter("dbase");
-    		dtype = getParameter("dtype") == null ? dtype : getParameter("dtype");
-    		DocId = getParameter("DocId") == null ? DocId : getParameter("DocId");
-    		section = getParameter("section") == null ? section : getParameter("section");
-    	
+
     	}
     	catch(Exception e)
     	{
     		
     	}
-    	properties.setProperty("DepartmentId", DepartmentId);
-		properties.setProperty("UserId", UserId);
-		properties.setProperty("dbaseip", dbaseip);
-		properties.setProperty("dbuid", dbuid);
-		properties.setProperty("dbpwd", dbpwd);
-		properties.setProperty("dbase", dbase);
-		properties.setProperty("dtype", dtype);
-		properties.setProperty("DocId", DocId);
-		properties.setProperty("section", section);
+    	properties.setProperty("societyid", societyid);
+    	properties.setProperty("doctypeid", doctypeid);
+    	properties.setProperty("docsubtypeid", docsubtypeid);
+    	properties.setProperty("documentId", documentId);
+    	properties.setProperty("userid", userid);
+    	properties.setProperty("dbaseip", dbaseip);
+    	properties.setProperty("dbuid", dbuid);
+    	properties.setProperty("dbpwd", dbpwd);
+    	properties.setProperty("dbase", dbase);
 //      javax.swing.SwingUtilities.invokeAndWait(
       javax.swing.SwingUtilities.invokeLater(
         new Runnable(){

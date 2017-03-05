@@ -140,7 +140,7 @@
 	        		var text = desc[0]+" <a href='#!' onclick=showhide('more"+i+"')>[more]</a><br><div id='more"+i+"' style='display:none'>"+fullText+"</div>";
 	        		
 	        		var viewBtn = '<a class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>';
-	        		var downloadBtn = '<a class="btn btn-default btn-sm"><i class="fa fa-cloud-download"></i></a>';
+	        		var downloadBtn = '<a class="btn btn-default btn-sm" target="_blank" href="downloadAsPdf.do?documentId='+item.documentid+'"><i class="fa fa-cloud-download"></i></a>';
 	        		//item.documentid
 	        		table.row.add( [
 	        			text, 

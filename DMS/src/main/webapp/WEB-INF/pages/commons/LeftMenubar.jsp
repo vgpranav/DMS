@@ -13,6 +13,7 @@
 		                      <li><a href="addDoctype.do">Create Doctype</a></li>
 		                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
 		                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
+		                      <li><a href="addMember.do">Add Members</a></li>
 		                    </ul>
 		                  </li>
 		                  
