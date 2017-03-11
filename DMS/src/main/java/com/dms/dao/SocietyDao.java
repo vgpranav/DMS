@@ -2,7 +2,9 @@ package com.dms.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -11,9 +13,11 @@ import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.slf4j.LoggerFactory;
 
-import com.dms.beans.Files;
+import com.dms.beans.Committee;
+import com.dms.beans.CommitteeMaster;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
+import com.dms.beans.User;
 import com.dms.beans.Userprofile;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
@@ -227,6 +231,147 @@ public class SocietyDao {
 			}
 		}
 	return profiles;
+}
+
+
+	public List<CommitteeMaster> getCommitteeMaster(List<CommitteeMaster> committeeMasterList) {
+		Connection conn = null;
+		ResultSetHandler<List<CommitteeMaster>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<CommitteeMaster>(CommitteeMaster.class);
+			committeeMasterList = qr.query(conn, DMSQueries.getAllCommitteePositions,rsh);
+		}catch(Exception e){
+			logger.error("Error getCommitteeMaster :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return committeeMasterList;
+}
+
+
+	public List<User> getUserAutosuggest(String searchText, String societyid) {
+		Connection conn = null;
+		ResultSetHandler<List<User>> rsh;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<User>(User.class);
+			String SQL = " select u.userid,u.firstName,u.lastName from user u,userprofile up where u.userid=up.userid and up.societyid="+societyid+" and "
+						+ " (lower(u.firstName) like '%"+searchText.toLowerCase()+"%' or lower(u.lastName) like '%"+searchText.toLowerCase()+"%') ";
+			
+			//System.out.println("SQL :; "+SQL);
+			
+			return qr.query(conn,SQL,rsh);
+		}catch(Exception e){
+			logger.error("Error getting soc list :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return null;
+}
+
+
+	public Committee addCommitteeMember(Committee committee) {
+		Connection conn = null;
+		ResultSetHandler<Object> rsh;
+		long committeeMemberId=0L;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new ScalarHandler<Object>();
+			Object obj = qr.insert(conn,DMSQueries.insertNewCommitteeMember,rsh,
+					committee.getUserid(),
+					committee.getSocietyid(),
+					committee.getPositionid(),
+					committee.getAppointedon(),
+					committee.getRemovedon()
+					);
+			committeeMemberId = CommomUtility.convertToLong(obj);
+			committee.setCommitteememberid(committeeMemberId);
+			return committee;
+		}catch(Exception e){
+			logger.error("Error getting soc list :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return null;
+}
+
+
+	public Map<String, List<Committee>> getCommitteMembersForSociety(long societyid, Map<String, List<Committee>> committees) {
+		Connection conn = null;
+		ResultSetHandler<List<Committee>> rsh;
+		
+		List<Committee> activeMembers=null;
+		List<Committee> inactiveMembers=null;
+		try{
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			rsh = new BeanListHandler<Committee>(Committee.class);
+			
+			activeMembers = qr.query(conn, DMSQueries.getAllActiveCommitteMembersBySocietyId,rsh,societyid);
+			inactiveMembers = qr.query(conn, DMSQueries.getAllInActiveCommitteMembersBySocietyId,rsh,societyid);
+			
+			committees.put("active",activeMembers);
+			committees.put("inactive",inactiveMembers);
+			
+		}catch(Exception e){
+			logger.error("Error getCommitteMembersForSociety :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return committees;
+}
+
+
+	public int removeCommitteeMember(Committee committee) {
+		Connection conn = null;
+		try{
+			/*
+			java.util.Date dt = new java.util.Date();
+			java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);*/
+			
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			int rowsUpdated = qr.update(conn,DMSQueries.removeCommitteeMember,
+					new Date(),
+					committee.getCommitteememberid()
+					);
+			return rowsUpdated;
+		}catch(Exception e){
+			logger.error("Error getting soc list :: "+e.getMessage());
+			e.printStackTrace();
+		}finally{
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				logger.error("Error releasing connection :: "+e.getMessage());
+			}
+		}
+	return 0;
 }
 	
 	

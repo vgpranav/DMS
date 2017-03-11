@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
@@ -308,11 +309,14 @@ public class ViewController {
 	public ModelAndView createCommittee(){
 		ModelAndView mv = null;
 		List<Society> societyList=null;
+		List<CommitteeMaster> committeeMasterList=null;
 		SocietyDao societyDao = new SocietyDao();
 		try{
 			societyList = societyDao.getSocietyListforUser(societyList);
+			committeeMasterList = societyDao.getCommitteeMaster(committeeMasterList);
 			mv = new ModelAndView("createCommittee");
 			mv.addObject("societyList",societyList);
+			mv.addObject("committeeMasterList",committeeMasterList);
  		}catch(Exception e){
 			logger.error(e.getMessage());
 		}

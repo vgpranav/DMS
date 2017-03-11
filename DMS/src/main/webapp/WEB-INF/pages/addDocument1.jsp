@@ -1,19 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
 
-		<div class="dashboard_graph">
-
-			<div class="row x_title">
-				<div class="col-md-6">
-					<h3>
-						Add Document <small>Select Data</small>
-					</h3>
-				</div>
-			</div>
-			
-			<div class="row">
+<div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>Add Document <small>Select Data</small></h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li> 
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+                    <div class="row">
 			<div class="col-md-6 col-md-offset-3 col-sm-offset-3 col-sm-6 col-xs-12">
  				<form id="addDocSubTypeForm" data-parsley-validate
 					class="form-horizontal form-label-left" action="addDocument2.do"
@@ -74,11 +74,11 @@
  				</form>
  			</div>
  			</div>
-			 					
-			<div class="clearfix"></div>
-		</div>
-	</div>
-</div>
+                  </div>
+                </div>
+              </div>
+ </div>
+ 
 
 <script>
 	$(document).ready(function(){

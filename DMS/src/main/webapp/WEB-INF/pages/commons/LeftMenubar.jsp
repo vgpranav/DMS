@@ -31,6 +31,17 @@
 		                    </ul>
 		                  </li>
 		                  
+		                   <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		Administrator 
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                      <li><a href="addDocument1.do">Administrative Details</a></li>
+		                    </ul>
+		                  </li>
+		                  
 		                   
 	                  </ul>
                   </div>

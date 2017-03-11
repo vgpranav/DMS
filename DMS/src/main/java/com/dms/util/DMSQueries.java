@@ -3,6 +3,7 @@ package com.dms.util;
 public class DMSQueries {
 
 	public static String authenticateUser = "select * from user where mobileNo=? and password=?";  // and active=1
+	public static String getAllActiveUser = "select * from user where active=1 ";  // and active=1
 	public static String getAllActiveSocietyTypes = "select * from societytypemaster where isactive=1";
 	public static String getAllSociety = "select * from society";
 	public static String getAllDocumentTypes = "SELECT * FROM doctype order by doctypename";
@@ -32,6 +33,24 @@ public class DMSQueries {
 	public static String getDocPathsByDocId = "select * from files where documentid = ?";
 	public static String insertNewUser = "insert into user (firstName,lastName,password,createdBy,mobileNo) values (?,?,?,?,?)";
 	public static String insertNewUserProfile = "insert into userprofile(userid,flatno,wing,floor,tower,occupancy,alternateno,email,aadharno,jointowners,purchasedate,possessiondate,builtuparea,carpetarea,parkingtype,vehicletype,parkingallotmentno,societyid) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	public static String getMembersForSociety = "select * from userprofile up,user u where up.userid = u.userid and up.societyid=?"; 
+	public static String getMembersForSociety = "select * from userprofile up,user u where up.userid = u.userid and up.societyid=?";
+	public static String getAllCommitteePositions = "select * from committeemaster where isactive=1";
+	public static String insertNewCommitteeMember = "insert into committee(userid,societyid,positionid,appointedon,removedon) values (?,?,?,?,?)";
+	public static String getAllActiveCommitteMembersBySocietyId = "select c.*,concat(p.firstName,' ',p.lastName) as userName,s.societyname,cm.positionname "
+																+ " from committee c,user p,society s,committeemaster cm "
+																+ " where c.userid = p.userid "
+																+ " and c.societyid = s.societyid "
+																+ " and c.positionid = cm.positionid "
+																+ " and c.societyid=? and c.isactive=1" ;
+	public static String getAllInActiveCommitteMembersBySocietyId = "select c.*,concat(p.firstName,' ',p.lastName) as userName,s.societyname,cm.positionname "
+																+ " from committee c,user p,society s,committeemaster cm "
+																+ " where c.userid = p.userid "
+																+ " and c.societyid = s.societyid "
+																+ " and c.positionid = cm.positionid "
+																+ " and c.societyid=? and c.isactive=0" ;
+	public static String removeCommitteeMember = "update committee set isactive=0,removedon=? where committeememberid=?";
+	
+	
+	
 	 
 }
