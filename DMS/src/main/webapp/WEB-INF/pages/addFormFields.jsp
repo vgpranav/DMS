@@ -187,6 +187,8 @@
 	        url: "<%=request.getContextPath()%>/getFieldsForDocSubtype.do",
 	        data :"docsubtypeid="+docsubtypeid,
 	        success: function(response){
+	        
+	        if(response.length>0){
 	        	$.each(response, function(i, item) {
 	  
 	        		table.row.add( [
@@ -201,6 +203,7 @@
 	                ] ).draw( false );
 	        	    
 	        	  });
+	        	}
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);

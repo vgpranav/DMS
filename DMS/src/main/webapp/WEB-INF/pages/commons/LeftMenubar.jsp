@@ -10,6 +10,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addSociety.do">Create Society</a></li>
+		                      <li><a href="addSocietyPhotos.do">Add Society Photos</a></li>
 		                      <li><a href="addDoctype.do">Create Doctype</a></li>
 		                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
 		                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
@@ -27,7 +28,6 @@
 		                    <ul class="nav child_menu">
 		                      <li><a href="addDocument1.do">Add Document</a></li>
 		                      <li><a href="viewDocument.do">View Document</a></li>
-		                      <li><a href="index3.html">Dummy Link</a></li>
 		                    </ul>
 		                  </li>
 		                  
@@ -38,7 +38,7 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <li><a href="addDocument1.do">Administrative Details</a></li>
+		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
 		                    </ul>
 		                  </li>
 		                  

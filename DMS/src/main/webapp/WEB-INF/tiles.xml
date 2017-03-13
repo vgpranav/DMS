@@ -63,22 +63,22 @@
     </definition> 
     
     <definition name="addDocument1" extends="base-definition">  
-      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="title" value="Select Document Type" />  
       <put-attribute name="body" value="/WEB-INF/pages/addDocument1.jsp" />   
     </definition> 
     
     <definition name="addDocument2" extends="base-definition">  
-      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="title" value="Fill Document Info" />  
       <put-attribute name="body" value="/WEB-INF/pages/addDocument2.jsp" />   
     </definition> 
     
     <definition name="addDocument3" extends="base-definition">  
-      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="title" value="Add Document" />  
       <put-attribute name="body" value="/WEB-INF/pages/addDocument3.jsp" />   
     </definition> 
     
     <definition name="viewDocument" extends="base-definition">  
-      <put-attribute name="title" value="Add Form Fields" />  
+      <put-attribute name="title" value="View Document" />  
       <put-attribute name="body" value="/WEB-INF/pages/viewDocument.jsp" />   
     </definition> 
     
@@ -92,6 +92,20 @@
       <put-attribute name="body" value="/WEB-INF/pages/CreateCommittee.jsp" />   
     </definition> 
     
+     <definition name="adminPanel" extends="base-definition">  
+      <put-attribute name="title" value="Admin Panel" />  
+      <put-attribute name="body" value="/WEB-INF/pages/AdminPanel.jsp" />   
+    </definition> 
+    
+    <definition name="viewCommittee" extends="base-definition">  
+      <put-attribute name="title" value="View Committee" />  
+      <put-attribute name="body" value="/WEB-INF/pages/ViewCommittee.jsp" />   
+    </definition> 
+    
+     <definition name="addSocietyPhotos" extends="base-definition">  
+      <put-attribute name="title" value="Create Committee" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addSocietyPhotos.jsp" />   
+    </definition> 
     
   
 </tiles-definitions>

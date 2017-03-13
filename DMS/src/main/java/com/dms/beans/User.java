@@ -2,86 +2,104 @@ package com.dms.beans;
 
 import java.util.Date;
 
-public class User {
+public class User
+{
 
-	private int userid;
-	private String firstName;
-	private String lastName;
-	private String userName;
-	private String password;
-	private Date createDate;
-	private int active;
-	private String mobileNo;
+    private int userid;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String password;
+    private Date createDate;
+    private int active;
+    private String mobileNo;
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public User()
+    {
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName()
+    {
+        return firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName()
+    {
+        return lastName;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUserName()
+    {
+        return userName;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword()
+    {
+        return password;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public Date getCreateDate()
+    {
+        return createDate;
+    }
 
-	public int getActive() {
-		return active;
-	}
+    public void setCreateDate(Date createDate)
+    {
+        this.createDate = createDate;
+    }
 
-	public void setActive(int active) {
-		this.active = active;
-	}
+    public int getActive()
+    {
+        return active;
+    }
 
-	public String getMobileNo() {
-		return mobileNo;
-	}
+    public void setActive(int active)
+    {
+        this.active = active;
+    }
 
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
+    public String getMobileNo()
+    {
+        return mobileNo;
+    }
 
-	public int getUserid() {
-		return userid;
-	}
+    public void setMobileNo(String mobileNo)
+    {
+        this.mobileNo = mobileNo;
+    }
 
-	public void setUserid(int userid) {
-		this.userid = userid;
-	}
+    public int getUserid()
+    {
+        return userid;
+    }
 
-	@Override
-	public String toString() {
-		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
-				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
-				+ ", mobileNo=" + mobileNo + "]";
-	}
+    public void setUserid(int userid)
+    {
+        this.userid = userid;
+    }
 
+    public String toString()
+    {
+        return (new StringBuilder("User [userid=")).append(userid).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", userName=").append(userName).append(", password=").append(password).append(", createDate=").append(createDate).append(", active=").append(active).append(", mobileNo=").append(mobileNo).append("]").toString();
+    }
 }

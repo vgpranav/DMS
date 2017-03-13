@@ -103,6 +103,26 @@
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name"> Society Registration No. <span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="registrationno" name="registrationno"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Establishment Date<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="estdate" name="estdate"
+								readonly required="required" class="form-control col-md-7 col-xs-12 customdatepicker">
+						</div>
+					</div>
 
 					<div class="form-group" align="right">
 						<button class="btn btn-warning" type="reset">Reset</button>

@@ -1,51 +1,17 @@
-<div class="row">
-	<div class="col-md-12 col-sm-12 col-xs-12">
-
-		<div class="dashboard_graph">
-
-			<div class="row x_title">
-				<div class="col-md-6">
-					<h3>
-						Interface Title<small> sub-title</small>
-					</h3>
-				</div>
-
-			</div>
-
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> 
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> 
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
-			<br /> aaaaaaaaaaaaa
-
-			<div class="clearfix"></div>
-		</div>
-	</div>
-</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>Quick Settings</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li> 
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+                    
+                  </div>
+                </div>
+              </div>
+ </div>
