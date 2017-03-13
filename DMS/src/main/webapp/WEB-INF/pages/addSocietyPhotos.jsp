@@ -31,6 +31,7 @@
                   </div>
                 </div>
               </div>
+              
  </div>
  
  
@@ -82,6 +83,7 @@ $(document).ready(function() {
 });
     
     
+    
     function getSocietyPhotos(){
     	
     	var societyid = $('#societyid').val();
@@ -90,19 +92,17 @@ $(document).ready(function() {
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getSocietyPhotos.do",
 	        data :"societyid="+societyid,
-	        success: function(response){
-	        	if(response!=null) {
-	        		$.each(response, function(i, item) { 
-	        			var img = '<img height="100" width="50" src="data:' + item.contenttype + ';base64,'
-	                    + item.file + '"/>';
-	        			imgContainer.append(img);
-	        		});
-	        	}  
-	        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-				}
-			});
+	        enctype: 'multipart/form-data',
+	        processData: false,
+            contentType: false 
+			}).done(function(data) {
+               $.each(data, function(i, item) {
+               		var img = '<img src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+               		imgContainer.html(img);
+               });
+          }).fail(function(jqXHR, textStatus) {
+              alert('File upload failed ...');
+          });;
     	
     	/* $.ajax({
             url: 'getSocietyPhotos.do',
@@ -121,3 +121,4 @@ $(document).ready(function() {
           }); */
     }
 </script>
+

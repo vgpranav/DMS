@@ -39,4 +39,9 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
         </property>  
     </bean>  
 
+ 	<bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="1048576"/>
+    </bean>
+    
 </beans>

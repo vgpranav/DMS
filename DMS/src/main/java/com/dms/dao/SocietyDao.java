@@ -42,17 +42,11 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<SocietyType>> rsh = new BeanListHandler(SocietyType.class);
-      docTypes = (List)qr.query(conn, DMSQueries.getAllActiveSocietyTypes, rsh);
+      ResultSetHandler<List<SocietyType>> rsh = new BeanListHandler<SocietyType>(SocietyType.class);
+      docTypes = qr.query(conn, DMSQueries.getAllActiveSocietyTypes, rsh);
     } catch (Exception e) {
       logger.error("Error fetching SocType List :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -73,9 +67,9 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Society>> rsh = new BeanListHandler(Society.class);
+      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
       String SQL = DMSQueries.getAllSociety + " where societyname like '%" + searchText + "%'";
-      return (List)qr.query(conn, SQL, rsh);
+      return qr.query(conn, SQL, rsh);
     } catch (Exception e) {
       logger.error("Error getting soc list :: " + e.getMessage());
       e.printStackTrace();
@@ -98,29 +92,29 @@ public class SocietyDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
-      
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       conn.setAutoCommit(false);
-      
-      Object obj = qr.insert(conn, DMSQueries.insertNewSociety, rsh, new Object[] {
-        Long.valueOf(society.getSocietytypeid()), 
-        society.getSocietyname(), 
-        Integer.valueOf(123) });
+      Object obj = qr.insert(conn, DMSQueries.insertNewSociety, rsh, 
+					        Long.valueOf(society.getSocietytypeid()), 
+					        society.getSocietyname(), 
+					        Integer.valueOf(123)
+				        );
       
       societyId = CommomUtility.convertToLong(obj);
       
       if (societyId != 0L) {
-        Object obj1 = qr.insert(conn, DMSQueries.insertNewSocietyProfile, rsh, new Object[] {
-          Long.valueOf(societyId), 
-          society.getAddressline1(), 
-          society.getAddressline2(), 
-          society.getWard(), 
-          society.getDistrict(), 
-          society.getState(), 
-          society.getPincode(), 
-          society.getCreatedby(), 
-          society.getRegistrationno(), 
-          society.getEstdate() });
+        Object obj1 = qr.insert(conn, DMSQueries.insertNewSocietyProfile, rsh, 
+	          Long.valueOf(societyId), 
+	          society.getAddressline1(), 
+	          society.getAddressline2(), 
+	          society.getWard(), 
+	          society.getDistrict(), 
+	          society.getState(), 
+	          society.getPincode(), 
+	          society.getCreatedby(), 
+	          society.getRegistrationno(), 
+	          society.getEstdate()
+          );
         
         societyProfileId = CommomUtility.convertToLong(obj1);
       }
@@ -153,17 +147,11 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Society>> rsh = new BeanListHandler(Society.class);
-      societyList = (List)qr.query(conn, DMSQueries.getAllActiveSocietyForUser, rsh);
+      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
+      societyList = qr.query(conn, DMSQueries.getAllActiveSocietyForUser, rsh);
     } catch (Exception e) {
       logger.error("Error fetching Society List :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -186,39 +174,41 @@ public class SocietyDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       conn.setAutoCommit(false);
       
-      Object obj = qr.insert(conn, DMSQueries.insertNewUser, rsh, new Object[] {
-        userprofile.getFirstName(), 
-        userprofile.getLastName(), 
-        userprofile.getPassword(), 
-        Integer.valueOf(123), 
-        userprofile.getMobileNo() });
+      Object obj = qr.insert(conn, DMSQueries.insertNewUser, rsh,  
+	        userprofile.getFirstName(), 
+	        userprofile.getLastName(), 
+	        userprofile.getPassword(), 
+	        Integer.valueOf(123), 
+	        userprofile.getMobileNo()
+        );
       
 
       userId = CommomUtility.convertToLong(obj);
       
       if (userId != 0L) {
-        Object obj1 = qr.insert(conn, DMSQueries.insertNewUserProfile, rsh, new Object[] {
-          Long.valueOf(userId), 
-          userprofile.getFlatno(), 
-          userprofile.getWing(), 
-          userprofile.getFloor(), 
-          userprofile.getTower(), 
-          userprofile.getOccupancy(), 
-          userprofile.getAlternateno(), 
-          userprofile.getEmail(), 
-          userprofile.getAadharno(), 
-          userprofile.getJointowners(), 
-          userprofile.getPurchasedate(), 
-          userprofile.getPossessiondate(), 
-          userprofile.getBuiltuparea(), 
-          userprofile.getCarpetarea(), 
-          userprofile.getParkingtype(), 
-          userprofile.getVehicletype(), 
-          userprofile.getParkingallotmentno(), 
-          userprofile.getSocietyid() });
+        Object obj1 = qr.insert(conn, DMSQueries.insertNewUserProfile, rsh,
+	          Long.valueOf(userId), 
+	          userprofile.getFlatno(), 
+	          userprofile.getWing(), 
+	          userprofile.getFloor(), 
+	          userprofile.getTower(), 
+	          userprofile.getOccupancy(), 
+	          userprofile.getAlternateno(), 
+	          userprofile.getEmail(), 
+	          userprofile.getAadharno(), 
+	          userprofile.getJointowners(), 
+	          userprofile.getPurchasedate(), 
+	          userprofile.getPossessiondate(), 
+	          userprofile.getBuiltuparea(), 
+	          userprofile.getCarpetarea(), 
+	          userprofile.getParkingtype(), 
+	          userprofile.getVehicletype(), 
+	          userprofile.getParkingallotmentno(), 
+	          userprofile.getSocietyid()
+          );
         
         userProfileId = CommomUtility.convertToLong(obj1);
       }
@@ -250,19 +240,12 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler(Userprofile.class);
-      profiles = (List)qr.query(conn, DMSQueries.getMembersForSociety, rsh, new Object[] {
-        societyid });
+      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler<Userprofile>(Userprofile.class);
+      profiles =  qr.query(conn, DMSQueries.getMembersForSociety, rsh,societyid);
     }
     catch (Exception e) {
       logger.error("Error getMembersForSociety :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -283,17 +266,11 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<CommitteeMaster>> rsh = new BeanListHandler(CommitteeMaster.class);
-      committeeMasterList = (List)qr.query(conn, DMSQueries.getAllCommitteePositions, rsh);
+      ResultSetHandler<List<CommitteeMaster>> rsh = new BeanListHandler<CommitteeMaster>(CommitteeMaster.class);
+      committeeMasterList = qr.query(conn, DMSQueries.getAllCommitteePositions, rsh);
     } catch (Exception e) {
       logger.error("Error getCommitteeMaster :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -314,13 +291,10 @@ public class SocietyDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<User>> rsh = new BeanListHandler(User.class);
+      ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
       String SQL = " select u.userid,u.firstName,u.lastName from user u,userprofile up where u.userid=up.userid and up.societyid=" + societyid + " and " + 
         " (lower(u.firstName) like '%" + searchText.toLowerCase() + "%' or lower(u.lastName) like '%" + searchText.toLowerCase() + "%') ";
-      
-
-
-      return (List)qr.query(conn, SQL, rsh);
+      return qr.query(conn,SQL,rsh);
     } catch (Exception e) {
       logger.error("Error getting soc list :: " + e.getMessage());
       e.printStackTrace();
@@ -342,13 +316,14 @@ public class SocietyDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
-      Object obj = qr.insert(conn, DMSQueries.insertNewCommitteeMember, rsh, new Object[] {
-        Long.valueOf(committee.getUserid()), 
-        Long.valueOf(committee.getSocietyid()), 
-        Long.valueOf(committee.getPositionid()), 
-        committee.getAppointedon(), 
-        committee.getRemovedon() });
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+      Object obj = qr.insert(conn, DMSQueries.insertNewCommitteeMember, rsh, 
+	        Long.valueOf(committee.getUserid()), 
+	        Long.valueOf(committee.getSocietyid()), 
+	        Long.valueOf(committee.getPositionid()), 
+	        committee.getAppointedon(), 
+	        committee.getRemovedon()
+        );
       
       committeeMemberId = CommomUtility.convertToLong(obj);
       committee.setCommitteememberid(committeeMemberId);
@@ -376,10 +351,10 @@ public class SocietyDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Committee>> rsh = new BeanListHandler(Committee.class);
+      ResultSetHandler<List<Committee>> rsh = new BeanListHandler<Committee>(Committee.class);
       
-      activeMembers = (List)qr.query(conn, DMSQueries.getAllActiveCommitteMembersBySocietyId, rsh, new Object[] { Long.valueOf(societyid) });
-      inactiveMembers = (List)qr.query(conn, DMSQueries.getAllInActiveCommitteMembersBySocietyId, rsh, new Object[] { Long.valueOf(societyid) });
+      activeMembers =  qr.query(conn, DMSQueries.getAllActiveCommitteMembersBySocietyId, rsh, Long.valueOf(societyid) );
+      inactiveMembers = qr.query(conn, DMSQueries.getAllInActiveCommitteMembersBySocietyId, rsh, Long.valueOf(societyid) );
       
       committees.put("active", activeMembers);
       committees.put("inactive", inactiveMembers);
@@ -387,12 +362,6 @@ public class SocietyDao
     catch (Exception e) {
       logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -433,22 +402,17 @@ public class SocietyDao
   public List<Society> getSocietyListForManager(int userid, List<Society> societyList)
   {
     Connection conn = null;
-    
     try
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Society>> rsh = new BeanListHandler(Society.class);
-      societyList = (List)qr.query(conn, DMSQueries.getSocietyListForManager, rsh, new Object[] { Integer.valueOf(userid) });
+      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
+      societyList = qr.query(conn, DMSQueries.getSocietyListForManager, rsh,userid);
+      
+      //System.out.println("userid :: "+userid+"/nsocietyList :: "+societyList);
     } catch (Exception e) {
       logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
     }
     finally
     {
@@ -471,14 +435,15 @@ public class SocietyDao
     String hostDomain = ftp.getServerName();
     String Id = ftp.getUsername();
     String Password = ftp.getPassword();
-    label479:
-    try { qr = new QueryRunner();
+    try { 
+    	
+      qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Photos>> rsh = new BeanListHandler(Photos.class);
+      ResultSetHandler<List<Photos>> rsh = new BeanListHandler<Photos>(Photos.class);
       
       System.out.println("societyid :: " + societyid);
       
-      photoBeans = (List)qr.query(conn, DMSQueries.getSocietyPhotos, rsh, new Object[] { Long.valueOf(societyid) });
+      photoBeans =  qr.query(conn, DMSQueries.getSocietyPhotos, rsh, new Object[] { Long.valueOf(societyid) });
       
       if (photoBeans.size() > 0) {
         if (ftp.connectAndLogin(hostDomain, Id, Password))
@@ -492,13 +457,15 @@ public class SocietyDao
           {
             InputStream stream = ftp.retrieveFileStream(photo.getDocname());
             byte[] bytes = IOUtils.toByteArray(stream);
-            HashMap<String, Object> hmap = new HashMap();
+            
+            System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
+            HashMap<String, Object> hmap = new HashMap<String, Object>();
             hmap.put("filename", photo.getDocname());
             hmap.put("contenttype", photo.getContenttype());
-            hmap.put("file", Base64Utils.encode(bytes));
+            hmap.put("file",  new String(Base64Utils.encode(bytes)));
             photos.add(hmap);
           }
-          break label479;
+           
         }
       } else System.out.println("No Files");
     }
@@ -506,20 +473,6 @@ public class SocietyDao
     {
       logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
       e.printStackTrace();
-      try
-      {
-        DbUtils.close(conn);
-      } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
-      }
-      try {
-        if (ftp.isConnected()) {
-          ftp.logout();
-          ftp.disconnect();
-        }
-      } catch (IOException ex) {
-        ex.printStackTrace();
-      }
     }
     finally
     {
