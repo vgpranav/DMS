@@ -61,7 +61,7 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
-                    
+                    <div id="imgContainer" style="max-height: 300px !important; overflow-y:auto" ></div>
                   </div>
                 </div>
               </div>
@@ -143,6 +143,7 @@
 	 
 		getCommitteMembersForSociety();
 		getMembersForSociety();
+		getSocietyPhotos();
  });
  
  
@@ -224,4 +225,45 @@
 				}
 			});
 	}
+	
+	function getSocietyPhotos(){
+    	
+    	var societyid = $('#societyid').val();
+    	
+    	$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getSocietyPhotos.do",
+	        data :"societyid="+societyid,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+            contentType: false 
+			}).done(function(data) {
+			var img='<ul class="imgslider"><li><br></li>';
+			var cnt =1;
+               $.each(data, function(i, item) {
+               		img += '<li><img height="200" width="300" src="data:' + item.contenttype + ';base64,' +  item.file + '"/></li>';
+               		if(cnt%3==0){
+               			//img+='<div class="clearfix"></div><br/>';
+               		}
+               		cnt++;
+               });
+               img += '</ul>';
+               $('#imgContainer').html(img);
+          }).fail(function(jqXHR, textStatus) {
+              alert('File Fetch failed ...');
+          });;
+    }
  </script>
+ 
+ <style>
+	 ul.imgslider{
+	 	list-style-type:none;
+	 	display: flex;
+        justify-content:space-around;
+	 }
+ 
+ 	ul.imgslider > li {
+ 		display: inline;
+ 	}
+ 	
+ </style>

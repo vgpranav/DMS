@@ -441,7 +441,7 @@ public class SocietyDao
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<List<Photos>> rsh = new BeanListHandler<Photos>(Photos.class);
       
-      System.out.println("societyid :: " + societyid);
+      //System.out.println("societyid :: " + societyid);
       
       photoBeans =  qr.query(conn, DMSQueries.getSocietyPhotos, rsh, new Object[] { Long.valueOf(societyid) });
       
@@ -458,12 +458,13 @@ public class SocietyDao
             InputStream stream = ftp.retrieveFileStream(photo.getDocname());
             byte[] bytes = IOUtils.toByteArray(stream);
             
-            System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
+            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
             HashMap<String, Object> hmap = new HashMap<String, Object>();
             hmap.put("filename", photo.getDocname());
             hmap.put("contenttype", photo.getContenttype());
             hmap.put("file",  new String(Base64Utils.encode(bytes)));
             photos.add(hmap);
+            ftp.completePendingCommand();
           }
            
         }

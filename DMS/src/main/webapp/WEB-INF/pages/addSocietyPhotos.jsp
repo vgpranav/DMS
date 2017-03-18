@@ -12,21 +12,36 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
-                   
-                   <div class="col-md-7 col-sm-7 col-xs-12">
-                   		<div id="imgContainer"></div>
-                   </div>
-                   <div class="col-md-5 col-sm-5 col-xs-12">
+                  
+                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="fileForm">
-                    	<select name="societyid" id="societyid" class="form-control" onchange="getDocTypes()">
-							<c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
-								<option value="${myItem.societyid}">${myItem.societyname}</option>
-							</c:forEach>
-						</select>
-					    <input type="file" name="file" />
-					    <button id="btnUpload" type="button">Upload file</button>
+                    	<div class="col-md-4 col-sm-4 col-xs-4">
+	                    	<select name="societyid" id="societyid" class="form-control" onchange="getDocTypes()">
+								<c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
+									<option value="${myItem.societyid}">${myItem.societyname}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-md-2 col-sm-2 col-xs-12">
+					    <input type="file" name="file" class="form-control btn btn-primary" />
+					   
+					    </div>
+					    <div class="col-md-2 col-sm-2 col-xs-12">
+					     <button id="btnUpload" type="button" class="form-control btn btn-success">
+					    	 Upload
+					     </button>
+					    </div>
 					</form>
                    </div>
+                   
+                   <div class="clearfix"></div>
+                   <div class="col-md-12 col-sm-12 col-xs-12">
+                   <br/>
+	                   <div class="row">
+	                   		<div id="imgContainer"></div>
+	                   </div> 
+                   </div>
+                   
                    
                   </div>
                 </div>
@@ -68,16 +83,17 @@ $(document).ready(function() {
             contentType: false
           }).done(function(data) {
               //imgContainer.html('');
-              var img = '<img height="100" width="50" src="data:' + data.contenttype + ';base64,'
-                  + data.base64 + '"/>';
-              imgContainer.append(img);
+              //var img = '<div class="col-md-4 col-sm-4 col-xs-12"><img height="100" width="50" src="data:' + data.contenttype + ';base64,'
+                  //+ data.base64 + '"/></div>';
+              //imgContainer.append(img);
+              getSocietyPhotos();
           }).fail(function(jqXHR, textStatus) {
               alert('File upload failed ...');
           });
     });
     
     $('#btnClear').on('click', function() {
-        imgContainer.html('');
+        $('#imgContainer').html('');
         file.val('');
     });
 });
@@ -96,29 +112,19 @@ $(document).ready(function() {
 	        processData: false,
             contentType: false 
 			}).done(function(data) {
+			var img='';
+			var cnt =1;
                $.each(data, function(i, item) {
-               		var img = '<img src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
-               		imgContainer.html(img);
+               		img += '<div class="col-md-4 col-sm-4 col-xs-12"><img height="150" width="300" src="data:' + item.contenttype + ';base64,' +  item.file + '"/></div>';
+               		if(cnt%3==0){
+               			img+='<div class="clearfix"></div><br/>';
+               		}
+               		cnt++;
                });
+               $('#imgContainer').html(img);
           }).fail(function(jqXHR, textStatus) {
-              alert('File upload failed ...');
+              alert('File Fetch failed ...');
           });;
-    	
-    	/* $.ajax({
-            url: 'getSocietyPhotos.do',
-            type: "POST",
-            data: "societyid="+societyid,
-            enctype: 'multipart/form-data',
-            processData: false,
-            contentType: false
-          }).done(function(data) {
-              //imgContainer.html('');
-              var img = '<img height="100" width="50" src="data:' + data.contenttype + ';base64,'
-                  + data.base64 + '"/>';
-              imgContainer.append(img);
-          }).fail(function(jqXHR, textStatus) {
-              alert('File upload failed ...');
-          }); */
     }
 </script>
 
