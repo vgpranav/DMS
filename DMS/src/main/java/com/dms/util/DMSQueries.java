@@ -7,15 +7,15 @@ public class DMSQueries
   public static String getAllActiveUser = "select * from user where active=1 ";
   public static String getAllActiveSocietyTypes = "select * from societytypemaster where isactive=1";
   public static String getAllSociety = "select * from society";
-  public static String getAllDocumentTypes = "SELECT * FROM doctype order by doctypename";
+  public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
   public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby) values (?,?,?)";
   public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate) values (?,?,?,?,?,?,?,?,?,?)";
   public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
-  public static String getAllDocumentSubTypes = "select * from docsubtype";
+  public static String getAllDocumentSubTypes = "SELECT st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
   public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active) values (?,?,?,?,?)";
   public static String getConfigValue = "select configvalue from config where configkey=?";
   public static String insertNewFormField = "insert into formstructure(docsubtypeid,fieldname,fieldtype,datatype,sequence,active,createdby) values (?,?,?,?,?,?,?)";
-  public static String getAllDocumentFormFieldsBySubTypes = "select * from formstructure where docsubtypeid=?";
+  public static String getAllDocumentFormFieldsBySubTypes = " SELECT fs.fieldid,fs.fieldname,fs.fieldtype,fs.datatype,fs.sequence,fs.active,fs.createdon,fs.docsubtypeid,concat(u.firstname,' ',u.lastname) as createdby FROM formstructure fs, user u where fs.createdby=u.userid and fs.docsubtypeid=?";
   public static String getAllActiveSocietyForUser = "select * from society where isactive=1";
   public static String getAllDoctypeFromSocid = "select d.doctypeid,d.doctypename from doctype d,societydocmapping m,society s where d.doctypeid = m.doctypeid and m.societyid = s.societyid and s.isactive = 1 and s.societyid=? ";
   public static String getAllDocSubTypeFromDocid = "select * from docsubtype where doctypeid = ?";
@@ -34,5 +34,18 @@ public class DMSQueries
   public static String getSocietyListForManager = "select s.societyname,sp.* from societymanager m,society s,societyprofile sp where m.societyid = s.societyid and s.societyid = sp.societyid and m.userid=?";
   public static String insertPhotoInfo = "insert into photos(phototype,docid,docpath,docname,contenttype) values (?,?,?,?,?)";
   public static String getSocietyPhotos = "select * from photos where docid=? and isactive=1 and phototype='society'";
+  public static String deactOldPhotos="update photos set isactive=0 where docid=? and phototype='society'";
+  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive) values (?,?,?,?,?,?,?,?,?)";
+  public static String insertVendorSocMapping = "insert into vendorsocietymapping(vendorid,societyid) values (?,?)";
+  public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
+  public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";
+  public static String updateSociety = "Update society set societytypeid=?, societyname=? where societyid=?";
+  public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=? where societyid=?";
+  public static String getDocumentTypeById = "select * from doctype where doctypeid=?";
+  public static String updateDoctype="Update doctype set doctypename=?, doctypedesc=?, active=? where doctypeid=?";
+  public static String getDocumentSubTypeById = "select * from docsubtype where docsubtypeid=?";
+  public static String updateDocSubtype=" Update docsubtype set doctypeid=?, docsubtypename=?, docsubtypedesc=?, active=? where docsubtypeid=?";
+  public static String getFormFieldDetailsById = "select * from formstructure where fieldid=?";
+  public static String updateFormFieldData = "Update formstructure set fieldname=?, fieldtype=?, datatype=?, sequence=?, active=?, docsubtypeid=? where fieldid=?";
   
 }

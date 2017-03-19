@@ -19,6 +19,8 @@
 					class="form-horizontal form-label-left" action="saveDocumentSubType.do"
 					method="post">
 
+					<input type="hidden" id="docsubtypeid" name="docsubtypeid" value="0">
+								
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Document Name <span class="required">*</span>
@@ -44,7 +46,7 @@
 							for="first-name">Parent Document <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<select name="doctypeid" class="form-control">
+							<select name="doctypeid" id="doctypeid" class="form-control">
 							<c:forEach items="${docTypesList}" var="myItem" varStatus="loopStatus">
 								<option value="${myItem.doctypeid}">${myItem.doctypename}</option>
 							</c:forEach>
@@ -126,11 +128,22 @@
 								</c:if>
 									<td class=" ">${myItem.docsubtypename}</td>
 									<td class=" ">${myItem.docsubtypedesc}</td>
-									<td class=" ">${myItem.doctypeid}</td>
+									<td class=" ">${myItem.doctypename}</td>
 									<td class=" ">${myItem.createdby}</td>
 									<td class=" ">${myItem.createdon}</td>
-									<td class=" ">${myItem.active}</td>								
-									<td class=" ">${myItem.docsubtypeid}</td>
+									<td class=" ">
+									<c:if test="${myItem.active==1}">
+											Active
+										</c:if>
+										<c:if test="${myItem.active!=1}">
+											Inactive
+									</c:if>
+									</td>								
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="editDocSubtype('${myItem.docsubtypeid}')">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
 								</tr>
 							</c:forEach>
                         </tbody>
@@ -147,4 +160,29 @@
 		$('#thetable').DataTable();
 	});
 
+	
+function editDocSubtype(docsubtypeid){
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getDocumentSubTypeById.do",
+	        data :"docsubtypeid="+docsubtypeid,
+	        success: function(response){
+	        	if(response.docsubtypeid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#docsubtypeid').val(response.docsubtypeid);
+	        		$('#docsubtypename').val(response.docsubtypename);
+	        		$('#docsubtypedesc').val(response.docsubtypedesc);
+	        		$('#doctypeid option[value="'+response.doctypeid+'"]').prop("selected",true).change();
+	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		//$('#societyname').val(response.societyname);
+	        		
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+		 
+	}
 </script>

@@ -81,6 +81,8 @@ public class ViewController
     ModelAndView mv = null;
     List<SocietyType> socTypes = null;
     SocietyDao documentDao = new SocietyDao();
+    
+
     try {
       socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
       mv = new ModelAndView("addSociety");
@@ -95,13 +97,16 @@ public class ViewController
 
 
   @RequestMapping(value={"/saveSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-  public ModelAndView saveSociety(@ModelAttribute Society society)
+  public ModelAndView saveSociety(@ModelAttribute Society society,HttpServletRequest request)
   {
     ModelAndView mv = null;
     List<SocietyType> socTypes = null;
     SocietyDao documentDao = new SocietyDao();
+    User user = null;
     try {
-      society = documentDao.insertOrUpdateSociety(society);
+      user = (User)request.getSession().getAttribute("userObject");
+      
+      society = documentDao.insertOrUpdateSociety(society,user.getUserid());
       socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
       mv = new ModelAndView("addSociety");
       mv.addObject("societytypeList", socTypes);
@@ -131,12 +136,15 @@ public class ViewController
 
 
   @RequestMapping(value={"/saveDocumentType"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-  public ModelAndView saveDocumentType(@ModelAttribute Doctype doctype)
+  public ModelAndView saveDocumentType(@ModelAttribute Doctype doctype,HttpServletRequest request)
   {
     ModelAndView mv = null;
     List<Doctype> docTypes = null;
     DocumentDao documentDao = new DocumentDao();
+    User user = null;
     try {
+      user = (User)request.getSession().getAttribute("userObject");
+      doctype.setCreatedby(String.valueOf(user.getUserid()));
       doctype = documentDao.insertOrUpdateDocType(doctype);
       docTypes = documentDao.getAllDocumentTypes(docTypes);
       mv = new ModelAndView("addDoctype");
@@ -171,13 +179,16 @@ public class ViewController
 
 
   @RequestMapping(value={"/saveDocumentSubType"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-  public ModelAndView saveDocumentType(@ModelAttribute DocSubType docSubType)
+  public ModelAndView saveDocumentType(@ModelAttribute DocSubType docSubType,HttpServletRequest request)
   {
     ModelAndView mv = null;
     List<Doctype> docTypes = null;
     List<DocSubType> docSubTypes = null;
+    User user = null;
     DocumentDao documentDao = new DocumentDao();
     try {
+      user = (User)request.getSession().getAttribute("userObject");
+      docSubType.setCreatedby(String.valueOf(user.getUserid()));
       docSubType = documentDao.insertOrUpdateDocSubType(docSubType);
       docTypes = documentDao.getAllDocumentTypes(docTypes);
       docSubTypes = documentDao.getAllDocumentSubTypes(docSubTypes);
@@ -377,4 +388,25 @@ public class ViewController
     }
     return mv;
   }
+  
+  @RequestMapping(value={"/createVendor"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createVendor(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("createVendor");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
 }

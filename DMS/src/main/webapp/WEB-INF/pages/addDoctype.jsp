@@ -18,6 +18,8 @@
 					class="form-horizontal form-label-left" action="saveDocumentType.do"
 					method="post">
 
+					<input type="hidden" id="doctypeid" name="doctypeid" value="0">
+								
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name"> Document Name <span class="required">*</span>
@@ -43,7 +45,7 @@
 							for="first-name"> Status <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:7px;">
-							<input type="radio" name="active" value="1"> Active
+							<input type="radio" name="active" value="1" checked="checked"> Active
 							<input type="radio" name="active" value="0"> Inactive
 						</div>
 					</div>
@@ -94,7 +96,7 @@
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
                             <th class="column-title no-link last">
-                            	<span class="nobr">Action</span>
+                            	<span class="nobr">Edit</span>
                             </th>
                              
                           </tr>
@@ -112,8 +114,19 @@
 									<td class=" ">${myItem.doctypedesc}</td>
 									<td class=" ">${myItem.createdby}</td>
 									<td class=" ">${myItem.createdon}</td>
-									<td class=" ">${myItem.active}</td>								
-									<td class=" ">${myItem.doctypeid}</td>
+									<td class=" ">
+										<c:if test="${myItem.active==1}">
+											Active
+										</c:if>
+										<c:if test="${myItem.active!=1}">
+											Inactive
+										</c:if>
+									</td>								
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="editDoc('${myItem.doctypeid}')">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
 								</tr>
 							</c:forEach>
                         </tbody>
@@ -131,5 +144,29 @@
 	$(document).ready(function(){
 		$('#thetable').DataTable();
 	});
+	
+	function editDoc(doctypeid){
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getDocumentTypeById.do",
+	        data :"doctypeid="+doctypeid ,
+	        success: function(response){
+	        	if(response.doctypeid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#doctypeid').val(response.doctypeid);
+	        		$('#doctypename').val(response.doctypename);
+	        		$('#doctypedesc').val(response.doctypedesc);
+	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		//$('#societyname').val(response.societyname);
+	        		
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+		 
+	}
 
 </script>

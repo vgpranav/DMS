@@ -11,11 +11,8 @@ public class DocSubType
     private String createdby;
     private String createdon;
     private int active;
-
-    public DocSubType()
-    {
-    }
-
+    private String doctypename;
+    
     public long getDocsubtypeid()
     {
         return docsubtypeid;
@@ -86,8 +83,21 @@ public class DocSubType
         this.active = active;
     }
 
-    public String toString()
-    {
-        return (new StringBuilder("DocSubType [docsubtypeid=")).append(docsubtypeid).append(", doctypeid=").append(doctypeid).append(", docsubtypename=").append(docsubtypename).append(", docsubtypedesc=").append(docsubtypedesc).append(", createdby=").append(createdby).append(", createdon=").append(createdon).append(", active=").append(active).append("]").toString();
-    }
+	public String getDoctypename() {
+		return doctypename;
+	}
+
+	public void setDoctypename(String doctypename) {
+		this.doctypename = doctypename;
+	}
+
+	@Override
+	public String toString() {
+		return "DocSubType [docsubtypeid=" + docsubtypeid + ", doctypeid=" + doctypeid + ", docsubtypename="
+				+ docsubtypename + ", docsubtypedesc=" + docsubtypedesc + ", createdby=" + createdby + ", createdon="
+				+ createdon + ", active=" + active + ", doctypename=" + doctypename + "]";
+	}
+	
+	
+	
 }

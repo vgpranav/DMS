@@ -107,5 +107,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/addSocietyPhotos.jsp" />   
     </definition> 
     
+     <definition name="createVendor" extends="base-definition">  
+      <put-attribute name="title" value="Create Committee" />  
+      <put-attribute name="body" value="/WEB-INF/pages/createVendor.jsp" />   
+    </definition> 
+    
   
 </tiles-definitions>

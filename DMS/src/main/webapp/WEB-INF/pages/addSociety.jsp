@@ -18,6 +18,8 @@
 					class="form-horizontal form-label-left" action="saveSociety.do"
 					method="post">
 
+					<input type="hidden" id="societyid" name="societyid" value="0">
+								
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name"> Society Name <span class="required">*</span>
@@ -146,7 +148,7 @@
 			<div class="col-md-5 col-sm-5 col-xs-12 widget widget_tally_box">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Search Society</h2>
+						<h2>Search Society to Edit</h2>
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
@@ -197,14 +199,51 @@
 		       return false;
 		   },
 		   select: function (event, ui) {
+			   var socId;
 		       var thisValue = ui.item.value;
 		       var str = thisValue.split("--");
 		       for (var i = 0; i < str.length; i++) {
-		       	 ui.item.value=str[0]; 
+		       	 ui.item.value=str[1]; 
+		       	socId=str[0];
 		       }
+		       getSocietyDetailsById(socId);
 			}
 		});
 		
 	});
+	
 
+	function getSocietyDetailsById(societyid){
+		
+		//var societyId = $('#searchText').val();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getSocietyDetailsById.do",
+	        data :"societyid="+societyid ,
+	        success: function(response){
+	        	if(response.societyid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#societyid').val(response.societyid);
+	        		$('#societyname').val(response.societyname);
+	        		$('#addressline1').val(response.addressline1);
+	        		$('#addressline2').val(response.addressline2);
+	        		$('#ward').val(response.ward);
+	        		$('#district').val(response.district);
+	        		$('#state').val(response.state);
+	        		$('#pincode').val(response.pincode);
+	        		$('#registrationno').val(response.registrationno);
+	        		$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));
+	        		
+	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();
+	        		//$('#societyname').val(response.societyname);
+	        		
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+		 
+	}
 </script>

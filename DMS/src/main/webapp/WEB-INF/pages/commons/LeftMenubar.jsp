@@ -16,6 +16,7 @@
 		                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
 		                      <li><a href="addMember.do">Add Members</a></li>
 		                      <li><a href="createCommittee.do">Create Committee</a></li>
+		                      <li><a href="createVendor.do">Create Vendor</a></li>
 		                    </ul>
 		                  </li>
 		                  

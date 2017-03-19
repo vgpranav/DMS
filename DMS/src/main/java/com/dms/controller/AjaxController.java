@@ -1,19 +1,12 @@
 package com.dms.controller;
 
-import com.dms.beans.Committee;
-import com.dms.beans.DocSubType;
-import com.dms.beans.Doctype;
-import com.dms.beans.Document;
-import com.dms.beans.FormFields;
-import com.dms.beans.Society;
-import com.dms.beans.User;
-import com.dms.beans.Userprofile;
-import com.dms.dao.DocumentDao;
-import com.dms.dao.SocietyDao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -23,6 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import com.dms.beans.Committee;
+import com.dms.beans.DocSubType;
+import com.dms.beans.Doctype;
+import com.dms.beans.Document;
+import com.dms.beans.FormFields;
+import com.dms.beans.Society;
+import com.dms.beans.User;
+import com.dms.beans.Userprofile;
+import com.dms.beans.Vendor;
+import com.dms.dao.DocumentDao;
+import com.dms.dao.SocietyDao;
 
 @Controller
 public class AjaxController
@@ -77,11 +82,14 @@ public class AjaxController
 
   @RequestMapping(value={"/saveFormFields"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   @ResponseBody
-  public FormFields saveDocumentType(@ModelAttribute FormFields formFields)
+  public FormFields saveDocumentType(@ModelAttribute FormFields formFields,HttpServletRequest request)
   {
     DocumentDao documentDao = new DocumentDao();
+    User user = null;
     try {
-      formFields = documentDao.insertOrUpdateFormFields(formFields);
+    	user = (User)request.getSession().getAttribute("userObject");
+    	formFields.setCreatedby(String.valueOf(user.getUserid()));
+    	formFields = documentDao.insertOrUpdateFormFields(formFields);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -233,4 +241,84 @@ public class AjaxController
       return "success";
     return "failed";
   }
+  
+  @RequestMapping(value={"/saveVendorDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Vendor saveVendorDetails(@ModelAttribute Vendor vendor)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	vendor = societyDao.saveVendorDetails(vendor);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return vendor;
+  }
+  
+  @RequestMapping(value={"/getVendorsBySocId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<Vendor> getVendorsBySocId(@ModelAttribute Vendor vendor)
+  {
+    SocietyDao societyDao = new SocietyDao();
+     List<Vendor>  vendors = new ArrayList<Vendor>();
+    try {
+    	vendors = societyDao.getVendorsBySocId(vendor.getSocietyid(), vendors);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return vendors;
+  }
+  
+  @RequestMapping(value={"/getSocietyDetailsById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Society getSocietyDetailsById(@ModelAttribute Society society)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	society = societyDao.getSocietyDetailsById(society);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return society;
+  }
+  
+  @RequestMapping(value={"/getDocumentTypeById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Doctype getDocumentTypeById(@ModelAttribute Doctype doctype)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	doctype = societyDao.getDocumentTypeById(doctype);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return doctype;
+  }
+  
+  @RequestMapping(value={"/getDocumentSubTypeById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public DocSubType getDocumentSubTypeById(@ModelAttribute DocSubType docSubType)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	docSubType = societyDao.getDocumentSubTypeById(docSubType);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return docSubType;
+  }
+  
+  @RequestMapping(value={"/getFormFieldById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public FormFields getFormFieldById(@ModelAttribute FormFields formFields)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	formFields = societyDao.getFormFieldsById(formFields);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return formFields;
+  }
+  
 }

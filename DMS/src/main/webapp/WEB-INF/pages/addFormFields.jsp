@@ -19,6 +19,8 @@
 					class="form-horizontal form-label-left" action="saveFormFields.do"
 					method="post" onsubmit="return saveFormFields()">
 
+					<input type="hidden" id="fieldid" name="fieldid" value="0">
+								
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Select Document <span class="required">*</span>
@@ -73,8 +75,8 @@
 							for="first-name">Field Type <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="radio" id="fieldtype" name="fieldtype" id="fieldtype" required="required"  value="mandatory"> Mandatory
-							<input type="radio" id="fieldtype" name="fieldtype" id="fieldtype" required="required"  value="optional"> Optional
+							<input type="radio" id="fieldtype" name="fieldtype" required="required"  value="mandatory"> Mandatory
+							<input type="radio" id="fieldtype" name="fieldtype" required="required"  value="optional" checked="checked"> Optional
 						</div>
 					</div>
 					
@@ -143,22 +145,6 @@
                         </thead>
 
                         <tbody>
-                        	<%-- <c:forEach items="${docSubTypeList}" var="myItem" varStatus="loopStatus">
-								<c:if test="${loopStatus.index%2==0}">
-									<tr class="even pointer">
-								</c:if>
-								<c:if test="${loopStatus.index%2!=0}">
-									<tr class="odd pointer">
-								</c:if>
-									<td class=" ">${myItem.docsubtypename}</td>
-									<td class=" ">${myItem.docsubtypedesc}</td>
-									<td class=" ">${myItem.doctypeid}</td>
-									<td class=" ">${myItem.createdby}</td>
-									<td class=" ">${myItem.createdon}</td>
-									<td class=" ">${myItem.active}</td>								
-									<td class=" ">${myItem.docsubtypeid}</td>
-								</tr>
-							</c:forEach> --%>
                         </tbody>
                       </table>
                     </div>
@@ -191,6 +177,12 @@
 	        if(response.length>0){
 	        	$.each(response, function(i, item) {
 	  
+	        		var activeflag = "Inactive";
+	        		if(item.active==1)
+	        			activeflag = "Active";
+	        		
+	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.fieldid + '\')"><i class="fa fa-edit"></i></a>';
+	        		
 	        		table.row.add( [
 	        			item.fieldname,
 	        			item.datatype,
@@ -198,8 +190,8 @@
 	        			item.sequence,
 	        			item.createdby,
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
-	        			item.active,
-	        			item.fieldid,
+	        			activeflag,
+	        			editBtn,
 	                ] ).draw( false );
 	        	    
 	        	  });
@@ -214,6 +206,7 @@
 	function saveFormFields(){
 		
 		var docsubtypeid = $('#docsubtypeid').val();
+		var fieldid = $('#fieldid').val();
 		var fieldname = $('#fieldname').val();
 		var datatype = $('#datatype').val();
 		var sequence = $('#sequence').val();
@@ -224,7 +217,8 @@
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveFormFields.do",
 	        data :"docsubtypeid="+docsubtypeid
-			        +"&fieldname="+fieldname
+	        		+"&fieldid="+fieldid
+	       			 +"&fieldname="+fieldname
 			        +"&datatype="+datatype
 			        +"&sequence="+sequence
 			        +"&fieldtype="+fieldtype
@@ -242,4 +236,30 @@
 		
 		return false;
 	}
+	
+	function editFormField(fieldid){
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getFormFieldById.do",
+	        data :"fieldid="+fieldid,
+	        success: function(response){
+	        	if(response.fieldid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#fieldid').val(response.fieldid);
+	        		$('#docsubtypeid option[value="'+response.docsubtypeid+'"]').prop("selected",true).change();
+	        		$('#fieldname').val(response.fieldname);
+	        		$('#datatype option[value="'+response.datatype+'"]').prop("selected",true).change();
+	        		$('#sequence option[value="'+response.sequence+'"]').prop("selected",true).change();
+	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		$('input[name=fieldtype][value="'+response.fieldtype+'"]').prop("checked","checked").change();
+	        		//$('#societyname').val(response.societyname);
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
+	
 </script>

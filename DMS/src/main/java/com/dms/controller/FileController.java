@@ -31,9 +31,6 @@ import com.dms.dao.SocietyDao;
 import uk.co.mmscomputing.application.imageviewer.FtpWrapper;
 
 
-
-
-
 @Controller
 public class FileController
 {

@@ -30,8 +30,8 @@
 							onsubmit="return false;">
 
 
-							<div class="col-md-2 col-sm-2 col-xs-12">
-								<br /> <strong>Owner Details</strong> <br />
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <strong>Owner Details</strong> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -123,8 +123,8 @@
 
 							</div>
 
-							<div class="col-md-2 col-sm-2 col-xs-12">
-								<br /> <strong>Flat Details</strong> <br />
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <strong>Flat Details</strong> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -226,9 +226,75 @@
 								</div>
 
 							</div>
-
-							<div class="col-md-2 col-sm-2 col-xs-12">
-								<br /> <strong>Parking Details</strong> <br />
+							
+							<section id="tenantdetails">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <strong>Tenant Details</strong> <hr />
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Name of Lease Owner </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname" name=tenantname
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Permanent Address </label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaddress" name=tenantaddress
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Contact Number</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantcontactnumber" name=tenantcontactnumber
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Alternate Number</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaltnumber" name=tenantaltnumber
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Email</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantemail" name=tenantemail
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Aadhar Number</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaadharno" name=tenantaadharno
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							</section>
+							
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <strong>Parking Details</strong> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -446,10 +512,14 @@
 	        success: function(response){
 	        	var srno=1;
 	        	$.each(response, function(i, item) {
+	        		
+	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.userprofileid + '\')"><i class="fa fa-edit"></i></a>';
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.userprofileid + '\')"><i class="fa fa-times"></i></a>';
+
 	        		table.row.add( [
 	        			srno,
-	        			item.userprofileid,
-	        			item.userprofileid,
+	        			editBtn,
+	        			delBtn,
 	        			item.flatno,
 	        			item.wing,
 	        			item.floor,

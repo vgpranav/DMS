@@ -2,11 +2,15 @@ package com.dms.dao;
 
 import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
+import com.dms.beans.DocSubType;
+import com.dms.beans.Doctype;
+import com.dms.beans.FormFields;
 import com.dms.beans.Photos;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
 import com.dms.beans.Userprofile;
+import com.dms.beans.Vendor;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -16,6 +20,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +28,7 @@ import java.util.Map;
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.commons.io.IOUtils;
@@ -83,7 +89,7 @@ public class SocietyDao
     return null;
   }
   
-  public Society insertOrUpdateSociety(Society society)
+  public Society insertOrUpdateSociety(Society society, int userId)
   {
     Connection conn = null;
     
@@ -93,32 +99,56 @@ public class SocietyDao
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+      
       conn.setAutoCommit(false);
-      Object obj = qr.insert(conn, DMSQueries.insertNewSociety, rsh, 
-					        Long.valueOf(society.getSocietytypeid()), 
-					        society.getSocietyname(), 
-					        Integer.valueOf(123)
-				        );
       
-      societyId = CommomUtility.convertToLong(obj);
-      
-      if (societyId != 0L) {
-        Object obj1 = qr.insert(conn, DMSQueries.insertNewSocietyProfile, rsh, 
-	          Long.valueOf(societyId), 
-	          society.getAddressline1(), 
-	          society.getAddressline2(), 
-	          society.getWard(), 
-	          society.getDistrict(), 
-	          society.getState(), 
-	          society.getPincode(), 
-	          society.getCreatedby(), 
-	          society.getRegistrationno(), 
-	          society.getEstdate()
-          );
-        
-        societyProfileId = CommomUtility.convertToLong(obj1);
+      //Insert new
+      if(society.getSocietyid()==0){
+    	  
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewSociety, rsh, 
+			        Long.valueOf(society.getSocietytypeid()), 
+			        society.getSocietyname(), 
+			        userId
+		        );
+
+		societyId = CommomUtility.convertToLong(obj);
+		
+		if (societyId != 0L) {
+		Object obj1 = qr.insert(conn, DMSQueries.insertNewSocietyProfile, rsh, 
+		    Long.valueOf(societyId), 
+		    society.getAddressline1(), 
+		    society.getAddressline2(), 
+		    society.getWard(), 
+		    society.getDistrict(), 
+		    society.getState(), 
+		    society.getPincode(), 
+		    userId, 
+		    society.getRegistrationno(), 
+		    society.getEstdate()
+		);
+		
+		societyProfileId = CommomUtility.convertToLong(obj1);
+		}
+    	  
       }
-      
+      	else {
+      		qr.update(conn,DMSQueries.updateSociety,
+      				society.getSocietytypeid(),
+      				society.getSocietyname(),
+      				society.getSocietyid());
+    	  
+      		qr.update(conn,DMSQueries.updateSocProfile,
+      				society.getAddressline1(),
+      				society.getAddressline2(),
+      				society.getWard(),
+      				society.getDistrict(),
+      				society.getState(),
+      				society.getPincode(),
+      				society.getRegistrationno(),
+      				society.getEstdate(),
+      				society.getSocietyid());
+    	  
+      }
 
       conn.commit();
       
@@ -493,5 +523,179 @@ public class SocietyDao
       }
     }
     return photos;
+  }
+
+public Vendor saveVendorDetails(Vendor vendor) {
+    Connection conn = null;
+    
+    long vendorId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      
+      conn.setAutoCommit(false);
+      
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+      Object obj = qr.insert(conn, DMSQueries.insertNewVendor, rsh, 
+    		  vendor.getCompanyname(),
+    		  vendor.getJobnature(),
+    		  vendor.getContactperson(),
+    		  vendor.getAddress(),
+    		  vendor.getContactno(),
+    		  vendor.getAlternateno(),
+    		  vendor.getEmail(),
+    		  vendor.getRemark(),
+    		  vendor.getIsactive()
+        );
+      
+      vendorId = CommomUtility.convertToLong(obj);
+      
+      Object obj1 = qr.insert(conn, DMSQueries.insertVendorSocMapping, rsh, 
+    		  vendorId,
+    		  vendor.getSocietyid()
+        );
+      
+      conn.commit();
+      
+      vendor.setVendorid(vendorId);
+      
+      return vendor;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public  List<Vendor> getVendorsBySocId(long societyid, List<Vendor> vendors) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<Vendor>> rsh = new BeanListHandler<Vendor>(Vendor.class);
+      
+      vendors =  qr.query(conn, DMSQueries.getAllVendorsBySocId,rsh,Long.valueOf(societyid));
+      
+     return vendors;
+    }
+    catch (Exception e) {
+      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      e.printStackTrace();
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public Society getSocietyDetailsById(Society society) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Society> rsh = new BeanHandler<Society>(Society.class);
+      society = qr.query(conn, DMSQueries.getSocietyDetailsById, rsh, 
+    		  society.getSocietyid()
+        );
+      
+      return society;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public Doctype getDocumentTypeById(Doctype doctype) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Doctype> rsh = new BeanHandler<Doctype>(Doctype.class);
+      doctype = qr.query(conn, DMSQueries.getDocumentTypeById, rsh, 
+    		  doctype.getDoctypeid()
+        );
+      
+      return doctype;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public DocSubType getDocumentSubTypeById(DocSubType docSubType) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<DocSubType> rsh = new BeanHandler<DocSubType>(DocSubType.class);
+      docSubType = qr.query(conn, DMSQueries.getDocumentSubTypeById, rsh, 
+    		  docSubType.getDocsubtypeid()
+        );
+      return docSubType;
+    } catch (Exception e) {
+      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public FormFields getFormFieldsById(FormFields formFields) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<FormFields> rsh = new BeanHandler<FormFields>(FormFields.class);
+      formFields = qr.query(conn, DMSQueries.getFormFieldDetailsById, rsh, 
+    		  formFields.getFieldid()
+        );
+      return formFields;
+    } catch (Exception e) {
+      logger.error("Error in getFormFieldsById :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
   }
 }

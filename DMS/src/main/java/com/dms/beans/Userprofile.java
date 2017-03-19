@@ -28,6 +28,13 @@ public class Userprofile
     private String floor;
     private String password;
     private String societyid;
+    private String tenantname;
+    private String tenantaddress;
+    private String tenantcontactnumber;
+    private String tenantaltnumber;
+    private String tenantemail;
+    private String tenantaadharno;
+    
 
     public Userprofile()
     {
@@ -263,8 +270,68 @@ public class Userprofile
         this.societyid = societyid;
     }
 
-    public String toString()
-    {
-        return (new StringBuilder("Userprofile [userprofileid=")).append(userprofileid).append(", userid=").append(userid).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", mobileNo=").append(mobileNo).append(", flatno=").append(flatno).append(", wing=").append(wing).append(", tower=").append(tower).append(", occupancy=").append(occupancy).append(", alternateno=").append(alternateno).append(", email=").append(email).append(", aadharno=").append(aadharno).append(", jointowners=").append(jointowners).append(", purchasedate=").append(purchasedate).append(", possessiondate=").append(possessiondate).append(", builtuparea=").append(builtuparea).append(", carpetarea=").append(carpetarea).append(", parkingtype=").append(parkingtype).append(", vehicletype=").append(vehicletype).append(", parkingallotmentno=").append(parkingallotmentno).append(", floor=").append(floor).append(", password=").append(password).append(", societyid=").append(societyid).append("]").toString();
-    }
+	public String getTenantname() {
+		return tenantname;
+	}
+
+	public void setTenantname(String tenantname) {
+		this.tenantname = tenantname;
+	}
+
+	public String getTenantaddress() {
+		return tenantaddress;
+	}
+
+	public void setTenantaddress(String tenantaddress) {
+		this.tenantaddress = tenantaddress;
+	}
+
+	public String getTenantcontactnumber() {
+		return tenantcontactnumber;
+	}
+
+	public void setTenantcontactnumber(String tenantcontactnumber) {
+		this.tenantcontactnumber = tenantcontactnumber;
+	}
+
+	public String getTenantaltnumber() {
+		return tenantaltnumber;
+	}
+
+	public void setTenantaltnumber(String tenantaltnumber) {
+		this.tenantaltnumber = tenantaltnumber;
+	}
+
+	public String getTenantemail() {
+		return tenantemail;
+	}
+
+	public void setTenantemail(String tenantemail) {
+		this.tenantemail = tenantemail;
+	}
+
+	public String getTenantaadharno() {
+		return tenantaadharno;
+	}
+
+	public void setTenantaadharno(String tenantaadharno) {
+		this.tenantaadharno = tenantaadharno;
+	}
+
+	@Override
+	public String toString() {
+		return "Userprofile [userprofileid=" + userprofileid + ", userid=" + userid + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", mobileNo=" + mobileNo + ", flatno=" + flatno + ", wing=" + wing
+				+ ", tower=" + tower + ", occupancy=" + occupancy + ", alternateno=" + alternateno + ", email=" + email
+				+ ", aadharno=" + aadharno + ", jointowners=" + jointowners + ", purchasedate=" + purchasedate
+				+ ", possessiondate=" + possessiondate + ", builtuparea=" + builtuparea + ", carpetarea=" + carpetarea
+				+ ", parkingtype=" + parkingtype + ", vehicletype=" + vehicletype + ", parkingallotmentno="
+				+ parkingallotmentno + ", floor=" + floor + ", password=" + password + ", societyid=" + societyid
+				+ ", tenantname=" + tenantname + ", tenantaddress=" + tenantaddress + ", tenantcontactnumber="
+				+ tenantcontactnumber + ", tenantaltnumber=" + tenantaltnumber + ", tenantemail=" + tenantemail
+				+ ", tenantaadharno=" + tenantaadharno + "]";
+	}
+    
+    
+     
 }

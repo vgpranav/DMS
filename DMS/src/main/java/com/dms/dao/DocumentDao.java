@@ -38,7 +38,7 @@ public class DocumentDao
       ResultSetHandler<List<Doctype>> rsh = new BeanListHandler(Doctype.class);
       docTypes = (List)qr.query(conn, DMSQueries.getAllDocumentTypes, rsh);
     } catch (Exception e) {
-      logger.error("Error authenticating user :: " + e.getMessage());
+      logger.error("Error getAllDocumentTypes :: " + e.getMessage());
       e.printStackTrace();
       try
       {
@@ -66,16 +66,23 @@ public class DocumentDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
-      Object obj = qr.insert(conn, DMSQueries.insertNewDoctype, rsh, new Object[] {
-        doctype.getDoctypename(), 
-        doctype.getDoctypedesc(), 
-        Integer.valueOf(doctype.getActive()), 
-        doctype.getCreatedby() });
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       
-
-      doctypeId = CommomUtility.convertToLong(obj);
-      doctype.setDoctypeid(doctypeId);
+      if(doctype.getDoctypeid()==0){
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewDoctype, rsh, new Object[] {
+    		        doctype.getDoctypename(), 
+    		        doctype.getDoctypedesc(), 
+    		        Integer.valueOf(doctype.getActive()), 
+    		        doctype.getCreatedby()});
+    		      doctypeId = CommomUtility.convertToLong(obj);
+    		      doctype.setDoctypeid(doctypeId);
+      }else{
+    	  qr.insert(conn, DMSQueries.updateDoctype, rsh, new Object[] {
+  		        doctype.getDoctypename(), 
+  		        doctype.getDoctypedesc(), 
+  		        Integer.valueOf(doctype.getActive()), 
+  		        doctype.getDoctypeid() });
+      }
     }
     catch (Exception e) {
       logger.error("Error Saving Doctype :: " + e.getMessage());
@@ -105,8 +112,8 @@ public class DocumentDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler(DocSubType.class);
-      docSubType = (List)qr.query(conn, DMSQueries.getAllDocumentSubTypes, rsh);
+      ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler<DocSubType>(DocSubType.class);
+      docSubType = (List<DocSubType>)qr.query(conn, DMSQueries.getAllDocumentSubTypes, rsh);
     } catch (Exception e) {
       logger.error("Error authenticating user :: " + e.getMessage());
       e.printStackTrace();
@@ -136,17 +143,29 @@ public class DocumentDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
-      Object obj = qr.insert(conn, DMSQueries.insertNewDocSubtype, rsh, new Object[] {
-        Long.valueOf(docSubType.getDoctypeid()), 
-        docSubType.getDocsubtypename(), 
-        docSubType.getDocsubtypedesc(), 
-        docSubType.getCreatedby(), 
-        Integer.valueOf(docSubType.getActive()) });
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       
-
-      docsubtypeId = CommomUtility.convertToLong(obj);
-      docSubType.setDoctypeid(docsubtypeId);
+      //System.out.println("docSubType :: "+docSubType);
+      
+      if(docSubType.getDocsubtypeid()==0){
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewDocSubtype, rsh, new Object[] {
+    			  Long.valueOf(docSubType.getDoctypeid()), 
+    			  docSubType.getDocsubtypename(), 
+    			  docSubType.getDocsubtypedesc(), 
+    			  docSubType.getCreatedby(), 
+    			  Integer.valueOf(docSubType.getActive()) });
+    	  docsubtypeId = CommomUtility.convertToLong(obj);
+    	  docSubType.setDoctypeid(docsubtypeId);
+      } else{
+    	  		qr.update(conn, DMSQueries.updateDocSubtype,
+    			  docSubType.getDoctypeid(),
+    			  docSubType.getDocsubtypename(),
+    			  docSubType.getDocsubtypedesc(),
+    			  docSubType.getActive(),
+    			  docSubType.getDocsubtypeid()
+    			  );
+      }
+      
     } catch (Exception e) {
       logger.error("Error Saving Doctype :: " + e.getMessage());
       e.printStackTrace();
@@ -176,19 +195,32 @@ public class DocumentDao
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<Object> rsh = new ScalarHandler();
-      Object obj = qr.insert(conn, DMSQueries.insertNewFormField, rsh, new Object[] {
-        Long.valueOf(formFields.getDocsubtypeid()), 
-        formFields.getFieldname(), 
-        formFields.getFieldtype(), 
-        formFields.getDatatype(), 
-        Integer.valueOf(formFields.getSequence()), 
-        Integer.valueOf(formFields.getActive()), 
-        formFields.getCreatedby() });
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       
-
-      fieldid = CommomUtility.convertToLong(obj);
-      formFields.setFieldid(fieldid);
+      if(formFields.getFieldid()==0){
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewFormField, rsh, new Object[] {
+          Long.valueOf(formFields.getDocsubtypeid()), 
+    	  formFields.getFieldname(), 
+    	  formFields.getFieldtype(), 
+    	  formFields.getDatatype(), 
+    	  Integer.valueOf(formFields.getSequence()), 
+    	  Integer.valueOf(formFields.getActive()), 
+    	  formFields.getCreatedby() });
+    	  fieldid = CommomUtility.convertToLong(obj);
+    	  formFields.setFieldid(fieldid);
+      }else{
+    	  qr.update(conn, DMSQueries.updateFormFieldData,
+    			  formFields.getFieldname(),
+    			  formFields.getFieldid(),
+    			  formFields.getDatatype(),
+    			  formFields.getSequence(),
+    			  formFields.getActive(),
+    			  formFields.getDocsubtypeid(),
+    			  formFields.getFieldid()
+    			  );
+      }
+       
+      	
     } catch (Exception e) {
       logger.error("Error Saving Doctype :: " + e.getMessage());
       e.printStackTrace();
@@ -217,8 +249,8 @@ public class DocumentDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<FormFields>> rsh = new BeanListHandler(FormFields.class);
-      formFields = (List)qr.query(conn, DMSQueries.getAllDocumentFormFieldsBySubTypes, rsh, new Object[] { Long.valueOf(docSubtypeid) });
+      ResultSetHandler<List<FormFields>> rsh = new BeanListHandler<FormFields>(FormFields.class);
+      formFields = (List<FormFields>)qr.query(conn, DMSQueries.getAllDocumentFormFieldsBySubTypes, rsh, new Object[] { Long.valueOf(docSubtypeid) });
     } catch (Exception e) {
       logger.error("Error fetching form fields :: " + e.getMessage());
       e.printStackTrace();
@@ -324,7 +356,7 @@ public class DocumentDao
       conn = ConnectionPoolManager.getInstance().getConnection();
       conn.setAutoCommit(false);
       
-      Object obj = qr.insert(conn, DMSQueries.insertDocHead, new ScalarHandler(), new Object[] {
+      Object obj = qr.insert(conn, DMSQueries.insertDocHead, new ScalarHandler<Object>(), new Object[] {
         societyid, 
         doctypeid, 
         docsubtypeid, 
@@ -335,7 +367,7 @@ public class DocumentDao
       if (documentId != 0L) {
         for (String key : params.keySet()) {
           if (!key.equals("UserId")) {
-            qr.insert(conn, DMSQueries.insertDocDetails, new ScalarHandler(), new Object[] {
+            qr.insert(conn, DMSQueries.insertDocDetails, new ScalarHandler<Object>(), new Object[] {
               Long.valueOf(documentId), 
               key, 
               params.get(key), 
@@ -443,6 +475,11 @@ public class DocumentDao
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<Object> rsh = new ScalarHandler();
+      
+      conn.setAutoCommit(false);
+      
+      qr.update(conn,DMSQueries.deactOldPhotos,docid);
+      
       Object obj = qr.insert(conn, DMSQueries.insertPhotoInfo, rsh, new Object[] {
         phototype, 
         Integer.valueOf(docid), 
@@ -450,6 +487,7 @@ public class DocumentDao
         docname, 
         contentType });
       
+      conn.commit();
 
       fieldid = CommomUtility.convertToLong(obj);
     } catch (Exception e) {
