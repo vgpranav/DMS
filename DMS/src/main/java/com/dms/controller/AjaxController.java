@@ -321,4 +321,19 @@ public class AjaxController
     return formFields;
   }
   
+  
+  @RequestMapping(value={"/getUserDataById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Userprofile getUserDataById(@ModelAttribute Userprofile userprofile)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	userprofile = societyDao.getUserDataById(userprofile);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return userprofile;
+  }
+  
+  
 }

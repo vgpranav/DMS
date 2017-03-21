@@ -35,10 +35,7 @@ public class Userprofile
     private String tenantemail;
     private String tenantaadharno;
     
-
-    public Userprofile()
-    {
-    }
+ 
 
     public long getUserprofileid()
     {

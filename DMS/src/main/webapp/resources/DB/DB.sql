@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `dms` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `dms`;
 -- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dms
@@ -118,7 +120,7 @@ CREATE TABLE `docsubtype` (
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `active` int(11) DEFAULT NULL,
   PRIMARY KEY (`docsubtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +129,7 @@ CREATE TABLE `docsubtype` (
 
 LOCK TABLES `docsubtype` WRITE;
 /*!40000 ALTER TABLE `docsubtype` DISABLE KEYS */;
-INSERT INTO `docsubtype` VALUES (1,1,'Flat Sale Deed','Flat Sale Deed',NULL,'2017-03-13 20:15:57',1);
+INSERT INTO `docsubtype` VALUES (1,1,'Flat Sale Deed','Flat Sale Deed','2','2017-03-13 20:15:57',1),(2,2,'Parking allotment letter','Parking allotment letter','2','2017-03-18 13:37:17',1),(3,1,'Test','Test','2','2017-03-19 01:38:47',1),(4,3,'TestDST','TestDST','2','2017-03-19 01:39:24',1),(5,1,'Flat Sale Deed','Flat Sale Deed1',NULL,'2017-03-19 23:13:52',1),(6,3,'hello','hello',NULL,'2017-03-19 23:35:07',0),(7,4,'Test1111111','Test1111111','2','2017-03-19 23:47:46',1);
 /*!40000 ALTER TABLE `docsubtype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +148,7 @@ CREATE TABLE `doctype` (
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`doctypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +157,7 @@ CREATE TABLE `doctype` (
 
 LOCK TABLES `doctype` WRITE;
 /*!40000 ALTER TABLE `doctype` DISABLE KEYS */;
-INSERT INTO `doctype` VALUES (1,'Agreement  Legal Documents','Agreement  Legal Documents',1,NULL,'2017-03-13 20:15:08');
+INSERT INTO `doctype` VALUES (1,'Agreement - Legal Documents','Agreement - Legal Documents',1,'2','2017-03-13 20:15:08'),(2,'Allotment Letters','Allotment Letters',1,'2','2017-03-18 13:36:48'),(3,'TestDt','TestDt',1,'2','2017-03-19 01:39:09'),(4,'Test2','Test22222223',1,'2','2017-03-19 21:41:26');
 /*!40000 ALTER TABLE `doctype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -175,7 +177,7 @@ CREATE TABLE `document` (
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`documentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +186,36 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
+INSERT INTO `document` VALUES (2,1,1,1,NULL,'123','2017-03-18 12:28:57'),(3,1,1,1,NULL,'123','2017-03-18 12:43:19'),(4,1,1,1,NULL,'123','2017-03-18 13:26:13'),(5,1,1,1,NULL,'123','2017-03-18 13:29:45'),(6,1,1,1,NULL,'123','2017-03-18 13:30:28'),(7,1,2,2,NULL,'123','2017-03-18 13:38:26');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `documentdetails`
+--
+
+DROP TABLE IF EXISTS `documentdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `documentdetails` (
+  `documentdetailsid` int(11) NOT NULL AUTO_INCREMENT,
+  `documentid` int(11) DEFAULT NULL,
+  `datakey` varchar(45) DEFAULT NULL,
+  `datavalue` varchar(45) DEFAULT NULL,
+  `createdby` varchar(45) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`documentdetailsid`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `documentdetails`
+--
+
+LOCK TABLES `documentdetails` WRITE;
+/*!40000 ALTER TABLE `documentdetails` DISABLE KEYS */;
+INSERT INTO `documentdetails` VALUES (1,2,'societyid','1','123','2017-03-18 12:28:57'),(2,2,'doctypeid','1','123','2017-03-18 12:28:57'),(3,2,'docsubtypeid','1','123','2017-03-18 12:28:57'),(4,2,'1','hello','123','2017-03-18 12:28:57'),(5,2,'2','03/18/2017','123','2017-03-18 12:28:57'),(6,3,'societyid','1','123','2017-03-18 12:43:19'),(7,3,'doctypeid','1','123','2017-03-18 12:43:19'),(8,3,'docsubtypeid','1','123','2017-03-18 12:43:19'),(9,3,'1','hello','123','2017-03-18 12:43:19'),(10,3,'2','03/18/2017','123','2017-03-18 12:43:19'),(11,4,'societyid','1','123','2017-03-18 13:26:13'),(12,4,'doctypeid','1','123','2017-03-18 13:26:13'),(13,4,'docsubtypeid','1','123','2017-03-18 13:26:13'),(14,4,'1','hello','123','2017-03-18 13:26:13'),(15,4,'2','03/18/2017','123','2017-03-18 13:26:13'),(16,5,'societyid','1','123','2017-03-18 13:29:45'),(17,5,'doctypeid','1','123','2017-03-18 13:29:45'),(18,5,'docsubtypeid','1','123','2017-03-18 13:29:45'),(19,5,'1','hello','123','2017-03-18 13:29:45'),(20,5,'2','03/18/2017','123','2017-03-18 13:29:45'),(21,6,'societyid','1','123','2017-03-18 13:30:28'),(22,6,'doctypeid','1','123','2017-03-18 13:30:28'),(23,6,'docsubtypeid','1','123','2017-03-18 13:30:28'),(24,6,'1','hello','123','2017-03-18 13:30:28'),(25,6,'2','03/18/2017','123','2017-03-18 13:30:28'),(26,7,'societyid','1','123','2017-03-18 13:38:26'),(27,7,'doctypeid','2','123','2017-03-18 13:38:26'),(28,7,'docsubtypeid','2','123','2017-03-18 13:38:26'),(29,7,'3','Pranav','123','2017-03-18 13:38:26');
+/*!40000 ALTER TABLE `documentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -206,7 +237,7 @@ CREATE TABLE `files` (
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`filesid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,6 +246,7 @@ CREATE TABLE `files` (
 
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
+INSERT INTO `files` VALUES (1,1,1,1,6,'1-1-1-1489824078320.jpg','/DMS/1-1-1-1489824078320.jpg','','2017-03-18 13:31:18','1'),(2,1,1,1,6,'1-1-1-1489824078451.jpg','/DMS/1-1-1-1489824078451.jpg','','2017-03-18 13:31:18','1'),(3,1,1,1,6,'1-1-1-1489824078669.jpg','/DMS/1-1-1-1489824078669.jpg','','2017-03-18 13:31:18','1'),(4,1,2,2,7,'1-2-2-1489824517010.jpg','/DMS/1-2-2-1489824517010.jpg','','2017-03-18 13:38:37','1');
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +268,7 @@ CREATE TABLE `formstructure` (
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `docsubtypeid` int(11) DEFAULT NULL,
   PRIMARY KEY (`fieldid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +277,7 @@ CREATE TABLE `formstructure` (
 
 LOCK TABLES `formstructure` WRITE;
 /*!40000 ALTER TABLE `formstructure` DISABLE KEYS */;
-INSERT INTO `formstructure` VALUES (1,'Agreement Between','optional','text','1',1,NULL,'2017-03-13 20:22:52',1),(2,'Date of Agreement','optional','date','1',1,NULL,'2017-03-13 20:23:18',1);
+INSERT INTO `formstructure` VALUES (1,'Agreement Between','1','text','1',1,'2','2017-03-13 20:22:52',1),(2,'Date of Agreement','optional','date','1',1,'2','2017-03-13 20:23:18',1),(3,'Name of Flat Owner','optional','text','1',1,'2','2017-03-18 13:37:45',2),(4,'Agreement Between','optional','text','1',0,'2','2017-03-20 00:45:42',1),(5,'Agreement Between','optional','text','1',0,'2','2017-03-20 00:45:52',1),(6,'Agreement Between1','optional','text','1',1,'2','2017-03-20 00:46:08',1),(7,'Agreement Between1','optional','text','1',1,'2','2017-03-20 00:47:34',1),(8,'Agreement Between1','optional','text','1',1,'2','2017-03-20 00:50:47',1),(9,'Agreement Between1','optional','text','1',1,'2','2017-03-20 00:51:32',1),(10,'Test','optional','text','1',1,'2','2017-03-20 00:52:41',4),(11,'Test','optional','text','1',1,'2','2017-03-20 00:53:01',4),(12,'Test','optional','text','1',1,'2','2017-03-20 00:53:11',4),(13,'Test','optional','text','1',1,'2','2017-03-20 00:53:39',4),(14,'Test','optional','text','1',1,'2','2017-03-20 00:54:21',4),(15,'Hi','mandatory','text','1',1,'2','2017-03-20 01:00:11',7);
 /*!40000 ALTER TABLE `formstructure` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,13 +292,13 @@ CREATE TABLE `photos` (
   `photosid` int(11) NOT NULL AUTO_INCREMENT,
   `phototype` varchar(45) DEFAULT NULL,
   `docid` int(11) DEFAULT NULL,
-  `docpath` varchar(45) DEFAULT NULL,
-  `docname` varchar(45) DEFAULT NULL,
+  `docpath` varchar(2000) DEFAULT NULL,
+  `docname` varchar(1000) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `isactive` int(11) DEFAULT '1',
   `contenttype` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`photosid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,6 +307,7 @@ CREATE TABLE `photos` (
 
 LOCK TABLES `photos` WRITE;
 /*!40000 ALTER TABLE `photos` DISABLE KEYS */;
+INSERT INTO `photos` VALUES (19,'society',1,'SocietyImages/1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-16 10:03:35',0,'image/jpeg'),(20,'society',1,'SocietyImages/1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','2017-03-16 10:03:40',0,'image/jpeg'),(21,'society',1,'SocietyImages/1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','2017-03-16 10:03:45',0,'image/jpeg'),(22,'society',1,'SocietyImages/1489638831917-2017_yamaha_mt_07-t2.jpg','1489638831917-2017_yamaha_mt_07-t2.jpg','2017-03-16 10:03:51',0,'image/jpeg'),(23,'society',1,'SocietyImages/1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','2017-03-16 10:03:57',0,'image/jpeg'),(24,'society',1,'SocietyImages/1489678750208-twain-32-64.jpg','1489678750208-twain-32-64.jpg','2017-03-16 21:09:10',0,'image/jpeg'),(25,'society',1,'SocietyImages/1489819299807-inside_explosion_hd-1366x768.jpg','1489819299807-inside_explosion_hd-1366x768.jpg','2017-03-18 12:11:39',1,'image/jpeg');
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,20 +322,11 @@ CREATE TABLE `society` (
   `societyid` int(11) NOT NULL AUTO_INCREMENT,
   `societytypeid` int(11) DEFAULT NULL,
   `societyname` varchar(1000) DEFAULT NULL,
-  `societyprofileid` int(11) DEFAULT NULL,
-  `addressline1` varchar(1000) DEFAULT NULL,
-  `addressline2` varchar(1000) DEFAULT NULL,
-  `ward` varchar(125) DEFAULT NULL,
-  `district` varchar(255) DEFAULT NULL,
-  `state` varchar(125) DEFAULT NULL,
-  `pincode` varchar(125) DEFAULT NULL,
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `isactive` int(11) DEFAULT '1',
-  `registrationno` varchar(255) DEFAULT NULL,
-  `estdate` datetime DEFAULT NULL,
   PRIMARY KEY (`societyid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +335,7 @@ CREATE TABLE `society` (
 
 LOCK TABLES `society` WRITE;
 /*!40000 ALTER TABLE `society` DISABLE KEYS */;
-INSERT INTO `society` VALUES (1,1,'Kalpana Complex CoOp Hsg Soc ltd',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'123','2017-03-13 20:06:07',1,NULL,NULL);
+INSERT INTO `society` VALUES (1,1,'Kalpana Complex CoOp Hsg Soc ltd','123','2017-03-13 20:06:07',1),(2,1,'Satyam Complex','2','2017-03-19 10:18:32',1);
 /*!40000 ALTER TABLE `society` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,7 +352,7 @@ CREATE TABLE `societydocmapping` (
   `societyid` int(11) DEFAULT NULL,
   `isactive` int(11) DEFAULT '1',
   PRIMARY KEY (`societydocmappingid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -337,7 +361,7 @@ CREATE TABLE `societydocmapping` (
 
 LOCK TABLES `societydocmapping` WRITE;
 /*!40000 ALTER TABLE `societydocmapping` DISABLE KEYS */;
-INSERT INTO `societydocmapping` VALUES (1,1,1,1);
+INSERT INTO `societydocmapping` VALUES (1,1,1,1),(2,2,1,1);
 /*!40000 ALTER TABLE `societydocmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,9 +377,9 @@ CREATE TABLE `societymanager` (
   `societyid` int(11) DEFAULT NULL,
   `userid` int(11) DEFAULT NULL,
   `isactive` int(11) DEFAULT '1',
-  `createdon` varchar(45) DEFAULT 'current_timestamp',
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`societymanagerid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -364,7 +388,7 @@ CREATE TABLE `societymanager` (
 
 LOCK TABLES `societymanager` WRITE;
 /*!40000 ALTER TABLE `societymanager` DISABLE KEYS */;
-INSERT INTO `societymanager` VALUES (1,1,2,1,'current_timestamp');
+INSERT INTO `societymanager` VALUES (2,1,2,1,'2017-03-13 23:57:02');
 /*!40000 ALTER TABLE `societymanager` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,8 +401,6 @@ DROP TABLE IF EXISTS `societyprofile`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `societyprofile` (
   `societyid` int(11) NOT NULL,
-  `societytypeid` int(11) DEFAULT NULL,
-  `societyname` varchar(1000) DEFAULT NULL,
   `societyprofileid` int(11) NOT NULL AUTO_INCREMENT,
   `addressline1` varchar(1000) DEFAULT NULL,
   `addressline2` varchar(1000) DEFAULT NULL,
@@ -392,7 +414,7 @@ CREATE TABLE `societyprofile` (
   `registrationno` varchar(255) DEFAULT NULL,
   `estdate` datetime DEFAULT NULL,
   PRIMARY KEY (`societyprofileid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -401,7 +423,7 @@ CREATE TABLE `societyprofile` (
 
 LOCK TABLES `societyprofile` WRITE;
 /*!40000 ALTER TABLE `societyprofile` DISABLE KEYS */;
-INSERT INTO `societyprofile` VALUES (1,NULL,NULL,1,'Panchal Nagar','Station Road','Nallasopara West','Thane','Maharashtra','401203',NULL,'2017-03-13 20:06:07',1,'TNA/VSI/12334','1988-03-08 00:00:00');
+INSERT INTO `societyprofile` VALUES (1,1,'Panchal Nagar12','Station Road','Nallasopara West','Thane','Maharashtra','401203',NULL,'2017-03-13 20:06:07',1,'TNA/VSI/12334','1988-03-08 00:00:00'),(2,2,'Panchal Nagar1','Panchal Nagar','Nallasopara West','Thane','Maharashtra','401209','2','2017-03-19 10:18:32',1,'TNA/VSI/1233465465','2017-03-19 00:00:00');
 /*!40000 ALTER TABLE `societyprofile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,6 +455,38 @@ INSERT INTO `societytypemaster` VALUES (1,'Residential','Residential',1,'2017-03
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tenant`
+--
+
+DROP TABLE IF EXISTS `tenant`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tenant` (
+  `tenantid` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) DEFAULT NULL,
+  `tenantname` varchar(100) DEFAULT NULL,
+  `tenantaddress` varchar(1000) DEFAULT NULL,
+  `tenantcontactnumber` varchar(45) DEFAULT NULL,
+  `tenantaltnumber` varchar(45) DEFAULT NULL,
+  `tenantemail` varchar(45) DEFAULT NULL,
+  `tenantaadharno` varchar(45) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  `active` int(11) DEFAULT '1',
+  PRIMARY KEY (`tenantid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tenant`
+--
+
+LOCK TABLES `tenant` WRITE;
+/*!40000 ALTER TABLE `tenant` DISABLE KEYS */;
+INSERT INTO `tenant` VALUES (1,3,'aa','aa','aa','aa','aa','aa','2017-03-20 03:11:13',1),(2,4,'','','','','','','2017-03-20 03:12:08',1);
+/*!40000 ALTER TABLE `tenant` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -450,7 +504,7 @@ CREATE TABLE `user` (
   `mobileNo` varchar(45) DEFAULT NULL,
   `createdBy` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -459,7 +513,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,NULL,NULL,NULL,'123456','2017-03-13 19:58:13',1,'9920650410',NULL),(2,'Pranav','VG',NULL,'pranav','2017-03-13 20:08:34',1,'8976724255','123');
+INSERT INTO `user` VALUES (1,NULL,NULL,NULL,'123456','2017-03-13 19:58:13',1,'9920650410',NULL),(2,'Pranav','VG',NULL,'pranav','2017-03-13 20:08:34',1,'8976724255','123'),(3,'aa','aa',NULL,'pranav','2017-03-20 03:11:13',1,'aa','123'),(4,'aa111','aa',NULL,'pranav','2017-03-20 03:12:08',1,'aa','123');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -473,9 +527,6 @@ DROP TABLE IF EXISTS `userprofile`;
 CREATE TABLE `userprofile` (
   `userprofileid` int(11) NOT NULL AUTO_INCREMENT,
   `userid` int(11) DEFAULT NULL,
-  `firstName` varchar(45) DEFAULT NULL,
-  `lastName` varchar(45) DEFAULT NULL,
-  `mobileNo` varchar(45) DEFAULT NULL,
   `flatno` varchar(45) DEFAULT NULL,
   `wing` varchar(45) DEFAULT NULL,
   `tower` varchar(45) DEFAULT NULL,
@@ -492,10 +543,9 @@ CREATE TABLE `userprofile` (
   `vehicletype` varchar(45) DEFAULT NULL,
   `parkingallotmentno` varchar(45) DEFAULT NULL,
   `floor` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
   `societyid` int(11) DEFAULT NULL,
   PRIMARY KEY (`userprofileid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -504,17 +554,68 @@ CREATE TABLE `userprofile` (
 
 LOCK TABLES `userprofile` WRITE;
 /*!40000 ALTER TABLE `userprofile` DISABLE KEYS */;
-INSERT INTO `userprofile` VALUES (1,2,NULL,NULL,NULL,'203','B','2','self','','vgpranav@gmail.com','1234123412341234','','2017-03-13 00:00:00','2017-03-13 00:00:00','465','520','NA','2Wheeler','NA','2',NULL,1);
+INSERT INTO `userprofile` VALUES (1,2,'203','B','2','self','','vgpranav@gmail.com','1234123412341234','','2017-03-13 00:00:00','2017-03-13 00:00:00','465','520','NA','2Wheeler','NA','2',1),(2,3,'aa','aa','aa','leased','aa','aa','aa','8976724255','2017-03-20 00:00:00','2017-03-20 00:00:00','aa','aa','aa','aa','aa','aa',1),(3,4,'aa','aa','aa','leased','aa','aa','aa','8976724255','2017-03-20 00:00:00','2017-03-20 00:00:00','aa','aa','aa','aa','aa','aa',1);
 /*!40000 ALTER TABLE `userprofile` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'dms'
+-- Table structure for table `vendors`
 --
 
+DROP TABLE IF EXISTS `vendors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendors` (
+  `vendorid` int(11) NOT NULL AUTO_INCREMENT,
+  `companyname` varchar(500) DEFAULT NULL,
+  `jobnature` varchar(255) DEFAULT NULL,
+  `contactperson` varchar(255) DEFAULT NULL,
+  `address` varchar(1000) DEFAULT NULL,
+  `contactno` varchar(45) DEFAULT NULL,
+  `alternateno` varchar(45) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `remark` varchar(1000) DEFAULT NULL,
+  `isactive` int(11) DEFAULT '1',
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`vendorid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 --
--- Dumping routines for database 'dms'
+-- Dumping data for table `vendors`
 --
+
+LOCK TABLES `vendors` WRITE;
+/*!40000 ALTER TABLE `vendors` DISABLE KEYS */;
+INSERT INTO `vendors` VALUES (1,'Test','test','test','test','000','000','test@abc.com','test',1,'2017-03-19 00:22:25'),(2,'test1','test1','test1','test1 test1 test1 test1 test1 v v','1234','1134','test1','test1test1test1test1test1test1test1',1,'2017-03-19 00:39:48'),(3,'test1111111','test1','test1','test1 test1 test1 test1 test1 v v','1234','1134','test1','test1test1test1test1test1test1test1',1,'2017-03-19 00:40:26');
+/*!40000 ALTER TABLE `vendors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vendorsocietymapping`
+--
+
+DROP TABLE IF EXISTS `vendorsocietymapping`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `vendorsocietymapping` (
+  `vendorsocietymappingid` int(11) NOT NULL AUTO_INCREMENT,
+  `vendorid` varchar(45) DEFAULT NULL,
+  `societyid` varchar(45) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`vendorsocietymappingid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vendorsocietymapping`
+--
+
+LOCK TABLES `vendorsocietymapping` WRITE;
+/*!40000 ALTER TABLE `vendorsocietymapping` DISABLE KEYS */;
+INSERT INTO `vendorsocietymapping` VALUES (1,'1','1','2017-03-18 21:57:38'),(2,'2','1','2017-03-19 00:39:48'),(3,'3','1','2017-03-19 00:40:26');
+/*!40000 ALTER TABLE `vendorsocietymapping` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -525,4 +626,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-13 20:40:16
+-- Dump completed on 2017-03-21 23:15:30

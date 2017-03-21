@@ -243,6 +243,19 @@ public class SocietyDao
         userProfileId = CommomUtility.convertToLong(obj1);
       }
       
+      //userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno
+      if(userprofile.getOccupancy().equalsIgnoreCase("leased")){
+    	  qr.insert(conn, DMSQueries.insertNewTenant, rsh,
+    			  userId,
+    			  userprofile.getTenantname(),
+    			  userprofile.getTenantaddress(),
+    			  userprofile.getTenantcontactnumber(),
+    			  userprofile.getTenantaltnumber(),
+    			  userprofile.getTenantemail(),
+    			  userprofile.getTenantaadharno()
+    			  );
+      }
+      
       conn.commit();
       
       userprofile.setUserid(userId);
@@ -688,6 +701,46 @@ public FormFields getFormFieldsById(FormFields formFields) {
       return formFields;
     } catch (Exception e) {
       logger.error("Error in getFormFieldsById :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public Userprofile getUserDataById(Userprofile userprofile) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Userprofile> rsh = new BeanHandler<Userprofile>(Userprofile.class);
+      userprofile = qr.query(conn, DMSQueries.getUserDataById, rsh, 
+    		  userprofile.getUserid()
+        );
+      
+       Userprofile tenant = null;
+       tenant = qr.query(conn, DMSQueries.getTenantDataByUserId, rsh, 
+     		  userprofile.getUserid()
+    	        );
+       
+       if(tenant!=null && userprofile.getOccupancy().equalsIgnoreCase("leased")){
+    	   userprofile.setTenantname(tenant.getTenantname());
+    	   userprofile.setTenantaddress(tenant.getTenantaddress());
+    	   userprofile.setTenantcontactnumber(tenant.getTenantcontactnumber());
+    	   userprofile.setTenantaltnumber(tenant.getTenantaltnumber());
+    	   userprofile.setTenantemail(tenant.getTenantemail());
+    	   userprofile.setTenantaadharno(tenant.getTenantaadharno());
+    	   
+    	   tenant=null;
+       }
+      return userprofile;
+    } catch (Exception e) {
+      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
       e.printStackTrace();
     } finally {
       try {

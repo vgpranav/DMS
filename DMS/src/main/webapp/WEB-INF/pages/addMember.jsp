@@ -31,7 +31,9 @@
 
 
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <strong>Owner Details</strong> <hr />
+								<br /> 
+								<h2><span class="label label-success label-md">Owner Details</span></h2> 
+								<hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -124,7 +126,7 @@
 							</div>
 
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <strong>Flat Details</strong> <hr />
+								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -156,7 +158,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select class="form-control" name="occupancy" id="occupancy"
-											required="required">
+											required="required" onchange="showhidetenant()">
 											<option value="self">Self Occupied</option>
 											<option value="leased">Leased</option>
 										</select>
@@ -227,9 +229,9 @@
 
 							</div>
 							
-							<section id="tenantdetails">
+							<section id="tenantdetails" style="display: none;">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <strong>Tenant Details</strong> <hr />
+								<br /> <h2><span class="label label-success label-md">Tenant Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
 							<div class="form-group">
@@ -294,7 +296,7 @@
 							
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <strong>Parking Details</strong> <hr />
+								<br /><h2><span class="label label-success label-md">Parking Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -455,6 +457,13 @@
 		var parkingallotmentno = $('#parkingallotmentno').val();
 		var societyid = $('#societyid').val();
 		var password = $('#password').val();
+		
+		var tenantname = $('#tenantname').val();
+		var tenantaddress = $('#tenantaddress').val();
+		var tenantcontactnumber = $('#tenantcontactnumber').val();
+		var tenantaltnumber = $('#tenantaltnumber').val();
+		var tenantemail = $('#tenantemail').val();
+		var tenantaadharno = $('#tenantaadharno').val();
 
 		if(firstName.length<1 || lastName.length<1 || mobileNo.length<1 || occupancy.length<1 || flatno.length<1 || wing.length<1 || password.length<1 || societyid.length<1){
 			alert("Some Mandatory Fields Are Empty");
@@ -484,7 +493,13 @@
 			        +"&carpetarea="+carpetarea
 			        +"&vehicletype="+vehicletype
 			        +"&parkingtype="+parkingtype
-			        +"&parkingallotmentno="+parkingallotmentno,
+			        +"&parkingallotmentno="+parkingallotmentno
+			        +"&tenantname="+tenantname
+			        +"&tenantaddress="+tenantaddress
+			        +"&tenantcontactnumber="+tenantcontactnumber
+			        +"&tenantaltnumber="+tenantaltnumber
+			        +"&tenantemail="+tenantemail
+			        +"&tenantaadharno="+tenantaadharno,
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
@@ -513,8 +528,8 @@
 	        	var srno=1;
 	        	$.each(response, function(i, item) {
 	        		
-	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.userprofileid + '\')"><i class="fa fa-edit"></i></a>';
-	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.userprofileid + '\')"><i class="fa fa-times"></i></a>';
+	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editUserData(\'' + item.userid + '\')"><i class="fa fa-edit"></i></a>';
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteUserData(\'' + item.userid + '\')"><i class="fa fa-times"></i></a>';
 
 	        		table.row.add( [
 	        			srno,
@@ -548,6 +563,43 @@
 			});
 	}
 	
-	
+	function showhidetenant(){
+		var occupancy = $('#occupancy').val();
+		if(occupancy=='self')
+		 $('#tenantdetails').hide('slideDown');
+		else
+			$('#tenantdetails').show('slideDown');
+	}
+	 
+	function editUserData(userid){
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getUserDataById.do",
+	        data :"userid="+userid,
+	        success: function(response){
+	        	if(response.fieldid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#fieldid').val(response.fieldid);
+	        		$('#docsubtypeid option[value="'+response.docsubtypeid+'"]').prop("selected",true).change();
+	        		$('#fieldname').val(response.fieldname);
+	        		$('#datatype option[value="'+response.datatype+'"]').prop("selected",true).change();
+	        		$('#sequence option[value="'+response.sequence+'"]').prop("selected",true).change();
+	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		$('input[name=fieldtype][value="'+response.fieldtype+'"]').prop("checked","checked").change();
+	        		//$('#societyname').val(response.societyname);
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
 </script>
+
+<style>
+	.headcolor{
+		color: red;
+	}
+</style>
 

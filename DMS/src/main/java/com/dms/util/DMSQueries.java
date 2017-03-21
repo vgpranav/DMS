@@ -47,5 +47,8 @@ public class DMSQueries
   public static String updateDocSubtype=" Update docsubtype set doctypeid=?, docsubtypename=?, docsubtypedesc=?, active=? where docsubtypeid=?";
   public static String getFormFieldDetailsById = "select * from formstructure where fieldid=?";
   public static String updateFormFieldData = "Update formstructure set fieldname=?, fieldtype=?, datatype=?, sequence=?, active=?, docsubtypeid=? where fieldid=?";
+  public static String insertNewTenant = "insert into tenant(userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno) values (?,?,?,?,?,?,?)";
+public static String getUserDataById = "select * from user ud,userprofile up where ud.userid=up.userid and up.userid=?";
+public static String getTenantDataByUserId = "select * from tenant where userid=?";
   
 }
