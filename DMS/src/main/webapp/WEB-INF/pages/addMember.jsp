@@ -37,6 +37,8 @@
 							</div>
 							<div class="clearfix"></div>
 
+							<input type="hidden" id="userid" name="userid" value="0">
+							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">First Name <span class="required">*</span>
@@ -377,25 +379,25 @@
 						<tr class="headings">
 							<th class="column-title">Sr.No</th>
 							<th class="column-title">Edit</th>
-							<th class="column-title">Delete</th>
-							<th class="column-title">Flat_No</th>
+							<!-- <th class="column-title">Deact</th> -->
+							<th class="column-title">Flat&nbsp;No</th>
 							<th class="column-title">Wing</th>
 							<th class="column-title">Floor</th>
 							<th class="column-title">Tower</th>
-							<th class="column-title">Tenant_Name</th>
-							<th class="column-title">Mobile_No</th>
-							<th class="column-title">Joint_Owners</th>
+							<th class="column-title">Tenant&nbsp;Name</th>
+							<th class="column-title">Mobile&nbsp;No</th>
+							<th class="column-title">Joint&nbsp;Owners</th>
 							<th class="column-title">Occupancy</th>
-							<th class="column-title">Alternate_No</th>
+							<th class="column-title">Alternate&nbsp;No</th>
 							<th class="column-title">Email</th>
-							<th class="column-title">Aadhar_No</th>
-							<th class="column-title">Purchase_Date</th>
-							<th class="column-title">Possession_Date</th>
-							<th class="column-title">Builtup_Area</th>
-							<th class="column-title">Carpet_Area</th>
-							<th class="column-title">Vehicle_Type</th>
-							<th class="column-title">Parking_Type</th>
-							<th class="column-title">Parking_Allotment_No</th>
+							<th class="column-title">Aadhar&nbsp;No</th>
+							<th class="column-title">Purchase&nbsp;Date</th>
+							<th class="column-title">Possession&nbsp;Date</th>
+							<th class="column-title">Builtup&nbsp;Area</th>
+							<th class="column-title">Carpet&nbsp;Area</th>
+							<th class="column-title">Vehicle&nbsp;Type</th>
+							<th class="column-title">Parking&nbsp;Type</th>
+							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -436,6 +438,7 @@
 	
 	function saveMemberDetails(){
 		
+		var userid = $('#userid').val();
 		var firstName = $('#firstName').val();
 		var lastName = $('#lastName').val();
 		var mobileNo = $('#mobileNo').val();
@@ -473,8 +476,9 @@
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveMemberDetails.do",
-	        data :"firstName="+firstName
-			        +"&lastName="+lastName
+	        data :"userid="+userid
+	        		+"&firstName="+firstName
+	        		+"&lastName="+lastName
 			        +"&mobileNo="+mobileNo
 			        +"&alternateno="+alternateno
 			        +"&email="+email
@@ -534,7 +538,7 @@
 	        		table.row.add( [
 	        			srno,
 	        			editBtn,
-	        			delBtn,
+	        			/* delBtn, */
 	        			item.flatno,
 	        			item.wing,
 	        			item.floor,
@@ -578,16 +582,39 @@
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
 	        data :"userid="+userid,
 	        success: function(response){
-	        	if(response.fieldid>0) {
+	        	if(response.userid>0) {
 	        		//notify('success','SUCCESS','Added Successfully',2000);
-	        		$('#fieldid').val(response.fieldid);
-	        		$('#docsubtypeid option[value="'+response.docsubtypeid+'"]').prop("selected",true).change();
-	        		$('#fieldname').val(response.fieldname);
-	        		$('#datatype option[value="'+response.datatype+'"]').prop("selected",true).change();
-	        		$('#sequence option[value="'+response.sequence+'"]').prop("selected",true).change();
-	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
-	        		$('input[name=fieldtype][value="'+response.fieldtype+'"]').prop("checked","checked").change();
-	        		//$('#societyname').val(response.societyname);
+	        		$('#userid').val(response.userid);
+	        		$('#firstName').val(response.firstName);
+	        		$('#lastName').val(response.lastName);
+	        		$('#mobileNo').val(response.mobileNo);
+	        		$('#alternateno').val(response.alternateno);
+	        		$('#email').val(response.email);
+	        		$('#aadharno').val(response.aadharno);
+	        		$('#jointowners').val(response.jointowners);
+	        		$('#password').val(response.password);
+	        		$('#purchasedate').val(new Date(response.purchasedate).toString("yyyy/MM/dd"));
+	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
+	        		
+	        		$('#occupancy option[value="'+response.occupancy+'"]').prop("selected",true).change();
+	        		
+	        		$('#flatno').val(response.flatno);
+	        		$('#wing').val(response.wing);
+	        		$('#tower').val(response.tower);
+	        		$('#floor').val(response.floor);
+	        		$('#builtuparea').val(response.builtuparea);
+	        		$('#carpetarea').val(response.carpetarea);
+	        		$('#tenantname').val(response.tenantname);
+	        		$('#tenantaddress').val(response.tenantaddress);
+	        		$('#tenantcontactnumber').val(response.tenantcontactnumber);
+	        		$('#tenantaltnumber').val(response.tenantaltnumber);
+	        		$('#tenantemail').val(response.tenantemail);
+	        		$('#tenantaadharno').val(response.tenantaadharno);
+	        		$('#vehicletype').val(response.vehicletype);
+	        		$('#parkingtype').val(response.parkingtype);
+	        		$('#parkingallotmentno').val(response.parkingallotmentno);
+	        		
+	        		
 	        	}  
 	        },
 				error : function(e) {

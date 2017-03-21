@@ -168,7 +168,7 @@ public class AjaxController
   {
     SocietyDao societyDao = new SocietyDao();
     try {
-      System.out.println("userprofile :: " + userprofile);
+      //System.out.println("userprofile :: " + userprofile);
       userprofile = societyDao.saveMemberDetails(userprofile);
     } catch (Exception e) {
       logger.error(e.getMessage());

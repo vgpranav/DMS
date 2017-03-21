@@ -207,59 +207,106 @@ public class SocietyDao
       ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
       conn.setAutoCommit(false);
       
-      Object obj = qr.insert(conn, DMSQueries.insertNewUser, rsh,  
-	        userprofile.getFirstName(), 
-	        userprofile.getLastName(), 
-	        userprofile.getPassword(), 
-	        Integer.valueOf(123), 
-	        userprofile.getMobileNo()
-        );
-      
+      if(userprofile.getUserid() == 0){
+    	  
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewUser, rsh,  
+    		        userprofile.getFirstName(), 
+    		        userprofile.getLastName(), 
+    		        userprofile.getPassword(), 
+    		        Integer.valueOf(123), 
+    		        userprofile.getMobileNo()
+    	        );
+    	      
 
-      userId = CommomUtility.convertToLong(obj);
-      
-      if (userId != 0L) {
-        Object obj1 = qr.insert(conn, DMSQueries.insertNewUserProfile, rsh,
-	          Long.valueOf(userId), 
-	          userprofile.getFlatno(), 
-	          userprofile.getWing(), 
-	          userprofile.getFloor(), 
-	          userprofile.getTower(), 
-	          userprofile.getOccupancy(), 
-	          userprofile.getAlternateno(), 
-	          userprofile.getEmail(), 
-	          userprofile.getAadharno(), 
-	          userprofile.getJointowners(), 
-	          userprofile.getPurchasedate(), 
-	          userprofile.getPossessiondate(), 
-	          userprofile.getBuiltuparea(), 
-	          userprofile.getCarpetarea(), 
-	          userprofile.getParkingtype(), 
-	          userprofile.getVehicletype(), 
-	          userprofile.getParkingallotmentno(), 
-	          userprofile.getSocietyid()
-          );
-        
-        userProfileId = CommomUtility.convertToLong(obj1);
-      }
-      
-      //userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno
-      if(userprofile.getOccupancy().equalsIgnoreCase("leased")){
-    	  qr.insert(conn, DMSQueries.insertNewTenant, rsh,
-    			  userId,
-    			  userprofile.getTenantname(),
-    			  userprofile.getTenantaddress(),
-    			  userprofile.getTenantcontactnumber(),
-    			  userprofile.getTenantaltnumber(),
-    			  userprofile.getTenantemail(),
-    			  userprofile.getTenantaadharno()
-    			  );
+    	      userId = CommomUtility.convertToLong(obj);
+    	      
+    	      if (userId != 0L) {
+    	        Object obj1 = qr.insert(conn, DMSQueries.insertNewUserProfile, rsh,
+    		          Long.valueOf(userId), 
+    		          userprofile.getFlatno(), 
+    		          userprofile.getWing(), 
+    		          userprofile.getFloor(), 
+    		          userprofile.getTower(), 
+    		          userprofile.getOccupancy(), 
+    		          userprofile.getAlternateno(), 
+    		          userprofile.getEmail(), 
+    		          userprofile.getAadharno(), 
+    		          userprofile.getJointowners(), 
+    		          userprofile.getPurchasedate(), 
+    		          userprofile.getPossessiondate(), 
+    		          userprofile.getBuiltuparea(), 
+    		          userprofile.getCarpetarea(), 
+    		          userprofile.getParkingtype(), 
+    		          userprofile.getVehicletype(), 
+    		          userprofile.getParkingallotmentno(), 
+    		          userprofile.getSocietyid()
+    	          );
+    	        
+    	        userProfileId = CommomUtility.convertToLong(obj1);
+    	      }
+    	      
+    	      if(userprofile.getOccupancy().equalsIgnoreCase("leased")){
+    	    	  qr.insert(conn, DMSQueries.insertNewTenant, rsh,
+    	    			  userId,
+    	    			  userprofile.getTenantname(),
+    	    			  userprofile.getTenantaddress(),
+    	    			  userprofile.getTenantcontactnumber(),
+    	    			  userprofile.getTenantaltnumber(),
+    	    			  userprofile.getTenantemail(),
+    	    			  userprofile.getTenantaadharno()
+    	    			  );
+    	      }
+    	      
+    	      userprofile.setUserid(userId);
+    	      userprofile.setUserprofileid(userProfileId);
+    	      
+      } else {
+    	  qr.update(conn, DMSQueries.updateNewUser, 
+  		        userprofile.getFirstName(), 
+  		        userprofile.getLastName(), 
+  		        userprofile.getPassword(), 
+  		        1,
+  		        userprofile.getMobileNo(),
+  		        userprofile.getUserid()
+  	        );
+    	  
+    	  Object obj1 = qr.update(conn, DMSQueries.updateNewUserProfile, 
+		          userprofile.getFlatno(), 
+		          userprofile.getWing(), 
+		          userprofile.getTower(), 
+		          userprofile.getOccupancy(), 
+		          userprofile.getAlternateno(), 
+		          userprofile.getEmail(), 
+		          userprofile.getAadharno(), 
+		          userprofile.getJointowners(), 
+		          userprofile.getPurchasedate(), 
+		          userprofile.getPossessiondate(), 
+		          userprofile.getBuiltuparea(), 
+		          userprofile.getCarpetarea(), 
+		          userprofile.getParkingtype(), 
+		          userprofile.getVehicletype(), 
+		          userprofile.getParkingallotmentno(), 
+		          userprofile.getSocietyid(),
+		          userprofile.getFloor(), 
+		          userprofile.getUserid()
+	          );
+    	  
+    	  if(userprofile.getOccupancy().equalsIgnoreCase("leased")){
+	    	  qr.update(conn, DMSQueries.updateNewTenant, 
+	    			  userprofile.getTenantname(),
+	    			  userprofile.getTenantaddress(),
+	    			  userprofile.getTenantcontactnumber(),
+	    			  userprofile.getTenantaltnumber(),
+	    			  userprofile.getTenantemail(),
+	    			  userprofile.getTenantaadharno(),
+	    			  userprofile.getUserid()
+	    			  );
+	      }
       }
       
       conn.commit();
       
-      userprofile.setUserid(userId);
-      userprofile.setUserprofileid(userProfileId);
+      
       
       return userprofile;
     }

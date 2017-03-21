@@ -50,5 +50,10 @@ public class DMSQueries
   public static String insertNewTenant = "insert into tenant(userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno) values (?,?,?,?,?,?,?)";
 public static String getUserDataById = "select * from user ud,userprofile up where ud.userid=up.userid and up.userid=?";
 public static String getTenantDataByUserId = "select * from tenant where userid=?";
+
+
+public static String updateNewUser = "Update user set firstname=?, lastname=?,  password=?, active=?, mobileNo=? where userid=?";
+public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=? where userid=?";
+public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=? where userid=?";
   
 }
