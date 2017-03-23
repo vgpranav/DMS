@@ -16,6 +16,9 @@ public class Vendor {
 	private String remark;
 	private int isactive;
 	private Date createdon;
+	private String createdby;
+	
+	
 	
 	public long getVendorid() {
 		return vendorid;
@@ -92,12 +95,20 @@ public class Vendor {
 		this.createdon = createdon;
 	}
 	
+	public String getCreatedby() {
+		return createdby;
+	}
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
 	@Override
 	public String toString() {
 		return "Vendor [vendorid=" + vendorid + ", societyid=" + societyid + ", companyname=" + companyname
 				+ ", jobnature=" + jobnature + ", contactperson=" + contactperson + ", address=" + address
 				+ ", contactno=" + contactno + ", alternateno=" + alternateno + ", email=" + email + ", remark="
-				+ remark + ", isactive=" + isactive + ", createdon=" + createdon + "]";
+				+ remark + ", isactive=" + isactive + ", createdon=" + createdon + ", createdby=" + createdby + "]";
 	}
+	
+	
 	
 }

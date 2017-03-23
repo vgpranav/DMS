@@ -286,8 +286,9 @@ public class SocietyDao
 		          userprofile.getParkingtype(), 
 		          userprofile.getVehicletype(), 
 		          userprofile.getParkingallotmentno(), 
-		          userprofile.getSocietyid(),
+		         
 		          userprofile.getFloor(), 
+		          userprofile.getSocietyid(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -595,29 +596,58 @@ public Vendor saveVendorDetails(Vendor vendor) {
       
       conn.setAutoCommit(false);
       
-      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
-      Object obj = qr.insert(conn, DMSQueries.insertNewVendor, rsh, 
-    		  vendor.getCompanyname(),
-    		  vendor.getJobnature(),
-    		  vendor.getContactperson(),
-    		  vendor.getAddress(),
-    		  vendor.getContactno(),
-    		  vendor.getAlternateno(),
-    		  vendor.getEmail(),
-    		  vendor.getRemark(),
-    		  vendor.getIsactive()
-        );
+      if(vendor.getVendorid()==0){
+    	  
+    	  ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+          Object obj = qr.insert(conn, DMSQueries.insertNewVendor, rsh, 
+        		  vendor.getCompanyname(),
+        		  vendor.getJobnature(),
+        		  vendor.getContactperson(),
+        		  vendor.getAddress(),
+        		  vendor.getContactno(),
+        		  vendor.getAlternateno(),
+        		  vendor.getEmail(),
+        		  vendor.getRemark(),
+        		  vendor.getIsactive(),
+        		  vendor.getCreatedby()
+            );
+          
+          vendorId = CommomUtility.convertToLong(obj);
+          
+          Object obj1 = qr.insert(conn, DMSQueries.insertVendorSocMapping, rsh, 
+        		  vendorId,
+        		  vendor.getSocietyid()
+            );
+          
+          vendor.setVendorid(vendorId);
+          
+      } else {
+    					  
+          Object obj = qr.update(conn, DMSQueries.updateNewVendor,  
+        		  vendor.getCompanyname(),
+        		  vendor.getJobnature(),
+        		  vendor.getContactperson(),
+        		  vendor.getAddress(),
+        		  vendor.getContactno(),
+        		  vendor.getAlternateno(),
+        		  vendor.getEmail(),
+        		  vendor.getRemark(),
+        		  vendor.getIsactive(),
+        		  vendor.getVendorid()
+            );
+          
+          Object obj1 = qr.update(conn, DMSQueries.updateVendorSocMapping , 
+        		  vendor.getSocietyid(),
+        		  vendor.getVendorid()
+            );
+    	  
+    	  
+      }
       
-      vendorId = CommomUtility.convertToLong(obj);
-      
-      Object obj1 = qr.insert(conn, DMSQueries.insertVendorSocMapping, rsh, 
-    		  vendorId,
-    		  vendor.getSocietyid()
-        );
       
       conn.commit();
       
-      vendor.setVendorid(vendorId);
+      
       
       return vendor;
     } catch (Exception e) {
@@ -786,6 +816,30 @@ public Userprofile getUserDataById(Userprofile userprofile) {
     	   tenant=null;
        }
       return userprofile;
+    } catch (Exception e) {
+      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public Vendor getVendorDataById(Vendor vendor) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Vendor> rsh = new BeanHandler<Vendor>(Vendor.class);
+      vendor = qr.query(conn, DMSQueries.getVendorDataById, rsh, 
+    		  vendor.getVendorid()
+        );
+      return vendor;
     } catch (Exception e) {
       logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
       e.printStackTrace();

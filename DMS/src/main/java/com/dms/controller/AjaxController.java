@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -244,10 +245,13 @@ public class AjaxController
   
   @RequestMapping(value={"/saveVendorDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   @ResponseBody
-  public Vendor saveVendorDetails(@ModelAttribute Vendor vendor)
+  public Vendor saveVendorDetails(@ModelAttribute Vendor vendor,HttpServletRequest request, HttpServletResponse response)
   {
+	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
+    	user = (User)request.getSession().getAttribute("userObject");
+    	vendor.setCreatedby(String.valueOf(user.getUserid()));
     	vendor = societyDao.saveVendorDetails(vendor);
     } catch (Exception e) {
       logger.error(e.getMessage());
@@ -333,6 +337,19 @@ public class AjaxController
       logger.error(e.getMessage());
     }
     return userprofile;
+  }
+  
+  @RequestMapping(value={"/getVendorDataById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Vendor getVendorDataById(@ModelAttribute Vendor vendor)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	vendor = societyDao.getVendorDataById(vendor);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return vendor;
   }
   
   

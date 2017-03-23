@@ -508,6 +508,35 @@
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
 	        		notify('success','SUCCESS','Added Successfully',2000);
+	        		
+	        		$('#userid').val("");
+	        		$('#firstName').val("");
+	        		$('#lastName').val("");
+	        		$('#mobileNo').val("");
+	        		$('#alternateno').val("");
+	        		$('#email').val("");
+	        		$('#aadharno').val("");
+	        		$('#jointowners').val("");
+	        		$('#password').val("");
+	        		$('#purchasedate').val("");
+	        		$('#possessiondate').val("");
+	        		
+	        		$('#flatno').val("");
+	        		$('#wing').val("");
+	        		$('#tower').val("");
+	        		$('#floor').val("");
+	        		$('#builtuparea').val("");
+	        		$('#carpetarea').val("");
+	        		$('#tenantname').val("");
+	        		$('#tenantaddress').val("");
+	        		$('#tenantcontactnumber').val("");
+	        		$('#tenantaltnumber').val("");
+	        		$('#tenantemail').val("");
+	        		$('#tenantaadharno').val("");
+	        		$('#vehicletype').val("");
+	        		$('#parkingtype').val("");
+	        		$('#parkingallotmentno').val("");
+	        		
 	        	}  
 	        },
 				error : function(e) {
@@ -522,6 +551,7 @@
 		var societyid = $('#societyid').val();
 		var table = $('#thetable').DataTable();
 			
+		
 		table .clear() .draw();
 		
 		$.ajax({

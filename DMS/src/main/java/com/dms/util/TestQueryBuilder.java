@@ -16,7 +16,7 @@ public class TestQueryBuilder {
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dms","root","12345");  
 			
 			
-			String tablename = "tenant";
+			String tablename = "vendorsocietymapping";
 			//String QueryType = "insert";
 			String QueryType = "update";
 			

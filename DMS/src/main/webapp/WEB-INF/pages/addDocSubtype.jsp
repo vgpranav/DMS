@@ -59,7 +59,7 @@
 							for="first-name">Status<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:6px;">
-							<input type="radio" name="active" value="1"> Active
+							<input type="radio" name="active" value="1" checked="checked"> Active
 							<input type="radio" name="active" value="0"> Inactive
 						</div>
 					</div>

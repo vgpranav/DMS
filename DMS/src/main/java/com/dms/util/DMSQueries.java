@@ -35,7 +35,7 @@ public class DMSQueries
   public static String insertPhotoInfo = "insert into photos(phototype,docid,docpath,docname,contenttype) values (?,?,?,?,?)";
   public static String getSocietyPhotos = "select * from photos where docid=? and isactive=1 and phototype='society'";
   public static String deactOldPhotos="update photos set isactive=0 where docid=? and phototype='society'";
-  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive) values (?,?,?,?,?,?,?,?,?)";
+  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive,vendors) values (?,?,?,?,?,?,?,?,?,?)";
   public static String insertVendorSocMapping = "insert into vendorsocietymapping(vendorid,societyid) values (?,?)";
   public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
   public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";
@@ -55,5 +55,8 @@ public static String getTenantDataByUserId = "select * from tenant where userid=
 public static String updateNewUser = "Update user set firstname=?, lastname=?,  password=?, active=?, mobileNo=? where userid=?";
 public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=? where userid=?";
 public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=? where userid=?";
+public static String getVendorDataById = "select * from vendors where vendorid=?";
+public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=? where vendorid=?";
+public static String updateVendorSocMapping="Update vendorsocietymapping set societyid=? where vendorid=?";
   
 }

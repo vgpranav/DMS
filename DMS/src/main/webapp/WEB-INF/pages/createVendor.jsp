@@ -26,6 +26,7 @@
 					class="form-horizontal form-label-left" action="#"
 					method="post" onsubmit="return saveVendorDetails()">
 					
+					<input type="hidden" id="vendorid" name="vendorid" value="0">
 					
 					 <div class="form-group">
 						<label class="control-label col-md-6 col-sm-6 col-xs-12"
@@ -174,7 +175,7 @@
  
  
  function saveVendorDetails(){
-		
+		var vendorid = $('#vendorid').val();
 		var societyid = $('#societyid').val();
 		var companyname = $('#companyname').val();
 		var jobnature = $('#jobnature').val();
@@ -196,7 +197,8 @@
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveVendorDetails.do",
-	        data :"societyid="+societyid
+	        data :"vendorid="+vendorid
+			        +"&societyid="+societyid
 			        +"&companyname="+companyname
 			        +"&jobnature="+jobnature
 			        +"&contactperson="+contactperson
@@ -207,6 +209,7 @@
 			        +"&remark="+remark
 			        +"&isactive="+isactive,
 	        success: function(response){
+	        	//alert();
 	        	if(response.vendorid>0) {
 	        		getVendorsBySocId();
 	        		notify('success','SUCCESS','Added Successfully',2000);
@@ -235,6 +238,8 @@
 	        if(response.length>0){
 	        	$.each(response, function(i, item) {
 	  
+	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editVendor(\'' + item.vendorid + '\')"><i class="fa fa-edit"></i></a>';
+	        		
 	        		table.row.add( [
 	        			item.companyname,
 	        			item.jobnature,
@@ -242,7 +247,7 @@
 	        			item.contactno,
 	        			item.alternateno,
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
-	        			item.vendorid,
+	        			editBtn,
 	                ] ).draw( false );
 	        	    
 	        	  });
@@ -253,4 +258,35 @@
 				}
 			});
 	}
+	
+	
+	function editVendor(vendorId){
+		
+
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getVendorDataById.do",
+	        data :"vendorid="+vendorId,
+	        success: function(response){
+	        	if(response.vendorid>0) {
+	        		//notify('success','SUCCESS','Added Successfully',2000);
+	        		$('#vendorid').val(response.vendorid);
+	        		$('#companyname').val(response.companyname);
+	        		$('#jobnature').val(response.jobnature);
+	        		$('#contactperson').val(response.contactperson);
+	        		$('#address').val(response.address);
+	        		$('#contactno').val(response.contactno);
+	        		$('#alternateno').val(response.alternateno);
+	        		$('#email').val(response.email);
+	        		$('#remark').val(response.remark);
+	        		$('input[name=isactive][value="'+response.isactive+'"]').prop("checked","checked").change();
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
+	
+	
  </script>

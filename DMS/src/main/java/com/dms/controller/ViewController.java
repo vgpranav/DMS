@@ -244,6 +244,9 @@ public class ViewController
   public ModelAndView addDocument2(@ModelAttribute Document document) {
     ModelAndView mv = null;
     List<FormFields> formFields = null;
+    
+    System.out.println("document ::> "+document);
+    
     DocumentDao documentDao = new DocumentDao();
     try {
       formFields = documentDao.getFieldsForDocSubtype(document.getDocsubtypeid(), formFields);
