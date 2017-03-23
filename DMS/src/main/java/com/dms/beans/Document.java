@@ -8,14 +8,11 @@ public class Document
     private long documentid;
     private long societyid;
     private long doctypeid;
+    private long userid;
     private long docsubtypeid;
     private String description;
     private String createdby;
     private Date createdon;
-
-    public Document()
-    {
-    }
 
     public long getDocumentid()
     {
@@ -87,8 +84,20 @@ public class Document
         this.description = description;
     }
 
-    public String toString()
-    {
-        return (new StringBuilder("Document [documentid=")).append(documentid).append(", societyid=").append(societyid).append(", doctypeid=").append(doctypeid).append(", docsubtypeid=").append(docsubtypeid).append(", description=").append(description).append(", createdby=").append(createdby).append(", createdon=").append(createdon).append("]").toString();
-    }
+	public long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(long userid) {
+		this.userid = userid;
+	}
+
+	@Override
+	public String toString() {
+		return "Document [documentid=" + documentid + ", societyid=" + societyid + ", doctypeid=" + doctypeid
+				+ ", userid=" + userid + ", docsubtypeid=" + docsubtypeid + ", description=" + description
+				+ ", createdby=" + createdby + ", createdon=" + createdon + "]";
+	}
+	
+	
 }

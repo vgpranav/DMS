@@ -10,6 +10,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addSociety.do">Create Society</a></li>
+		                      <li><a href="createBuilder.do">Create Builder</a></li>
 		                      <li><a href="addSocietyPhotos.do">Add Society Photos</a></li>
 		                      <li><a href="addDoctype.do">Create Doctype</a></li>
 		                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
@@ -17,6 +18,17 @@
 		                      <li><a href="addMember.do">Add Members</a></li>
 		                      <li><a href="createCommittee.do">Create Committee</a></li>
 		                      <li><a href="createVendor.do">Create Vendor</a></li>
+		                    </ul>
+		                  </li>
+		                  
+		                  <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		Authorizations 
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
 		                    </ul>
 		                  </li>
 		                  

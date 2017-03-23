@@ -3,6 +3,7 @@ package com.dms.dao;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
+import com.dms.beans.Documentdetails;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.util.CommomUtility;
@@ -339,6 +340,7 @@ public class DocumentDao
     String societyid = "";
     String doctypeid = "";
     String docsubtypeid = "";
+    String userid = "";
     long documentId = 0L;
     try
     {
@@ -347,9 +349,14 @@ public class DocumentDao
       if (params.containsKey("doctypeid"))
         doctypeid = (String)params.get("doctypeid");
       if (params.containsKey("docsubtypeid")) {
-        docsubtypeid = (String)params.get("docsubtypeid");
-      }
-      if ((societyid.length() < 1) || (doctypeid.length() < 1) || (docsubtypeid.length() < 1)) {
+          docsubtypeid = (String)params.get("docsubtypeid");
+        }
+      if (params.containsKey("userid")) {
+    	  userid = (String)params.get("userid");
+        }
+      
+      
+      if ((societyid.length() < 1) || (doctypeid.length() < 1) || (docsubtypeid.length() < 1) || (userid.length() < 1)) {
         return 0L;
       }
       qr = new QueryRunner();
@@ -360,7 +367,8 @@ public class DocumentDao
         societyid, 
         doctypeid, 
         docsubtypeid, 
-        Integer.valueOf(123) });
+        Integer.valueOf(123) ,
+        userid});
       
       documentId = CommomUtility.convertToLong(obj);
       
@@ -510,5 +518,45 @@ public class DocumentDao
       }
     }
     return fieldid;
+  }
+
+public List<Documentdetails> getExistingDocumentDetails(Document document, List<Documentdetails> documentdetails) {
+    Connection conn = null;
+
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<Documentdetails>> rsh = new BeanListHandler<Documentdetails>(Documentdetails.class);
+      
+      documentdetails = qr.query(conn,DMSQueries.getExistingDocDetails,rsh,
+    		  	document.getSocietyid(),
+    		  	document.getDoctypeid(),
+    		  	document.getDocsubtypeid(),
+    		  	document.getUserid()
+    		  );
+      
+      //System.out.println("documentdetails :: "+documentdetails);
+      
+      return documentdetails;
+    } catch (Exception e) {
+      logger.error("Error Saving Doctype :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
   }
 }

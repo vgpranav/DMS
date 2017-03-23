@@ -852,4 +852,82 @@ public Vendor getVendorDataById(Vendor vendor) {
     }
     return null;
   }
+
+public List<Committee> getManagersForSociety(Society society, List<Committee> committees) {
+    Connection conn = null;
+    
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<Committee>> rsh = new BeanListHandler<Committee>(Committee.class);
+      
+      committees =  qr.query(conn, DMSQueries.getSocietyManagerList,rsh,society.getSocietyid());
+      
+     return committees;
+    }
+    catch (Exception e) {
+      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      e.printStackTrace();
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public int removeSocietyManager(Committee committee) {
+    Connection conn = null;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      int rowsUpdated = qr.update(conn, DMSQueries.removeSocietyManager, 
+    		  committee.getSocietymanagerid());
+      return rowsUpdated;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return 0;
+  }
+
+public Committee addSocietyManager(Committee committee) {
+    Connection conn = null;
+    
+    long societyManagerId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+      Object obj = qr.insert(conn, DMSQueries.addSocietyManager, rsh, 
+	        Long.valueOf(committee.getSocietyid()),
+	        Long.valueOf(committee.getUserid())
+        );
+      
+      societyManagerId = CommomUtility.convertToLong(obj);
+      committee.setSocietymanagerid(String.valueOf(societyManagerId));
+      return committee;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
 }

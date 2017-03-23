@@ -353,4 +353,48 @@ public class AjaxController
   }
   
   
+  @RequestMapping(value={"/getManagersForSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<Committee> getManagersForSociety(@ModelAttribute Society society)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<Committee> committees = null;
+    try {
+    	committees = societyDao.getManagersForSociety(society, committees);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return committees;
+  }
+  
+  @RequestMapping(value={"/removeSocietyManager"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String removeSocietyManager(@ModelAttribute Committee committee)
+  {
+    int rowsUpdated = 0;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      rowsUpdated = societyDao.removeSocietyManager(committee);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
+  
+  
+  @RequestMapping(value={"/addSocietyManager"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Committee addSocietyManager(@ModelAttribute Committee committee)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      committee = societyDao.addSocietyManager(committee);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return committee;
+  }
 }

@@ -20,7 +20,7 @@ public class DMSQueries
   public static String getAllDoctypeFromSocid = "select d.doctypeid,d.doctypename from doctype d,societydocmapping m,society s where d.doctypeid = m.doctypeid and m.societyid = s.societyid and s.isactive = 1 and s.societyid=? ";
   public static String getAllDocSubTypeFromDocid = "select * from docsubtype where doctypeid = ?";
   public static String insertDocDetails = "insert into documentdetails(documentid,datakey,datavalue,createdby) values (?,?,?,?)";
-  public static String insertDocHead = "insert into document(societyid,doctypeid,docsubtypeid,createdby) values (?,?,?,?)";
+  public static String insertDocHead = "insert into document(societyid,doctypeid,docsubtypeid,createdby,userid) values (?,?,?,?,?)";
   public static String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description,  d.documentid, d.createdby,d.createdon  from formstructure f,documentdetails d,document doc  where f.fieldid = d.datakey  and d.documentid = doc.documentid  and doc.societyid=? and doc.doctypeid=? and doc.docsubtypeid=?  group by d.documentid order by f.sequence ";
   public static String getDocPathsByDocId = "select * from files where documentid = ?";
   public static String insertNewUser = "insert into user (firstName,lastName,password,createdBy,mobileNo) values (?,?,?,?,?)";
@@ -58,5 +58,9 @@ public static String updateNewTenant = "Update tenant set  tenantname=?, tenanta
 public static String getVendorDataById = "select * from vendors where vendorid=?";
 public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=? where vendorid=?";
 public static String updateVendorSocMapping="Update vendorsocietymapping set societyid=? where vendorid=?";
+public static String getExistingDocDetails = "select dd.* from documentdetails dd,document d where dd.documentid=d.documentid and d.societyid=? and d.doctypeid=? and d.docsubtypeid=? and d.userid=?";
+public static String getSocietyManagerList = "select sm.societymanagerid as societymanagerid,concat(u.firstname,' ',u.lastname) as userName,sm.isactive as isactive from societymanager sm, user u where sm.userid=u.userid and sm.societyid=?";
+public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
+public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
   
 }

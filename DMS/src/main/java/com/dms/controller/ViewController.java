@@ -4,6 +4,7 @@ import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
+import com.dms.beans.Documentdetails;
 import com.dms.beans.FormFields;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
@@ -49,6 +50,20 @@ public class ViewController
     return "login";
   }
   
+  @RequestMapping(value={"/showHomepage"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView showHomepage(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
+  {
+	  ModelAndView mv = null;
+	  User authenticatedUser = null;
+	  try {
+		  authenticatedUser = (User)request.getSession().getAttribute("userObject");
+		  request.getSession().setAttribute("userObject", authenticatedUser);
+		  mv = new ModelAndView("home");
+	  } catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	   return mv;
+  }
   @RequestMapping(value={"/authenticateUser"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView welcome(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
   {
@@ -244,13 +259,26 @@ public class ViewController
   public ModelAndView addDocument2(@ModelAttribute Document document) {
     ModelAndView mv = null;
     List<FormFields> formFields = null;
+    List<Documentdetails> documentdetails = null;
     
-    System.out.println("document ::> "+document);
+    //System.out.println("document ::> "+document);
     
     DocumentDao documentDao = new DocumentDao();
     try {
       formFields = documentDao.getFieldsForDocSubtype(document.getDocsubtypeid(), formFields);
+      
+      documentdetails = documentDao.getExistingDocumentDetails(document,documentdetails);
+      
+      
       mv = new ModelAndView("addDocument2");
+      
+      if(documentdetails!=null){
+    	  mv.addObject("dataExists",true);
+    	  mv.addObject("documentdetails",documentdetails);
+      } else {
+    	  mv.addObject("dataExists",false);
+      }
+      
       mv.addObject("formFieldsList", formFields);
       mv.addObject("document", document);
     }
@@ -266,12 +294,27 @@ public class ViewController
     
     DocumentDao ddao = new DocumentDao();
     
-    System.out.println(params);
+    //System.out.println(params);
     
     ModelAndView mv = null;
     try
     {
-      detailsSaved = ddao.saveDocumentHeadAndDetails(params);
+      boolean gotDocId=false;
+    	
+      if (params.containsKey("documentid")){
+    	  String docId = params.get("documentid");
+    	  if(docId!=null) {
+    		  if(docId.trim().length()>0){
+    			  if(!docId.trim().equals("0")){
+    				  detailsSaved=Long.parseLong(docId);
+    				  gotDocId=true;
+    			  }
+    		  }
+    	  }
+      }
+      
+      if(!gotDocId)
+    	  detailsSaved = ddao.saveDocumentHeadAndDetails(params);
       
       mv = new ModelAndView("addDocument3");
       if (params.containsKey("societyid"))
@@ -411,5 +454,34 @@ public class ViewController
     }
     return mv;
   }
+
   
+  @RequestMapping(value={"/societyManagerMapping"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView societyManagerMapping() {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    List<CommitteeMaster> committeeMasterList = null;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      societyList = societyDao.getSocietyListforUser(societyList);
+      committeeMasterList = societyDao.getCommitteeMaster(committeeMasterList);
+      mv = new ModelAndView("societyManagerMapping");
+      mv.addObject("societyList", societyList);
+      mv.addObject("committeeMasterList", committeeMasterList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  @RequestMapping(value={"/createBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createBuilder() {
+    ModelAndView mv = null;
+    try {
+      mv = new ModelAndView("createBuilder");
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
 }

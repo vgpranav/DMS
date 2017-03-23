@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.List,com.dms.beans.Documentdetails" %>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
@@ -21,7 +22,8 @@
 					<input type="hidden" name ="societyid" value="${document.societyid}">
 					<input type="hidden" name ="doctypeid" value="${document.doctypeid}">
 					<input type="hidden" name ="docsubtypeid" value="${document.docsubtypeid}">
-					
+					<input type="hidden" name ="userid" value="${document.userid}">
+					<input type="hidden" id="documentid" name ="documentid" value="0">
 					
 					<c:forEach items="${formFieldsList}" var="myItem" varStatus="loopStatus">
 						<div class="form-group">
@@ -74,11 +76,23 @@
                 </div>
               </div>
  </div>
- 
- 
+  
 <script>
+
+
+
 $(document).ready(function(){
-	 
+	<%  
+	if(request.getAttribute("dataExists").equals(true)){
+		List<Documentdetails> documentdetails = (List<Documentdetails>)request.getAttribute("documentdetails");
+		for(Documentdetails ddetails :documentdetails){
+			%>
+				$('#<%= ddetails.getDatakey() %>').val('<%= ddetails.getDatavalue() %>');
+				$('#documentid').val(<%= ddetails.getDocumentid() %>);
+			<%
+		}
+	}
+	%>
 });
 
 </script>

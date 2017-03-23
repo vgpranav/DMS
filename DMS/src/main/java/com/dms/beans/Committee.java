@@ -17,6 +17,7 @@ public class Committee
     private Date removedon;
     private String contactNo;
     private String flat;
+    private String societymanagerid;
 
     public Committee()
     {
@@ -141,13 +142,22 @@ public class Committee
     {
         this.removedon = removedon;
     }
+ 
+	public String getSocietymanagerid() {
+		return societymanagerid;
+	}
+
+	public void setSocietymanagerid(String societymanagerid) {
+		this.societymanagerid = societymanagerid;
+	}
 
 	@Override
 	public String toString() {
 		return "Committee [committeememberid=" + committeememberid + ", userid=" + userid + ", userName=" + userName
 				+ ", societyid=" + societyid + ", societyname=" + societyname + ", positionid=" + positionid
 				+ ", positionname=" + positionname + ", isactive=" + isactive + ", appointedon=" + appointedon
-				+ ", removedon=" + removedon + ", contactNo=" + contactNo + ", flat=" + flat + "]";
+				+ ", removedon=" + removedon + ", contactNo=" + contactNo + ", flat=" + flat + ", societymanagerid="
+				+ societymanagerid + "]";
 	}
 
     

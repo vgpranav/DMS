@@ -103,13 +103,23 @@
     </definition> 
     
      <definition name="addSocietyPhotos" extends="base-definition">  
-      <put-attribute name="title" value="Create Committee" />  
+      <put-attribute name="title" value="Add Society Photos" />  
       <put-attribute name="body" value="/WEB-INF/pages/addSocietyPhotos.jsp" />   
     </definition> 
     
      <definition name="createVendor" extends="base-definition">  
-      <put-attribute name="title" value="Create Committee" />  
+      <put-attribute name="title" value="Create Vendor" />  
       <put-attribute name="body" value="/WEB-INF/pages/createVendor.jsp" />   
+    </definition> 
+    
+     <definition name="societyManagerMapping" extends="base-definition">  
+      <put-attribute name="title" value="Society Manager Mapping" />  
+      <put-attribute name="body" value="/WEB-INF/pages/societyManagerMapping.jsp" />   
+    </definition>
+    
+     <definition name="createBuilder" extends="base-definition">  
+      <put-attribute name="title" value="Create Builder Profile" />  
+      <put-attribute name="body" value="/WEB-INF/pages/createBuilder.jsp" />   
     </definition> 
     
   
