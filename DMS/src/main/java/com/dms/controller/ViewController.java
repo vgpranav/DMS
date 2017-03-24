@@ -1,5 +1,21 @@
 package com.dms.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.dms.beans.Builder;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
@@ -13,20 +29,6 @@ import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
 import com.dms.util.CommomUtility;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ViewController
@@ -289,16 +291,16 @@ public class ViewController
   }
   
   @RequestMapping(value={"/addDocument3"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-  public ModelAndView addDocument3(@org.springframework.web.bind.annotation.RequestParam Map<String, String> params) {
+  public ModelAndView addDocument3(@org.springframework.web.bind.annotation.RequestParam Map<String, String> params,HttpServletRequest request) {
     long detailsSaved = 0L;
-    
+    User user = null;
     DocumentDao ddao = new DocumentDao();
-    
-    //System.out.println(params);
     
     ModelAndView mv = null;
     try
     {
+      user = (User)request.getSession().getAttribute("userObject");
+      
       boolean gotDocId=false;
     	
       if (params.containsKey("documentid")){
@@ -314,7 +316,7 @@ public class ViewController
       }
       
       if(!gotDocId)
-    	  detailsSaved = ddao.saveDocumentHeadAndDetails(params);
+    	  detailsSaved = ddao.saveDocumentHeadAndDetails(params,user);
       
       mv = new ModelAndView("addDocument3");
       if (params.containsKey("societyid"))
@@ -477,11 +479,39 @@ public class ViewController
   @RequestMapping(value={"/createBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView createBuilder() {
     ModelAndView mv = null;
+    SocietyDao documentDao = new SocietyDao();
+    List<Builder>  builderList = null;
     try {
-      mv = new ModelAndView("createBuilder");
+    	builderList = documentDao.getAllBuilder(builderList);
+    	mv = new ModelAndView("createBuilder");
+    	 mv.addObject("builderList", builderList);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
     return mv;
   }
+  
+  @RequestMapping(value={"/saveBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+  public ModelAndView saveBuilder(@ModelAttribute Builder builder,HttpServletRequest request)
+  {
+    ModelAndView mv = null;
+    List<Builder>  builderList = null;
+    SocietyDao documentDao = new SocietyDao();
+    User user = null;
+    try {
+      user = (User)request.getSession().getAttribute("userObject");
+      builder.setCreatedby(String.valueOf(user.getUserid()));
+      builder = documentDao.insertOrUpdateBuilder(builder);
+      builderList = documentDao.getAllBuilder(builderList);
+      System.out.println("builderList:: "+builderList);
+      mv = new ModelAndView("createBuilder");
+      mv.addObject("builderList", builderList);
+      mv.addObject("error", "Builder Profile Added");
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
 }

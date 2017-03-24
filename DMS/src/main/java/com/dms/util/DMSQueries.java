@@ -62,5 +62,9 @@ public static String getExistingDocDetails = "select dd.* from documentdetails d
 public static String getSocietyManagerList = "select sm.societymanagerid as societymanagerid,concat(u.firstname,' ',u.lastname) as userName,sm.isactive as isactive from societymanager sm, user u where sm.userid=u.userid and sm.societyid=?";
 public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
 public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
+public static String getAllBuilders = "select * from builder";
+public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? where builderid=?";
+public static String getBuilderDetailsById="select * from builder where builderid=?";
   
 }

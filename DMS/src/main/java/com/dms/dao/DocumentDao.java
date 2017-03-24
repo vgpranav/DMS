@@ -6,6 +6,7 @@ import com.dms.beans.Document;
 import com.dms.beans.Documentdetails;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
+import com.dms.beans.User;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -335,7 +336,7 @@ public class DocumentDao
     return docSubTypes;
   }
   
-  public long saveDocumentHeadAndDetails(Map<String, String> params) {
+  public long saveDocumentHeadAndDetails(Map<String, String> params, User user) {
     Connection conn = null;
     String societyid = "";
     String doctypeid = "";
@@ -367,7 +368,7 @@ public class DocumentDao
         societyid, 
         doctypeid, 
         docsubtypeid, 
-        Integer.valueOf(123) ,
+        user.getUserid(),
         userid});
       
       documentId = CommomUtility.convertToLong(obj);
@@ -379,7 +380,7 @@ public class DocumentDao
               Long.valueOf(documentId), 
               key, 
               params.get(key), 
-              Integer.valueOf(123) });
+              user.getUserid() });
           }
         }
         conn.commit();

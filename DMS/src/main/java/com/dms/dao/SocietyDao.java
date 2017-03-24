@@ -1,5 +1,6 @@
 package com.dms.dao;
 
+import com.dms.beans.Builder;
 import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
@@ -43,7 +44,8 @@ public class SocietyDao
   
   public SocietyDao() {}
   
-  public List<SocietyType> getAllActiveSocietyTypes(List<SocietyType> docTypes) { Connection conn = null;
+  public List<SocietyType> getAllActiveSocietyTypes(List<SocietyType> docTypes) { 
+	  Connection conn = null;
     try
     {
       qr = new QueryRunner();
@@ -195,7 +197,7 @@ public class SocietyDao
     return societyList;
   }
   
-  public Userprofile saveMemberDetails(Userprofile userprofile)
+  public Userprofile saveMemberDetails(Userprofile userprofile, User user)
   {
     Connection conn = null;
     
@@ -213,7 +215,7 @@ public class SocietyDao
     		        userprofile.getFirstName(), 
     		        userprofile.getLastName(), 
     		        userprofile.getPassword(), 
-    		        Integer.valueOf(123), 
+    		        user.getUserid(), 
     		        userprofile.getMobileNo()
     	        );
     	      
@@ -930,4 +932,121 @@ public Committee addSocietyManager(Committee committee) {
     }
     return null;
   }
+
+public Builder insertOrUpdateBuilder(Builder builder) {
+    Connection conn = null;
+    
+    long builderId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+      
+      conn.setAutoCommit(false);
+      
+      //Insert new
+      if(builder.getBuilderid()==0){
+    	  
+    	  
+    	  Object obj = qr.insert(conn, DMSQueries.insertNewBuilder, rsh, 
+    			  builder.getBuildername(), 
+    			  builder.getAddress(), 
+    			  builder.getBlockno(), 
+    			  builder.getPremisesname(), 
+    			  builder.getStreetname(), 
+    			  builder.getLandmark(), 
+    			  builder.getArea(), 
+    			  builder.getCity(), 
+    			  builder.getPincode(), 
+    			  builder.getState(), 
+    			  builder.getCountry(), 
+    			  builder.getCreatedby(),
+      			  builder.getActive()
+		        );
+
+    	  builderId = CommomUtility.convertToLong(obj);
+    	  builder.setBuilderid(builderId);
+		
+      }
+      	else {
+      		qr.update(conn,DMSQueries.updateBuilder,
+      			  builder.getBuildername(), 
+      			  builder.getAddress(), 
+      			  builder.getBlockno(), 
+      			  builder.getPremisesname(), 
+      			  builder.getStreetname(), 
+      			  builder.getLandmark(), 
+      			  builder.getArea(), 
+      			  builder.getCity(), 
+      			  builder.getPincode(), 
+      			  builder.getState(), 
+      			  builder.getCountry(),
+      			  builder.getActive(),
+      			  builder.getBuilderid());
+      }
+      
+      conn.commit();
+      
+      return builder;
+    }
+    catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+	public List<Builder> getAllBuilder(List<Builder> builderList) { 
+	  Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Builder>> rsh = new BeanListHandler<Builder>(Builder.class);
+	      builderList = qr.query(conn, DMSQueries.getAllBuilders, rsh);
+	    } catch (Exception e) {
+	      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return builderList;
+	  }
+
+	public Builder getBuilderDetailsById(Builder builder) {
+	    Connection conn = null;
+	    
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Builder> rsh = new BeanHandler<Builder>(Builder.class);
+	      builder = qr.query(conn, DMSQueries.getBuilderDetailsById, rsh, 
+	    		  builder.getBuilderid()
+	        );
+	      return builder;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.dms.beans.Builder;
 import com.dms.beans.Committee;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
@@ -165,12 +166,13 @@ public class AjaxController
 
   @RequestMapping(value={"/saveMemberDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   @ResponseBody
-  public Userprofile saveMemberDetails(@ModelAttribute Userprofile userprofile)
+  public Userprofile saveMemberDetails(@ModelAttribute Userprofile userprofile,HttpServletRequest request)
   {
+	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
-      //System.out.println("userprofile :: " + userprofile);
-      userprofile = societyDao.saveMemberDetails(userprofile);
+    	user = (User)request.getSession().getAttribute("userObject");
+    	userprofile = societyDao.saveMemberDetails(userprofile,user);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -397,4 +399,19 @@ public class AjaxController
     }
     return committee;
   }
+  
+  @RequestMapping(value={"/getBuilderDetailsById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Builder getBuilderDetailsById(@ModelAttribute Builder builder)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	builder = societyDao.getBuilderDetailsById(builder);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return builder;
+  }
+  
+  
 }
