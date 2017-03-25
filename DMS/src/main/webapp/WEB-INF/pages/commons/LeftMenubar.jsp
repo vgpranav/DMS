@@ -9,14 +9,34 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <li><a href="addSociety.do">Create Society</a></li>
-		                      <li><a href="createBuilder.do">Create Builder</a></li>
-		                      <li><a href="addSocietyPhotos.do">Add Society Photos</a></li>
-		                      <li><a href="addDoctype.do">Create Doctype</a></li>
-		                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
-		                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
-		                      <li><a href="addMember.do">Add Members</a></li>
-		                      <li><a href="createCommittee.do">Create Committee</a></li>
+		                      <li>
+		                      	<a><i class="fa fa-folder-o"></i> Documents</a>
+		                      	<ul class="nav child_menu">
+		                      		 <li><a href="addDoctype.do">Create Doctype</a></li>
+				                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
+				                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
+		                      	</ul>
+		                      </li>
+		                      
+		                      <li>
+		                      	<a><i class="fa fa-folder-o"></i> Builder/Project</a>
+		                      	<ul class="nav child_menu">
+		                      		 <li><a href="createBuilder.do">Create Builder Profile</a></li>
+		                      		<li><a href="createProject.do">Create Project</a></li>
+		                      	</ul>
+		                      </li>
+		                    
+		                      <li>
+		                      	<a> <i class="fa fa-folder-o"></i> Society</a>
+		                      	<ul class="nav child_menu">
+		                      		 <li><a href="addSociety.do">Create Society</a></li>
+				                      <li><a href="addSocietyPhotos.do">Add Society Photos</a></li>
+				                      <li><a href="addMember.do">Add Members</a></li>
+				                      <li><a href="createCommittee.do">Create Committee</a></li>
+		                      	</ul>
+		                      </li>
+		                      
+		                      
 		                      <li><a href="createVendor.do">Create Vendor</a></li>
 		                    </ul>
 		                  </li>
@@ -29,6 +49,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
+		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                    </ul>
 		                  </li>
 		                  
@@ -52,6 +73,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
+		                      <li><a href="createAdminUser.do">Create Admin User</a></li>
 		                    </ul>
 		                  </li>
 		                  

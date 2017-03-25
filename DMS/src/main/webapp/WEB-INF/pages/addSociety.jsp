@@ -29,7 +29,23 @@
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
-
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name"> Select Project  
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<select name="projectid" id="projectid"
+								class="form-control">
+								<option value="">Individual</option>
+								<c:forEach items="${projectList}" var="myItem"
+									varStatus="loopStatus">
+									<option value="${myItem.projectid}">${myItem.projectname}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name"> Society Type <span class="required">*</span>
@@ -145,7 +161,7 @@
 				</form>
 			</div>
 			
-			<div class="col-md-5 col-sm-5 col-xs-12 widget widget_tally_box">
+			<!-- <div class="col-md-5 col-sm-5 col-xs-12 widget widget_tally_box">
 				<div class="x_panel">
 					<div class="x_title">
 						<h2>Search Society to Edit</h2>
@@ -162,7 +178,7 @@
 						<div></div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			
 			
                   </div>
@@ -173,7 +189,66 @@
 
 
 
+<div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel tile">
+                <div class="x_title">
+                  <h2>Existing Society</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li> 
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action" id="thetable">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Society Name</th>
+                            <th class="column-title">Project Name</th>
+                            <th class="column-title">Created On </th>
+                            <th class="column-title">Status </th>
+                            <th class="column-title no-link last">
+                            	<span class="nobr">Edit</span>
+                            </th>
+                             
+                          </tr>
+                        </thead>
 
+                        <tbody>
+                        	  <c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
+								<c:if test="${loopStatus.index%2==0}">
+									<tr class="even pointer">
+								</c:if>
+								<c:if test="${loopStatus.index%2!=0}">
+									<tr class="odd pointer">
+								</c:if>
+									<td class=" ">${myItem.societyname}</td>
+									<td class=" ">${myItem.projectname}</td>
+									<td class=" ">${myItem.createdon}</td>
+									<td class=" ">
+										<c:if test="${myItem.isactive==1}">
+											Active
+										</c:if>
+										<c:if test="${myItem.isactive!=1}">
+											Inactive
+										</c:if>
+									</td>								
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="getSocietyDetailsById('${myItem.societyid}')">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+								</tr>
+							</c:forEach>  
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+ </div>
 
 
 
@@ -236,6 +311,7 @@
 	        		$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));
 	        		
 	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();
+	        		$('#projectid option[value="'+response.projectid+'"]').prop("selected",true).change();
 	        		//$('#societyname').val(response.societyname);
 	        		
 	        	}  

@@ -3,7 +3,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Create Builder Profile</h2>
+                  <h2>Create Project</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -15,118 +15,121 @@
                     <div class="col-md-7 col-sm-7 col-xs-12">
                     
                     <form id="addSocietyForm" data-parsley-validate
-					class="form-horizontal form-label-left" action="saveBuilder.do"
+					class="form-horizontal form-label-left" action="saveProject.do"
 					method="post">
 
-					<input type="hidden" id="builderid" name="builderid" value="0">
-								
+					<input type="hidden" id="projectid" name="projectid" value="0">
+						
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Name of Builder <span class="required">*</span>
+							for="first-name">Name of the Project <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="buildername" name="buildername"
+							<input type="text" id="projectname" name="projectname"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Office Address <span class="required">*</span>
+							for="first-name">Builder <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<textarea id="address" name="address"
+							<select name="builderid" id="builderid" class="form-control">
+								<option value=""> -- Select Builder -- </option>
+								<c:forEach items="${builderList}" var="myItem" varStatus="loopStatus">
+									<option value="${myItem.builderid}">${myItem.buildername}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Site Address <span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<textarea id="siteaddress" name="siteaddress"
 								required="required" class="form-control col-md-7 col-xs-12"></textarea>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Block Number<span class="required">*</span>
+							for="first-name">Plot Area<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="blockno" name="blockno"
+							<input type="text" id="plotarea" name="plotarea"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Name of Premises<span class="required">*</span>
+							for="first-name">Registration Date<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="premisesname" name="premisesname"
+							<input type="text" id="registrationdate" name="registrationdate"
+								required="required" class="form-control col-md-7 col-xs-12 customdatepicker" readonly="readonly">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No. of Towers<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="towernos" name="towernos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Street Name<span class="required">*</span>
+							for="first-name">No. of Residence<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="streetname" name="streetname"
+							<input type="text" id="resnos" name="resnos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Landmark<span class="required">*</span>
+							for="first-name">No. of Bunglows<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="landmark" name="landmark"
+							<input type="text" id="bungnos" name="bungnos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Area<span class="required">*</span>
+							for="first-name">No. of Penta House<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="area" name="area"
+							<input type="text" id="pentanos" name="pentanos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">City <span class="required">*</span>
+							for="first-name">No. of Shops<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="city" name="city"
-								required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					
-					
-					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Pincode<span class="required">*</span>
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="pincode" name="pincode"
+							<input type="text" id="shopnos" name="shopnos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">State<span class="required">*</span>
+							for="first-name">No. of Commercial Gala<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="state" name="state"
-								required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Country<span class="required">*</span>
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="country" name="country"
+							<input type="text" id="galanos" name="galanos"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
@@ -169,7 +172,7 @@
  <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Existing Builders</h2>
+                  <h2>Existing Projects</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -182,10 +185,9 @@
                       <table class="table table-striped jambo_table bulk_action" id="thetable">
                         <thead>
                           <tr class="headings">
+                            <th class="column-title">Project Name</th>
                             <th class="column-title">Builder Name</th>
-                            <th class="column-title">Area</th>
-                            <th class="column-title">City</th>
-                            <th class="column-title">State</th>
+                            <th class="column-title">Registration Date</th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
                             <th class="column-title no-link last">
@@ -196,17 +198,16 @@
                         </thead>
 
                         <tbody>
-                        	<c:forEach items="${builderList}" var="myItem" varStatus="loopStatus">
+                        	  <c:forEach items="${projectList}" var="myItem" varStatus="loopStatus">
 								<c:if test="${loopStatus.index%2==0}">
 									<tr class="even pointer">
 								</c:if>
 								<c:if test="${loopStatus.index%2!=0}">
 									<tr class="odd pointer">
 								</c:if>
+									<td class=" ">${myItem.projectname}</td>
 									<td class=" ">${myItem.buildername}</td>
-									<td class=" ">${myItem.area}</td>
-									<td class=" ">${myItem.city}</td> 
-									<td class=" ">${myItem.state}</td>
+									<td class=" ">${myItem.registrationdate}</td> 
 									<td class=" ">${myItem.createdon}</td>
 									<td class=" ">
 										<c:if test="${myItem.active==1}">
@@ -217,12 +218,12 @@
 										</c:if>
 									</td>								
 									<td class=" ">
-										<a class="btn btn-default btn-sm" onclick="editBuilder('${myItem.builderid}')">
+										<a class="btn btn-default btn-sm" onclick="editProject('${myItem.projectid}')">
 											<i class="fa fa-edit"></i>
 										</a>
 									</td>
 								</tr>
-							</c:forEach>
+							</c:forEach>  
                         </tbody>
                       </table>
                     </div>
@@ -239,27 +240,27 @@
 	});
  
 		 
-		 function editBuilder(builderid){
+		 function editProject(projectid){
 		
 		$.ajax({
 	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getBuilderDetailsById.do",
-	        data :"builderid="+builderid ,
+	        url: "<%=request.getContextPath()%>/getProjectDetailsById.do",
+	        data :"projectid="+projectid ,
 	        success: function(response){
-	        	if(response.builderid>0) {
+	        	if(response.projectid>0) {
 	        		//notify('success','SUCCESS','Added Successfully',2000);
-	        		$('#builderid').val(response.builderid);
-	        		$('#buildername').val(response.buildername);
-	        		$('#address').val(response.address);
-	        		$('#blockno').val(response.blockno);
-	        		$('#premisesname').val(response.premisesname);
-	        		$('#streetname').val(response.streetname);
-	        		$('#landmark').val(response.landmark);
-	        		$('#area').val(response.area);
-	        		$('#city').val(response.city);
-	        		$('#pincode').val(response.pincode);
-	        		$('#state').val(response.state);
-	        		$('#country').val(response.country);
+	        		$('#projectid').val(response.projectid);
+	        		$('#projectname').val(response.projectname);
+	        		$('#builderid option[value="'+response.builderid+'"]').prop("selected",true).change();
+	        		$('#siteaddress').val(response.siteaddress);
+	        		$('#plotarea').val(response.plotarea);
+	        		$('#registrationdate').val(new Date(response.registrationdate).toString("yyyy/MM/dd"));
+	        		$('#towernos').val(response.towernos);
+	        		$('#resnos').val(response.resnos);
+	        		$('#bungnos').val(response.bungnos);
+	        		$('#pentanos').val(response.pentanos);
+	        		$('#shopnos').val(response.shopnos);
+	        		$('#galanos').val(response.galanos);
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
 
 	        	}  

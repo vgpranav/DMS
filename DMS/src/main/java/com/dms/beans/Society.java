@@ -20,12 +20,19 @@ public class Society
     private int isactive;
     private String registrationno;
     private Date estdate;
+    private long projectid;
+    private String projectname;
 
-    public Society()
-    {
-    }
+    
+    public String getProjectname() {
+		return projectname;
+	}
 
-    public String getRegistrationno()
+	public void setProjectname(String projectname) {
+		this.projectname = projectname;
+	}
+
+	public String getRegistrationno()
     {
         return registrationno;
     }
@@ -175,8 +182,22 @@ public class Society
         this.isactive = isactive;
     }
 
-    public String toString()
-    {
-        return (new StringBuilder("Society [societyid=")).append(societyid).append(", societytypeid=").append(societytypeid).append(", societyname=").append(societyname).append(", societyprofileid=").append(societyprofileid).append(", addressline1=").append(addressline1).append(", addressline2=").append(addressline2).append(", ward=").append(ward).append(", district=").append(district).append(", state=").append(state).append(", pincode=").append(pincode).append(", createdby=").append(createdby).append(", createdon=").append(createdon).append(", isactive=").append(isactive).append(", registrationno=").append(registrationno).append(", estdate=").append(estdate).append("]").toString();
-    }
+	public long getProjectid() {
+		return projectid;
+	}
+
+	public void setProjectid(long projectid) {
+		this.projectid = projectid;
+	}
+
+	@Override
+	public String toString() {
+		return "Society [societyid=" + societyid + ", societytypeid=" + societytypeid + ", societyname=" + societyname
+				+ ", societyprofileid=" + societyprofileid + ", addressline1=" + addressline1 + ", addressline2="
+				+ addressline2 + ", ward=" + ward + ", district=" + district + ", state=" + state + ", pincode="
+				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive
+				+ ", registrationno=" + registrationno + ", estdate=" + estdate + ", projectid=" + projectid
+				+ ", projectname=" + projectname + "]";
+	}
+
 }

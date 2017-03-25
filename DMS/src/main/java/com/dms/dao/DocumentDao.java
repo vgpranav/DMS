@@ -6,6 +6,7 @@ import com.dms.beans.Document;
 import com.dms.beans.Documentdetails;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
+import com.dms.beans.GenericBean;
 import com.dms.beans.User;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
@@ -62,7 +63,9 @@ public class DocumentDao
   }
   
   QueryRunner qr;
-  public Doctype insertOrUpdateDocType(Doctype doctype) { Connection conn = null;
+  public Doctype insertOrUpdateDocType(Doctype doctype) { 
+	
+	Connection conn = null;
     
     long doctypeId = 0L;
     try {
@@ -559,5 +562,47 @@ public List<Documentdetails> getExistingDocumentDetails(Document document, List<
       }
     }
     return null;
+  }
+
+public GenericBean insertSocDocMapping(GenericBean bean) { 
+	
+	Connection conn = null;
+    
+    long doctypeId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+
+      Object obj = qr.insert(conn, DMSQueries.insertSocDocMapping, rsh,  
+    		  		bean.getDoctypeid(),
+    		  		bean.getSocietyid(),
+    		        bean.getCreatedby());
+      
+      
+      doctypeId = CommomUtility.convertToLong(obj);
+      bean.setSocietydocmappingid(doctypeId);
+       
+    }
+    catch (Exception e) {
+      logger.error("Error Saving Doctype :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return bean;
   }
 }

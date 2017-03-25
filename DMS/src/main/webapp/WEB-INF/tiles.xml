@@ -117,9 +117,24 @@
       <put-attribute name="body" value="/WEB-INF/pages/societyManagerMapping.jsp" />   
     </definition>
     
+    <definition name="societyDocumentMapping" extends="base-definition">  
+      <put-attribute name="title" value="Society Document Mapping" />  
+      <put-attribute name="body" value="/WEB-INF/pages/societyDocumentMapping.jsp" />   
+    </definition>
+    
      <definition name="createBuilder" extends="base-definition">  
       <put-attribute name="title" value="Create Builder Profile" />  
       <put-attribute name="body" value="/WEB-INF/pages/createBuilder.jsp" />   
+    </definition> 
+    
+    <definition name="createProject" extends="base-definition">  
+      <put-attribute name="title" value="Create Project" />  
+      <put-attribute name="body" value="/WEB-INF/pages/createProject.jsp" />   
+    </definition> 
+    
+    <definition name="createAdminUser" extends="base-definition">  
+      <put-attribute name="title" value="Create Project" />  
+      <put-attribute name="body" value="/WEB-INF/pages/createAdminUser.jsp" />   
     </definition> 
     
   

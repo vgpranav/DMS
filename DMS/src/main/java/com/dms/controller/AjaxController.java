@@ -24,6 +24,8 @@ import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.FormFields;
+import com.dms.beans.GenericBean;
+import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.User;
 import com.dms.beans.Userprofile;
@@ -413,5 +415,35 @@ public class AjaxController
     return builder;
   }
   
+  @RequestMapping(value={"/getProjectDetailsById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Project getProjectDetailsById(@ModelAttribute Project project)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	project = societyDao.getProjectDetailsById(project);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return project;
+  }
+  
+  
+  @RequestMapping(value={"/removeSocietyDocmapping"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String removeSocietyDocmapping(@ModelAttribute GenericBean bean)
+  {
+    int rowsUpdated = 0;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      rowsUpdated = societyDao.removeSocietyDocmapping(bean);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
   
 }

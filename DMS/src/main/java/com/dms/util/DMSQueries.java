@@ -8,7 +8,7 @@ public class DMSQueries
   public static String getAllActiveSocietyTypes = "select * from societytypemaster where isactive=1";
   public static String getAllSociety = "select * from society";
   public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
-  public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby) values (?,?,?)";
+  public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby,projectid) values (?,?,?,?)";
   public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate) values (?,?,?,?,?,?,?,?,?,?)";
   public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
   public static String getAllDocumentSubTypes = "SELECT st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
@@ -39,7 +39,7 @@ public class DMSQueries
   public static String insertVendorSocMapping = "insert into vendorsocietymapping(vendorid,societyid) values (?,?)";
   public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
   public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";
-  public static String updateSociety = "Update society set societytypeid=?, societyname=? where societyid=?";
+  public static String updateSociety = "Update society set societytypeid=?, societyname=? ,projectid=? where societyid=?";
   public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=? where societyid=?";
   public static String getDocumentTypeById = "select * from doctype where doctypeid=?";
   public static String updateDoctype="Update doctype set doctypename=?, doctypedesc=?, active=? where doctypeid=?";
@@ -66,5 +66,14 @@ public static String getAllBuilders = "select * from builder";
 public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? where builderid=?";
 public static String getBuilderDetailsById="select * from builder where builderid=?";
+public static String getAllProjects="SELECT p.*,b.builderid,b.buildername FROM project p, builder b where p.builderid=b.builderid ";
+public static String getProjectDetailsById="select * from project where projectid=?";
+public static String insertNewProject="insert into project(projectname, builderid, siteaddress, plotarea, registrationdate, towernos, resnos, bungnos, pentanos, shopnos, galanos, createdby) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateProject="Update project set projectname=?, builderid=?, siteaddress=?, plotarea=?, registrationdate=?, towernos=?, resnos=?, bungnos=?, pentanos=?, shopnos=?, galanos=?, createdby=?,active=? where projectid=?";
+public static String insertSocDocMapping="insert into societydocmapping(doctypeid, societyid, createdby) values (?,?,?)";
+public static String getAllSocDocMapping= "select m.societydocmappingid,d.doctypename,s.societyname from societydocmapping m, society s, doctype d where m.societyid=s.societyid and m.doctypeid=d.doctypeid";
+public static String removeSocietyDocmapping="delete from societydocmapping where societydocmappingid=?";
+public static String getAllRoles ="select * from rolemaster";
+public static String insertNewAdminUser;
   
 }
