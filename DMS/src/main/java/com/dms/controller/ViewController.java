@@ -253,12 +253,14 @@ public class ViewController
   }
   
   @RequestMapping(value={"/addDocument1"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-  public ModelAndView addDocument1() {
+  public ModelAndView addDocument1(HttpServletRequest request) {
     ModelAndView mv = null;
     List<Society> societyList = null;
+    User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
-      societyList = societyDao.getSocietyListforUser(societyList);
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
       mv = new ModelAndView("addDocument1");
       mv.addObject("societyList", societyList);
     } catch (Exception e) {
@@ -360,14 +362,16 @@ public class ViewController
   }
   
   @RequestMapping(value={"/addMember"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-  public ModelAndView addMember() {
+  public ModelAndView addMember(HttpServletRequest request) {
     ModelAndView mv = null;
     List<Society> societyList = null;
     SocietyDao societyDao = new SocietyDao();
+    User user = null;
     try {
-      societyList = societyDao.getSocietyListforUser(societyList);
-      mv = new ModelAndView("addMember");
-      mv.addObject("societyList", societyList);
+    	user = (User)request.getSession().getAttribute("userObject");
+    	societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
+    	mv = new ModelAndView("addMember");
+    	mv.addObject("societyList", societyList);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
@@ -375,13 +379,15 @@ public class ViewController
   }
   
   @RequestMapping(value={"/createCommittee"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-  public ModelAndView createCommittee() {
+  public ModelAndView createCommittee(HttpServletRequest request) {
     ModelAndView mv = null;
     List<Society> societyList = null;
     List<CommitteeMaster> committeeMasterList = null;
     SocietyDao societyDao = new SocietyDao();
+    User user = null;
     try {
-      societyList = societyDao.getSocietyListforUser(societyList);
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
       committeeMasterList = societyDao.getCommitteeMaster(committeeMasterList);
       mv = new ModelAndView("createCommittee");
       mv.addObject("societyList", societyList);
@@ -633,11 +639,15 @@ public class ViewController
     ModelAndView mv = null;
     SocietyDao documentDao = new SocietyDao();
     List<GenericBean>  roleList = null;
+    List<User>  adminUsers = null;
+
     try {
     	roleList = documentDao.getAllRoles(roleList);
+    	adminUsers = documentDao.getAllAdminUsers(adminUsers);
     			
-     mv = new ModelAndView("createAdminUser");
-     mv.addObject("roleList", roleList);
+    	mv = new ModelAndView("createAdminUser");
+    	mv.addObject("roleList", roleList);
+    	mv.addObject("adminUsers", adminUsers);
      
     } catch (Exception e) {
       logger.error(e.getMessage());
@@ -646,27 +656,27 @@ public class ViewController
   }
   
   @RequestMapping(value={"/saveAdminUser"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
-  public ModelAndView saveAdminUser(@ModelAttribute GenericBean adminUser,HttpServletRequest request)
+  public ModelAndView saveAdminUser(@ModelAttribute User adminUser,HttpServletRequest request)
   {
     ModelAndView mv = null;
-    List<Builder>  builderList = null;
-    List<Project>  projectList = null;
+    List<GenericBean>  roleList = null;
     SocietyDao documentDao = new SocietyDao();
     User user = null;
-    
+    List<User>  adminUsers = null;
+
     try {
       user = (User)request.getSession().getAttribute("userObject");
       adminUser.setCreatedby(String.valueOf(user.getUserid()));
       adminUser = documentDao.saveAdminUser(adminUser);
+      adminUsers = documentDao.getAllAdminUsers(adminUsers);
       
-      projectList = documentDao.getAllProjects(projectList);
-      builderList = documentDao.getAllBuilder(builderList);
+      roleList = documentDao.getAllRoles(roleList);
       
-      mv = new ModelAndView("createProject");
-      mv.addObject("builderList", builderList);
- 	  mv.addObject("projectList", projectList);
- 
-      mv.addObject("error", "Project Added");
+      mv = new ModelAndView("createAdminUser");
+      mv.addObject("roleList", roleList);
+  	  mv.addObject("adminUsers", adminUsers);
+
+      mv.addObject("error", "User Added");
     } catch (Exception e) {
       logger.error(e.getMessage());
     }

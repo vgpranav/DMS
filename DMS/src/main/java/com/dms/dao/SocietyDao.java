@@ -6,7 +6,9 @@ import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.FormFields;
+import com.dms.beans.GenericBean;
 import com.dms.beans.Photos;
+import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
@@ -91,7 +93,7 @@ public class SocietyDao
     return null;
   }
   
-  public Society insertOrUpdateSociety(Society society, int userId)
+  public Society insertOrUpdateSociety(Society society, long userId)
   {
     Connection conn = null;
     
@@ -110,7 +112,8 @@ public class SocietyDao
     	  Object obj = qr.insert(conn, DMSQueries.insertNewSociety, rsh, 
 			        Long.valueOf(society.getSocietytypeid()), 
 			        society.getSocietyname(), 
-			        userId
+			        userId,
+			        society.getProjectid()
 		        );
 
 		societyId = CommomUtility.convertToLong(obj);
@@ -137,7 +140,9 @@ public class SocietyDao
       		qr.update(conn,DMSQueries.updateSociety,
       				society.getSocietytypeid(),
       				society.getSocietyname(),
-      				society.getSocietyid());
+      				society.getProjectid(),
+      				society.getSocietyid()
+      				 );
     	  
       		qr.update(conn,DMSQueries.updateSocProfile,
       				society.getAddressline1(),
@@ -386,7 +391,10 @@ public class SocietyDao
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
       String SQL = " select u.userid,u.firstName,u.lastName from user u,userprofile up where u.userid=up.userid and up.societyid=" + societyid + " and " + 
-        " (lower(u.firstName) like '%" + searchText.toLowerCase() + "%' or lower(u.lastName) like '%" + searchText.toLowerCase() + "%') ";
+        " (lower(u.firstName) like '%" + searchText.toLowerCase() + "%' or lower(u.lastName) like '%" + searchText.toLowerCase() + "%') "
+        		+ " union all "
+        		+ " select userid,firstName,concat(lastName,' (Admin)') as lastName from user where userroleid <> 0 and (lower(firstName) like "
+        		+ " '%" + searchText.toLowerCase() + "%' or lower(lastName) like '%" + searchText.toLowerCase() + "%') ";
       return qr.query(conn,SQL,rsh);
     } catch (Exception e) {
       logger.error("Error getting soc list :: " + e.getMessage());
@@ -492,7 +500,7 @@ public class SocietyDao
     return 0;
   }
   
-  public List<Society> getSocietyListForManager(int userid, List<Society> societyList)
+  public List<Society> getSocietyListForManager(long userid, List<Society> societyList)
   {
     Connection conn = null;
     try
@@ -1049,4 +1057,340 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    return null;
 	  }
+
+	public List<Project> getAllProjects(List<Project> projectList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
+		      projectList = qr.query(conn, DMSQueries.getAllProjects, rsh);
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return projectList;
+		  }
+
+	public Project getProjectDetailsById(Project project) {
+	    Connection conn = null;
+	    
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Project> rsh = new BeanHandler<Project>(Project.class);
+	      project = qr.query(conn, DMSQueries.getProjectDetailsById, rsh, 
+	    		  project.getProjectid()
+	        );
+	      return project;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public Project insertOrUpdateProject(Project project) {
+	    Connection conn = null;
+	    
+	    long projectId = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      conn.setAutoCommit(false);
+	      
+	      //Insert new
+	      if(project.getProjectid()==0){
+	    	  
+	    	  
+	    	  Object obj = qr.insert(conn, DMSQueries.insertNewProject, rsh, 
+	    			  project.getProjectname(),
+	    			  project.getBuilderid(),
+	    			  project.getSiteaddress(),
+	    			  project.getPlotarea(),
+	    			  project.getRegistrationdate(),
+	    			  project.getTowernos(),
+	    			  project.getResnos(),
+	    			  project.getBungnos(),
+	    			  project.getPentanos(),
+	    			  project.getShopnos(),
+	    			  project.getGalanos(),
+	    			  project.getCreatedby()
+			        );
+
+	    	  projectId = CommomUtility.convertToLong(obj);
+	    	  project.setProjectid(projectId);
+			
+	      }
+	      	else {
+	      		qr.update(conn,DMSQueries.updateProject,
+	      				  project.getProjectname(),
+		    			  project.getBuilderid(),
+		    			  project.getSiteaddress(),
+		    			  project.getPlotarea(),
+		    			  project.getRegistrationdate(),
+		    			  project.getTowernos(),
+		    			  project.getResnos(),
+		    			  project.getBungnos(),
+		    			  project.getPentanos(),
+		    			  project.getShopnos(),
+		    			  project.getGalanos(),
+		    			  project.getCreatedby(),
+		    			  project.getActive(),
+		    			  project.getProjectid()); 
+	      		}
+	      
+	      conn.commit();
+	      
+	      return project;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<Society> getAllSociety(List<Society> societyList) { 
+		  Connection conn = null;
+		  List<Society> tempSocietyList;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
+		      tempSocietyList = qr.query(conn, DMSQueries.getAllSociety, rsh);
+		      
+		      System.out.println("tempSocietyList :: "+tempSocietyList);
+		      
+		      for(Society society : tempSocietyList){
+		    	  
+		    	  if(society.getProjectid()!=0){
+		    		   
+		    		  Project project = qr.query(conn, DMSQueries.getProjectDetailsById, 
+						    				  new BeanHandler<Project>(Project.class), 
+						    				  society.getProjectid()
+		    			        			);
+		    		  society.setProjectname(project.getProjectname());
+		    		  
+		    	  }
+		    	  societyList.add(society);
+		      }
+		      
+		      
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return societyList;
+		  }
+
+	public List<GenericBean> getSocDocMapping(List<GenericBean> socDocMapping) { 
+		  Connection conn = null; 
+		    try
+		    {
+		    	
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+		      socDocMapping = qr.query(conn, DMSQueries.getAllSocDocMapping, rsh); 
+		      
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return socDocMapping;
+		  }
+	
+	
+	public int removeSocietyDocmapping(GenericBean bean) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeSocietyDocmapping, 
+	    		  bean.getSocietydocmappingid());
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+	
+	public List<GenericBean> getAllRoles(List<GenericBean> roleList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+		      roleList = qr.query(conn, DMSQueries.getAllRoles, rsh);
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return roleList;
+		  }
+	
+	public User saveAdminUser(User adminUser) {
+	    Connection conn = null;
+	    
+	    long userid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      conn.setAutoCommit(false);
+	      
+	      if(adminUser.getUserid()==0){
+	    	  Object obj = qr.insert(conn, DMSQueries.insertNewAdminUser, rsh, 
+	    			  adminUser.getFirstName(),
+	    			  adminUser.getLastName(),
+	    			  adminUser.getPassword(),
+	    			  adminUser.getMobileNo(),
+	    			  adminUser.getCreatedby(),
+	    			  adminUser.getUserroleid()
+			        );
+
+	    	  userid = CommomUtility.convertToLong(obj);
+	    	  adminUser.setUserid(userid);
+	      }
+	      else{
+	    	  Object obj = qr.update(conn, DMSQueries.updateAdminUser, 
+	    			  adminUser.getFirstName(),
+	    			  adminUser.getLastName(),
+	    			  adminUser.getPassword(),
+	    			  adminUser.getActive(),
+	    			  adminUser.getMobileNo(),
+	    			  adminUser.getUserroleid(),
+	    			  adminUser.getUserid()
+			        );
+	      }
+	    
+	      conn.commit();
+	      
+	      return adminUser;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<User> getAllAdminUsers(List<User> adminUsers) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
+		      adminUsers = qr.query(conn, DMSQueries.getAllAdminUsers, rsh);
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return adminUsers;
+		  }
+
+	
+	
+	public User editAdminUser(User user) {
+	    Connection conn = null;
+	    
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+	      user = qr.query(conn, DMSQueries.getUserById, rsh, 
+	    		  user.getUserid()
+	      );
+	      return user;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+	
 }

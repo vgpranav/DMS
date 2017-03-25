@@ -74,6 +74,9 @@ public static String insertSocDocMapping="insert into societydocmapping(doctypei
 public static String getAllSocDocMapping= "select m.societydocmappingid,d.doctypename,s.societyname from societydocmapping m, society s, doctype d where m.societyid=s.societyid and m.doctypeid=d.doctypeid";
 public static String removeSocietyDocmapping="delete from societydocmapping where societydocmappingid=?";
 public static String getAllRoles ="select * from rolemaster";
-public static String insertNewAdminUser;
+public static String insertNewAdminUser="insert into user(firstname, lastname, password, mobileNo, createdBy, userroleid) values (?,?,?,?,?,?)";
+public static String getAllAdminUsers = "SELECT u.*,r.rolename as userrolename FROM dms.user u,dms.rolemaster r where u.userroleid=r.roleid and userroleid <> 0" ;
+public static String getUserById = "select * from user where userid=?";
+public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
   
 }

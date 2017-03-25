@@ -13,6 +13,8 @@ public class Document
     private String description;
     private String createdby;
     private Date createdon;
+    private String doctypename;
+    private String docsubtypename;
 
     public long getDocumentid()
     {
@@ -92,12 +94,30 @@ public class Document
 		this.userid = userid;
 	}
 
+	public String getDoctypename() {
+		return doctypename;
+	}
+
+	public void setDoctypename(String doctypename) {
+		this.doctypename = doctypename;
+	}
+
+	public String getDocsubtypename() {
+		return docsubtypename;
+	}
+
+	public void setDocsubtypename(String docsubtypename) {
+		this.docsubtypename = docsubtypename;
+	}
+
 	@Override
 	public String toString() {
 		return "Document [documentid=" + documentid + ", societyid=" + societyid + ", doctypeid=" + doctypeid
 				+ ", userid=" + userid + ", docsubtypeid=" + docsubtypeid + ", description=" + description
-				+ ", createdby=" + createdby + ", createdon=" + createdon + "]";
+				+ ", createdby=" + createdby + ", createdon=" + createdon + ", doctypename=" + doctypename
+				+ ", docsubtypename=" + docsubtypename + "]";
 	}
-	
+
+	 
 	
 }

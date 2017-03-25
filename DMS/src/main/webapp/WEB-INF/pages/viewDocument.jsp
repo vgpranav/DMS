@@ -24,7 +24,7 @@
 							for="first-name">Select Society <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<select name="societyid" id="societyid" class="form-control" onchange="getDocTypes()">
+							<select name="societyid" id="societyid" class="form-control" onchange="getDocTypes()" required="required">
 							<option value=""> -- select -- </option>
 							<c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
 								<option value="${myItem.societyid}">${myItem.societyname}</option>
@@ -35,7 +35,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Document Type<span class="required">*</span>
+							for="first-name">Document Type 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<select name="doctypeid" id="doctypeid" class="form-control" onchange="getDocSubTypes()">
@@ -46,7 +46,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Document Sub Type<span class="required">*</span>
+							for="first-name">Document Sub Type 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<select name="docsubtypeid" id="docsubtypeid" class="form-control">
@@ -57,13 +57,12 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Society Member <span class="required">*</span>
+							for="first-name">Society Member 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							 	<input type="hidden" id="userid" name="userid"
 								required="required" class="form-control col-md-8 col-xs-12">	
-								<input type="text" id="username" name="username"
-								required="required" class="form-control col-md-8 col-xs-12">
+								<input type="text" id="username" name="username"  class="form-control col-md-8 col-xs-12">
 						</div>
 					</div>
 					
@@ -108,6 +107,8 @@
                         <thead>
                           <tr class="headings">
                             <th class="column-title">Document Description</th>
+                            <th class="column-title">Document Type</th>
+                            <th class="column-title">Document Sub Type</th>
                             <th class="column-title" width="10%">CreatedBy </th>
                             <th class="column-title" width="10%">CreatedOn </th>
                             <th class="column-title" width="8%">Download </th>
@@ -172,6 +173,18 @@
 		var docsubtypeid = $('#docsubtypeid').val();
 		var userid = $('#userid').val();
 		
+		if(doctypeid.length<1)
+			doctypeid="0"
+			
+				if(docsubtypeid.length<1)
+					docsubtypeid="0"
+					
+						if(userid.length<1)
+							userid="0"
+		
+		if(societyid.length<1)
+			return false;
+		
 		var table = $('#thetable').DataTable();
 			
 		table .clear() .draw();
@@ -197,6 +210,8 @@
 	        		//item.documentid
 	        		table.row.add( [
 	        			text, 
+	        			item.doctypename,
+	        			item.docsubtypename,
 	        			item.createdby, 
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
 	        			downloadBtn,

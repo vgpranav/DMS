@@ -5,7 +5,7 @@ import java.util.Date;
 public class User
 {
 
-    private int userid;
+    private long userid;
     private String firstName;
     private String lastName;
     private String userName;
@@ -13,12 +13,21 @@ public class User
     private Date createDate;
     private int active;
     private String mobileNo;
+    private long userroleid;
+    private String userrolename;
+    private String createdby;
+    
+    
+    
+    public String getUserrolename() {
+		return userrolename;
+	}
 
-    public User()
-    {
-    }
+	public void setUserrolename(String userrolename) {
+		this.userrolename = userrolename;
+	}
 
-    public String getFirstName()
+	public String getFirstName()
     {
         return firstName;
     }
@@ -88,18 +97,43 @@ public class User
         this.mobileNo = mobileNo;
     }
 
-    public int getUserid()
-    {
-        return userid;
-    }
+    public long getUserid() {
+		return userid;
+	}
 
-    public void setUserid(int userid)
+	public void setUserid(long userid) {
+		this.userid = userid;
+	}
+
+	public void setUserid(int userid)
     {
         this.userid = userid;
     }
 
-    public String toString()
-    {
-        return (new StringBuilder("User [userid=")).append(userid).append(", firstName=").append(firstName).append(", lastName=").append(lastName).append(", userName=").append(userName).append(", password=").append(password).append(", createDate=").append(createDate).append(", active=").append(active).append(", mobileNo=").append(mobileNo).append("]").toString();
-    }
+ 
+ 
+	public String getCreatedby() {
+		return createdby;
+	}
+
+	public void setCreatedby(String createdby) {
+		this.createdby = createdby;
+	}
+
+	public long getUserroleid() {
+		return userroleid;
+	}
+
+	public void setUserroleid(long userroleid) {
+		this.userroleid = userroleid;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
+				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
+				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
+				+ ", createdby=" + createdby + "]";
+	}
+
 }

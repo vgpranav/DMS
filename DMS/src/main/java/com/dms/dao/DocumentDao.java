@@ -419,11 +419,31 @@ public class DocumentDao
     {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
-      ResultSetHandler<List<Document>> rsh = new BeanListHandler(Document.class);
-      documents = (List)qr.query(conn, DMSQueries.getDocumentListForView, rsh, new Object[] {
-        Long.valueOf(document.getSocietyid()), 
-        Long.valueOf(document.getDoctypeid()), 
-        Long.valueOf(document.getDocsubtypeid()) });
+      ResultSetHandler<List<Document>> rsh = new BeanListHandler<Document>(Document.class);
+      
+      
+      String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description,d.documentid, "
+      		+ " dt.doctypename,dst.docsubtypename,d.createdby,d.createdon "
+      		+ " from dms.formstructure f,dms.documentdetails d,dms.document doc,dms.doctype dt,dms.docsubtype dst "
+      		+ " where f.fieldid = d.datakey and d.documentid = doc.documentid and doc.doctypeid=dt.doctypeid "
+      		+ " and doc.docsubtypeid=dst.docsubtypeid "
+      		+ " and doc.societyid=? ";
+      					
+      if(document.getDoctypeid()!=0)
+    	  getDocumentListForView = getDocumentListForView + " and doc.doctypeid= "+document.getDoctypeid();
+      
+      if(document.getUserid()!=0)
+    	  getDocumentListForView = getDocumentListForView + " and doc.userid= "+document.getUserid();
+      
+      if(document.getDocsubtypeid()!=0)
+    	  getDocumentListForView = getDocumentListForView + " and doc.docsubtypeid= "+document.getDocsubtypeid();
+      
+      getDocumentListForView= getDocumentListForView + " group by d.documentid order by f.sequence ";
+      
+      System.out.println("getDocumentListForView :: "+getDocumentListForView);
+      
+      documents = qr.query(conn,getDocumentListForView, rsh, document.getSocietyid());
+      
     }
     catch (Exception e) {
       logger.error("Error getDocumentListForView :: " + e.getMessage());

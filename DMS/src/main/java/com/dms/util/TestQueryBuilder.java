@@ -17,8 +17,8 @@ public class TestQueryBuilder {
 			
 			
 			String tablename = "user";
-			String QueryType = "insert";
-			//String QueryType = "update";
+			//String QueryType = "insert";
+			String QueryType = "update";
 			
 			TestQueryBuilder t1 = new TestQueryBuilder();
 			System.out.println(t1.QueryBuiler(tablename.toLowerCase(), QueryType, con));

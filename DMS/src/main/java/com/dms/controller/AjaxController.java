@@ -446,4 +446,19 @@ public class AjaxController
     return "failed";
   }
   
+  
+  @RequestMapping(value={"/editAdminUser"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public User editAdminUser(@ModelAttribute User adminUser)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	adminUser = societyDao.editAdminUser(adminUser);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return adminUser;
+  }
+  
+  
 }
