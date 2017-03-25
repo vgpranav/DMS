@@ -246,7 +246,15 @@ public class SocietyDao
     		          userprofile.getParkingtype(), 
     		          userprofile.getVehicletype(), 
     		          userprofile.getParkingallotmentno(), 
-    		          userprofile.getSocietyid()
+    		          userprofile.getSocietyid(),
+    		          userprofile.getBloodgroup(),
+    		          userprofile.getSharecertno(),
+    		          userprofile.getNominee1(),
+    		          userprofile.getPercent1(),
+    		          userprofile.getNominee2(),
+    		          userprofile.getPercent2(),
+    		          userprofile.getNominee3(),
+    		          userprofile.getPercent3()
     	          );
     	        
     	        userProfileId = CommomUtility.convertToLong(obj1);
@@ -293,9 +301,16 @@ public class SocietyDao
 		          userprofile.getParkingtype(), 
 		          userprofile.getVehicletype(), 
 		          userprofile.getParkingallotmentno(), 
-		         
 		          userprofile.getFloor(), 
 		          userprofile.getSocietyid(),
+		          userprofile.getBloodgroup(),
+		          userprofile.getSharecertno(),
+		          userprofile.getNominee1(),
+		          userprofile.getPercent1(),
+		          userprofile.getNominee2(),
+		          userprofile.getPercent2(),
+		          userprofile.getNominee3(),
+		          userprofile.getPercent3(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -527,7 +542,7 @@ public class SocietyDao
     return societyList;
   }
   
-  public List<HashMap<String, Object>> getSocietyPhotos(long societyid, List<HashMap<String, Object>> photos)
+  public List<HashMap<String, Object>> getSocietyPhotos(long docId, String photoType ,String Path,List<HashMap<String, Object>> photos)
   {
     Connection conn = null;
     
@@ -544,7 +559,7 @@ public class SocietyDao
       
       //System.out.println("societyid :: " + societyid);
       
-      photoBeans =  qr.query(conn, DMSQueries.getSocietyPhotos, rsh, new Object[] { Long.valueOf(societyid) });
+      photoBeans =  qr.query(conn,DMSQueries.getPhotoInfo,rsh,docId,photoType);
       
       if (photoBeans.size() > 0) {
         if (ftp.connectAndLogin(hostDomain, Id, Password))
@@ -552,7 +567,7 @@ public class SocietyDao
           ftp.setPassiveMode(true);
           ftp.binary();
           ftp.setBufferSize(1024000);
-          ftp.changeWorkingDirectory("DMS/SocietyImages/");
+          ftp.changeWorkingDirectory("DMS/"+Path+"/");
           
           for (Photos photo : photoBeans)
           {

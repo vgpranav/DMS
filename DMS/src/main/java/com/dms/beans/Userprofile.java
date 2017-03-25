@@ -35,9 +35,81 @@ public class Userprofile
     private String tenantemail;
     private String tenantaadharno;
     
- 
+    private String bloodgroup;
+    private String sharecertno;
+    private String nominee1;
+    private String percent1;
+    private String nominee2;
+    private String percent2;
+    private String nominee3;
+    private String percent3;
+    
 
-    public long getUserprofileid()
+    public String getBloodgroup() {
+		return bloodgroup;
+	}
+
+	public void setBloodgroup(String bloodgroup) {
+		this.bloodgroup = bloodgroup;
+	}
+
+	public String getSharecertno() {
+		return sharecertno;
+	}
+
+	public void setSharecertno(String sharecertno) {
+		this.sharecertno = sharecertno;
+	}
+
+	public String getNominee1() {
+		return nominee1;
+	}
+
+	public void setNominee1(String nominee1) {
+		this.nominee1 = nominee1;
+	}
+
+	public String getPercent1() {
+		return percent1;
+	}
+
+	public void setPercent1(String percent1) {
+		this.percent1 = percent1;
+	}
+
+	public String getNominee2() {
+		return nominee2;
+	}
+
+	public void setNominee2(String nominee2) {
+		this.nominee2 = nominee2;
+	}
+
+	public String getPercent2() {
+		return percent2;
+	}
+
+	public void setPercent2(String percent2) {
+		this.percent2 = percent2;
+	}
+
+	public String getNominee3() {
+		return nominee3;
+	}
+
+	public void setNominee3(String nominee3) {
+		this.nominee3 = nominee3;
+	}
+
+	public String getPercent3() {
+		return percent3;
+	}
+
+	public void setPercent3(String percent3) {
+		this.percent3 = percent3;
+	}
+
+	public long getUserprofileid()
     {
         return userprofileid;
     }
@@ -326,9 +398,9 @@ public class Userprofile
 				+ parkingallotmentno + ", floor=" + floor + ", password=" + password + ", societyid=" + societyid
 				+ ", tenantname=" + tenantname + ", tenantaddress=" + tenantaddress + ", tenantcontactnumber="
 				+ tenantcontactnumber + ", tenantaltnumber=" + tenantaltnumber + ", tenantemail=" + tenantemail
-				+ ", tenantaadharno=" + tenantaadharno + "]";
+				+ ", tenantaadharno=" + tenantaadharno + ", bloodgroup=" + bloodgroup + ", sharecertno=" + sharecertno
+				+ ", nominee1=" + nominee1 + ", percent1=" + percent1 + ", nominee2=" + nominee2 + ", percent2="
+				+ percent2 + ", nominee3=" + nominee3 + ", percent3=" + percent3 + "]";
 	}
-    
-    
-     
+
 }

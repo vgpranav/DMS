@@ -31,8 +31,15 @@
 		                      	<ul class="nav child_menu">
 		                      		 <li><a href="addSociety.do">Create Society</a></li>
 				                      <li><a href="addSocietyPhotos.do">Add Society Photos</a></li>
-				                      <li><a href="addMember.do">Add Members</a></li>
 				                      <li><a href="createCommittee.do">Create Committee</a></li>
+		                      	</ul>
+		                      </li>
+		                      
+		                      <li>
+		                      	<a> <i class="fa fa-folder-o"></i> Members</a>
+		                      	<ul class="nav child_menu">
+				                      <li><a href="addMember.do">Add Members</a></li>
+				                      <li><a href="addMemberPhotos.do">Add Member Photos</a></li>
 		                      	</ul>
 		                      </li>
 		                      
@@ -61,6 +68,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addDocument1.do">Add Document</a></li>
+		                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
 		                      <li><a href="viewDocument.do">View Document</a></li>
 		                    </ul>
 		                  </li>

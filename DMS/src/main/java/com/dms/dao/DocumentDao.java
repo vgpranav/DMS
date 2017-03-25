@@ -510,7 +510,7 @@ public class DocumentDao
       
       conn.setAutoCommit(false);
       
-      qr.update(conn,DMSQueries.deactOldPhotos,docid);
+      qr.update(conn,DMSQueries.deactOldPhotos,docid,phototype);
       
       Object obj = qr.insert(conn, DMSQueries.insertPhotoInfo, rsh, new Object[] {
         phototype, 

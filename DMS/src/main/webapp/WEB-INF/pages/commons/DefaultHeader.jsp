@@ -8,7 +8,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="<%= request.getContextPath() %>/resources/theme/production/images/img.jpg" alt="">
+                    <img   src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
                     ${sessionScope.userObject.firstName}
                     <span class=" fa fa-angle-down"></span>
                   </a>

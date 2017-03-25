@@ -133,8 +133,13 @@
     </definition> 
     
     <definition name="createAdminUser" extends="base-definition">  
-      <put-attribute name="title" value="Create Project" />  
+      <put-attribute name="title" value="Create Admin User" />  
       <put-attribute name="body" value="/WEB-INF/pages/createAdminUser.jsp" />   
+    </definition> 
+    
+    <definition name="addMemberPhotos" extends="base-definition">  
+      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addMemberPhotos.jsp" />   
     </definition> 
     
   

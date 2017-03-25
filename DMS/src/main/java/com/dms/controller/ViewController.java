@@ -1,6 +1,7 @@
 package com.dms.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
+import com.dms.beans.Userprofile;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
@@ -59,10 +61,17 @@ public class ViewController
   {
 	  ModelAndView mv = null;
 	  User authenticatedUser = null;
+	  Userprofile userprofile = new Userprofile();
+	  SocietyDao societyDao = new SocietyDao();
 	  try {
 		  authenticatedUser = (User)request.getSession().getAttribute("userObject");
 		  request.getSession().setAttribute("userObject", authenticatedUser);
+		  userprofile.setUserid(authenticatedUser.getUserid());
+		  userprofile = societyDao.getUserDataById(userprofile);
 		  mv = new ModelAndView("home");
+		  mv.addObject("userprofile", userprofile);
+		  
+		  System.out.println("userprofile :: "+userprofile);
 	  } catch (Exception e) {
 	      logger.error(e.getMessage());
 	    }
@@ -72,14 +81,29 @@ public class ViewController
   public ModelAndView welcome(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
   {
     LoginDao loginDao = new LoginDao();
+    SocietyDao societyddao = new SocietyDao();
     ModelAndView mv = null;
     User authenticatedUser = null;
+    Userprofile userprofile = new Userprofile();
+    SocietyDao societyDao = new SocietyDao();
     try {
       authenticatedUser = loginDao.authenticateUser(user, authenticatedUser);
       if (authenticatedUser != null) {
         if (authenticatedUser.getActive() == 1) {
           mv = new ModelAndView("home");
           request.getSession().setAttribute("userObject", authenticatedUser);
+          userprofile.setUserid(authenticatedUser.getUserid());
+		  userprofile = societyDao.getUserDataById(userprofile);
+          
+          List<HashMap<String, Object>> photos = new ArrayList<HashMap<String, Object>>();
+          photos =  societyddao.getSocietyPhotos(authenticatedUser.getUserid(),"user","UserImages",photos);
+          String imgBase64 = (String) photos.get(0).get("file");
+          String imgContentType = (String) photos.get(0).get("contenttype");
+          
+          request.getSession().setAttribute("imgBase64", imgBase64);
+          request.getSession().setAttribute("imgContentType", imgContentType);
+          mv.addObject("userprofile", userprofile);
+          
         } else {
           mv = new ModelAndView("login");
           request.setAttribute("errorMessage", "Account is Locked. Please contact Administrator");
@@ -453,6 +477,9 @@ public class ViewController
     return mv;
   }
   
+  
+  
+  
   @RequestMapping(value={"/createVendor"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView createVendor(HttpServletRequest request, HttpServletResponse response)
   {
@@ -678,6 +705,47 @@ public class ViewController
 
       mv.addObject("error", "User Added");
     } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/addMemberPhotos"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView addMemberPhotos(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("addMemberPhotos");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  @RequestMapping(value={"/addNotice"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView addNotice(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("addNotice");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
       logger.error(e.getMessage());
     }
     return mv;

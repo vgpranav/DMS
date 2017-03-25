@@ -207,6 +207,7 @@
 	        		
 	        		var viewBtn = '<a class="btn btn-default btn-sm"><i class="fa fa-search"></i></a>';
 	        		var downloadBtn = '<a class="btn btn-default btn-sm" target="_blank" href="downloadAsPdf.do?documentId='+item.documentid+'"><i class="fa fa-cloud-download"></i></a>';
+	        		//var ttipbtn = '<button data-toggle="tooltip" data-placement="left" title="'+text+'">Hii</button>';
 	        		//item.documentid
 	        		table.row.add( [
 	        			text, 
@@ -219,6 +220,8 @@
 	                ] ).draw( false );
 	        	    
 	        	  });
+	        	
+	        	// $('[data-toggle="tooltip"]').tooltip({ container: 'body'  });
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);

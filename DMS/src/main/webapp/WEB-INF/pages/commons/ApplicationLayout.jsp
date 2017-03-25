@@ -32,7 +32,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="<%= request.getContextPath() %>/resources/theme/production/images/img.jpg" alt="..." class="img-circle profile_img">
+              <img class="img-circle profile_img"  src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>

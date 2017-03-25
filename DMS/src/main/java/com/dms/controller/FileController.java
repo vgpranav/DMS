@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dms.beans.Society;
+import com.dms.beans.User;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
 
@@ -64,7 +65,7 @@ public class FileController
       bytes = IOUtils.toByteArray(stream);
       InputStream in = new ByteArrayInputStream(bytes);
       String newFileName = System.currentTimeMillis() + "-" + ogFilename;
-      boolean flag = saveToFileSystem(newFileName, in);
+      boolean flag = saveToFileSystem(newFileName, in,"SocietyImages");
       
       if (flag) {
         DocumentDao ddao = new DocumentDao();
@@ -120,7 +121,7 @@ public class FileController
     return resizedImage;
   }
   
-  private boolean saveToFileSystem(String FileName, InputStream in) {
+  private boolean saveToFileSystem(String FileName, InputStream in,String Dir) {
     boolean filestatus = false;
     FtpWrapper ftp = new FtpWrapper();
     String hostDomain = ftp.getServerName();
@@ -136,11 +137,11 @@ public class FileController
         ftp.setBufferSize(1024000);
         ftp.changeWorkingDirectory(ftpDirectoryForDownloadingFile);
         
-        boolean dirExists = ftp.changeWorkingDirectory("SocietyImages");
+        boolean dirExists = ftp.changeWorkingDirectory(Dir);
         
         if (!dirExists) {
-          ftp.makeDirectory("SocietyImages");
-          ftp.changeWorkingDirectory("SocietyImages");
+          ftp.makeDirectory(Dir);
+          ftp.changeWorkingDirectory(Dir);
         }
         
         filestatus = ftp.storeFile(FileName, in);
@@ -170,6 +171,56 @@ public class FileController
   }
   
 
+  @RequestMapping(value={"/uploadMemberPhoto"}, method={org.springframework.web.bind.annotation.RequestMethod.POST}, produces={"application/json"})
+  @ResponseBody
+  public HashMap<String, Object> uploadMemberPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
+  {
+    byte[] bytes = null;
+    Long size = null;
+    String contentType = null;
+    BufferedImage resizedImage = null;
+    MultipartFile multipartFile = null;
+    BufferedImage originalImage = null;
+    String ogFilename = "";
+    int type = 0;
+    int userid = 0;
+    try {
+      multipartFile = request.getFile("file");
+      userid = Integer.parseInt(request.getParameter("userid"));
+      
+      size = Long.valueOf(multipartFile.getSize());
+      contentType = multipartFile.getContentType();
+      InputStream stream = multipartFile.getInputStream();
+      ogFilename = multipartFile.getOriginalFilename();
+      bytes = IOUtils.toByteArray(stream);
+      InputStream in = new ByteArrayInputStream(bytes);
+      String newFileName = System.currentTimeMillis() + "-" + ogFilename;
+      boolean flag = saveToFileSystem(newFileName, in,"UserImages");
+      
+      if (flag) {
+        DocumentDao ddao = new DocumentDao();
+        ddao.savePhotoInfo("user", userid, newFileName, "UserImages/" + newFileName, contentType);
+      }
+      
+      originalImage = ImageIO.read(new ByteArrayInputStream(bytes));
+
+
+    }
+    catch (IOException e)
+    {
+
+
+      e.printStackTrace();
+    }
+    
+    HashMap<String, Object> map = new HashMap();
+    map.put("fileoriginalsize", size);
+    map.put("contenttype", contentType);
+    map.put("base64", new String(Base64Utils.encode(convertToBytes(originalImage))));
+    
+    return map;
+  }
+  
   @RequestMapping(value={"/getSocietyPhotos"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   @ResponseBody
   public List<HashMap<String, Object>> getSocietyPhotos(@ModelAttribute Society society)
@@ -177,7 +228,22 @@ public class FileController
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
     try {
-      photos = societyDao.getSocietyPhotos(society.getSocietyid(), photos);
+      photos = societyDao.getSocietyPhotos(society.getSocietyid(),"society","SocietyImages", photos);
+    }
+    catch (Exception localException) {}
+    
+    return photos;
+  }
+  
+  
+  @RequestMapping(value={"/getMemberPhotos"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<HashMap<String, Object>> getMemberPhotos(@ModelAttribute User user)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<HashMap<String, Object>> photos = new ArrayList();
+    try {
+      photos = societyDao.getSocietyPhotos(user.getUserid(),"user","UserImages",photos);
     }
     catch (Exception localException) {}
     

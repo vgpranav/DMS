@@ -4250,3 +4250,8 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .dataTables_wrapper > .row{
   overflow:auto !important; /*prevent datatables overflowing its container*/
 }
+
+
+.img-circle {
+    border-radius: 20% !important;
+}

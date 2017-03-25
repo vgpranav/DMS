@@ -124,9 +124,98 @@
 											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Blood Group  
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="bloodgroup" name="bloodgroup"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div> 
 
 							</div>
 
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Share Certificate</span></h2> <hr />
+							</div>
+							
+							<div class="clearfix"></div>
+
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Share Certificate No </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="sharecertno" name="sharecertno"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Nominee 1</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nominee1" name="nominee1"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							 
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Percentage</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="percent1" name="percent1"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Nominee 2</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nominee2" name="nominee2"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							 
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Percentage</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="percent2" name="percent2"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Nominee 3</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nominee3" name="nominee3"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							 
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Percentage</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="percent3" name="percent3"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							
+							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
 							</div>
@@ -467,6 +556,17 @@
 		var tenantaltnumber = $('#tenantaltnumber').val();
 		var tenantemail = $('#tenantemail').val();
 		var tenantaadharno = $('#tenantaadharno').val();
+		
+		
+		var bloodgroup = $('#bloodgroup').val();
+		var sharecertno = $('#sharecertno').val();
+		var nominee1 = $('#nominee1').val();
+		var percent1 = $('#percent1').val();
+		var nominee2 = $('#nominee2').val();
+		var percent2 = $('#percent2').val();
+		var nominee3 = $('#nominee3').val();
+		var percent3 = $('#percent3').val();
+
 
 		if(firstName.length<1 || lastName.length<1 || mobileNo.length<1 || occupancy.length<1 || flatno.length<1 || wing.length<1 || password.length<1 || societyid.length<1){
 			alert("Some Mandatory Fields Are Empty");
@@ -503,7 +603,16 @@
 			        +"&tenantcontactnumber="+tenantcontactnumber
 			        +"&tenantaltnumber="+tenantaltnumber
 			        +"&tenantemail="+tenantemail
-			        +"&tenantaadharno="+tenantaadharno,
+			        +"&tenantaadharno="+tenantaadharno
+			        
+			        +"&bloodgroup="+bloodgroup
+			        +"&sharecertno="+sharecertno
+			        +"&nominee1="+nominee1
+			        +"&percent1="+percent1
+			        +"&nominee2="+nominee2
+			        +"&percent2="+percent2
+			        +"&nominee3="+nominee3
+			        +"&percent3="+percent3,
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
@@ -536,7 +645,17 @@
 	        		$('#vehicletype').val("");
 	        		$('#parkingtype').val("");
 	        		$('#parkingallotmentno').val("");
+
 	        		
+	        		$('#bloodgroup').val("");
+	        		$('#sharecertno').val("");
+	        		$('#nominee1').val("");
+	        		$('#percent1').val("");
+	        		$('#nominee2').val("");
+	        		$('#percent2').val("");
+	        		$('#nominee3').val("");
+	        		$('#percent3').val("");
+
 	        	}  
 	        },
 				error : function(e) {
@@ -643,7 +762,15 @@
 	        		$('#vehicletype').val(response.vehicletype);
 	        		$('#parkingtype').val(response.parkingtype);
 	        		$('#parkingallotmentno').val(response.parkingallotmentno);
-	        		
+	        		$('#bloodgroup').val(response.bloodgroup);
+	        		$('#sharecertno').val(response.sharecertno);
+	        		$('#nominee1').val(response.nominee1);
+	        		$('#percent1').val(response.percent1);
+	        		$('#nominee2').val(response.nominee2);
+	        		$('#percent2').val(response.percent2);
+	        		$('#nominee3').val(response.nominee3);
+	        		$('#percent3').val(response.percent3);
+
 	        		
 	        	}  
 	        },
