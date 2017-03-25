@@ -11,8 +11,8 @@ public class DMSQueries
   public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby,projectid) values (?,?,?,?)";
   public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate) values (?,?,?,?,?,?,?,?,?,?)";
   public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
-  public static String getAllDocumentSubTypes = "SELECT st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
-  public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active) values (?,?,?,?,?)";
+  public static String getAllDocumentSubTypes = "SELECT st.displayflag,st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
+  public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active,displayflag) values (?,?,?,?,?,?)";
   public static String getConfigValue = "select configvalue from config where configkey=?";
   public static String insertNewFormField = "insert into formstructure(docsubtypeid,fieldname,fieldtype,datatype,sequence,active,createdby) values (?,?,?,?,?,?,?)";
   public static String getAllDocumentFormFieldsBySubTypes = " SELECT fs.fieldid,fs.fieldname,fs.fieldtype,fs.datatype,fs.sequence,fs.active,fs.createdon,fs.docsubtypeid,concat(u.firstname,' ',u.lastname) as createdby FROM formstructure fs, user u where fs.createdby=u.userid and fs.docsubtypeid=?";
@@ -44,7 +44,7 @@ public class DMSQueries
   public static String getDocumentTypeById = "select * from doctype where doctypeid=?";
   public static String updateDoctype="Update doctype set doctypename=?, doctypedesc=?, active=? where doctypeid=?";
   public static String getDocumentSubTypeById = "select * from docsubtype where docsubtypeid=?";
-  public static String updateDocSubtype=" Update docsubtype set doctypeid=?, docsubtypename=?, docsubtypedesc=?, active=? where docsubtypeid=?";
+  public static String updateDocSubtype=" Update docsubtype set doctypeid=?, docsubtypename=?, docsubtypedesc=?, active=?,displayflag=? where docsubtypeid=?";
   public static String getFormFieldDetailsById = "select * from formstructure where fieldid=?";
   public static String updateFormFieldData = "Update formstructure set fieldname=?, fieldtype=?, datatype=?, sequence=?, active=?, docsubtypeid=? where fieldid=?";
   public static String insertNewTenant = "insert into tenant(userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno) values (?,?,?,?,?,?,?)";
@@ -78,5 +78,8 @@ public static String insertNewAdminUser="insert into user(firstname, lastname, p
 public static String getAllAdminUsers = "SELECT u.*,r.rolename as userrolename FROM dms.user u,dms.rolemaster r where u.userroleid=r.roleid and userroleid <> 0" ;
 public static String getUserById = "select * from user where userid=?";
 public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
+public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by documentid,createdon ";
+public static String getDocStubtypesToDispay = "select * from docsubtype where displayflag=1";
+public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
   
 }

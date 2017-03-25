@@ -142,5 +142,24 @@
       <put-attribute name="body" value="/WEB-INF/pages/addMemberPhotos.jsp" />   
     </definition> 
     
-  
+    <definition name="addNotice" extends="base-definition">  
+      <put-attribute name="title" value="Add Notice" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addNotice.jsp" />   
+    </definition> 
+    
+    <definition name="viewNoticeboard" extends="base-definition">  
+      <put-attribute name="title" value="View Notice" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewNoticeBoard.jsp" />   
+    </definition> 
+    
+    <definition name="selfSociety" extends="base-definition">  
+      <put-attribute name="title" value="Self Society" />  
+      <put-attribute name="body" value="/WEB-INF/pages/selfSociety.jsp" />   
+    </definition>
+    
+    <definition name="displayDocument" extends="base-definition">  
+      <put-attribute name="title" value="Self Society" />  
+      <put-attribute name="body" value="/WEB-INF/pages/displayDocument.jsp" />   
+    </definition> 
+    
 </tiles-definitions>

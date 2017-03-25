@@ -11,9 +11,21 @@ public class GenericBean {
 	private long roleid;
 	private String rolename;
 	private int active;
+	private String fieldname;
+	private String fieldvalue;
 	
-	
-	
+	public String getFieldname() {
+		return fieldname;
+	}
+	public void setFieldname(String fieldname) {
+		this.fieldname = fieldname;
+	}
+	public String getFieldvalue() {
+		return fieldvalue;
+	}
+	public void setFieldvalue(String fieldvalue) {
+		this.fieldvalue = fieldvalue;
+	}
 	public int getActive() {
 		return active;
 	}

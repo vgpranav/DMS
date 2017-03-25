@@ -64,6 +64,16 @@
 						</div>
 					</div>
 					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Display To User<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:6px;">
+							<input type="radio" name="displayflag" value="1" > Yes
+							<input type="radio" name="displayflag" value="0" checked="checked"> No
+						</div>
+					</div>
+					
 					<div class="form-group" align="right">
 						<button class="btn btn-warning" type="reset">Reset</button>
 						<button class="btn btn-success">Save</button>
@@ -111,6 +121,7 @@
                             <th class="column-title">Created By </th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
+                            <th class="column-title">Display to user </th>
                             <th class="column-title no-link last">
                             	<span class="nobr">Action</span>
                             </th>
@@ -137,6 +148,14 @@
 										</c:if>
 										<c:if test="${myItem.active!=1}">
 											Inactive
+									</c:if>
+									</td>								
+									<td class=" ">
+									<c:if test="${myItem.displayflag==1}">
+											Yes 
+										</c:if>
+										<c:if test="${myItem.displayflag!=1}">
+											No
 									</c:if>
 									</td>								
 									<td class=" ">
@@ -175,6 +194,7 @@ function editDocSubtype(docsubtypeid){
 	        		$('#docsubtypedesc').val(response.docsubtypedesc);
 	        		$('#doctypeid option[value="'+response.doctypeid+'"]').prop("selected",true).change();
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		$('input[name=displayflag][value="'+response.displayflag+'"]').prop("checked","checked").change();
 	        		//$('#societyname').val(response.societyname);
 	        		
 	        	}  

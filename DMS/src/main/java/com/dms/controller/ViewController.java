@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.Builder;
@@ -63,15 +64,21 @@ public class ViewController
 	  User authenticatedUser = null;
 	  Userprofile userprofile = new Userprofile();
 	  SocietyDao societyDao = new SocietyDao();
+	  DocumentDao ddao = new DocumentDao();
+	  List<DocSubType> docSubType = null;
 	  try {
 		  authenticatedUser = (User)request.getSession().getAttribute("userObject");
 		  request.getSession().setAttribute("userObject", authenticatedUser);
 		  userprofile.setUserid(authenticatedUser.getUserid());
 		  userprofile = societyDao.getUserDataById(userprofile);
+		  
+		  docSubType = ddao.getDocStubtypesToDispay(docSubType);
+		  
 		  mv = new ModelAndView("home");
 		  mv.addObject("userprofile", userprofile);
+		  mv.addObject("docSubType", docSubType);
 		  
-		  System.out.println("userprofile :: "+userprofile);
+		  //System.out.println("userprofile :: "+userprofile);
 	  } catch (Exception e) {
 	      logger.error(e.getMessage());
 	    }
@@ -86,6 +93,8 @@ public class ViewController
     User authenticatedUser = null;
     Userprofile userprofile = new Userprofile();
     SocietyDao societyDao = new SocietyDao();
+    DocumentDao ddao = new DocumentDao();
+	  List<DocSubType> docSubType = null;
     try {
       authenticatedUser = loginDao.authenticateUser(user, authenticatedUser);
       if (authenticatedUser != null) {
@@ -94,7 +103,11 @@ public class ViewController
           request.getSession().setAttribute("userObject", authenticatedUser);
           userprofile.setUserid(authenticatedUser.getUserid());
 		  userprofile = societyDao.getUserDataById(userprofile);
-          
+		  docSubType = ddao.getDocStubtypesToDispay(docSubType);
+		  
+		  request.getSession().setAttribute("userprofile", userprofile);
+		  mv.addObject("docSubType", docSubType);
+		  
           List<HashMap<String, Object>> photos = new ArrayList<HashMap<String, Object>>();
           photos =  societyddao.getSocietyPhotos(authenticatedUser.getUserid(),"user","UserImages",photos);
           String imgBase64 = (String) photos.get(0).get("file");
@@ -751,4 +764,65 @@ public class ViewController
     return mv;
   }
   
+  @RequestMapping(value={"/viewNoticeboard"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView viewNoticeboard(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+	    SocietyDao sdao = new SocietyDao();
+	    try
+	    {
+	      docList = sdao.getNoticeboardDocs(society.getSocietyid(), docList);
+	      mv = new ModelAndView("viewNoticeboard");
+	      mv.addObject("docList", docList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
+  
+  @RequestMapping(value={"/displaySelfSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView displaySelfSociety(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView mv = null;
+    Userprofile userprofile = null;
+    SocietyDao sdao = new SocietyDao();
+    Society society = new Society();
+    try {
+    	userprofile = (Userprofile)request.getSession().getAttribute("userprofile");
+      society.setSocietyid(Long.valueOf(userprofile.getSocietyid()));
+      society = sdao.getSocietyDetailsById(society);
+        mv = new ModelAndView("selfSociety");
+        mv.addObject("society",society);
+    } catch (Exception e) { logger.error(e.getMessage());
+      e.printStackTrace();
+    }
+    return mv;
+  }
+  
+  
+  //displayDocument
+  @RequestMapping(value={"/displayDocument"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView displayDocument(@RequestParam("doctypeid") String doctypeid,
+		  @RequestParam("userid") String userid,
+		  HttpServletRequest request, HttpServletResponse response)
+        {
+	    ModelAndView mv = null;
+	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+	    List<GenericBean> data = null;
+	    SocietyDao sdao = new SocietyDao();
+	    DocumentDao ddao = new DocumentDao();
+	    try
+	    {
+	      docList = sdao.displayDocument(doctypeid,userid, docList);
+	      data = ddao.getdisplayData(doctypeid,userid,data);
+	      
+	      mv = new ModelAndView("displayDocument");
+	      mv.addObject("docList", docList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
 }

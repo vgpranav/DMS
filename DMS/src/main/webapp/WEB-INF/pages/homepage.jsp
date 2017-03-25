@@ -208,24 +208,16 @@
 				<div class="row">
 				<hr>
 					<div class="col-md-4 col-sm-4 col-xs-12">
-						<h2>Self Society Details</h2>
+						<h2><a href="displaySelfSociety.do">Self Society Details</a></h2>
 					</div>
 					
 					<div class="col-md-4 col-sm-4 col-xs-12">
-						<h2>Lease Owner Agreement and Police Verification Document</h2>
+						<h2><a href="viewNoticeboard.do?societyid=${userprofile.societyid}">Society Notice Board</a></h2>
 					</div>
 					
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						<h2>Society Notice Board</h2>
-					</div>
-					
-					<div class="clearfix"></div>
-					
-					<div class="col-md-4 col-sm-4 col-xs-12">
-						<h2>Share Certificate</h2>
-					</div>
-					
-					
+					<c:forEach items="${docSubType}" var="myItem" varStatus="loopStatus">
+						<h2><a href="displayDocument.do?doctypeid=${myItem.doctypeid}&userid=${userprofile.userid}">${myItem.docsubtypedesc}</a></h2>
+					</c:forEach>
 					
 				</div>
 			</div>

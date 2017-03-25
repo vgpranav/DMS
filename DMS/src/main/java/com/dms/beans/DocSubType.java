@@ -12,8 +12,18 @@ public class DocSubType
     private String createdon;
     private int active;
     private String doctypename;
+    private int displayflag;
     
-    public long getDocsubtypeid()
+    
+    public int getDisplayflag() {
+		return displayflag;
+	}
+
+	public void setDisplayflag(int displayflag) {
+		this.displayflag = displayflag;
+	}
+
+	public long getDocsubtypeid()
     {
         return docsubtypeid;
     }
@@ -95,9 +105,9 @@ public class DocSubType
 	public String toString() {
 		return "DocSubType [docsubtypeid=" + docsubtypeid + ", doctypeid=" + doctypeid + ", docsubtypename="
 				+ docsubtypename + ", docsubtypedesc=" + docsubtypedesc + ", createdby=" + createdby + ", createdon="
-				+ createdon + ", active=" + active + ", doctypename=" + doctypename + "]";
+				+ createdon + ", active=" + active + ", doctypename=" + doctypename + ", displayflag=" + displayflag
+				+ "]";
 	}
-	
-	
-	
+
+	 
 }

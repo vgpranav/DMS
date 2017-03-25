@@ -158,7 +158,9 @@ public class DocumentDao
     			  docSubType.getDocsubtypename(), 
     			  docSubType.getDocsubtypedesc(), 
     			  docSubType.getCreatedby(), 
-    			  Integer.valueOf(docSubType.getActive()) });
+    			  Integer.valueOf(docSubType.getActive()),
+    			  docSubType.getDisplayflag()});
+    	  
     	  docsubtypeId = CommomUtility.convertToLong(obj);
     	  docSubType.setDoctypeid(docsubtypeId);
       } else{
@@ -167,6 +169,7 @@ public class DocumentDao
     			  docSubType.getDocsubtypename(),
     			  docSubType.getDocsubtypedesc(),
     			  docSubType.getActive(),
+    			  docSubType.getDisplayflag(),
     			  docSubType.getDocsubtypeid()
     			  );
       }
@@ -625,4 +628,42 @@ public GenericBean insertSocDocMapping(GenericBean bean) {
     }
     return bean;
   }
+
+public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType) {
+    Connection conn = null;
+
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler<DocSubType>(DocSubType.class);
+      
+      docSubType = qr.query(conn,DMSQueries.getDocStubtypesToDispay,rsh);
+      
+      return docSubType;
+    } catch (Exception e) {
+      logger.error("Error Saving Doctype :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public List<GenericBean> getdisplayData(String doctypeid, String userid, List<GenericBean> data) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
