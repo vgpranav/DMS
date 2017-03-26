@@ -16,6 +16,43 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `builder`
+--
+
+DROP TABLE IF EXISTS `builder`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `builder` (
+  `builderid` int(11) NOT NULL AUTO_INCREMENT,
+  `buildername` varchar(105) DEFAULT NULL,
+  `address` varchar(1000) DEFAULT NULL,
+  `blockno` varchar(45) DEFAULT NULL,
+  `premisesname` varchar(1000) DEFAULT NULL,
+  `streetname` varchar(105) DEFAULT NULL,
+  `landmark` varchar(105) DEFAULT NULL,
+  `area` varchar(105) DEFAULT NULL,
+  `city` varchar(105) DEFAULT NULL,
+  `pincode` varchar(45) DEFAULT NULL,
+  `state` varchar(105) DEFAULT NULL,
+  `country` varchar(105) DEFAULT NULL,
+  `createdby` int(11) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  `active` int(11) DEFAULT '1',
+  PRIMARY KEY (`builderid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `builder`
+--
+
+LOCK TABLES `builder` WRITE;
+/*!40000 ALTER TABLE `builder` DISABLE KEYS */;
+INSERT INTO `builder` VALUES (1,'test123','test11','test','test','test','test','test','test','123456','test','test',8,'2017-03-24 23:57:31',1);
+/*!40000 ALTER TABLE `builder` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `committee`
 --
 
@@ -36,7 +73,7 @@ CREATE TABLE `committee` (
   `contactNo` varchar(45) DEFAULT NULL,
   `flat` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`committeememberid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,7 +82,7 @@ CREATE TABLE `committee` (
 
 LOCK TABLES `committee` WRITE;
 /*!40000 ALTER TABLE `committee` DISABLE KEYS */;
-INSERT INTO `committee` VALUES (1,2,NULL,1,NULL,1,NULL,1,'2017-03-13 00:00:00',NULL,NULL,NULL),(2,8,NULL,1,NULL,1,NULL,0,'2017-03-23 00:00:00','2017-03-23 08:39:20',NULL,NULL);
+INSERT INTO `committee` VALUES (1,2,NULL,1,NULL,1,NULL,1,'2017-03-13 00:00:00',NULL,NULL,NULL),(2,8,NULL,1,NULL,1,NULL,0,'2017-03-23 00:00:00','2017-03-23 08:39:20',NULL,NULL),(3,8,NULL,1,NULL,2,NULL,0,'2017-03-25 00:00:00','2017-03-25 11:52:16',NULL,NULL),(4,9,NULL,1,NULL,1,NULL,1,'2017-03-26 00:00:00',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `committee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,8 +154,9 @@ CREATE TABLE `docsubtype` (
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `active` int(11) DEFAULT NULL,
+  `displayflag` int(11) DEFAULT '0',
   PRIMARY KEY (`docsubtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +165,7 @@ CREATE TABLE `docsubtype` (
 
 LOCK TABLES `docsubtype` WRITE;
 /*!40000 ALTER TABLE `docsubtype` DISABLE KEYS */;
-INSERT INTO `docsubtype` VALUES (8,5,'Flat Sale Deed','Flat Sale Deed','8','2017-03-23 10:16:06',1);
+INSERT INTO `docsubtype` VALUES (8,5,'Flat Sale Deed','Flat Sale Deed','8','2017-03-23 10:16:06',1,1),(9,6,'Housing society Share Certificate','Housing society Share Certificate','8','2017-03-26 10:11:26',1,1);
 /*!40000 ALTER TABLE `docsubtype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +184,7 @@ CREATE TABLE `doctype` (
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`doctypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +193,7 @@ CREATE TABLE `doctype` (
 
 LOCK TABLES `doctype` WRITE;
 /*!40000 ALTER TABLE `doctype` DISABLE KEYS */;
-INSERT INTO `doctype` VALUES (5,'Agreement  Legal Documents','Agreement  Legal Documents',1,'8','2017-03-23 10:15:16');
+INSERT INTO `doctype` VALUES (5,'Agreement  Legal Documents','Agreement  Legal Documents',1,'8','2017-03-23 10:15:16'),(6,'Society Membership Related Documents','Society Membership Related Document',1,'8','2017-03-26 10:10:56');
 /*!40000 ALTER TABLE `doctype` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,12 +208,13 @@ CREATE TABLE `document` (
   `documentid` int(11) NOT NULL AUTO_INCREMENT,
   `societyid` int(11) DEFAULT NULL,
   `doctypeid` int(11) DEFAULT NULL,
+  `userid` int(11) DEFAULT NULL,
   `docsubtypeid` int(11) DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`documentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,7 +223,7 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
-INSERT INTO `document` VALUES (2,1,1,1,NULL,'123','2017-03-18 12:28:57'),(3,1,1,1,NULL,'123','2017-03-18 12:43:19'),(4,1,1,1,NULL,'123','2017-03-18 13:26:13'),(5,1,1,1,NULL,'123','2017-03-18 13:29:45'),(6,1,1,1,NULL,'123','2017-03-18 13:30:28'),(7,1,2,2,NULL,'123','2017-03-18 13:38:26'),(8,1,5,8,NULL,'123','2017-03-23 10:17:55');
+INSERT INTO `document` VALUES (11,1,5,8,8,NULL,'8','2017-03-25 18:15:01'),(12,1,5,9,8,NULL,'8','2017-03-25 18:16:24'),(13,1,999,999,999,NULL,'8','2017-03-26 02:22:41'),(14,1,999,999,999,NULL,'8','2017-03-26 02:24:51'),(15,1,999,999,999,NULL,'8','2017-03-26 02:53:09'),(16,1,6,8,9,NULL,'8','2017-03-26 10:13:33');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +242,7 @@ CREATE TABLE `documentdetails` (
   `createdby` varchar(45) DEFAULT NULL,
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`documentdetailsid`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +251,7 @@ CREATE TABLE `documentdetails` (
 
 LOCK TABLES `documentdetails` WRITE;
 /*!40000 ALTER TABLE `documentdetails` DISABLE KEYS */;
-INSERT INTO `documentdetails` VALUES (1,2,'societyid','1','123','2017-03-18 12:28:57'),(2,2,'doctypeid','1','123','2017-03-18 12:28:57'),(3,2,'docsubtypeid','1','123','2017-03-18 12:28:57'),(4,2,'1','hello','123','2017-03-18 12:28:57'),(5,2,'2','03/18/2017','123','2017-03-18 12:28:57'),(6,3,'societyid','1','123','2017-03-18 12:43:19'),(7,3,'doctypeid','1','123','2017-03-18 12:43:19'),(8,3,'docsubtypeid','1','123','2017-03-18 12:43:19'),(9,3,'1','hello','123','2017-03-18 12:43:19'),(10,3,'2','03/18/2017','123','2017-03-18 12:43:19'),(11,4,'societyid','1','123','2017-03-18 13:26:13'),(12,4,'doctypeid','1','123','2017-03-18 13:26:13'),(13,4,'docsubtypeid','1','123','2017-03-18 13:26:13'),(14,4,'1','hello','123','2017-03-18 13:26:13'),(15,4,'2','03/18/2017','123','2017-03-18 13:26:13'),(16,5,'societyid','1','123','2017-03-18 13:29:45'),(17,5,'doctypeid','1','123','2017-03-18 13:29:45'),(18,5,'docsubtypeid','1','123','2017-03-18 13:29:45'),(19,5,'1','hello','123','2017-03-18 13:29:45'),(20,5,'2','03/18/2017','123','2017-03-18 13:29:45'),(21,6,'societyid','1','123','2017-03-18 13:30:28'),(22,6,'doctypeid','1','123','2017-03-18 13:30:28'),(23,6,'docsubtypeid','1','123','2017-03-18 13:30:28'),(24,6,'1','hello','123','2017-03-18 13:30:28'),(25,6,'2','03/18/2017','123','2017-03-18 13:30:28'),(26,7,'societyid','1','123','2017-03-18 13:38:26'),(27,7,'doctypeid','2','123','2017-03-18 13:38:26'),(28,7,'docsubtypeid','2','123','2017-03-18 13:38:26'),(29,7,'3','Pranav','123','2017-03-18 13:38:26'),(30,8,'societyid','1','123','2017-03-23 10:17:55'),(31,8,'doctypeid','5','123','2017-03-23 10:17:55'),(32,8,'docsubtypeid','8','123','2017-03-23 10:17:55'),(33,8,'16','A and B','123','2017-03-23 10:17:55'),(34,8,'17','Pranav VG','123','2017-03-23 10:17:55');
+INSERT INTO `documentdetails` VALUES (48,11,'societyid','1','8','2017-03-25 18:15:01'),(49,11,'doctypeid','5','8','2017-03-25 18:15:01'),(50,11,'docsubtypeid','8','8','2017-03-25 18:15:01'),(51,11,'userid','8','8','2017-03-25 18:15:01'),(52,11,'documentid','0','8','2017-03-25 18:15:01'),(53,11,'16','prasad and co','8','2017-03-25 18:15:01'),(54,11,'17','Prasad VG','8','2017-03-25 18:15:01'),(55,12,'societyid','1','8','2017-03-25 18:16:24'),(56,12,'doctypeid','5','8','2017-03-25 18:16:24'),(57,12,'docsubtypeid','8','8','2017-03-25 18:16:24'),(58,12,'userid','9','8','2017-03-25 18:16:24'),(59,12,'documentid','0','8','2017-03-25 18:16:24'),(60,12,'16','Pranav and co','8','2017-03-25 18:16:24'),(61,12,'17','Pranav VG','8','2017-03-25 18:16:24'),(62,13,'societyid','1','8','2017-03-26 02:22:41'),(63,13,'doctypeid','999','8','2017-03-26 02:22:41'),(64,13,'docsubtypeid','999','8','2017-03-26 02:22:41'),(65,13,'userid','999','8','2017-03-26 02:22:41'),(66,14,'societyid','1','8','2017-03-26 02:24:51'),(67,14,'doctypeid','999','8','2017-03-26 02:24:51'),(68,14,'docsubtypeid','999','8','2017-03-26 02:24:51'),(69,14,'userid','999','8','2017-03-26 02:24:51'),(70,15,'societyid','1','8','2017-03-26 02:53:09'),(71,15,'doctypeid','999','8','2017-03-26 02:53:10'),(72,15,'docsubtypeid','999','8','2017-03-26 02:53:10'),(73,15,'userid','999','8','2017-03-26 02:53:10'),(74,16,'societyid','1','8','2017-03-26 10:13:33'),(75,16,'doctypeid','6','8','2017-03-26 10:13:33'),(76,16,'docsubtypeid','9','8','2017-03-26 10:13:33'),(77,16,'userid','8','8','2017-03-26 10:13:33'),(78,16,'documentid','0','8','2017-03-26 10:13:33'),(79,16,'18','Prasad VG','8','2017-03-26 10:13:33'),(80,16,'19','03/26/2017','8','2017-03-26 10:13:33'),(81,16,'20','Pranav VG','8','2017-03-26 10:13:33');
 /*!40000 ALTER TABLE `documentdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +274,7 @@ CREATE TABLE `files` (
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `createdby` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`filesid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +283,7 @@ CREATE TABLE `files` (
 
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
-INSERT INTO `files` VALUES (1,1,1,1,6,'1-1-1-1489824078320.jpg','/DMS/1-1-1-1489824078320.jpg','','2017-03-18 13:31:18','1'),(2,1,1,1,6,'1-1-1-1489824078451.jpg','/DMS/1-1-1-1489824078451.jpg','','2017-03-18 13:31:18','1'),(3,1,1,1,6,'1-1-1-1489824078669.jpg','/DMS/1-1-1-1489824078669.jpg','','2017-03-18 13:31:18','1'),(4,1,2,2,7,'1-2-2-1489824517010.jpg','/DMS/1-2-2-1489824517010.jpg','','2017-03-18 13:38:37','1'),(5,1,5,8,8,'1-5-8-1490244518201.jpg','/DMS/1-5-8-1490244518201.jpg','','2017-03-23 10:18:38','1');
+INSERT INTO `files` VALUES (9,1,5,8,11,'1-5-8-1490445927871.jpg','/DMS/1-5-8-1490445927871.jpg','','2017-03-25 18:15:27','1'),(10,1,5,8,11,'1-5-8-1490445953142.jpg','/DMS/1-5-8-1490445953142.jpg','','2017-03-25 18:15:53','1'),(11,1,5,8,12,'1-5-8-1490445995076.jpg','/DMS/1-5-8-1490445995076.jpg','','2017-03-25 18:16:35','1'),(13,1,999,999,13,'1-999-999-1490475173912.jpg','/DMS/1-999-999-1490475173912.jpg','','2017-03-26 02:22:53','1'),(14,1,999,999,14,'1-999-999-1490475299954.jpg','/DMS/1-999-999-1490475299954.jpg','','2017-03-26 02:24:59','1'),(15,1,999,999,15,'1-999-999-1490477008944.jpg','/DMS/1-999-999-1490477008944.jpg','','2017-03-26 02:53:28','1'),(16,1,999,999,15,'1-999-999-1490477009069.jpg','/DMS/1-999-999-1490477009069.jpg','','2017-03-26 02:53:29','1'),(17,1,999,999,15,'1-999-999-1490477009142.jpg','/DMS/1-999-999-1490477009142.jpg','','2017-03-26 02:53:29','1'),(18,1,6,9,16,'1-6-9-1490503450537.jpg','/DMS/1-6-9-1490503450537.jpg','','2017-03-26 10:14:10','1'),(19,1,6,9,16,'1-6-9-1490503450646.jpg','/DMS/1-6-9-1490503450646.jpg','','2017-03-26 10:14:10','1'),(20,1,6,9,16,'1-6-9-1490503488939.jpg','/DMS/1-6-9-1490503488939.jpg','','2017-03-26 10:14:48','1');
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -266,7 +305,7 @@ CREATE TABLE `formstructure` (
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   `docsubtypeid` int(11) DEFAULT NULL,
   PRIMARY KEY (`fieldid`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -275,7 +314,7 @@ CREATE TABLE `formstructure` (
 
 LOCK TABLES `formstructure` WRITE;
 /*!40000 ALTER TABLE `formstructure` DISABLE KEYS */;
-INSERT INTO `formstructure` VALUES (16,'Agreement Between','optional','text','1',1,'8','2017-03-23 10:16:24',8),(17,'Name of Flat Owner','optional','text','1',1,'8','2017-03-23 10:16:49',8);
+INSERT INTO `formstructure` VALUES (16,'Agreement Between','optional','text','1',1,'8','2017-03-23 10:16:24',8),(17,'Name of Flat Owner','optional','text','1',1,'8','2017-03-23 10:16:49',8),(18,'Name of Flat Ownee','optional','text','1',1,'8','2017-03-26 10:12:02',9),(19,'Date of Issue by society','optional','date','1',1,'8','2017-03-26 10:12:22',9),(20,'Name of Previous Owner','optional','text','1',1,'8','2017-03-26 10:12:41',9);
 /*!40000 ALTER TABLE `formstructure` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -296,7 +335,7 @@ CREATE TABLE `photos` (
   `isactive` int(11) DEFAULT '1',
   `contenttype` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`photosid`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,8 +344,71 @@ CREATE TABLE `photos` (
 
 LOCK TABLES `photos` WRITE;
 /*!40000 ALTER TABLE `photos` DISABLE KEYS */;
-INSERT INTO `photos` VALUES (19,'society',1,'SocietyImages/1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-16 10:03:35',0,'image/jpeg'),(20,'society',1,'SocietyImages/1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','2017-03-16 10:03:40',0,'image/jpeg'),(21,'society',1,'SocietyImages/1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','2017-03-16 10:03:45',0,'image/jpeg'),(22,'society',1,'SocietyImages/1489638831917-2017_yamaha_mt_07-t2.jpg','1489638831917-2017_yamaha_mt_07-t2.jpg','2017-03-16 10:03:51',0,'image/jpeg'),(23,'society',1,'SocietyImages/1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','2017-03-16 10:03:57',0,'image/jpeg'),(24,'society',1,'SocietyImages/1489678750208-twain-32-64.jpg','1489678750208-twain-32-64.jpg','2017-03-16 21:09:10',0,'image/jpeg'),(25,'society',1,'SocietyImages/1489819299807-inside_explosion_hd-1366x768.jpg','1489819299807-inside_explosion_hd-1366x768.jpg','2017-03-18 12:11:39',1,'image/jpeg');
+INSERT INTO `photos` VALUES (19,'society',1,'SocietyImages/1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','1489638815298-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-16 10:03:35',0,'image/jpeg'),(20,'society',1,'SocietyImages/1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','1489638820017-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','2017-03-16 10:03:40',0,'image/jpeg'),(21,'society',1,'SocietyImages/1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','1489638825184-2017_ktm_rc16_motogp_race_bike-t2.jpg','2017-03-16 10:03:45',0,'image/jpeg'),(22,'society',1,'SocietyImages/1489638831917-2017_yamaha_mt_07-t2.jpg','1489638831917-2017_yamaha_mt_07-t2.jpg','2017-03-16 10:03:51',0,'image/jpeg'),(23,'society',1,'SocietyImages/1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','1489638837459-repsol_honda_rc213v_motogp_2017_8k-t2.jpg','2017-03-16 10:03:57',0,'image/jpeg'),(24,'society',1,'SocietyImages/1489678750208-twain-32-64.jpg','1489678750208-twain-32-64.jpg','2017-03-16 21:09:10',0,'image/jpeg'),(25,'society',1,'SocietyImages/1489819299807-inside_explosion_hd-1366x768.jpg','1489819299807-inside_explosion_hd-1366x768.jpg','2017-03-18 12:11:39',0,'image/jpeg'),(26,'user',8,'UserImages/1490450222182-2017_kawasaki_ninja_1000_5k-t2.jpg','1490450222182-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-25 19:27:02',0,'image/jpeg'),(27,'user',8,'UserImages/1490450233878-2017_kawasaki_ninja_1000_5k-t2.jpg','1490450233878-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-25 19:27:13',0,'image/jpeg'),(28,'user',8,'UserImages/1490453479631-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','1490453479631-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','2017-03-25 20:21:19',0,'image/jpeg'),(29,'society',1,'SocietyImages/1490453491567-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','1490453491567-2017_ktm_moto2_motogp_race_bike_4k-t2.jpg','2017-03-25 20:21:31',1,'image/jpeg'),(30,'user',8,'UserImages/1490453638686-2017_kawasaki_ninja_1000_5k-t2.jpg','1490453638686-2017_kawasaki_ninja_1000_5k-t2.jpg','2017-03-25 20:23:58',0,'image/jpeg'),(31,'user',9,'UserImages/1490453652947-2017_yamaha_mt_07-t2.jpg','1490453652947-2017_yamaha_mt_07-t2.jpg','2017-03-25 20:24:12',1,'image/jpeg'),(32,'user',13,'UserImages/1490454030359-twain-32-64.jpg','1490454030359-twain-32-64.jpg','2017-03-25 20:30:30',0,'image/jpeg'),(33,'user',13,'UserImages/1490454372208-13568927_10207937675572644_2494741473472572782_o.jpg','1490454372208-13568927_10207937675572644_2494741473472572782_o.jpg','2017-03-25 20:36:12',1,'image/jpeg'),(34,'user',8,'UserImages/1490454488834-13568927_10207937675572644_2494741473472572782_o.jpg','1490454488834-13568927_10207937675572644_2494741473472572782_o.jpg','2017-03-25 20:38:08',1,'image/jpeg');
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `project`
+--
+
+DROP TABLE IF EXISTS `project`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `project` (
+  `projectid` int(11) NOT NULL AUTO_INCREMENT,
+  `projectname` varchar(100) DEFAULT NULL,
+  `builderid` int(11) DEFAULT NULL,
+  `siteaddress` varchar(500) DEFAULT NULL,
+  `plotarea` varchar(45) DEFAULT NULL,
+  `registrationdate` datetime DEFAULT NULL,
+  `towernos` varchar(45) DEFAULT NULL,
+  `resnos` varchar(45) DEFAULT NULL,
+  `bungnos` varchar(45) DEFAULT NULL,
+  `pentanos` varchar(45) DEFAULT NULL,
+  `shopnos` varchar(45) DEFAULT NULL,
+  `galanos` varchar(45) DEFAULT NULL,
+  `createdby` varchar(45) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
+  `active` int(11) DEFAULT '1',
+  PRIMARY KEY (`projectid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `project`
+--
+
+LOCK TABLES `project` WRITE;
+/*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` VALUES (1,'aaa',1,'aaaa','111','2017-03-25 00:00:00','111','111','111','111','111','1111','8','2017-03-25 10:08:40',0),(2,'My new Project',1,'nb','mbmnb','2017-03-25 00:00:00','654','654','64','654','65','46','8','2017-03-25 10:53:22',1);
+/*!40000 ALTER TABLE `project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rolemaster`
+--
+
+DROP TABLE IF EXISTS `rolemaster`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rolemaster` (
+  `rolemasterid` int(11) NOT NULL AUTO_INCREMENT,
+  `roleid` int(11) DEFAULT NULL,
+  `rolename` varchar(45) DEFAULT NULL,
+  `active` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`rolemasterid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rolemaster`
+--
+
+LOCK TABLES `rolemaster` WRITE;
+/*!40000 ALTER TABLE `rolemaster` DISABLE KEYS */;
+INSERT INTO `rolemaster` VALUES (2,0,'User',NULL),(3,1,'Admin',NULL);
+/*!40000 ALTER TABLE `rolemaster` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -318,6 +420,7 @@ DROP TABLE IF EXISTS `society`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `society` (
   `societyid` int(11) NOT NULL AUTO_INCREMENT,
+  `projectid` int(11) DEFAULT NULL,
   `societytypeid` int(11) DEFAULT NULL,
   `societyname` varchar(1000) DEFAULT NULL,
   `createdby` varchar(45) DEFAULT NULL,
@@ -333,7 +436,7 @@ CREATE TABLE `society` (
 
 LOCK TABLES `society` WRITE;
 /*!40000 ALTER TABLE `society` DISABLE KEYS */;
-INSERT INTO `society` VALUES (1,1,'Kalpana Complex CoOp Hsg Soc ltd','123','2017-03-13 20:06:07',1),(2,1,'Satyam Complex','2','2017-03-19 10:18:32',1);
+INSERT INTO `society` VALUES (1,2,2,'Kalpana Complex CoOp Hsg Soc ltd','2','2017-03-13 20:06:07',1),(2,2,2,'Satyam Complex','2','2017-03-19 10:18:32',1);
 /*!40000 ALTER TABLE `society` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,8 +452,10 @@ CREATE TABLE `societydocmapping` (
   `doctypeid` int(11) DEFAULT NULL,
   `societyid` int(11) DEFAULT NULL,
   `isactive` int(11) DEFAULT '1',
+  `createdby` varchar(45) DEFAULT NULL,
+  `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`societydocmappingid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -359,7 +464,7 @@ CREATE TABLE `societydocmapping` (
 
 LOCK TABLES `societydocmapping` WRITE;
 /*!40000 ALTER TABLE `societydocmapping` DISABLE KEYS */;
-INSERT INTO `societydocmapping` VALUES (3,5,1,1);
+INSERT INTO `societydocmapping` VALUES (3,5,1,1,NULL,'2017-03-25 12:51:24'),(6,5,2,1,'13','2017-03-25 17:18:41'),(7,6,1,1,'8','2017-03-26 10:13:06');
 /*!40000 ALTER TABLE `societydocmapping` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,7 +482,7 @@ CREATE TABLE `societymanager` (
   `isactive` int(11) DEFAULT '1',
   `createdon` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`societymanagerid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -386,7 +491,7 @@ CREATE TABLE `societymanager` (
 
 LOCK TABLES `societymanager` WRITE;
 /*!40000 ALTER TABLE `societymanager` DISABLE KEYS */;
-INSERT INTO `societymanager` VALUES (2,1,8,1,'2017-03-13 23:57:02');
+INSERT INTO `societymanager` VALUES (6,1,8,1,'2017-03-23 23:38:06'),(7,1,9,1,'2017-03-23 23:38:14'),(9,2,13,1,'2017-03-25 17:16:45'),(10,1,13,1,'2017-03-25 18:21:02');
 /*!40000 ALTER TABLE `societymanager` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +585,7 @@ CREATE TABLE `tenant` (
 
 LOCK TABLES `tenant` WRITE;
 /*!40000 ALTER TABLE `tenant` DISABLE KEYS */;
-INSERT INTO `tenant` VALUES (3,8,'IDK','IDK','1234567891','1234567891','test@test.com','12345665432','2017-03-22 01:08:51',1);
+INSERT INTO `tenant` VALUES (3,8,'IDK','IDK','1234567891','1234567891','test@test.com','34','2017-03-22 01:08:51',1);
 /*!40000 ALTER TABLE `tenant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -501,8 +606,9 @@ CREATE TABLE `user` (
   `active` int(11) DEFAULT '1',
   `mobileNo` varchar(45) DEFAULT NULL,
   `createdBy` varchar(45) DEFAULT NULL,
+  `userroleid` int(11) DEFAULT '0',
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -511,7 +617,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (8,'Prasad','VG',NULL,'pranav','2017-03-22 01:08:51',1,'8976724255','123');
+INSERT INTO `user` VALUES (8,'Prasad','VG',NULL,'pranav','2017-03-22 01:08:51',1,'8976724255','123',1),(9,'Pranav','VG',NULL,'pranav','2017-03-23 20:41:07',1,'9920650410','123',0),(13,'Test','Admin',NULL,'123','2017-03-25 16:30:08',1,'123123123','8',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -533,8 +639,8 @@ CREATE TABLE `userprofile` (
   `email` varchar(45) DEFAULT NULL,
   `aadharno` varchar(45) DEFAULT NULL,
   `jointowners` varchar(45) DEFAULT NULL,
-  `purchasedate` datetime DEFAULT NULL,
-  `possessiondate` datetime DEFAULT NULL,
+  `purchasedate` date DEFAULT NULL,
+  `possessiondate` date DEFAULT NULL,
   `builtuparea` varchar(45) DEFAULT NULL,
   `carpetarea` varchar(45) DEFAULT NULL,
   `parkingtype` varchar(45) DEFAULT NULL,
@@ -542,8 +648,16 @@ CREATE TABLE `userprofile` (
   `parkingallotmentno` varchar(45) DEFAULT NULL,
   `floor` varchar(45) DEFAULT NULL,
   `societyid` int(11) DEFAULT NULL,
+  `bloodgroup` varchar(45) DEFAULT NULL,
+  `sharecertno` varchar(45) DEFAULT NULL,
+  `nominee1` varchar(500) DEFAULT NULL,
+  `percent1` varchar(45) DEFAULT NULL,
+  `nominee2` varchar(500) DEFAULT NULL,
+  `percent2` varchar(45) DEFAULT NULL,
+  `nominee3` varchar(500) DEFAULT NULL,
+  `percent3` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`userprofileid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -552,7 +666,7 @@ CREATE TABLE `userprofile` (
 
 LOCK TABLES `userprofile` WRITE;
 /*!40000 ALTER TABLE `userprofile` DISABLE KEYS */;
-INSERT INTO `userprofile` VALUES (7,8,'203','B','1','leased','','vgpranav@gmail.com','123412341234','','2017-03-23 00:00:00','2017-03-22 00:00:00','300','350','NO','2 Wheeler','No','1',1);
+INSERT INTO `userprofile` VALUES (7,8,'203','B','1','leased','','vgpranav@gmail.com','123412341234','a,b,c,d','2017-03-23','2017-03-22','300','350','NO','2 Wheeler','No','1',1,'A-ve','12345','qq','33','ww','33','ee','34'),(8,9,'123','B','B','self','','','','8976724255','2017-03-23','2017-03-23','','','','','','',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `userprofile` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -625,4 +739,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-23 11:38:33
+-- Dump completed on 2017-03-26 13:12:54
