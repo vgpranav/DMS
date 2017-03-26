@@ -19,7 +19,7 @@
 							<c:set var="docId" value="${myItem.documentid}"></c:set>
 							<div class="clearfix"></div>
 							<hr/>
-							<b>Notie Date : ${myItem.createdon}</b>
+							<b>Notice Date : ${myItem.createdon}</b>
 							<hr/>
 						</c:if>
 						

@@ -1,11 +1,15 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>Menu</h3>
+                <h3>Menu</h3> 
 	                <ul class="nav side-menu">
-		                  <li>
+	                
+	                <c:if test="${userroleid==1}">
+	                	<li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
-		                  		Masters 
+		                  			Masters 
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
@@ -47,7 +51,9 @@
 		                      <li><a href="createVendor.do">Create Vendor</a></li>
 		                    </ul>
 		                  </li>
+	                </c:if>
 		                  
+		            <c:if test="${userroleid==1}">
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -59,7 +65,10 @@
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                    </ul>
 		                  </li>
-		                  
+		            </c:if>
+		            
+		            
+		             <c:if test="${userroleid==1}">     
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -72,7 +81,9 @@
 		                      <li><a href="viewDocument.do">View Document</a></li>
 		                    </ul>
 		                  </li>
-		                  
+		             </c:if>
+		               
+		              <c:if test="${userroleid==1}">         
 		                   <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -80,11 +91,11 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
+		                      <!-- <li><a href="displayAdminPanel.do">Administrative Details</a></li> -->
 		                      <li><a href="createAdminUser.do">Create Admin User</a></li>
 		                    </ul>
 		                  </li>
-		                  
+		             </c:if>     
 		                   
 	                  </ul>
                   </div>

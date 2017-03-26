@@ -55,8 +55,10 @@
                 <br />
 
                 <div>
-                  <h1><i class="fa fa-leaf"></i> Document Management System</h1>
-                  <p>©2016 All Rights Reserved. Document Management System. Privacy and Terms</p>
+                  <!-- <h1><i class="fa fa-leaf"></i> Document Management System</h1> -->
+                  
+                  <img src="<%= request.getContextPath() %>/resources/images/ods-logo.png" height="80">
+                  <p>©20167-18 All Rights Reserved.</p>
                 </div>
               </div>
             </form>

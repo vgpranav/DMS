@@ -1,5 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
+ <title><tiles:insertAttribute name="title" /> | Document Management System</title>
+ <tiles:insertAttribute name="imports" />  
+ <tiles:insertAttribute name="importJScript" />  
+ 
+ <br>	
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
@@ -12,6 +18,18 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
+                  <div class="row">
+                  	<div class="col-md-12 col-sm-12 col-xs-12">
+						<c:forEach items="${dataList}" var="myItem" varStatus="loopStatus">
+						 	<div class="col-md-4 col-sm-4 col-xs-12">
+		  						<label class="control-label">${myItem.fieldname}</label>
+		  						<div>${myItem.fieldvalue} </div> 
+		  						<br>
+		  					</div>
+						</c:forEach>                  	
+                  	</div>
+                  </div>
+                  
                     	<div class="row">
                     		<c:forEach items="${docList}" var="myItem" varStatus="loopStatus">
                     
@@ -19,7 +37,7 @@
 							<c:set var="docId" value="${myItem.documentid}"></c:set>
 							<div class="clearfix"></div>
 							<hr/>
-							<b>Notie Date : ${myItem.createdon}</b>
+							 
 							<hr/>
 						</c:if>
 						

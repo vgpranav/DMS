@@ -81,5 +81,14 @@ public static String updateAdminUser="Update user set firstname=?, lastname=?, p
 public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by documentid,createdon ";
 public static String getDocStubtypesToDispay = "select * from docsubtype where displayflag=1";
 public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
+public static String getDocumentDatabyDoctypeIdUserId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+		    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.doctypeid=? and d.userid=?";
   
+
+public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and f.documentid=?";
+
+public static String getDocumentDatabyDocId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+		+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
+
+
 }

@@ -663,7 +663,69 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType) {
   }
 
 public List<GenericBean> getdisplayData(String doctypeid, String userid, List<GenericBean> data) {
-	// TODO Auto-generated method stub
-	return null;
-}
+    Connection conn = null;
+
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+      
+      data = qr.query(conn,DMSQueries.getDocumentDatabyDoctypeIdUserId,rsh,doctypeid,userid);
+      
+      return data;
+    } catch (Exception e) {
+      logger.error("Error Saving Doctype :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  } 
+
+
+public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBean> data) {
+    Connection conn = null;
+
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+      
+      data = qr.query(conn,DMSQueries.getDocumentDatabyDocId,rsh,documentid);
+      
+      return data;
+    } catch (Exception e) {
+      logger.error("Error Saving Doctype :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
 }

@@ -115,6 +115,7 @@ public class ViewController
           
           request.getSession().setAttribute("imgBase64", imgBase64);
           request.getSession().setAttribute("imgContentType", imgContentType);
+          request.getSession().setAttribute("userroleid", authenticatedUser.getUserroleid());
           mv.addObject("userprofile", userprofile);
           
         } else {
@@ -800,8 +801,6 @@ public class ViewController
     return mv;
   }
   
-  
-  //displayDocument
   @RequestMapping(value={"/displayDocument"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView displayDocument(@RequestParam("doctypeid") String doctypeid,
 		  @RequestParam("userid") String userid,
@@ -819,6 +818,31 @@ public class ViewController
 	      
 	      mv = new ModelAndView("displayDocument");
 	      mv.addObject("docList", docList);
+	      mv.addObject("dataList", data);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
+  
+  @RequestMapping(value={"/displayDocumentFromSearch"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView displayDocumentFromSearch(@RequestParam("documentid") String documentid,
+		  HttpServletRequest request, HttpServletResponse response)
+        {
+	    ModelAndView mv = null;
+	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+	    List<GenericBean> data = null;
+	    SocietyDao sdao = new SocietyDao();
+	    DocumentDao ddao = new DocumentDao();
+	    try
+	    {
+	      docList = sdao.displayDocumentFromSearch(documentid,docList);
+	      data = ddao.getdisplayDataByDocId(documentid, data);
+	      
+	      mv = new ModelAndView("displayDocument");
+	      mv.addObject("docList", docList);
+	      mv.addObject("dataList", data);
 	    }
 	    catch (Exception e) {
 	      logger.error(e.getMessage());

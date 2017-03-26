@@ -157,9 +157,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/selfSociety.jsp" />   
     </definition>
     
-    <definition name="displayDocument" extends="base-definition">  
-      <put-attribute name="title" value="Self Society" />  
-      <put-attribute name="body" value="/WEB-INF/pages/displayDocument.jsp" />   
+    <definition name="displayDocument" template="/WEB-INF/pages/displayDocument.jsp">  
+      	  <put-attribute name="title" value="View Document" />  
+  	      <put-attribute name="imports" value="/WEB-INF/pages/commons/DefaultStyles.jsp" />
+  	      <put-attribute name="importJScript" value="/WEB-INF/pages/commons/DefaultScripts.jsp" /> 
     </definition> 
     
 </tiles-definitions>
