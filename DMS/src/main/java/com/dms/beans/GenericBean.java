@@ -3,17 +3,36 @@ package com.dms.beans;
 public class GenericBean {
 	
 	private long societyid;
+	
 	private long doctypeid;
+	private String doctypename;
+	private String docsubtypeid;
+	private String docsubtypename;
+	private String doccount;
+	
 	private String createdby;
 	private long societydocmappingid;
 	private String societyname;
-	private String doctypename;
 	private long roleid;
 	private String rolename;
 	private int active;
 	private String fieldname;
 	private String fieldvalue;
 	
+	
+	
+	public String getDocsubtypeid() {
+		return docsubtypeid;
+	}
+	public void setDocsubtypeid(String docsubtypeid) {
+		this.docsubtypeid = docsubtypeid;
+	}
+	public String getDocsubtypename() {
+		return docsubtypename;
+	}
+	public void setDocsubtypename(String docsubtypename) {
+		this.docsubtypename = docsubtypename;
+	}
 	public String getFieldname() {
 		return fieldname;
 	}
@@ -80,5 +99,21 @@ public class GenericBean {
 	public void setSocietydocmappingid(long societydocmappingid) {
 		this.societydocmappingid = societydocmappingid;
 	}
+	public String getDoccount() {
+		return doccount;
+	}
+	public void setDoccount(String doccount) {
+		this.doccount = doccount;
+	}
+	
+	@Override
+	public String toString() {
+		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", createdby=" + createdby
+				+ ", societydocmappingid=" + societydocmappingid + ", societyname=" + societyname + ", doctypename="
+				+ doctypename + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
+				+ fieldname + ", fieldvalue=" + fieldvalue + ", docsubtypeid=" + docsubtypeid + ", docsubtypename="
+				+ docsubtypename + ", doccount=" + doccount + "]";
+	}
+	
 	
 }

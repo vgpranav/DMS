@@ -1617,5 +1617,30 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    return docList;
 	  }
-	
+
+	public List<GenericBean> getAllExistingDocsForSoc(Society society, List<GenericBean> docs) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+		      docs = qr.query(conn, DMSQueries.getDocSummaryforAdminpanel,rsh,society.getSocietyid());
+		    } catch (Exception e) {
+		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return docs;
+		  }
+
+	 
 }

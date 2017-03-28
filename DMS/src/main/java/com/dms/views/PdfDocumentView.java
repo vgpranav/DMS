@@ -1,5 +1,6 @@
 package com.dms.views;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import com.dms.beans.Files;
@@ -16,6 +18,7 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
+import com.mchange.lang.StringUtils;
 
 import uk.co.mmscomputing.application.imageviewer.FtpWrapper;
 
@@ -44,9 +47,11 @@ public class PdfDocumentView extends AbstractPdfView{
 					String workDir = path.substring(0, path.lastIndexOf("/")+1);
 					ftp.changeWorkingDirectory(workDir);
 					
-					FileOutputStream fos = new FileOutputStream("img.jpg");
+					String ranfileName = RandomStringUtils.randomAlphanumeric(10)+".jpg";
+					
+					FileOutputStream fos = new FileOutputStream(ranfileName);
 					ftp.retrieveFile(path,fos);
-					Image image1 = Image.getInstance("img.jpg");
+					Image image1 = Image.getInstance(ranfileName);
 				
 					int indentation = 0;
 					float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
@@ -55,6 +60,9 @@ public class PdfDocumentView extends AbstractPdfView{
 					
 			        document.add(image1);
 			        fos.close();
+			        File f1 = new File(ranfileName);
+			        //System.out.println(f1.getAbsolutePath());
+			        f1.delete();
 				}
 			}
 			

@@ -37,7 +37,7 @@
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<select name="projectid" id="projectid"
 								class="form-control">
-								<option value="">Individual</option>
+								<option value="0">Individual</option>
 								<c:forEach items="${projectList}" var="myItem"
 									varStatus="loopStatus">
 									<option value="${myItem.projectid}">${myItem.projectname}</option>

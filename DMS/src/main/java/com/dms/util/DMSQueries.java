@@ -90,5 +90,10 @@ public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d
 public static String getDocumentDatabyDocId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
 		+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
 
+public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
+		+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst "
+		+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and societyid=? "
+		+ " group by dst.docsubtypename,dt.doctypename order by dt.doctypename,dst.docsubtypename";
+
 
 }

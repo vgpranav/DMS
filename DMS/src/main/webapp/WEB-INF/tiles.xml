@@ -163,4 +163,9 @@
   	      <put-attribute name="importJScript" value="/WEB-INF/pages/commons/DefaultScripts.jsp" /> 
     </definition> 
     
+    <definition name="viewDocumentFromAdminPanel" extends="base-definition">  
+      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewDocumentFromAdminPanel.jsp" />   
+    </definition> 
+
 </tiles-definitions>

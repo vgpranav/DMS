@@ -91,7 +91,7 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <!-- <li><a href="displayAdminPanel.do">Administrative Details</a></li> -->
+		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
 		                      <li><a href="createAdminUser.do">Create Admin User</a></li>
 		                    </ul>
 		                  </li>

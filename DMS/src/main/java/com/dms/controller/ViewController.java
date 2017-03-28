@@ -442,12 +442,20 @@ public class ViewController
     User user = null;
     SocietyDao sdao = new SocietyDao();
     List<Society> societyList = null;
+    List<GenericBean> docs = null;
+    
     try {
       user = (User)request.getSession().getAttribute("userObject");
       societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      
+      
       if (societyList.size() == 1) {
         mv = new ModelAndView("adminPanel");
+        
+        docs = sdao.getAllExistingDocsForSoc((Society)societyList.get(0),docs);
+        
         mv.addObject("society", (Society)societyList.get(0));
+        mv.addObject("docs", docs);
       }
       else {
         mv = new ModelAndView("tobemade");
@@ -849,4 +857,23 @@ public class ViewController
 	    }
 	    return mv;
 	  }
+  
+  
+  @RequestMapping(value={"/showDocFromAdminPanel"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView showDocFromAdminPanel(@ModelAttribute GenericBean bean,HttpServletRequest request, HttpServletResponse response)
+        {
+	    ModelAndView mv = null;
+	    try
+	    {
+	      mv = new ModelAndView("viewDocumentFromAdminPanel");
+	      mv.addObject("societyid", bean.getSocietyid());
+	      mv.addObject("doctypeid", bean.getDoctypeid());
+	      mv.addObject("docsubtypeid", bean.getDocsubtypeid());
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  } 
+  
 }

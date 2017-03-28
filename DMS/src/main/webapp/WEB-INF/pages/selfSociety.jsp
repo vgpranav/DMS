@@ -23,47 +23,10 @@
  
   	
  
+  
+ 
+ 
  <div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel tile">
-                <div class="x_title">
-                  <h2>Tenants Summary</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li> 
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <div class="dashboard-widget-content">
-                    <div class="table-responsive">
-				<table class="table table-striped jambo_table bulk_action"
-					id="thetable1">
-					<thead>
-						<tr class="headings">
-							<th class="column-title">Sr.No</th>
-							<th class="column-title">Flat No</th>
-							<th class="column-title">Wing</th>
-							<th class="column-title">Floor</th>
-							<th class="column-title">Tower</th>
-							<th class="column-title">Tenant Name</th>
-							<th class="column-title">Mobile No</th>
-							<th class="column-title">Occupancy</th>
-							<th class="column-title">Alternate No</th>
-							<th class="column-title">Email</th>
-							<th class="column-title">Aadhar No</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-                  </div>
-                </div>
-              </div>
- </div>
- 
- 
- <div class="col-md-6 col-sm-6 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Committee Members</h2>
@@ -95,7 +58,7 @@
  </div>
  
  
- <div class="col-md-6 col-sm-6 col-xs-12">
+ <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Vendor Details</h2>
@@ -136,12 +99,7 @@
 	        "bFilter": false
 	    });
 	 
-	 $('#thetable1').DataTable({
-	        
-	        "ordering": false,
-	        "info":     false,
-	        "bFilter": false
-	    });
+	 
 	 
 	 $('#thetable2').DataTable({
 	        
@@ -151,7 +109,7 @@
 	    });
 	 
 		getCommitteMembersForSociety();
-		getMembersForSociety();
+		//getMembersForSociety();
 		getSocietyPhotos();
 		getVendorsBySocId();
  });

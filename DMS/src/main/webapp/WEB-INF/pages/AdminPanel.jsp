@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
 
 
@@ -62,7 +64,7 @@
               </div>
  </div>
  
- <div class="col-md-12 col-sm-12 col-xs-12">
+ 		<div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Existing Documents</h2>
@@ -75,13 +77,50 @@
                 <div class="x_content">
                   <div class="dashboard-widget-content">
                     
+                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                      
+                      <c:set var="udoc" value=""></c:set>
+                      
+                       <c:forEach items="${docs}" var="myItem" varStatus="loopStatus">
+                       
+                       		<c:if test="${udoc!=myItem.doctypename}">
+                       			<c:set var="udoc" value="${myItem.doctypename}"></c:set>
+                       			<div class="col-md-4 col-sm-4 col-xs-12">
+			                      <div class="panel">
+			                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse${myItem.doctypeid}" aria-expanded="true" aria-controls="collapseOne">
+			                          <h4 class="panel-title">${myItem.doctypename}</h4>
+			                        </a>
+			                        <div id="collapse${myItem.doctypeid}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+			                          <div class="panel-body">
+			                             <ul>
+		                             		<c:forEach items="${docs}" var="mySubItem" varStatus="loopSubStatus">
+		                             		 	<c:if test="${udoc==mySubItem.doctypename}">	
+		                             		 		<li>
+		                             		 			<a href="showDocFromAdminPanel.do?societyid=${society.societyid}&doctypeid=${myItem.doctypeid}&docsubtypeid=${mySubItem.docsubtypeid}">
+		                             		 				${mySubItem.docsubtypename}
+		                             		 			</a>
+		                             		 		</li>
+		                             		 	</c:if>	
+		                            	    </c:forEach>
+		                             	</ul>
+		                          	  </div>
+		                        	</div>
+		                      	  </div>
+		                     	</div>
+                       		</c:if>
+                       		
+                       		<c:if test="${loopStatus.index!=0 && loopStatus.index%3==0}">
+                       			<div class="clearfix"></div>
+                       		</c:if>
+                       </c:forEach>
+                    </div>
                   </div>
                 </div>
               </div>
- </div>
+ 		</div>
  
  
- <div class="col-md-6 col-sm-6 col-xs-12">
+ 		<div class="col-md-6 col-sm-6 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Committee Members</h2>
@@ -110,7 +149,7 @@
                   </div>
                 </div>
               </div>
- </div>
+ 		</div>
  
  
  <div class="col-md-6 col-sm-6 col-xs-12">
