@@ -460,5 +460,17 @@ public class AjaxController
     return adminUser;
   }
   
-  
+  @RequestMapping(value={"/getNeighborDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<Userprofile> getNeighborDetails(@ModelAttribute User user)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<Userprofile> profiles = null;
+    try {
+      profiles = societyDao.getNeighborDetails(user.getUserid(), profiles);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return profiles;
+  }
 }

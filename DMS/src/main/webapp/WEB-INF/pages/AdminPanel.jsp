@@ -43,16 +43,25 @@
 					<thead>
 						<tr class="headings">
 							<th class="column-title">Sr.No</th>
-							<th class="column-title">Flat No</th>
+							<th class="column-title">Flat&nbsp;No</th>
 							<th class="column-title">Wing</th>
 							<th class="column-title">Floor</th>
 							<th class="column-title">Tower</th>
-							<th class="column-title">Tenant Name</th>
-							<th class="column-title">Mobile No</th>
+							<th class="column-title">Tenant&nbsp;Name</th>
+							<th class="column-title">Mobile&nbsp;No</th>
+							<th class="column-title">Joint&nbsp;Owners</th>
 							<th class="column-title">Occupancy</th>
-							<th class="column-title">Alternate No</th>
+							<th class="column-title">Alternate&nbsp;No</th>
 							<th class="column-title">Email</th>
-							<th class="column-title">Aadhar No</th>
+							<th class="column-title">Aadhar&nbsp;No</th>
+							<th class="column-title">Purchase&nbsp;Date</th>
+							<th class="column-title">Possession&nbsp;Date</th>
+							<th class="column-title">Builtup&nbsp;Area</th>
+							<th class="column-title">Carpet&nbsp;Area</th>
+							<th class="column-title">Vehicle&nbsp;Type</th>
+							<th class="column-title">Parking&nbsp;Type</th>
+							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+							<th class="column-title">Photograph</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -88,7 +97,7 @@
                        			<div class="col-md-4 col-sm-4 col-xs-12">
 			                      <div class="panel">
 			                        <a class="panel-heading" role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapse${myItem.doctypeid}" aria-expanded="true" aria-controls="collapseOne">
-			                          <h4 class="panel-title">${myItem.doctypename}</h4>
+			                          <h4 class="panel-title"> ${myItem.doctypename}</h4>
 			                        </a>
 			                        <div id="collapse${myItem.doctypeid}" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
 			                          <div class="panel-body">
@@ -120,7 +129,7 @@
  		</div>
  
  
- 		<div class="col-md-6 col-sm-6 col-xs-12">
+ 		<div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Committee Members</h2>
@@ -132,6 +141,9 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
+                  
+                   <h4>Current Members</h4>
+                   <hr>
                   <div class="table-responsive">
                     <table class="table table-striped jambo_table bulk_action" id="thetable">
                         <thead>
@@ -139,20 +151,45 @@
                             <th class="column-title">Sr.No</th>
                             <th class="column-title">Member Name</th>
                             <th class="column-title">Designation</th>
-                            <th class="column-title">Flat</th>
+                            <th class="column-title">Wing/Flat</th>
+                            <th class="column-title">Tower</th>
                             <th class="column-title">Contact No</th>
+                            <th class="column-title">Appointed On</th>
+                            <th class="column-title">Photograph</th>
                           </tr>
                         </thead>
                         <tbody></tbody>
                       </table>
-                      </div>
+                   </div>
+                   
+                   <h4>Past Members</h4>
+                   <hr>
+                   <div class="table-responsive">
+                       <table class="table table-striped jambo_table bulk_action" id="thetable5">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Sr.No</th>
+                            <th class="column-title">Member Name</th>
+                            <th class="column-title">Designation</th>
+                            <th class="column-title">Wing/Flat</th>
+                            <th class="column-title">Tower</th>
+                            <th class="column-title">Contact No</th>
+                            <th class="column-title">Appointed On</th>
+                            <th class="column-title">Removed On</th>
+                            <th class="column-title">Photograph</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
+                      
                   </div>
                 </div>
               </div>
  		</div>
  
  
- <div class="col-md-6 col-sm-6 col-xs-12">
+ <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Vendor Details</h2>
@@ -171,8 +208,12 @@
                             <th class="column-title">Company Name</th>
                             <th class="column-title">Job Nature</th>
                             <th class="column-title">Contact Person</th>
+                            <th class="column-title">Address</th>
                             <th class="column-title">Contact Number</th>
                             <th class="column-title">Alternate Number</th>
+                            <th class="column-title">Email</th>
+                            <th class="column-title">Remarks</th>
+                            <th class="column-title">Visiting Card</th>
                           </tr>
                         </thead>
                         <tbody></tbody>
@@ -186,6 +227,10 @@
  <script>
  
  $(document).ready(function(){
+	 
+	
+	 
+	 
 	 $('#thetable').DataTable({
 		 	"paging":   false,
 	        "ordering": false,
@@ -194,6 +239,13 @@
 	    });
 	 
 	 $('#thetable1').DataTable({
+	        
+	        "ordering": false,
+	        "info":     false,
+	        "bFilter": false
+	    });
+	 
+	 $('#thetable5').DataTable({
 	        
 	        "ordering": false,
 	        "info":     false,
@@ -217,13 +269,13 @@
  function getCommitteMembersForSociety(){
 		var societyid = $('#societyid').val();
 		var table = $('#thetable').DataTable();
-		var table1 = $('#thetable1').DataTable();
+		var table5 = $('#thetable5').DataTable();
 			
 		if(societyid.length<1)
 			return false;
 			
 		table.clear().draw();
-		table1.clear().draw();
+		table5.clear().draw();
 		
 		$.ajax({
 	        type: "GET",
@@ -232,21 +284,41 @@
 	        success: function(response){
 	        var k=1;
 	        var j=1;
-	        
+	        var srno=1;
 	        	$.each(response, function(i, item) {
 	        		$.each(item, function(i, item1) {
+	        			var divid="commem"+srno;
+			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+			        	
 	        				if(item1.isactive==1){
 	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeCommitteeMember(\'' + item1.committeememberid + '\')"><i class="fa fa-times"></i></button>';
 			        					table.row.add( [
-			        					k,
-					        			item1.userName,
-					        			item1.positionname, 
-					        			//new Date(item1.appointedon).toString("dd MMM yyyy"),
-					        			item1.flat,
-					        			item1.contactNo
+			        						k,
+						        			item1.userName,
+						        			item1.positionname, 
+						        			item1.flat,
+						        			item1.tower,
+						        			item1.contactNo,
+						        			new Date(item1.appointedon).toString("dd MMM yyyy"),
+						        			photodiv,
 				                ] ).draw( false ); 
 				                k++;
-	        				} 
+	        				} else{
+	        					table5.row.add( [
+	        						j,
+				        			item1.userName,
+				        			item1.positionname, 
+				        			item1.flat,
+				        			item1.tower,
+				        			item1.contactNo,
+				        			new Date(item1.appointedon).toString("dd MMM yyyy"),
+				        			new Date(item1.removedon).toString("dd MMM yyyy"),
+				        			photodiv,
+				                ] ).draw( false ); 
+				                j++;
+	        				}
+	        				getMemberPhoto(item1.userid,divid);
+	        				srno++;
 	        		 });
 	        		 
 	        	  });
@@ -262,6 +334,7 @@
 		var societyid = $('#societyid').val();
 		var table = $('#thetable1').DataTable();
 			
+		
 		table .clear() .draw();
 		
 		$.ajax({
@@ -270,7 +343,10 @@
 	        data :"societyid="+societyid,
 	        success: function(response){
 	        	var srno=1;
+	        	
 	        	$.each(response, function(i, item) {
+	        		var divid="soc"+srno;
+		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
 	        		table.row.add( [
 	        			srno,
 	        			item.flatno,
@@ -279,11 +355,22 @@
 	        			item.tower,
 	        			item.firstName + ' ' + item.lastName,
 	        			item.mobileNo,
+	        			item.jointowners,
 	        			item.occupancy,
 	        			item.alternateno,
 	        			item.email,
 	        			item.aadharno,
+	        			new Date(item.purchasedate).toString("dd MMM yyyy"),
+	        			new Date(item.possessiondate).toString("dd MMM yyyy"),
+	        			item.builtuparea,
+	        			item.carpetarea,
+	        			item.vehicletype,
+	        			item.parkingtype,
+	        			item.parkingallotmentno,
+	        			photodiv,
 	                ] ).draw( false );
+	        		
+	        		getMemberPhoto(item.userid,divid);
 	        		srno++;
 	        	 });
 	        },
@@ -316,6 +403,7 @@
                });
                img += '</ul>';
                $('#imgContainer').html(img);
+               
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
           });;
@@ -335,16 +423,26 @@
 	        success: function(response){
 	        
 	        if(response.length>0){
+	        	var srno=1;
+	        	
 	        	$.each(response, function(i, item) {
-	  
+	        		var divid="vend"+srno;
+		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
 	        		table.row.add( [
 	        			item.companyname,
 	        			item.jobnature,
 	        			item.contactperson,
+	        			item.address,
 	        			item.contactno,
 	        			item.alternateno,
+	        			item.email,
+	        			item.remark,
+	        			photodiv,
 	                ] ).draw( false );
 	        	    
+	        		getVendorPhotos(item.vendorid,divid);
+	        		srno++;
+	        		
 	        	  });
 	        	}
 	        },
@@ -353,6 +451,52 @@
 				}
 			});
 	}
+	
+	function getMemberPhoto(memberId,divId){
+    	console.log(memberId+"-"+divId);
+    	$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
+	        data :"userid="+memberId,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+            contentType: false 
+			}).done(function(data) {
+			$('#'+divId).html("");
+			var img='';
+			var cnt =1;
+               $.each(data, function(i, item) {
+               		img = '<img class="dp" height="30"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+               });
+               $('#'+divId).html(img);
+               $(".dp").popImg();
+          }).fail(function(jqXHR, textStatus) {
+              alert('File Fetch failed ...');
+          });;
+    }
+	
+	function getVendorPhotos(vendorid,divId){
+    	//console.log(memberId+"-"+divId);
+    	$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getVendorPhotos.do",
+	        data :"vendorid="+vendorid,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+            contentType: false 
+			}).done(function(data) {
+			$('#'+divId).html("");
+			var img='';
+			var cnt =1;
+               $.each(data, function(i, item) {
+               		img = '<img class="dp" height="30"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+               });
+               $('#'+divId).html(img);
+               $(".dp").popImg();
+          }).fail(function(jqXHR, textStatus) {
+              alert('File Fetch failed ...');
+          });;
+    }
  </script>
  
  <style>

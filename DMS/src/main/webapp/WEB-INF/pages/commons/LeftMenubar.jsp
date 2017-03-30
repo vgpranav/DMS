@@ -27,6 +27,7 @@
 		                      	<ul class="nav child_menu">
 		                      		 <li><a href="createBuilder.do">Create Builder Profile</a></li>
 		                      		<li><a href="createProject.do">Create Project</a></li>
+		                      		<li><a href="createSubProject.do">Create Sub Project</a></li>
 		                      	</ul>
 		                      </li>
 		                    
@@ -47,8 +48,14 @@
 		                      	</ul>
 		                      </li>
 		                      
+		                      <li>
+		                      	<a> <i class="fa fa-folder-o"></i> Vendors</a>
+		                      	<ul class="nav child_menu">
+		                      		<li><a href="createVendor.do">Create Vendor</a></li>
+		                      		<li><a href="createVendorCards.do">Add Vendor Visiting Card</a></li>
+		                      	</ul>
+		                      </li>
 		                      
-		                      <li><a href="createVendor.do">Create Vendor</a></li>
 		                    </ul>
 		                  </li>
 	                </c:if>
@@ -93,6 +100,20 @@
 		                    <ul class="nav child_menu">
 		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
 		                      <li><a href="createAdminUser.do">Create Admin User</a></li>
+		                    </ul>
+		                  </li>
+		             </c:if>     
+		             
+		             
+		              <c:if test="${userroleid==1}">         
+		                   <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		ODS Team 
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                      <li><a href="addCallRef.do">Add Call Reference</a></li>
 		                    </ul>
 		                  </li>
 		             </c:if>     

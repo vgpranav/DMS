@@ -143,7 +143,7 @@ public class ViewController
 
     try {
         socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
-        societyList = documentDao.getAllSociety(societyList);
+        societyList = documentDao.getAllSociety(societyList,"society");
         projectList = documentDao.getAllProjects(projectList);
         
       mv = new ModelAndView("addSociety");
@@ -151,30 +151,71 @@ public class ViewController
       mv.addObject("projectList", projectList);
       mv.addObject("societyList", societyList);
       
+      mv.addObject("societytype","society");
+
+      
     } catch (Exception e) {
       logger.error(e.getMessage());
     }
     return mv;
   }
 
+  @RequestMapping(value={"/createSubProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createSubProject()
+  {
+    ModelAndView mv = null;
+    List<SocietyType> socTypes = null;
+    SocietyDao documentDao = new SocietyDao();
+    List<Society>  societyList = new ArrayList<Society>();
+    List<Project>  projectList = null;
+
+    try {
+        socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
+        societyList = documentDao.getAllSociety(societyList,"subproject");
+        projectList = documentDao.getAllProjects(projectList);
+        
+      mv = new ModelAndView("addSociety");
+      mv.addObject("societytypeList", socTypes);
+      mv.addObject("projectList", projectList);
+      mv.addObject("societyList", societyList);
+
+      mv.addObject("societytype","subproject");
+
+      
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  
+  
   @RequestMapping(value={"/saveSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveSociety(@ModelAttribute Society society,HttpServletRequest request)
   {
     ModelAndView mv = null;
     List<SocietyType> socTypes = null;
     List<Society>  societyList = new ArrayList<Society>();
-
+    List<Project>  projectList = null;
     SocietyDao documentDao = new SocietyDao();
     User user = null;
+    
     try {
       user = (User)request.getSession().getAttribute("userObject");
       society = documentDao.insertOrUpdateSociety(society,user.getUserid());
       socTypes = documentDao.getAllActiveSocietyTypes(socTypes);
-      societyList = documentDao.getAllSociety(societyList);
+      
+      
+      societyList = documentDao.getAllSociety(societyList,society.getSocietytype());
+      
+      
+      projectList = documentDao.getAllProjects(projectList);
       
       mv = new ModelAndView("addSociety");
       mv.addObject("societytypeList", socTypes);
       mv.addObject("societyList", societyList);
+      mv.addObject("projectList", projectList);
       mv.addObject("error", "Society Added");
     } catch (Exception e) {
       logger.error(e.getMessage());
@@ -182,6 +223,7 @@ public class ViewController
     return mv;
   }
   
+ 
   @RequestMapping(value={"/addDoctype"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView addDoctype() {
     ModelAndView mv = null;
@@ -458,13 +500,47 @@ public class ViewController
         mv.addObject("docs", docs);
       }
       else {
-        mv = new ModelAndView("tobemade");
+        mv = new ModelAndView("SocietySelectionForAdmin");
+        mv.addObject("societyList",societyList);
       }
     } catch (Exception e) { logger.error(e.getMessage());
       e.printStackTrace();
     }
     return mv;
   }
+  
+  
+  @RequestMapping(value={"/displayAdminPanelBySocId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView displayAdminPanelBySocId(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView mv = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    List<Society> societyList = null;
+    List<GenericBean> docs = null;
+    
+    try {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      
+      for(Society soc1 : societyList){
+    	  if(soc1.getSocietyid()==society.getSocietyid()){
+    		  society = soc1;
+    	  }
+      }
+      
+       
+        mv = new ModelAndView("adminPanel");
+        docs = sdao.getAllExistingDocsForSoc(society,docs);
+        mv.addObject("society",society);
+        mv.addObject("docs", docs);
+        
+    } catch (Exception e) { logger.error(e.getMessage());
+      e.printStackTrace();
+    }
+    return mv;
+  }
+  
+  
   
   @RequestMapping(value={"/viewCommittee"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView viewCommittee(HttpServletRequest request, HttpServletResponse response) {
@@ -876,4 +952,27 @@ public class ViewController
 	    return mv;
 	  } 
   
+  
+  @RequestMapping(value={"/createVendorCards"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createVendorCards(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("createVendorCards");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
 }
+
+

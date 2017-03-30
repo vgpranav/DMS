@@ -115,7 +115,8 @@ public class SocietyDao
 			        Long.valueOf(society.getSocietytypeid()), 
 			        society.getSocietyname(), 
 			        userId,
-			        society.getProjectid()
+			        society.getProjectid(),
+			        society.getSocietytype()
 		        );
 
 		societyId = CommomUtility.convertToLong(obj);
@@ -1192,7 +1193,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    return null;
 	  }
 
-	public List<Society> getAllSociety(List<Society> societyList) { 
+	public List<Society> getAllSociety(List<Society> societyList, String societytype) { 
 		  Connection conn = null;
 		  List<Society> tempSocietyList;
 		    try
@@ -1200,7 +1201,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      qr = new QueryRunner();
 		      conn = ConnectionPoolManager.getInstance().getConnection();
 		      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
-		      tempSocietyList = qr.query(conn, DMSQueries.getAllSociety, rsh);
+		      tempSocietyList = qr.query(conn, DMSQueries.getAllSociety, rsh,societytype);
 		      
 		      System.out.println("tempSocietyList :: "+tempSocietyList);
 		      
@@ -1641,6 +1642,31 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		    }
 		    return docs;
 		  }
+
+	public List<Userprofile> getNeighborDetails(long userid, List<Userprofile> profiles) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler<Userprofile>(Userprofile.class);
+	      profiles =  qr.query(conn, DMSQueries.getNeighborProfile, rsh,userid);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return profiles;
+	  }
 
 	 
 }

@@ -167,5 +167,15 @@
       <put-attribute name="title" value="Create Admin User" />  
       <put-attribute name="body" value="/WEB-INF/pages/viewDocumentFromAdminPanel.jsp" />   
     </definition> 
+    
+    <definition name="createVendorCards" extends="base-definition">  
+      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addvendorcards.jsp" />   
+    </definition> 
+    
+     <definition name="SocietySelectionForAdmin" extends="base-definition">  
+      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/SocietySelectionForAdmin.jsp" />   
+    </definition> 
 
 </tiles-definitions>

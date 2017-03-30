@@ -18,11 +18,8 @@ public class Committee
     private String contactNo;
     private String flat;
     private String societymanagerid;
-
-    public Committee()
-    {
-    }
-
+    private String tower;
+   
     public String getContactNo()
     {
         return contactNo;
@@ -151,14 +148,21 @@ public class Committee
 		this.societymanagerid = societymanagerid;
 	}
 
+	public String getTower() {
+		return tower;
+	}
+
+	public void setTower(String tower) {
+		this.tower = tower;
+	}
+
 	@Override
 	public String toString() {
 		return "Committee [committeememberid=" + committeememberid + ", userid=" + userid + ", userName=" + userName
 				+ ", societyid=" + societyid + ", societyname=" + societyname + ", positionid=" + positionid
 				+ ", positionname=" + positionname + ", isactive=" + isactive + ", appointedon=" + appointedon
 				+ ", removedon=" + removedon + ", contactNo=" + contactNo + ", flat=" + flat + ", societymanagerid="
-				+ societymanagerid + "]";
+				+ societymanagerid + ", tower=" + tower + "]";
 	}
 
-    
 }

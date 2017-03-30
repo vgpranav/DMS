@@ -22,7 +22,9 @@ public class Society
     private Date estdate;
     private long projectid;
     private String projectname;
-
+    private String societytype;
+    
+    
     
     public String getProjectname() {
 		return projectname;
@@ -190,6 +192,14 @@ public class Society
 		this.projectid = projectid;
 	}
 
+	public String getSocietytype() {
+		return societytype;
+	}
+
+	public void setSocietytype(String societytype) {
+		this.societytype = societytype;
+	}
+
 	@Override
 	public String toString() {
 		return "Society [societyid=" + societyid + ", societytypeid=" + societytypeid + ", societyname=" + societyname
@@ -197,7 +207,8 @@ public class Society
 				+ addressline2 + ", ward=" + ward + ", district=" + district + ", state=" + state + ", pincode="
 				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive
 				+ ", registrationno=" + registrationno + ", estdate=" + estdate + ", projectid=" + projectid
-				+ ", projectname=" + projectname + "]";
+				+ ", projectname=" + projectname + ", societytype=" + societytype + "]";
 	}
 
+	
 }

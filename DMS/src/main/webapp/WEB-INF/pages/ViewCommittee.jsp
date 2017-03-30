@@ -22,6 +22,9 @@
                             <th class="column-title">Sr.No</th>
                             <th class="column-title">Member Name</th>
                             <th class="column-title">Designation</th>
+                            <th class="column-title">Wing/Flat</th>
+                            <th class="column-title">Tower</th>
+                            <th class="column-title">Contact No</th>
                             <th class="column-title">Appointed On</th>
                             <th class="column-title">Remove</th>
                           </tr>
@@ -54,6 +57,9 @@
                             <th class="column-title">Sr.No</th>
                             <th class="column-title">Member Name</th>
                             <th class="column-title">Designation</th>
+                            <th class="column-title">Wing/Flat</th>
+                            <th class="column-title">Tower</th>
+                            <th class="column-title">Contact No</th>
                             <th class="column-title">Appointed On</th>
                             <th class="column-title">Removed On</th>
                           </tr>
@@ -197,6 +203,9 @@
 			        					k,
 					        			item1.userName,
 					        			item1.positionname, 
+					        			item1.flat,
+					        			item1.tower,
+					        			item1.contactNo,
 					        			new Date(item1.appointedon).toString("dd MMM yyyy"),
 					        			removebtn,
 				                ] ).draw( false ); 
@@ -206,6 +215,9 @@
 	        						j,
 				        			item1.userName,
 				        			item1.positionname, 
+				        			item1.flat,
+				        			item1.tower,
+				        			item1.contactNo,
 				        			new Date(item1.appointedon).toString("dd MMM yyyy"),
 				        			new Date(item1.removedon).toString("dd MMM yyyy"),
 				                ] ).draw( false ); 

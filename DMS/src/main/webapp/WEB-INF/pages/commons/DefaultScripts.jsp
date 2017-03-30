@@ -19,6 +19,11 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/datatables.net-bs/js/dataTables.bootstrap.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/datatables.net/js/jquery.dataTables.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/popupimage/popImg.js"></script>
+
+
 <script>
 	function notify(type,title,message,delay){
 		new PNotify({

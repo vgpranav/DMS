@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dms.beans.Society;
 import com.dms.beans.User;
+import com.dms.beans.Vendor;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
 
@@ -249,4 +250,70 @@ public class FileController
     
     return photos;
   }
+  
+  @RequestMapping(value={"/getVendorPhotos"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<HashMap<String, Object>> getVendorPhotos(@ModelAttribute Vendor vendor)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<HashMap<String, Object>> photos = new ArrayList();
+    try {
+      photos = societyDao.getSocietyPhotos(vendor.getVendorid(),"vendor","VendorImages",photos);
+    }
+    catch (Exception localException) {}
+    
+    return photos;
+  }
+  
+  
+  @RequestMapping(value={"/uploadVendorPhoto"}, method={org.springframework.web.bind.annotation.RequestMethod.POST}, produces={"application/json"})
+  @ResponseBody
+  public HashMap<String, Object> uploadVendorPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
+  {
+    byte[] bytes = null;
+    Long size = null;
+    String contentType = null;
+    BufferedImage resizedImage = null;
+    MultipartFile multipartFile = null;
+    BufferedImage originalImage = null;
+    String ogFilename = "";
+    int type = 0;
+    int vendorid = 0;
+    try {
+      multipartFile = request.getFile("file");
+      vendorid = Integer.parseInt(request.getParameter("vendorid"));
+      
+      size = Long.valueOf(multipartFile.getSize());
+      contentType = multipartFile.getContentType();
+      InputStream stream = multipartFile.getInputStream();
+      ogFilename = multipartFile.getOriginalFilename();
+      bytes = IOUtils.toByteArray(stream);
+      InputStream in = new ByteArrayInputStream(bytes);
+      String newFileName = System.currentTimeMillis() + "-" + ogFilename;
+      boolean flag = saveToFileSystem(newFileName, in,"VendorImages");
+      
+      if (flag) {
+        DocumentDao ddao = new DocumentDao();
+        ddao.savePhotoInfo("vendor", vendorid, newFileName, "VendorImages/" + newFileName, contentType);
+      }
+      
+      originalImage = ImageIO.read(new ByteArrayInputStream(bytes));
+
+
+    }
+    catch (IOException e)
+    {
+
+
+      e.printStackTrace();
+    }
+    
+    HashMap<String, Object> map = new HashMap();
+    map.put("fileoriginalsize", size);
+    map.put("contenttype", contentType);
+    map.put("base64", new String(Base64Utils.encode(convertToBytes(originalImage))));
+    
+    return map;
+  }
+  
 }
