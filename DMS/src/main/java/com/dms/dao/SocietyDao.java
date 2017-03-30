@@ -1,6 +1,7 @@
 package com.dms.dao;
 
 import com.dms.beans.Builder;
+import com.dms.beans.CallReference;
 import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
@@ -1668,5 +1669,219 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    return profiles;
 	  }
 
-	 
+	public CallReference saveCallRef(CallReference callref) {
+	    Connection conn = null;
+	    
+	    long builderId = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      conn.setAutoCommit(false);
+	      long callrefId=0;
+	      //Insert new
+	      if(callref.getCallrefid()==0){
+	    	  
+	    	  
+	    	  Object obj = qr.insert(conn, DMSQueries.addNewCallRef, rsh, 
+	    			  
+	    			  callref.getRefno(),
+	    			  callref.getInitiatorname(),
+	    			  callref.getSocietytype(),
+	    			  callref.getBuildingno(),
+	    			  callref.getStreetname(),
+	    			  callref.getLandmark(),
+	    			  callref.getArea(),
+	    			  callref.getPincode(),
+	    			  callref.getCity(),
+	    			  callref.getState(),
+	    			  callref.getCountry(),
+	    			  callref.getResno(),
+	    			  callref.getShopsno(),
+	    			  callref.getInitiatedate(),
+	    			  callref.getRemark(),
+	    			  callref.getClosingchance()
+	    			  
+			        );
+
+	    	  callrefId = CommomUtility.convertToLong(obj);
+	    	  
+			callref.setCallrefid(callrefId);
+			
+	      }
+	      	else {
+	      		qr.update(conn,DMSQueries.updateCallRef,
+	      				callref.getRefno(),
+		    			  callref.getInitiatorname(),
+		    			  callref.getSocietytype(),
+		    			  callref.getBuildingno(),
+		    			  callref.getStreetname(),
+		    			  callref.getLandmark(),
+		    			  callref.getArea(),
+		    			  callref.getPincode(),
+		    			  callref.getCity(),
+		    			  callref.getState(),
+		    			  callref.getCountry(),
+		    			  callref.getResno(),
+		    			  callref.getShopsno(),
+		    			  callref.getInitiatedate(),
+		    			  callref.getRemark(),
+		    			  callref.getClosingchance(),
+		    			  callref.getCallrefid());
+	      }
+	      
+	      conn.commit();
+	      
+	      return callref;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public CallReference saveCallrefContact(CallReference callref) {
+	    Connection conn = null;
+	    long userid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      conn.setAutoCommit(false);
+	    	  Object obj = qr.insert(conn, DMSQueries.insertNewCallRefContact, rsh, 
+	    			  callref.getCallrefid(),
+	    			  callref.getContactname(),
+	    			  callref.getContactdesignation(),
+	    			  callref.getContactmobileno(),
+	    			  callref.getContactlandlineno(),
+	    			  callref.getContactemail()
+			        );
+	      conn.commit();
+	      return callref;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<CallReference> getContactsByCallRefId(long callrefid, List<CallReference> profiles) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<CallReference>> rsh = new BeanListHandler<CallReference>(CallReference.class);
+	      profiles =  qr.query(conn, DMSQueries.getContactsByCallRefId, rsh,callrefid);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return profiles;
+	  }
+
+	public CallReference saveCallrefMeeting(CallReference callref) {
+	    Connection conn = null;
+	    long userid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      conn.setAutoCommit(false);
+	    	  Object obj = qr.insert(conn, DMSQueries.saveCallrefMeeting, rsh, 
+	    			  callref.getCallrefid(),
+	    			  callref.getMeetingdate(),
+	    			  callref.getMeetingperson(),
+	    			  callref.getMeetingremarks()
+			        );
+	      conn.commit();
+	      return callref;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<CallReference> getMeetingsByCallRefId(long callrefid, List<CallReference> profiles) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<CallReference>> rsh = new BeanListHandler<CallReference>(CallReference.class);
+	      profiles =  qr.query(conn, DMSQueries.getMeetingsByCallRefId, rsh,callrefid);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return profiles;
+	  }
+
+	public List<CallReference> getAllCallRefs(List<CallReference> calls) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<CallReference>> rsh = new BeanListHandler<CallReference>(CallReference.class);
+	      calls =  qr.query(conn, DMSQueries.getAllCallRefs, rsh);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return calls;
+	  }
 }

@@ -114,6 +114,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                      <li><a href="addCallRef.do">Add Call Reference</a></li>
+		                      <li><a href="viewAllCallRef.do">Add Call Reference</a></li>
 		                    </ul>
 		                  </li>
 		             </c:if>     

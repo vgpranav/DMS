@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dms.beans.Builder;
+import com.dms.beans.CallReference;
 import com.dms.beans.Committee;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
@@ -473,4 +474,63 @@ public class AjaxController
     }
     return profiles;
   }
+  
+  
+ 
+  
+  @RequestMapping(value={"/getContactsByCallRefId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<CallReference> getContactsByCallRefId(@ModelAttribute CallReference callref)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<CallReference> profiles = null;
+    try {
+      profiles = societyDao.getContactsByCallRefId(callref.getCallrefid(), profiles);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return profiles;
+  }
+  
+  
+  @RequestMapping(value={"/saveCallrefMeeting"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public CallReference saveCallrefMeeting(@ModelAttribute CallReference callref)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	callref = societyDao.saveCallrefMeeting(callref);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return callref;
+  }
+  
+  @RequestMapping(value={"/saveCallrefContact"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public CallReference saveCallrefContact(@ModelAttribute CallReference callref)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	callref = societyDao.saveCallrefContact(callref);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return callref;
+  }
+  
+  @RequestMapping(value={"/getMeetingsByCallRefId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<CallReference> getMeetingsByCallRefId(@ModelAttribute CallReference callref)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<CallReference> profiles = null;
+    try {
+      profiles = societyDao.getMeetingsByCallRefId(callref.getCallrefid(), profiles);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return profiles;
+  }
 }
+

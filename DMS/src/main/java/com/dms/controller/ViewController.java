@@ -1,6 +1,8 @@
 package com.dms.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.Builder;
+import com.dms.beans.CallReference;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
@@ -973,6 +977,125 @@ public class ViewController
     return mv;
   }
   
+  @RequestMapping(value={"/addCallRef"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView addCallRef(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+    	SimpleDateFormat sf = new SimpleDateFormat("YYMMd");
+      String callrefid = "ODS"+sf.format(new Date())+RandomStringUtils.randomNumeric(5);
+      user = (User)request.getSession().getAttribute("userObject");
+      mv = new ModelAndView("AddCallReference");
+      mv.addObject("callrefid",callrefid);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+
+  @RequestMapping(value={"/saveCallRef"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+  public ModelAndView saveCallRef(@ModelAttribute CallReference callref,HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    SocietyDao documentDao = new SocietyDao();
+
+    try {
+    
+      callref = documentDao.saveCallRef(callref);
+    
+      mv = new ModelAndView("AddCallReference2");
+      
+      SimpleDateFormat sf = new SimpleDateFormat("YYMMd");
+      String callrefid = "ODS"+sf.format(new Date())+RandomStringUtils.randomNumeric(5);
+      
+      mv.addObject("callrefid",callrefid);
+      mv.addObject("callref",callref);
+      mv.addObject("error","Call Reference Added");
+      
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/saveCallRef3.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+  public ModelAndView saveCallRef3(@ModelAttribute CallReference callref,HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    try {
+	      mv = new ModelAndView("AddCallReference3");
+	      mv.addObject("callref",callref);
+	      mv.addObject("error","Contact Added");
+	      
+	    } catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
+  
+  @RequestMapping(value={"/viewAllCallRef"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView viewAllCallRef(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    User user = null;
+    List<CallReference> calls=null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      
+      calls = sdao.getAllCallRefs(calls);
+      
+      mv = new ModelAndView("viewAllCallRef");
+      mv.addObject("calls",calls);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/getRefContactpage"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView getRefContactpage(@RequestParam("callrefid") long callrefid ,HttpServletRequest request, HttpServletResponse response)
+  {
+	  CallReference callref = new CallReference();
+	  callref.setCallrefid(callrefid);
+	  
+    ModelAndView mv = null;
+    try {
+    
+      mv = new ModelAndView("AddCallReference2");
+      mv.addObject("callref",callref);
+      
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/getRefMeetingpage.do"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView getRefMeetingpage(@RequestParam("callrefid") long callrefid ,HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    try {
+	    	
+	    	 CallReference callref = new CallReference();
+	   	  callref.setCallrefid(callrefid);
+	      mv = new ModelAndView("AddCallReference3");
+	      mv.addObject("callref",callref);
+	    } catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
 }
 
 

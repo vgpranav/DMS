@@ -16,9 +16,9 @@ public class TestQueryBuilder {
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dms","root","12345");  
 			
 			
-			String tablename = "user";
-			//String QueryType = "insert";
-			String QueryType = "update";
+			String tablename = "callreferencemeeting";
+			 String QueryType = "insert";
+			//String QueryType = "update";
 			
 			TestQueryBuilder t1 = new TestQueryBuilder();
 			System.out.println(t1.QueryBuiler(tablename.toLowerCase(), QueryType, con));

@@ -98,5 +98,16 @@ public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) a
 public static String getNeighborProfile = "SELECT n.*,u.* FROM dms.userprofile o,dms.userprofile n,dms.user u "
 		+ " where o.wing=n.wing and o.tower=n.tower and upper(o.floor)=upper(n.floor) and o.societyid=n.societyid "
 		+ " and n.userid=u.userid and o.userid!=n.userid and o.userid=?";
+public static String addNewCallRef = "insert into callreference(refno, initiatorname, societytype, buildingno, streetname, landmark, area, pincode, city, state, country, resno, shopsno, initiatedate, remark, closingchance) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateCallRef ="Update callreference set refno=?, initiatorname=?, societytype=?, buildingno=?, streetname=?, landmark=?, area=?, pincode=?, city=?, state=?, country=?, resno=?, shopsno=?, initiatedate=?, remark=?, closingchance=?";
+public static String insertNewCallRefContact="insert into callreferencecontact( callrefid, contactname, contactdesignation, contactmobileno, contactlandlineno, contactemail) values ( ?,?,?,?,?,?)";
+public static String getContactsByCallRefId ="select * from callreferencecontact where callrefid=?";
+public static String saveCallrefMeeting = "insert into callreferencemeeting(callrefid, meetingdate, meetingperson, meetingremarks) values (?,?,?,?)";
+public static String getMeetingsByCallRefId ="select * from callreferencemeeting where callrefid=?";
+public static String getAllCallRefs = "select * from callreference";
+
+
+
+
 
 }
