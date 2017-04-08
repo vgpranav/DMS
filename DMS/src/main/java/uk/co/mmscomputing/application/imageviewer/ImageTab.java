@@ -389,12 +389,12 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
       writer=(ImageWriter)writers.next();
     }
 
-    ImageWriteParam iwp = writer.getDefaultWriteParam();
+        ImageWriteParam iwp = writer.getDefaultWriteParam();
     
 // this code is used for compressing the image
-    	iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+    	//** iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
     	//iwp.setCompressionType(jpeg);
-    	iwp.setCompressionQuality(0.2f);
+    	//** iwp.setCompressionQuality(1.0f);
 //    iwp.setCompressionQuality(Float.valueOf("0.05"));
 // end compressing
     IIOParamController controller = iwp.getController();

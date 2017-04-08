@@ -42,7 +42,7 @@
 								
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Name of Initiator<span class="required">*</span>
+									for="first-name">Name of Initiator <span class="required">*</span>
 								</label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
@@ -60,7 +60,7 @@
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
-										<select name="societytype" id="societytype" class="form-control col-md-12 col-xs-12">
+										<select name="societytype" id="societytype" class="form-control col-md-12 col-xs-12" required="required">
 											<option value="residential">Residential</option>
 											<option value="commercial">Commercial</option>
 											<option value="builder">Builders & Developers</option>
@@ -74,17 +74,17 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="buildingno" name="buildingno	"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12"  required="required">
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Street Name<span class="required">*</span>
+									for="first-name">Street Name
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="streetname" name="streetname"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								
@@ -93,64 +93,64 @@
 							<div class="form-group">
 							
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Landmark<span class="required">*</span>
+									for="first-name">Landmark
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="landmark" name="landmark"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Area<span class="required">*</span>
+									for="first-name">Area
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="area" name="area"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Pincode<span class="required">*</span>
+									for="first-name">Pincode <span class="required">*</span>
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="pincode" name="pincode"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" required="required" >
 									</div>
 								</div>
 							</div>
 							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">City<span class="required">*</span>
+									for="first-name">City <span class="required">*</span>
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="city" name="city"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12"  required="required">
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">State<span class="required">*</span>
+									for="first-name">State <span class="required">*</span>
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="state" name="state"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" required="required" >
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Country<span class="required">*</span>
-								</label>
+									for="first-name">Country <span class="required">*</span>
+								</label> 
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="country" name="country"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12"  required="required">
 									</div>
 								</div>
 							
@@ -159,32 +159,32 @@
 							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">No. of Residence<span class="required">*</span>
+									for="first-name">No. of Residence
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="resno" name="resno"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">No. of Shops<span class="required">*</span>
+									for="first-name">No. of Shops
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="shopsno" name="shopsno"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Date of Initiate<span class="required">*</span>
+									for="first-name">Date of Initiate
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="initiatedate" name="initiatedate"
-											class="customdatepicker form-control col-md-12 col-xs-12" required="required">
+											class="customdatepicker form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 							
@@ -192,11 +192,12 @@
 							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Order Closing Chance<span class="required">*</span>
+									for="first-name">Order Closing Chance
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select name="closingchance" id="closingchance" class="form-control col-md-12 col-xs-12">
+											<option value="pending">Pending</option>
 											<option value="yes">Yes</option>
 											<option value="no">No</option>
 										</select>
@@ -204,12 +205,12 @@
 								</div>
 								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Conclusion Remark<span class="required">*</span>
+									for="first-name">Conclusion Remark
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="remark" name="remark"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12" >
 									</div>
 								</div>
 								

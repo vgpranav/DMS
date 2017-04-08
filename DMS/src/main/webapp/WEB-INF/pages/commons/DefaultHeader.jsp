@@ -8,7 +8,16 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  
+                  <% if(request.getSession().getAttribute("imgBase64")!=null && request.getSession().getAttribute("imgBase64").toString().length()>5){ %>
                     <img   src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
+                    <% } else {
+	            	  %>
+	            	  <img src="<%= request.getContextPath() %>/resources/images/blankface.jpg" >
+	            	  <%
+		              }
+		              %>
+                    
                     ${sessionScope.userObject.firstName}
                     <span class=" fa fa-angle-down"></span>
                   </a>

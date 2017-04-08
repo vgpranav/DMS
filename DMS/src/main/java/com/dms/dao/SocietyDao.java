@@ -829,6 +829,9 @@ public Userprofile getUserDataById(Userprofile userprofile) {
     		  userprofile.getUserid()
         );
       
+       if(userprofile==null)
+    	   return null;
+       
        Userprofile tenant = null;
        tenant = qr.query(conn, DMSQueries.getTenantDataByUserId, rsh, 
      		  userprofile.getUserid()
@@ -1883,5 +1886,35 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      }
 	    }
 	    return calls;
+	  }
+
+	public long checkIfSocietyManager(long userid) {
+	    Connection conn = null;
+	    Object countObj=null;
+	    long count=0;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      
+	      countObj =  qr.query(conn, DMSQueries.getCountOfSocsAsManager,new ScalarHandler<Object>(),userid);
+	      
+	      count = CommomUtility.convertToLong(countObj);
+	      
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return count;
 	  }
 }

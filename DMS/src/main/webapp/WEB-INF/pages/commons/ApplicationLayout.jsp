@@ -25,7 +25,7 @@
             <div class="navbar nav_title" style="border: 0;">
             
               <a href="showHomepage.do" class="site_title">
-               <img src="<%= request.getContextPath() %>/resources/images/ods-logo1.png" height="46">
+               <img src="<%= request.getContextPath() %>/resources/images/ods-logo1.png" width="200">
               		<!-- <i class="fa fa-leaf"></i> 
               		<span>DMS</span> -->
               		
@@ -35,7 +35,16 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-              <img class="img-circle profile_img"  src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
+              
+              <% if(request.getSession().getAttribute("imgBase64")!=null && request.getSession().getAttribute("imgBase64").toString().length()>5){ %>
+              	<img class="img-circle profile_img"  src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
+              <% } else {
+            	  %>
+            	  <img src="<%= request.getContextPath() %>/resources/images/blankface.jpg" class="img-circle profile_img">
+            	  <%
+              }
+               %>
+              
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>

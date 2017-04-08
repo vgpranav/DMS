@@ -13,33 +13,32 @@ public class ConnectionPoolManager {
 
 	private static ComboPooledDataSource cpds;
 	
-	/*
-		private static String SQLDriver = CommonDA.getProperties().getProperty("SQLDriver");
-		private static String SQLURL = CommonDA.getProperties().getProperty("SQLURL");
-		private static String SQLUsername = CommonDA.getProperties().getProperty("SQLUsername");
-		private static String SQLPassword = CommonDA.getProperties().getProperty("SQLPassword");
-		private static String C3P0_InitialPoolSize = CommonDA.getProperties().getProperty("C3P0_InitialPoolSize");
-		private static String C3P0_setMinPoolSize = CommonDA.getProperties().getProperty("C3P0_setMinPoolSize");
-		private static String C3P0_setAcquireIncrement = CommonDA.getProperties().getProperty("C3P0_setAcquireIncrement");
-		private static String C3P0_setMaxPoolSize = CommonDA.getProperties().getProperty("C3P0_setMaxPoolSize");
-		private static String C3P0_setMaxStatements = CommonDA.getProperties().getProperty("C3P0_setMaxStatements");
-	 */	
-	   
+	 
+		private static String SQLDriver = CommonDA.getProperties().getProperty("SQLDriver").trim();
+		private static String SQLURL = CommonDA.getProperties().getProperty("SQLURL").trim();
+		private static String SQLUsername = CommonDA.getProperties().getProperty("SQLUsername").trim();
+		private static String SQLPassword = CommonDA.getProperties().getProperty("SQLPassword").trim();
+		private static String C3P0_InitialPoolSize = CommonDA.getProperties().getProperty("C3P0_InitialPoolSize").trim();
+		private static String C3P0_setMinPoolSize = CommonDA.getProperties().getProperty("C3P0_setMinPoolSize").trim();
+		private static String C3P0_setAcquireIncrement = CommonDA.getProperties().getProperty("C3P0_setAcquireIncrement").trim();
+		private static String C3P0_setMaxPoolSize = CommonDA.getProperties().getProperty("C3P0_setMaxPoolSize").trim();
+		private static String C3P0_setMaxStatements = CommonDA.getProperties().getProperty("C3P0_setMaxStatements").trim();
+	 
 	public ConnectionPoolManager(){
 	}
 	
 	public static ComboPooledDataSource createConnectionPool(){
 		try{
 			cpds = new ComboPooledDataSource();
-			cpds.setDriverClass("com.mysql.jdbc.Driver");
-			cpds.setJdbcUrl("jdbc:mysql://localhost:3306/dms");
-			cpds.setUser("root");
-			cpds.setPassword("12345");
-			cpds.setInitialPoolSize(5);
-			cpds.setMinPoolSize(5);
-			cpds.setAcquireIncrement(5);
-			cpds.setMaxPoolSize(20);
-			cpds.setMaxStatements(100); 
+			cpds.setDriverClass(SQLDriver);
+			cpds.setJdbcUrl(SQLURL);
+			cpds.setUser(SQLUsername);
+			cpds.setPassword(SQLPassword);
+			cpds.setInitialPoolSize(Integer.valueOf(C3P0_InitialPoolSize));
+			cpds.setMinPoolSize(Integer.valueOf(C3P0_setMinPoolSize));
+			cpds.setAcquireIncrement(Integer.valueOf(C3P0_setAcquireIncrement));
+			cpds.setMaxPoolSize(Integer.valueOf(C3P0_setMaxPoolSize));
+			cpds.setMaxStatements(Integer.valueOf(C3P0_setMaxStatements)); 
 			
 		}catch(Exception e){
 			e.printStackTrace();

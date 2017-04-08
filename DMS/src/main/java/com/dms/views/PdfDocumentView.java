@@ -2,6 +2,7 @@ package com.dms.views;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,7 @@ public class PdfDocumentView extends AbstractPdfView{
 	    	String hostDomain = ftp.getServerName();
 			String Id = ftp.getUsername();
 			String Password = ftp.getPassword();
+			List<String> generatedFiles = new ArrayList<String>();
 			
 			if (ftp.connectAndLogin(hostDomain, Id, Password)) {
 				for(Files files : docs){
@@ -49,7 +51,10 @@ public class PdfDocumentView extends AbstractPdfView{
 					
 					String ranfileName = RandomStringUtils.randomAlphanumeric(10)+".jpg";
 					
-					FileOutputStream fos = new FileOutputStream(ranfileName);
+					
+					File out = new File(ranfileName);
+					
+					FileOutputStream fos = new FileOutputStream(out);
 					ftp.retrieveFile(path,fos);
 					Image image1 = Image.getInstance(ranfileName);
 				
@@ -60,9 +65,10 @@ public class PdfDocumentView extends AbstractPdfView{
 					
 			        document.add(image1);
 			        fos.close();
-			        File f1 = new File(ranfileName);
-			        //System.out.println(f1.getAbsolutePath());
-			        f1.delete();
+			        
+					System.out.println("ranfileName ::"+out.getAbsolutePath());
+
+			        generatedFiles.add(out.getAbsolutePath());
 				}
 			}
 			
@@ -71,6 +77,11 @@ public class PdfDocumentView extends AbstractPdfView{
 			table.addCell(params.get("documentId"));
 			document.add(table);*/
 			
+			/*for(String filename : generatedFiles){
+				File f1 = new File(filename);
+				if(f1.exists())
+					f1.delete();
+			}*/
 			
 		}catch(Exception e){
 			e.printStackTrace();

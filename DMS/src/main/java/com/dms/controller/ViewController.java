@@ -114,12 +114,19 @@ public class ViewController
 		  
           List<HashMap<String, Object>> photos = new ArrayList<HashMap<String, Object>>();
           photos =  societyddao.getSocietyPhotos(authenticatedUser.getUserid(),"user","UserImages",photos);
-          String imgBase64 = (String) photos.get(0).get("file");
-          String imgContentType = (String) photos.get(0).get("contenttype");
           
-          request.getSession().setAttribute("imgBase64", imgBase64);
-          request.getSession().setAttribute("imgContentType", imgContentType);
+          if(photos.size()>0){
+        	  String imgBase64 = (String) photos.get(0).get("file");
+              String imgContentType = (String) photos.get(0).get("contenttype");
+              request.getSession().setAttribute("imgBase64", imgBase64);
+              request.getSession().setAttribute("imgContentType", imgContentType);
+          }
+          
+          long isSocManager = societyddao.checkIfSocietyManager(authenticatedUser.getUserid());
+          
+         
           request.getSession().setAttribute("userroleid", authenticatedUser.getUserroleid());
+          request.getSession().setAttribute("socmanagercount",isSocManager);
           mv.addObject("userprofile", userprofile);
           
         } else {

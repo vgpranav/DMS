@@ -105,6 +105,7 @@ public static String getContactsByCallRefId ="select * from callreferencecontact
 public static String saveCallrefMeeting = "insert into callreferencemeeting(callrefid, meetingdate, meetingperson, meetingremarks) values (?,?,?,?)";
 public static String getMeetingsByCallRefId ="select * from callreferencemeeting where callrefid=?";
 public static String getAllCallRefs = "select * from callreference";
+public static String getCountOfSocsAsManager="select count(societymanagerid) from societymanager where userid=? and isactive=1";
 
 
 

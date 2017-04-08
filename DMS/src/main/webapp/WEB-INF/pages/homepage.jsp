@@ -50,7 +50,14 @@
 			<div class="dashboard-widget-content">
 				<div class="row">
 					<div class="col-md-3 col-sm-3 col-xs-12">
+					<% if(request.getSession().getAttribute("imgBase64")!=null && request.getSession().getAttribute("imgBase64").toString().length()>5){ %>
 	 					<img class="img-circle"  width="210" src="data:<%= request.getSession().getAttribute("imgContentType") %>;base64,<%= request.getSession().getAttribute("imgBase64") %>"/>
+	 					<% } else {
+	            	  %>
+	            	  <img src="<%= request.getContextPath() %>/resources/images/blankface.jpg" width="210">
+	            	  <%
+		              }
+		              %>
 	  				</div>
 	  			
 	  				<div class="col-md-9 col-sm-9 col-xs-12">
