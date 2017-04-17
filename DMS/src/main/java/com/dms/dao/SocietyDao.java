@@ -20,6 +20,7 @@ import com.dms.beans.Vendor;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
+import com.dms.util.FtpWrapper;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,7 +42,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
-import uk.co.mmscomputing.application.imageviewer.FtpWrapper;
 
 public class SocietyDao
 {
@@ -225,7 +225,8 @@ public class SocietyDao
     		        userprofile.getLastName(), 
     		        userprofile.getPassword(), 
     		        user.getUserid(), 
-    		        userprofile.getMobileNo()
+    		        userprofile.getMobileNo(),
+    		        userprofile.getMiddleName()
     	        );
     	      
 
@@ -258,7 +259,8 @@ public class SocietyDao
     		          userprofile.getNominee2(),
     		          userprofile.getPercent2(),
     		          userprofile.getNominee3(),
-    		          userprofile.getPercent3()
+    		          userprofile.getPercent3(),
+    		          userprofile.getVehicleno()
     	          );
     	        
     	        userProfileId = CommomUtility.convertToLong(obj1);
@@ -272,7 +274,9 @@ public class SocietyDao
     	    			  userprofile.getTenantcontactnumber(),
     	    			  userprofile.getTenantaltnumber(),
     	    			  userprofile.getTenantemail(),
-    	    			  userprofile.getTenantaadharno()
+    	    			  userprofile.getTenantaadharno(),
+    	    			  userprofile.getTenantType(),
+    	    			  userprofile.getTenantPVstatus()
     	    			  );
     	      }
     	      
@@ -286,6 +290,7 @@ public class SocietyDao
   		        userprofile.getPassword(), 
   		        1,
   		        userprofile.getMobileNo(),
+  		        userprofile.getMiddleName(),
   		        userprofile.getUserid()
   	        );
     	  
@@ -315,6 +320,7 @@ public class SocietyDao
 		          userprofile.getPercent2(),
 		          userprofile.getNominee3(),
 		          userprofile.getPercent3(),
+		          userprofile.getVehicleno(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -326,14 +332,14 @@ public class SocietyDao
 	    			  userprofile.getTenantaltnumber(),
 	    			  userprofile.getTenantemail(),
 	    			  userprofile.getTenantaadharno(),
+	    			  userprofile.getTenantType(),
+	    			  userprofile.getTenantPVstatus(),
 	    			  userprofile.getUserid()
 	    			  );
 	      }
       }
       
       conn.commit();
-      
-      
       
       return userprofile;
     }
@@ -844,7 +850,8 @@ public Userprofile getUserDataById(Userprofile userprofile) {
     	   userprofile.setTenantaltnumber(tenant.getTenantaltnumber());
     	   userprofile.setTenantemail(tenant.getTenantemail());
     	   userprofile.setTenantaadharno(tenant.getTenantaadharno());
-    	   
+    	   userprofile.setTenantType(tenant.getTenantType());
+    	   userprofile.setTenantPVstatus(tenant.getTenantPVstatus());
     	   tenant=null;
        }
       return userprofile;

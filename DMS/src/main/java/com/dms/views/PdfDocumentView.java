@@ -14,6 +14,7 @@ import org.springframework.web.servlet.view.document.AbstractPdfView;
 
 import com.dms.beans.Files;
 import com.dms.dao.DocumentDao;
+import com.dms.util.FtpWrapper;
 import com.lowagie.text.Document;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
@@ -21,7 +22,6 @@ import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
 import com.mchange.lang.StringUtils;
 
-import uk.co.mmscomputing.application.imageviewer.FtpWrapper;
 
 public class PdfDocumentView extends AbstractPdfView{
 

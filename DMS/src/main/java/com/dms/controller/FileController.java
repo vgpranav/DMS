@@ -29,8 +29,8 @@ import com.dms.beans.User;
 import com.dms.beans.Vendor;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.SocietyDao;
+import com.dms.util.FtpWrapper;
 
-import uk.co.mmscomputing.application.imageviewer.FtpWrapper;
 
 
 @Controller

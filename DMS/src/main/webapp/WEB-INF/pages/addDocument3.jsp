@@ -23,9 +23,10 @@
 						<PARAM name="docsubtypeid" value="${docsubtypeid}"> 
 						<PARAM name="documentId" value="${documentId}"> 
 						<PARAM name="userid" value="1"> 
-						<PARAM name="dbaseip" value="127.0.0.1:3306"> 
+						<PARAM name="dbaseip" value="localhost:3306"> 
 						<PARAM name="dbuid" value="root"> 
-						<PARAM name="dbpwd" value="12345"> 
+<!-- 						<PARAM name="dbuid" value="odsdbuser"> 
+ -->						<PARAM name="dbpwd" value="12345"> 
 						<PARAM name="dbase" value="dms">
 						<PARAM name="java_arguments" value="-Xmx1000m -Dsun.java2d.noddraw=true"> 
 					</APPLET>

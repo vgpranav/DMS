@@ -22,16 +22,6 @@
 						
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Name of the Project <span class="required">*</span>
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="projectname" name="projectname"
-								required="required" class="form-control col-md-7 col-xs-12">
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Builder <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
@@ -43,6 +33,18 @@
 							</select>
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Name of the Project <span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="projectname" name="projectname"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
+					
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"

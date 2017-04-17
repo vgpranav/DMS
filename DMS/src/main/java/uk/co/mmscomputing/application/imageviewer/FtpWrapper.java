@@ -76,9 +76,9 @@ public class FtpWrapper extends FTPClient {
 //		EProperties p1 = new EProperties();
 		try {
 //			p1.load(this.getClass().getClassLoader().getResourceAsStream("/com/windworld/files/dbConfigurationFile/ftpServer.properties"));
-			setServerName("127.0.0.1");
-			setUsername("dms");
-			setPassword("dms");
+			setServerName("166.62.90.161");
+			setUsername("odsmonitor");
+			setPassword("Hot@1234");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

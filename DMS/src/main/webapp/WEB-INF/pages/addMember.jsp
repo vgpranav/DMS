@@ -29,6 +29,9 @@
 							class="form-horizontal form-label-left" action="#" method="post"
 							onsubmit="return false;">
 
+							<div class="editmodeind">
+							
+							<div class="editmodeicon" style="display: none;"><h2><span class="label label-warning label-xs "><i class="fa fa-circle-o-notch fa-spin fa-sm fa-fw"></i> Edit Mode</span></h2></div> 
 
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> 
@@ -51,6 +54,16 @@
 								</div>
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Middle Name <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="middleName" name="middleName"
+											class="form-control col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Last Name <span class="required">*</span>
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
@@ -59,6 +72,11 @@
 											class="form-control col-md-12 col-xs-12" required="required">
 									</div>
 								</div>
+
+								
+							</div>
+
+							<div class="form-group">
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Mobile No <span class="required">*</span>
@@ -69,10 +87,7 @@
 											class="form-control col-md-12 col-xs-12" required="required">
 									</div>
 								</div>
-							</div>
-
-							<div class="form-group">
-
+								
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Alternate Number </label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
@@ -91,6 +106,11 @@
 									</div>
 								</div>
 
+
+							</div>
+
+							<div class="form-group">
+							
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Aadhar No. </label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
@@ -99,21 +119,7 @@
 											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
-
-
-
-
-							</div>
-
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Joint Owners </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="jointowners" name="jointowners"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
+								
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Password <span class="required">*</span>
@@ -136,7 +142,245 @@
 								</div> 
 
 							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Joint Owners </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="jointowners" name="jointowners"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
+							</div>
+							<div class="clearfix"></div>
 
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Purchase Date </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="purchasedate" name="purchasedate"
+											class="form-control col-md-12 col-xs-12 customdatepicker"
+											readonly="readonly">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Possession Date </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="possessiondate" name="possessiondate"
+											class="form-control col-md-12 col-xs-12 customdatepicker"
+											readonly="readonly">
+									</div>
+								</div>
+
+								 <label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Floor </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="floor" name="floor"
+											class="form-control col-md-12 col-xs-12" placeholder="">
+									</div>
+								</div>
+								 
+								 
+							</div>
+
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Flat No <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="flatno" name="flatno"
+											class="form-control col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Wing <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="wing" name="wing"
+											class="form-control col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Tower </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tower" name="tower"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Built-up Area </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="builtuparea" name="builtuparea"
+											class="form-control col-md-12 col-xs-12"
+											placeholder="sq. ft.">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Carpet Area </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="carpetarea" name="carpetarea"
+											class="form-control col-md-12 col-xs-12"
+											placeholder="sq. ft.">
+									</div>
+								</div>
+
+							</div>
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Occupancy </span></h2> <hr />
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Occupancy <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="occupancy" id="occupancy"
+											required="required" onchange="showhidetenant()">
+											<option value="self">Self Occupied</option>
+											<option value="leased">Leased</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
+							
+							<section id="tenantdetails" style="display: none;">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Lease Tenant Details</span></h2> <hr />
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">First Name <span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname" name=tenantname
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Middle Name <span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname2" name=tenantname2
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Last Name <span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname3" name=tenantname3
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Permanent Address <span class="required">*</span></label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaddress" name=tenantaddress
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Lease Type<span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="tenantType" id="tenantType">
+											<option value="Residential">Residential</option>
+											<option value="Commercial">Commercial</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Contact Number <span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantcontactnumber" name=tenantcontactnumber
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Alternate Number</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaltnumber" name=tenantaltnumber
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Email</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantemail" name=tenantemail
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Aadhar Number <span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaadharno" name=tenantaadharno
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Tenant Police Verification Done<span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="tenantPVstatus" id="tenantPVstatus">
+											<option value="Yes">Yes</option>
+											<option value="No">No</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							</section>
+							
+							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> <h2><span class="label label-success label-md">Share Certificate</span></h2> <hr />
 							</div>
@@ -214,178 +458,6 @@
 								</div>
 							</div>
 							
-							
-							
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
-							</div>
-							<div class="clearfix"></div>
-
-							<div class="form-group">
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Purchase Date </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="purchasedate" name="purchasedate"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Possession Date </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="possessiondate" name="possessiondate"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Occupancy <span class="required">*</span>
-								</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<select class="form-control" name="occupancy" id="occupancy"
-											required="required" onchange="showhidetenant()">
-											<option value="self">Self Occupied</option>
-											<option value="leased">Leased</option>
-										</select>
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group">
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Flat No <span class="required">*</span>
-								</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="flatno" name="flatno"
-											class="form-control col-md-12 col-xs-12" required="required">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Wing <span class="required">*</span>
-								</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="wing" name="wing"
-											class="form-control col-md-12 col-xs-12" required="required">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Tower </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tower" name="tower"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Floor </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="floor" name="floor"
-											class="form-control col-md-12 col-xs-12" placeholder="">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Built-up Area </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="builtuparea" name="builtuparea"
-											class="form-control col-md-12 col-xs-12"
-											placeholder="sq. ft.">
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Carpet Area </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="carpetarea" name="carpetarea"
-											class="form-control col-md-12 col-xs-12"
-											placeholder="sq. ft.">
-									</div>
-								</div>
-
-							</div>
-							
-							<section id="tenantdetails" style="display: none;">
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <h2><span class="label label-success label-md">Tenant Details</span></h2> <hr />
-							</div>
-							<div class="clearfix"></div>
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Name of Lease Owner </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantname" name=tenantname
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-								
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Permanent Address </label>
-								<div class="col-md-6 col-sm-6 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantaddress" name=tenantaddress
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Contact Number</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantcontactnumber" name=tenantcontactnumber
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-								
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Alternate Number</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantaltnumber" name=tenantaltnumber
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-								
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Email</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantemail" name=tenantemail
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Aadhar Number</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantaadharno" name=tenantaadharno
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							</section>
-							
-							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /><h2><span class="label label-success label-md">Parking Details</span></h2> <hr />
 							</div>
@@ -396,8 +468,12 @@
 									for="first-name">Vehicle Type </label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="vehicletype" name=vehicletype
-											class="form-control col-md-12 col-xs-12">
+										<select class="form-control" name="vehicletype" id="vehicletype">
+											<option value=""> -- select --</option>
+											<option value="2-Wheeler">2 Wheeler</option>
+											<option value="3-Wheeler">3 Wheeler</option>
+											<option value="4-Wheeler">4 Wheeler</option>
+										</select>
 									</div>
 								</div>
 
@@ -405,8 +481,11 @@
 									for="first-name">Parking Type </label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="parkingtype" name="parkingtype"
-											class="form-control col-md-12 col-xs-12">
+										<select class="form-control" name="parkingtype" id="parkingtype">
+											<option value=""> -- select --</option>
+											<option value="Slit">Slit</option>
+											<option value="Open">Open</option>
+										</select>
 									</div>
 								</div>
 
@@ -416,6 +495,18 @@
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="parkingallotmentno"
 											name="parkingallotmentno"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Vehicle No </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="vehicleno"
+											name="vehicleno"
 											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
@@ -437,6 +528,8 @@
 						  </script>
 									<div class="text-success">${error}</div>
 								</c:if>
+							</div>
+							
 							</div>
 
 						</form>
@@ -487,6 +580,7 @@
 							<th class="column-title">Vehicle&nbsp;Type</th>
 							<th class="column-title">Parking&nbsp;Type</th>
 							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+							<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -551,6 +645,9 @@
 		var password = $('#password').val();
 		
 		var tenantname = $('#tenantname').val();
+		var tenantname2 = $('#tenantname2').val();
+		var tenantname3 = $('#tenantname3').val();
+		
 		var tenantaddress = $('#tenantaddress').val();
 		var tenantcontactnumber = $('#tenantcontactnumber').val();
 		var tenantaltnumber = $('#tenantaltnumber').val();
@@ -567,11 +664,30 @@
 		var nominee3 = $('#nominee3').val();
 		var percent3 = $('#percent3').val();
 
-
+		var middleName = $('#middleName').val();
+		var tenantType = $('#tenantType').val();
+		var tenantPVstatus = $('#tenantPVstatus').val();
+		var vehicleno = $('#vehicleno').val();
+		
+		
+		if(occupancy=='leased'){
+			if(tenantname.length<1 || tenantaddress.length<1 || tenantcontactnumber.length<1 || tenantaadharno.length<1 ){
+				alert("Tenant Details Are Mandatory");
+				return false;
+			}
+			
+			if(tenantname2.length>1)
+				tenantname = tenantname+' '+tenantname2;
+			
+			if(tenantname3.length>1)
+				tenantname = tenantname+' '+tenantname3;
+		}
+			
 		if(firstName.length<1 || lastName.length<1 || mobileNo.length<1 || occupancy.length<1 || flatno.length<1 || wing.length<1 || password.length<1 || societyid.length<1){
 			alert("Some Mandatory Fields Are Empty");
 			return false;
 		}
+		
 		
 		$.ajax({
 	        type: "GET",
@@ -579,6 +695,7 @@
 	        data :"userid="+userid
 	        		+"&firstName="+firstName
 	        		+"&lastName="+lastName
+	        		+"&middleName="+middleName
 			        +"&mobileNo="+mobileNo
 			        +"&alternateno="+alternateno
 			        +"&email="+email
@@ -612,7 +729,12 @@
 			        +"&nominee2="+nominee2
 			        +"&percent2="+percent2
 			        +"&nominee3="+nominee3
-			        +"&percent3="+percent3,
+			        +"&percent3="+percent3
+			        
+			        +"&tenantType="+tenantType
+			        +"&tenantPVstatus="+tenantPVstatus
+			        +"&vehicleno="+vehicleno,
+			        
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
@@ -620,6 +742,7 @@
 	        		
 	        		$('#userid').val("");
 	        		$('#firstName').val("");
+	        		$('#middleName').val("");
 	        		$('#lastName').val("");
 	        		$('#mobileNo').val("");
 	        		$('#alternateno').val("");
@@ -655,7 +778,8 @@
 	        		$('#percent2').val("");
 	        		$('#nominee3').val("");
 	        		$('#percent3').val("");
-
+	        		$('#vehicleno').val("");
+	        		
 	        	}  
 	        },
 				error : function(e) {
@@ -692,7 +816,7 @@
 	        			item.wing,
 	        			item.floor,
 	        			item.tower,
-	        			item.firstName + ' ' + item.lastName,
+	        			item.firstName + ' ' + item.middleName+ ' ' + item.lastName,
 	        			item.mobileNo,
 	        			item.jointowners,
 	        			item.occupancy,
@@ -706,6 +830,7 @@
 	        			item.vehicletype,
 	        			item.parkingtype,
 	        			item.parkingallotmentno,
+	        			item.vehicleno,
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
@@ -735,6 +860,7 @@
 	        		//notify('success','SUCCESS','Added Successfully',2000);
 	        		$('#userid').val(response.userid);
 	        		$('#firstName').val(response.firstName);
+	        		$('#middleName').val(response.middleName);
 	        		$('#lastName').val(response.lastName);
 	        		$('#mobileNo').val(response.mobileNo);
 	        		$('#alternateno').val(response.alternateno);
@@ -746,6 +872,10 @@
 	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
 	        		
 	        		$('#occupancy option[value="'+response.occupancy+'"]').prop("selected",true).change();
+
+	        		$('#tenantType option[value="'+response.tenantType+'"]').prop("selected",true).change();
+
+	        		$('#tenantPVstatus option[value="'+response.tenantPVstatus+'"]').prop("selected",true).change();
 	        		
 	        		$('#flatno').val(response.flatno);
 	        		$('#wing').val(response.wing);
@@ -753,7 +883,9 @@
 	        		$('#floor').val(response.floor);
 	        		$('#builtuparea').val(response.builtuparea);
 	        		$('#carpetarea').val(response.carpetarea);
-	        		$('#tenantname').val(response.tenantname);
+	        		$('#tenantname').val(response.tenantname.split(' ')[0]);
+	        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
+	        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
 	        		$('#tenantaddress').val(response.tenantaddress);
 	        		$('#tenantcontactnumber').val(response.tenantcontactnumber);
 	        		$('#tenantaltnumber').val(response.tenantaltnumber);
@@ -770,8 +902,11 @@
 	        		$('#percent2').val(response.percent2);
 	        		$('#nominee3').val(response.nominee3);
 	        		$('#percent3').val(response.percent3);
-
+	        		$('#vehicleno').val(response.vehicleno);
 	        		
+	        		$('.editmodeind').css({"background-color":"#ffffe0"});
+	        		$('.editmodeicon').show();
+	        		$('#firstName').focus();
 	        	}  
 	        },
 				error : function(e) {

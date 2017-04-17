@@ -140,7 +140,14 @@ footer { background-color:#0c1a1e; min-height:250px; font-family: 'Open Sans', s
   </head>
   <body style="background-color: #fff !important;">
   
-  		<div id="logo-scroll" class="col-md-12 col-sm-12 col-xs-12" style="position: fixed;z-index: 9999;background-color: #0c1a1e !important;">
+   
+  <div class="col-md-12 col-sm-12 col-xs-12" align="center" style="margin-top:10%">
+  		<img src="<%= request.getContextPath() %>/resources/images/ods-logo1.png" height="70">
+  </div>
+  <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+  		<h2>Website Under Construction</h2>
+  </div>
+  		<%-- <div id="logo-scroll" class="col-md-12 col-sm-12 col-xs-12" style="position: fixed;z-index: 9999;background-color: #0c1a1e !important;">
 			 <div class="row" style=" ">
 			 	<div class="col-md-4 col-sm-4 col-xs-12">
 					<img src="<%= request.getContextPath() %>/resources/images/ods-logo1.png" height="70">			 	
@@ -151,10 +158,10 @@ footer { background-color:#0c1a1e; min-height:250px; font-family: 'Open Sans', s
 				    </form>
 			 	</div>
 			 </div>
-		</div>
+		</div> --%>
 		
 		
-	<section class="container" >
+	<!-- <section class="container" >
 		
 		<div class="row" style="margin-top:90px;">
 			
@@ -269,12 +276,12 @@ footer { background-color:#0c1a1e; min-height:250px; font-family: 'Open Sans', s
 		
 		
 		</div>
-</section>
+</section> -->
 		
   
  		
  		
-             <footer>
+            <!--  <footer>
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6 footerleft ">
@@ -297,10 +304,10 @@ footer { background-color:#0c1a1e; min-height:250px; font-family: 'Open Sans', s
       </div>
     </div>
   </div>
-</footer>
+</footer> -->
 <!--footer start from here-->
 
-<div class="copyright">
+<!-- <div class="copyright">
   <div class="container">
     <div class="col-md-6">
       <p>&copy; 2018 - All Rights with Our Digital Society</p>
@@ -314,7 +321,7 @@ footer { background-color:#0c1a1e; min-height:250px; font-family: 'Open Sans', s
       </ul>
     </div>
   </div>
-</div>
+</div> -->
  		
    </body>
 </html>

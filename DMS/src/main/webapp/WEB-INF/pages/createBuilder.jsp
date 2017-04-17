@@ -42,51 +42,51 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Block Number<span class="required">*</span>
+							for="first-name">Block Number 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="blockno" name="blockno"
-								required="required" class="form-control col-md-7 col-xs-12">
+								  class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Name of Premises<span class="required">*</span>
+							for="first-name">Name of Premises 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="premisesname" name="premisesname"
-								required="required" class="form-control col-md-7 col-xs-12">
+								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Street Name<span class="required">*</span>
+							for="first-name">Street Name 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="streetname" name="streetname"
-								required="required" class="form-control col-md-7 col-xs-12">
+								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Landmark<span class="required">*</span>
+							for="first-name">Landmark 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="landmark" name="landmark"
-								required="required" class="form-control col-md-7 col-xs-12">
+							 	class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Area<span class="required">*</span>
+							for="first-name">Area 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="area" name="area"
-								required="required" class="form-control col-md-7 col-xs-12">
+							 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
@@ -117,7 +117,7 @@
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="state" name="state"
-								required="required" class="form-control col-md-7 col-xs-12">
+								required="required" class="form-control col-md-7 col-xs-12" value="Maharashtra">
 						</div>
 					</div>
 					
@@ -127,7 +127,7 @@
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="country" name="country"
-								required="required" class="form-control col-md-7 col-xs-12">
+								required="required" class="form-control col-md-7 col-xs-12" value="India">
 						</div>
 					</div>
 					

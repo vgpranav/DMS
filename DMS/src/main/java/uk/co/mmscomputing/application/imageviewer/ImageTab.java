@@ -70,7 +70,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
     docsubtypeid 	= properties.getProperty("docsubtypeid")== null ? "1":properties.getProperty("docsubtypeid").toString();
     documentId 		= properties.getProperty("documentId")== null ? "1":properties.getProperty("documentId").toString();
     userid 			= properties.getProperty("userid")== null ? "1":properties.getProperty("userid").toString();
-    dbaseip 		= properties.getProperty("dbaseip")== null ? "127.0.0.1:3306":properties.getProperty("dbaseip").toString();
+    dbaseip 		= properties.getProperty("dbaseip")== null ? "166.62.90.161:3306":properties.getProperty("dbaseip").toString();
     dbuid 			= properties.getProperty("dbuid")== null ? "root":properties.getProperty("dbuid").toString();
     dbpwd 			= properties.getProperty("dbpwd")== null ? "12345":properties.getProperty("dbpwd").toString();
     dbase 			= properties.getProperty("dbase")== null ? "dms":properties.getProperty("dbase").toString();

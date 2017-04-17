@@ -63,6 +63,10 @@ import org.apache.commons.net.ftp.FTPReply;
 
 public class FtpWrapper extends FTPClient {
 	
+	private static String FTP_serverIP = CommonDA.getProperties().getProperty("FTP_serverIP").trim();
+	private static String FTP_username = CommonDA.getProperties().getProperty("FTP_username").trim();
+	private static String FTP_password = CommonDA.getProperties().getProperty("FTP_password").trim();
+
 	private String serverName;
 	private String username;
 	private String password;
@@ -76,9 +80,9 @@ public class FtpWrapper extends FTPClient {
 //		EProperties p1 = new EProperties();
 		try {
 //			p1.load(this.getClass().getClassLoader().getResourceAsStream("/com/windworld/files/dbConfigurationFile/ftpServer.properties"));
-			setServerName("127.0.0.1");
-			setUsername("dms");
-			setPassword("dms");
+			setServerName(FTP_serverIP);
+			setUsername(FTP_username);
+			setPassword(FTP_password);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

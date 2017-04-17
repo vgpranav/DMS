@@ -1,5 +1,7 @@
 package com.dms.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +40,9 @@ import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
 import com.dms.util.CommomUtility;
+import com.dms.util.CommonDA;
+import com.dms.util.FtpWrapper;
+
 
 @Controller
 public class ViewController
@@ -45,6 +50,50 @@ public class ViewController
   public ViewController() {}
   
   private static final Logger logger = LoggerFactory.getLogger(ViewController.class);
+  
+  @RequestMapping(value={"/systemcheck"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public String systemcheck() {
+	  try{
+		  
+		  	String SQLDriver = CommonDA.getProperties().getProperty("SQLDriver").trim();
+			String SQLURL = CommonDA.getProperties().getProperty("SQLURL").trim();
+			String SQLUsername = CommonDA.getProperties().getProperty("SQLUsername").trim();
+			String SQLPassword = CommonDA.getProperties().getProperty("SQLPassword").trim();
+			
+			  System.out.println("Performing System check\n\n\n");
+			  System.out.println("\n\nConnecting DB..");
+			  System.out.println("\n\n"+SQLDriver);
+			  System.out.println("\n\n"+SQLURL);
+			  System.out.println("\n\n"+SQLUsername);
+			  System.out.println("\n\n"+SQLPassword);
+			  
+			  Class.forName(SQLDriver);
+			  
+			  Connection con = DriverManager.getConnection(SQLURL,SQLUsername,SQLPassword);  
+			  
+			  System.out.println("\n\nConn Is Open"+!con.isClosed());
+			  
+			  System.out.println("\n\nClosing Connection");
+	
+			  con.close();
+			  
+			  FtpWrapper ftp = new FtpWrapper();
+			  
+			  String hostDomain = ftp.getServerName();
+			  String Id = ftp.getUsername();
+			  String Password = ftp.getPassword();
+			  
+			  System.out.println("\n\nFTP Connection :: "+ftp.connectAndLogin(hostDomain, Id, Password));
+			  
+			  System.out.println("\n\nWorking Directory is :: "+ftp.printWorkingDirectory());
+			  
+			  return "Connection Successful at "+new Date();
+		  
+	  }catch(Exception e){
+		  e.printStackTrace();
+		  return "Db Connection Failed";
+	  }
+  }
   
   @RequestMapping(value={"/welcome"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public String getWelcomePage() {
@@ -370,6 +419,11 @@ public class ViewController
     
     DocumentDao documentDao = new DocumentDao();
     try {
+    	
+      if(document.getUserid()==0){
+    	  document.setUserid(9999);
+      }
+      
       formFields = documentDao.getFieldsForDocSubtype(document.getDocsubtypeid(), formFields);
       
       documentdetails = documentDao.getExistingDocumentDetails(document,documentdetails);

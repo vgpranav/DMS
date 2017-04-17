@@ -66,7 +66,7 @@
 		                      	<a> <i class="fa fa-folder-o"></i> Vendors</a>
 		                      	<ul class="nav child_menu">
 		                      		<li><a href="createVendor.do">Create Vendor</a></li>
-		                      		<li><a href="createVendorCards.do">Add Vendor Visiting Card</a></li>
+		                      		<li><a href="createVendorCards.do">Add Vendor Photo / Visiting Card</a></li>
 		                      	</ul>
 		                      </li>
 		                      </c:if>
@@ -135,7 +135,17 @@
 		                    </ul>
 		                  </li>
 		             </c:if>     
-		                   
+		                    <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		My ODS
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                      <li><a href="addCallRef.do">Add Call Reference</a></li>
+		                      <li><a href="viewAllCallRef.do">View Call Reference</a></li>
+		                    </ul>
+		                  </li>
 	                  </ul>
                   </div>
             </div>

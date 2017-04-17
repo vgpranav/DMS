@@ -8,6 +8,7 @@ public class Userprofile
     private long userprofileid;
     private long userid;
     private String firstName;
+    private String middleName;
     private String lastName;
     private String mobileNo;
     private String flatno;
@@ -43,9 +44,20 @@ public class Userprofile
     private String percent2;
     private String nominee3;
     private String percent3;
+    private String tenantType;
     
+    private String tenantPVstatus;
+    private String vehicleno;
+    
+    public String getTenantType() {
+		return tenantType;
+	}
 
-    public String getBloodgroup() {
+	public void setTenantType(String tenantType) {
+		this.tenantType = tenantType;
+	}
+
+	public String getBloodgroup() {
 		return bloodgroup;
 	}
 
@@ -387,20 +399,46 @@ public class Userprofile
 		this.tenantaadharno = tenantaadharno;
 	}
 
+	public String getMiddleName() {
+		return middleName;
+	}
+
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+ 
+	public String getTenantPVstatus() {
+		return tenantPVstatus;
+	}
+
+	public void setTenantPVstatus(String tenantPVstatus) {
+		this.tenantPVstatus = tenantPVstatus;
+	}
+
+	public String getVehicleno() {
+		return vehicleno;
+	}
+
+	public void setVehicleno(String vehicleno) {
+		this.vehicleno = vehicleno;
+	}
+
 	@Override
 	public String toString() {
 		return "Userprofile [userprofileid=" + userprofileid + ", userid=" + userid + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", mobileNo=" + mobileNo + ", flatno=" + flatno + ", wing=" + wing
-				+ ", tower=" + tower + ", occupancy=" + occupancy + ", alternateno=" + alternateno + ", email=" + email
-				+ ", aadharno=" + aadharno + ", jointowners=" + jointowners + ", purchasedate=" + purchasedate
-				+ ", possessiondate=" + possessiondate + ", builtuparea=" + builtuparea + ", carpetarea=" + carpetarea
-				+ ", parkingtype=" + parkingtype + ", vehicletype=" + vehicletype + ", parkingallotmentno="
-				+ parkingallotmentno + ", floor=" + floor + ", password=" + password + ", societyid=" + societyid
-				+ ", tenantname=" + tenantname + ", tenantaddress=" + tenantaddress + ", tenantcontactnumber="
-				+ tenantcontactnumber + ", tenantaltnumber=" + tenantaltnumber + ", tenantemail=" + tenantemail
-				+ ", tenantaadharno=" + tenantaadharno + ", bloodgroup=" + bloodgroup + ", sharecertno=" + sharecertno
-				+ ", nominee1=" + nominee1 + ", percent1=" + percent1 + ", nominee2=" + nominee2 + ", percent2="
-				+ percent2 + ", nominee3=" + nominee3 + ", percent3=" + percent3 + "]";
+				+ ", middleName=" + middleName + ", lastName=" + lastName + ", mobileNo=" + mobileNo + ", flatno="
+				+ flatno + ", wing=" + wing + ", tower=" + tower + ", occupancy=" + occupancy + ", alternateno="
+				+ alternateno + ", email=" + email + ", aadharno=" + aadharno + ", jointowners=" + jointowners
+				+ ", purchasedate=" + purchasedate + ", possessiondate=" + possessiondate + ", builtuparea="
+				+ builtuparea + ", carpetarea=" + carpetarea + ", parkingtype=" + parkingtype + ", vehicletype="
+				+ vehicletype + ", parkingallotmentno=" + parkingallotmentno + ", floor=" + floor + ", password="
+				+ password + ", societyid=" + societyid + ", tenantname=" + tenantname + ", tenantaddress="
+				+ tenantaddress + ", tenantcontactnumber=" + tenantcontactnumber + ", tenantaltnumber="
+				+ tenantaltnumber + ", tenantemail=" + tenantemail + ", tenantaadharno=" + tenantaadharno
+				+ ", bloodgroup=" + bloodgroup + ", sharecertno=" + sharecertno + ", nominee1=" + nominee1
+				+ ", percent1=" + percent1 + ", nominee2=" + nominee2 + ", percent2=" + percent2 + ", nominee3="
+				+ nominee3 + ", percent3=" + percent3 + ", tenantType=" + tenantType + ", tenantPVstatus="
+				+ tenantPVstatus + ", vehicleno=" + vehicleno + "]";
 	}
-
+	
 }

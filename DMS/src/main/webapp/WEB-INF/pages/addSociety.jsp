@@ -136,22 +136,22 @@
 					<c:if test="${societytype=='society'}">
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"
-								for="first-name"> Society Registration No. <span class="required">*</span>
+								for="first-name"> Society Registration No.  
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input type="text" id="registrationno" name="registrationno"
-									required="required" class="form-control col-md-7 col-xs-12">
+									  class="form-control col-md-7 col-xs-12">
 							</div>
 						</div>
 					</c:if>
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Establishment Date<span class="required">*</span>
+							for="first-name">Establishment Date 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="estdate" name="estdate"
-								readonly required="required" class="form-control col-md-7 col-xs-12 customdatepicker">
+								readonly class="form-control col-md-7 col-xs-12 customdatepicker">
 						</div>
 					</div>
 
@@ -214,6 +214,8 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
+                  
+                  <b>Residential Societies</b><hr/>
                     <div class="table-responsive">
                       <table class="table table-striped jambo_table bulk_action" id="thetable">
                         <thead>
@@ -231,6 +233,8 @@
 
                         <tbody>
                         	  <c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
+                        	  
+                        	  <c:if test="${myItem.societytypeid==1}">
 								<c:if test="${loopStatus.index%2==0}">
 									<tr class="even pointer">
 								</c:if>
@@ -254,10 +258,63 @@
 										</a>
 									</td>
 								</tr>
+								</c:if>
+								
 							</c:forEach>  
                         </tbody>
                       </table>
                     </div>
+                    
+                    <b>Commercial Societies</b><hr/>
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action" id="thetable">
+                        <thead>
+                          <tr class="headings">
+                            <th class="column-title">Society Name</th>
+                            <th class="column-title">Project Name</th>
+                            <th class="column-title">Created On </th>
+                            <th class="column-title">Status </th>
+                            <th class="column-title no-link last">
+                            	<span class="nobr">Edit</span>
+                            </th>
+                             
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        	  <c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
+                        	  
+                        	  <c:if test="${myItem.societytypeid==2}">
+								<c:if test="${loopStatus.index%2==0}">
+									<tr class="even pointer">
+								</c:if>
+								<c:if test="${loopStatus.index%2!=0}">
+									<tr class="odd pointer">
+								</c:if>
+									<td class=" ">${myItem.societyname}</td>
+									<td class=" ">${myItem.projectname}</td>
+									<td class=" ">${myItem.createdon}</td>
+									<td class=" ">
+										<c:if test="${myItem.isactive==1}">
+											Active
+										</c:if>
+										<c:if test="${myItem.isactive!=1}">
+											Inactive
+										</c:if>
+									</td>								
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="getSocietyDetailsById('${myItem.societyid}')">
+											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+								</tr>
+								</c:if>
+								
+							</c:forEach>  
+                        </tbody>
+                      </table>
+                    </div>
+                    
                   </div>
                 </div>
               </div>

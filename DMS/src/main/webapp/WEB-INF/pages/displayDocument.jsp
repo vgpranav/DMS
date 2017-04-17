@@ -14,6 +14,10 @@
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
                   </ul>
+                  <div class="pull-right">
+                  	<button class="btn btn-primary btn-md" onclick="makePrintable()">Print</button>
+                  	<button class="btn btn-primary btn-md" onclick="emailable()">Email</button>
+                  </div>
                   <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -33,20 +37,39 @@
                     	<div class="row">
                     		<c:forEach items="${docList}" var="myItem" varStatus="loopStatus">
                     
-						<c:if test="${docId!=myItem.documentid}">
-							<c:set var="docId" value="${myItem.documentid}"></c:set>
-							<div class="clearfix"></div>
-							<hr/>
-							 
-							<hr/>
-						</c:if>
+						 <c:if test="${loopStatus.index%6==0}">
+						 	<div class="clearfix"></div><hr>
+						 </c:if>
 						
-						<div class="col-md-6 col-sm-6 col-xs-12">
-						<img  class="img-fluid" width="500" src="data:image/jpeg;base64,${myItem.file}"/>
+						<div class="col-md-2 col-sm-2 col-xs-12 printable">
+						<img  class="img-fluid thumbs" width="200" src="data:image/jpeg;base64,${myItem.file}"/>
 						 </div>
+						 
+						
 					</c:forEach>
                     	</div>
                   </div>
                 </div>
               </div>
  </div>
+ 
+ 
+ <script>
+ 	$(document).ready(function(){
+ 		 $(".thumbs").popImg();
+ 	});
+ 	
+ 	function emailable(){
+ 		alert("Error ! No default email id configured for this user")
+ 	}
+ 	
+ 	function makePrintable(){
+ 		$('.printable').removeClass('col-md-2');
+ 		$('.printable').removeClass('col-sm-2');
+ 		$('.printable').addClass('col-md-12');
+ 		$('.printable').addClass('col-sm-12');
+ 		$('.printable').attr('align','center');
+ 		$('.printable>img').attr('width','');
+ 		window.print();
+ 	}
+ </script>

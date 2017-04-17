@@ -57,6 +57,15 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Common Document<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="checkbox" name="common" id="common" value="yes" onclick="changememreq()">&nbsp;Yes
+						</div>
+					</div>
+					
+					<div class="form-group userselector">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Society Member <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
@@ -94,6 +103,25 @@
  
 
 <script>
+
+	function changememreq(){
+		var common =  $('#common').is(":checked")
+		if(common){
+		 	$('#username').attr("disabled","disabled");
+		 	$('#userid').attr("disabled","disabled");
+			 	$('#username').removeAttr('required');
+			 	$('#userid').removeAttr('required');
+			 	$('.userselector').hide('fade');
+			 	}
+			 else{
+				 $('#username').removeAttr('disabled');
+				 $('#userid').removeAttr('disabled');
+				 $('#username').attr("required","required");
+				 $('#userid').attr("required","required");
+				 $('.userselector').show('fade');
+			 }
+		} 
+	
 	$(document).ready(function(){
 		$('#thetable').DataTable();
 		
