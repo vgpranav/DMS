@@ -23,8 +23,8 @@
 						<PARAM name="docsubtypeid" value="${docsubtypeid}"> 
 						<PARAM name="documentId" value="${documentId}"> 
 						<PARAM name="userid" value="1"> 
-						<PARAM name="dbaseip" value="localhost:3306"> 
-						<PARAM name="dbuid" value="root"> 
+						<PARAM name="dbaseip" value="166.62.90.161:3306"> 
+						<PARAM name="dbuid" value="odsdbuser"> 
 <!-- 						<PARAM name="dbuid" value="odsdbuser"> 
  -->						<PARAM name="dbpwd" value="12345"> 
 						<PARAM name="dbase" value="dms">

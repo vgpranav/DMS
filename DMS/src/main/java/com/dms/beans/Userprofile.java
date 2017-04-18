@@ -48,8 +48,30 @@ public class Userprofile
     
     private String tenantPVstatus;
     private String vehicleno;
+
     
-    public String getTenantType() {
+    private String tenantfrom;
+    private String tenantto;
+
+    
+    
+    public String getTenantfrom() {
+		return tenantfrom;
+	}
+
+	public void setTenantfrom(String tenantfrom) {
+		this.tenantfrom = tenantfrom;
+	}
+
+	public String getTenantto() {
+		return tenantto;
+	}
+
+	public void setTenantto(String tenantto) {
+		this.tenantto = tenantto;
+	}
+
+	public String getTenantType() {
 		return tenantType;
 	}
 
@@ -438,7 +460,8 @@ public class Userprofile
 				+ ", bloodgroup=" + bloodgroup + ", sharecertno=" + sharecertno + ", nominee1=" + nominee1
 				+ ", percent1=" + percent1 + ", nominee2=" + nominee2 + ", percent2=" + percent2 + ", nominee3="
 				+ nominee3 + ", percent3=" + percent3 + ", tenantType=" + tenantType + ", tenantPVstatus="
-				+ tenantPVstatus + ", vehicleno=" + vehicleno + "]";
+				+ tenantPVstatus + ", vehicleno=" + vehicleno + ", tenantfrom=" + tenantfrom + ", tenantto=" + tenantto
+				+ "]";
 	}
-	
+
 }

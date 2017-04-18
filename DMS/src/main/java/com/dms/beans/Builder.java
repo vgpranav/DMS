@@ -20,6 +20,10 @@ public class Builder {
 	public Date createdon; 
 	public int active;
 	
+	public String contact;
+	public String altcontact;
+	public String email;
+	
 	
 	public String getAddress() {
 		return address;
@@ -111,6 +115,24 @@ public class Builder {
 	public void setActive(int active) {
 		this.active = active;
 	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public String getAltcontact() {
+		return altcontact;
+	}
+	public void setAltcontact(String altcontact) {
+		this.altcontact = altcontact;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	@Override
 	public String toString() {
@@ -118,6 +140,7 @@ public class Builder {
 				+ ", blockno=" + blockno + ", premisesname=" + premisesname + ", streetname=" + streetname
 				+ ", landmark=" + landmark + ", area=" + area + ", city=" + city + ", pincode=" + pincode + ", state="
 				+ state + ", country=" + country + ", createdby=" + createdby + ", createdon=" + createdon + ", active="
-				+ active + "]";
+				+ active + ", contact=" + contact + ", altcontact=" + altcontact + ", email=" + email + "]";
 	}
+	
 }

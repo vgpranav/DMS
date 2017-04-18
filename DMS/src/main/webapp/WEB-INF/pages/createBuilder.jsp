@@ -133,6 +133,36 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Contact No 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="contact" name="contact"
+								 class="form-control col-md-7 col-xs-12" value="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Alternate No. 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="altcontact" name="altcontact"
+								 class="form-control col-md-7 col-xs-12" value="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Email 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="email" name="email"
+								 class="form-control col-md-7 col-xs-12" value="">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Status<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:6px;">
@@ -261,6 +291,10 @@
 	        		$('#state').val(response.state);
 	        		$('#country').val(response.country);
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+
+	        		$('#contact').val(response.contact);
+	        		$('#altcontact').val(response.altcontact);
+	        		$('#email').val(response.email);
 
 	        	}  
 	        },

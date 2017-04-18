@@ -142,8 +142,7 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <li><a href="addCallRef.do">Add Call Reference</a></li>
-		                      <li><a href="viewAllCallRef.do">View Call Reference</a></li>
+		                      <li><a href="editUserProfile.do">Edit My Profile</a></li>
 		                    </ul>
 		                  </li>
 	                  </ul>

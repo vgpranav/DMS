@@ -200,4 +200,9 @@
     </definition> 
     
     
+     <definition name="editUserProfile" extends="base-definition">  
+      <put-attribute name="title" value="Add Member" />  
+      <put-attribute name="body" value="/WEB-INF/pages/editUserProfile.jsp" />   
+    </definition> 
+    
 </tiles-definitions>

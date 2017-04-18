@@ -24,7 +24,7 @@ public class DMSQueries
   public static String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description,  d.documentid, d.createdby,d.createdon  from formstructure f,documentdetails d,document doc  where f.fieldid = d.datakey  and d.documentid = doc.documentid  and doc.societyid=? and doc.doctypeid=? and doc.docsubtypeid=?  group by d.documentid order by f.sequence ";
   public static String getDocPathsByDocId = "select * from files where documentid = ?";
   public static String insertNewUser = "insert into user (firstName,lastName,password,createdBy,mobileNo,middlename) values (?,?,?,?,?,?)";
-  public static String insertNewUserProfile = "insert into userprofile(userid,flatno,wing,floor,tower,occupancy,alternateno,email,aadharno,jointowners,purchasedate,possessiondate,builtuparea,carpetarea,parkingtype,vehicletype,parkingallotmentno,societyid,bloodgroup,sharecertno,nominee1,percent1,nominee2,percent2,nominee3,percent3,vehicleno) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  public static String insertNewUserProfile = "insert into userprofile(userid,flatno,wing,floor,tower,occupancy,alternateno,email,aadharno,jointowners,purchasedate,possessiondate,builtuparea,carpetarea,parkingtype,vehicletype,parkingallotmentno,societyid,bloodgroup,sharecertno,nominee1,percent1,nominee2,percent2,nominee3,percent3,vehicleno,tenantfrom,tenantto) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
   public static String getMembersForSociety = "select * from userprofile up,user u where up.userid = u.userid and up.societyid=?";
   public static String getAllCommitteePositions = "select * from committeemaster where isactive=1";
   public static String insertNewCommitteeMember = "insert into committee(userid,societyid,positionid,appointedon,removedon) values (?,?,?,?,?)";
@@ -53,7 +53,7 @@ public static String getTenantDataByUserId = "select * from tenant where userid=
 
 
 public static String updateNewUser = "Update user set firstname=?, lastname=?,  password=?, active=?, mobileNo=? ,middlename=? where userid=?";
-public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=?,bloodgroup=?,sharecertno=?,nominee1=?,percent1=?,nominee2=?,percent2=?,nominee3=?,percent3=?,vehicleno=? where userid=?";
+public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=?,bloodgroup=?,sharecertno=?,nominee1=?,percent1=?,nominee2=?,percent2=?,nominee3=?,percent3=?,vehicleno=?,tenantfrom=?,tenantto=? where userid=?";
 public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=?,tenanttype=?,tenantPVstatus=? where userid=?";
 public static String getVendorDataById = "select * from vendors where vendorid=?";
 public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=? where vendorid=?";
@@ -63,8 +63,8 @@ public static String getSocietyManagerList = "select sm.societymanagerid as soci
 public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
 public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
 public static String getAllBuilders = "select * from builder";
-public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? where builderid=?";
+public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active,contact,altcontact,email) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? ,contact=? ,altcontact=? ,email=? where builderid=?";
 public static String getBuilderDetailsById="select * from builder where builderid=?";
 public static String getAllProjects="SELECT p.*,b.builderid,b.buildername FROM project p, builder b where p.builderid=b.builderid ";
 public static String getProjectDetailsById="select * from project where projectid=?";
@@ -106,6 +106,7 @@ public static String saveCallrefMeeting = "insert into callreferencemeeting(call
 public static String getMeetingsByCallRefId ="select * from callreferencemeeting where callrefid=?";
 public static String getAllCallRefs = "select * from callreference";
 public static String getCountOfSocsAsManager="select count(societymanagerid) from societymanager where userid=? and isactive=1";
+public static String getmodNameBySocId="";
 
 
 

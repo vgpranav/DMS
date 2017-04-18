@@ -3,17 +3,11 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile ">
 		<div class="x_title">
-			<h2>Add Member</h2>
+			<h2>Edit My Profile</h2>
 
 			<div class="pull-right">
-				<select name="societyid" id="societyid" class="form-control"
-					onchange="getMembersForSociety()">
-					<option value="">-- select society --</option>
-					<c:forEach items="${societyList}" var="myItem"
-						varStatus="loopStatus">
-						<option value="${myItem.societyid}">${myItem.societyname}</option>
-					</c:forEach>
-				</select>
+				<input type="hidden" name="societyid" id="societyid" value="${userprofile.societyid}">
+					 
 			</div>
 			<ul class="nav navbar-right panel_toolbox pull-right">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -54,12 +48,12 @@
 								</div>
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Middle Name <span class="required">*</span>
+									for="first-name">Middle Name
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="middleName" name="middleName"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
 								
@@ -378,30 +372,6 @@
 									</div>
 								</div>
 							</div>
-							
-							<div class="form-group">
-							
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">From Date </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantfrom" name="tenantfrom"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
-									</div>
-								</div>
-								
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">To Date </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="tenantto" name="tenantto"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
-									</div>
-								</div>
-							
-							</div>
 							</section>
 							
 							
@@ -565,84 +535,28 @@
 </div>
 
 
-		<div class="col-md-12 col-sm-12 col-xs-12">
-              <div class="x_panel tile">
-                <div class="x_title">
-                  <h2>Existing Members</h2>
-                  <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                  </ul>
-                  <div class="clearfix"></div>
-                </div>
-                <div class="x_content">
-                  <div class="dashboard-widget-content">
-                    
-                    <div class="table-responsive">
-				<table class="table table-striped jambo_table bulk_action"
-					id="thetable">
-					<thead>
-						<tr class="headings">
-							<th class="column-title">Sr.No</th>
-							<th class="column-title">Edit</th>
-							<!-- <th class="column-title">Deact</th> -->
-							<th class="column-title">Flat&nbsp;No</th>
-							<th class="column-title">Wing</th>
-							<th class="column-title">Floor</th>
-							<th class="column-title">Tower</th>
-							<th class="column-title">Tenant&nbsp;Name</th>
-							<th class="column-title">Mobile&nbsp;No</th>
-							<th class="column-title">Joint&nbsp;Owners</th>
-							<th class="column-title">Occupancy</th>
-							<th class="column-title">Alternate&nbsp;No</th>
-							<th class="column-title">Email</th>
-							<th class="column-title">Aadhar&nbsp;No</th>
-							<th class="column-title">Purchase&nbsp;Date</th>
-							<th class="column-title">Possession&nbsp;Date</th>
-							<th class="column-title">Builtup&nbsp;Area</th>
-							<th class="column-title">Carpet&nbsp;Area</th>
-							<th class="column-title">Vehicle&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
-							<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-                    
-                    
-                    
-                  </div>
-                </div>
-              </div>
- </div>
-  
-
-<div id="memberDetails"></div>
-
-
 <script>
-	function openMemberDetails(){
-	    $( "#memberDetails" ).dialog( "open" );
-	}
-	
+	 
 	$(document).ready(function(){
 		$('#thetable').DataTable();
 		
-		$( "#memberDetails" ).dialog({
-		      autoOpen: false,
-		      height: 600,
-		      width: 1200,
-		      modal: true,
-		      title: "Hello"
-		    });
+		editUserData('${userObject.userid}');
+		
+		$('input').attr('readonly','readonly');
+		$('select :not(:selected)').attr('disabled','disabled');
+		
+		$('#alternateno').removeAttr('readonly');
+		$('#email').removeAttr('readonly');
+		$('#password').removeAttr('readonly');
+		$('#tenantcontactnumber').removeAttr('readonly');
+		$('#tenantaltnumber').removeAttr('readonly');
+		$('#tenantemail').removeAttr('readonly');
+		$('#tenantPVstatus').removeAttr('disabled');
+		
+		
 	});
 
-	
-	
-	
+
 	function saveMemberDetails(){
 		
 		var userid = $('#userid').val();
@@ -693,8 +607,6 @@
 		var tenantPVstatus = $('#tenantPVstatus').val();
 		var vehicleno = $('#vehicleno').val();
 		
-		var tenantfrom =  $('#tenantfrom').val();
-		var tenantto =  $('#tenantto').val();
 		
 		if(occupancy=='leased'){
 			if(tenantname.length<1 || tenantaddress.length<1 || tenantcontactnumber.length<1 || tenantaadharno.length<1 ){
@@ -759,58 +671,12 @@
 			        
 			        +"&tenantType="+tenantType
 			        +"&tenantPVstatus="+tenantPVstatus
-			        +"&vehicleno="+vehicleno
-
-			        +"&tenantfrom="+tenantfrom
-			        +"&tenantto="+tenantto,
-
+			        +"&vehicleno="+vehicleno,
+			        
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
 	        		notify('success','SUCCESS','Added Successfully',2000);
-	        		
-	        		$('#userid').val("");
-	        		$('#firstName').val("");
-	        		$('#middleName').val("");
-	        		$('#lastName').val("");
-	        		$('#mobileNo').val("");
-	        		$('#alternateno').val("");
-	        		$('#email').val("");
-	        		$('#aadharno').val("");
-	        		$('#jointowners').val("");
-	        		$('#password').val("");
-	        		$('#purchasedate').val("");
-	        		$('#possessiondate').val("");
-	        		
-	        		$('#flatno').val("");
-	        		$('#wing').val("");
-	        		$('#tower').val("");
-	        		$('#floor').val("");
-	        		$('#builtuparea').val("");
-	        		$('#carpetarea').val("");
-	        		$('#tenantname').val("");
-	        		$('#tenantaddress').val("");
-	        		$('#tenantcontactnumber').val("");
-	        		$('#tenantaltnumber').val("");
-	        		$('#tenantemail').val("");
-	        		$('#tenantaadharno').val("");
-	        		$('#vehicletype').val("");
-	        		$('#parkingtype').val("");
-	        		$('#parkingallotmentno').val("");
-	        		
-	        		$('#bloodgroup').val("");
-	        		$('#sharecertno').val("");
-	        		$('#nominee1').val("");
-	        		$('#percent1').val("");
-	        		$('#nominee2').val("");
-	        		$('#percent2').val("");
-	        		$('#nominee3').val("");
-	        		$('#percent3').val("");
-	        		$('#vehicleno').val("");
-	        		
-	        		$('#tenantfrom').val("");
-	        		$('#tenantto').val("");
-
 	        	}  
 	        },
 				error : function(e) {
@@ -934,10 +800,6 @@
 	        		$('#nominee3').val(response.nominee3);
 	        		$('#percent3').val(response.percent3);
 	        		$('#vehicleno').val(response.vehicleno);
-
-	        		
-	        		$('#tenantfrom').val(response.vehicleno);
-	        		$('#tenantto').val(response.vehicleno);
 	        		
 	        		$('.editmodeind').css({"background-color":"#ffffe0"});
 	        		$('.editmodeicon').show();

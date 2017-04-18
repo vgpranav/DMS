@@ -173,9 +173,19 @@ public class ViewController
           
           long isSocManager = societyddao.checkIfSocietyManager(authenticatedUser.getUserid());
           
-         
+          Society soc = new Society();
+          soc.setSocietyid(Long.valueOf(userprofile.getSocietyid()));
+          String modNAme="";
+          soc = societyddao.getSocietyDetailsById(soc);
+          
+          if(soc.getSocietytypeid()==2)
+        	  modNAme = "CS - DMS";
+          else
+        	  modNAme="HS - DMS";
+          
           request.getSession().setAttribute("userroleid", authenticatedUser.getUserroleid());
           request.getSession().setAttribute("socmanagercount",isSocManager);
+          request.getSession().setAttribute("modNAme",modNAme);
           mv.addObject("userprofile", userprofile);
           
         } else {
@@ -1157,6 +1167,24 @@ public class ViewController
 	    }
 	    return mv;
 	  }
+  
+  
+  @RequestMapping(value={"/editUserProfile"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView editUserProfile(HttpServletRequest request) {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    SocietyDao societyDao = new SocietyDao();
+    User user = null;
+    try {
+    	user = (User)request.getSession().getAttribute("userObject");
+    	societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
+    	mv = new ModelAndView("editUserProfile");
+    	mv.addObject("societyList", societyList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
 }
 
 

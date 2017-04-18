@@ -260,7 +260,9 @@ public class SocietyDao
     		          userprofile.getPercent2(),
     		          userprofile.getNominee3(),
     		          userprofile.getPercent3(),
-    		          userprofile.getVehicleno()
+    		          userprofile.getVehicleno(),
+    		          userprofile.getTenantfrom(),
+    		          userprofile.getTenantto()
     	          );
     	        
     	        userProfileId = CommomUtility.convertToLong(obj1);
@@ -321,6 +323,8 @@ public class SocietyDao
 		          userprofile.getNominee3(),
 		          userprofile.getPercent3(),
 		          userprofile.getVehicleno(),
+		          userprofile.getTenantfrom(),
+		          userprofile.getTenantto(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -852,6 +856,8 @@ public Userprofile getUserDataById(Userprofile userprofile) {
     	   userprofile.setTenantaadharno(tenant.getTenantaadharno());
     	   userprofile.setTenantType(tenant.getTenantType());
     	   userprofile.setTenantPVstatus(tenant.getTenantPVstatus());
+    	   userprofile.setTenantfrom(tenant.getTenantfrom());
+    	   userprofile.setTenantto(tenant.getTenantto());
     	   tenant=null;
        }
       return userprofile;
@@ -998,7 +1004,10 @@ public Builder insertOrUpdateBuilder(Builder builder) {
     			  builder.getState(), 
     			  builder.getCountry(), 
     			  builder.getCreatedby(),
-      			  builder.getActive()
+      			  builder.getActive(),
+      			  builder.getContact(),
+      			  builder.getAltcontact(),
+      			  builder.getEmail()
 		        );
 
     	  builderId = CommomUtility.convertToLong(obj);
@@ -1019,6 +1028,9 @@ public Builder insertOrUpdateBuilder(Builder builder) {
       			  builder.getState(), 
       			  builder.getCountry(),
       			  builder.getActive(),
+      			  builder.getContact(),
+    			  builder.getAltcontact(),
+    			  builder.getEmail(),
       			  builder.getBuilderid());
       }
       
@@ -1924,4 +1936,5 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    return count;
 	  }
+
 }
