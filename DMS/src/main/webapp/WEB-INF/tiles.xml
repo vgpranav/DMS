@@ -205,4 +205,14 @@
       <put-attribute name="body" value="/WEB-INF/pages/editUserProfile.jsp" />   
     </definition> 
     
+    <definition name="deleteDocument" extends="base-definition">  
+      <put-attribute name="title" value="Delete Document" />  
+      <put-attribute name="body" value="/WEB-INF/pages/deleteDocument.jsp" />   
+    </definition> 
+    
+    <definition name="managerDocViewAuth" extends="base-definition">  
+      <put-attribute name="title" value="Manager View Auth for Document" />  
+      <put-attribute name="body" value="/WEB-INF/pages/managerDocViewAuth.jsp" />   
+    </definition> 
+    
 </tiles-definitions>

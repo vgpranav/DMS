@@ -260,9 +260,7 @@ public class SocietyDao
     		          userprofile.getPercent2(),
     		          userprofile.getNominee3(),
     		          userprofile.getPercent3(),
-    		          userprofile.getVehicleno(),
-    		          userprofile.getTenantfrom(),
-    		          userprofile.getTenantto()
+    		          userprofile.getVehicleno() 
     	          );
     	        
     	        userProfileId = CommomUtility.convertToLong(obj1);
@@ -278,7 +276,9 @@ public class SocietyDao
     	    			  userprofile.getTenantemail(),
     	    			  userprofile.getTenantaadharno(),
     	    			  userprofile.getTenantType(),
-    	    			  userprofile.getTenantPVstatus()
+    	    			  userprofile.getTenantPVstatus(),
+    	    			  userprofile.getTenantfrom(),
+        		          userprofile.getTenantto()
     	    			  );
     	      }
     	      
@@ -323,8 +323,6 @@ public class SocietyDao
 		          userprofile.getNominee3(),
 		          userprofile.getPercent3(),
 		          userprofile.getVehicleno(),
-		          userprofile.getTenantfrom(),
-		          userprofile.getTenantto(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -338,6 +336,8 @@ public class SocietyDao
 	    			  userprofile.getTenantaadharno(),
 	    			  userprofile.getTenantType(),
 	    			  userprofile.getTenantPVstatus(),
+			          userprofile.getTenantfrom(),
+			          userprofile.getTenantto(),
 	    			  userprofile.getUserid()
 	    			  );
 	      }

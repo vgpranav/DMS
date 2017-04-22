@@ -1185,6 +1185,50 @@ public class ViewController
     }
     return mv;
   }
+  
+  @RequestMapping(value={"/deleteDocument"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView deleteDocument() {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      societyList = societyDao.getSocietyListforUser(societyList);
+      mv = new ModelAndView("deleteDocument");
+      mv.addObject("societyList", societyList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/managerDocViewAuth"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView managerDocViewAuth(HttpServletRequest request) {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    List<Doctype> docTypes = null;
+    List<GenericBean> socDocMapping = null;
+    SocietyDao societyDao = new SocietyDao();
+    DocumentDao documentDao = new DocumentDao();
+    User user = null;
+    try {
+      
+    	  user = (User)request.getSession().getAttribute("userObject");
+	      docTypes = documentDao.getAllDocumentTypes(docTypes);
+	      societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
+	      socDocMapping = societyDao.getSocDocMapping(socDocMapping);
+	      
+	      mv = new ModelAndView("managerDocViewAuth");
+	      mv.addObject("societyList", societyList);
+	      mv.addObject("docTypes", docTypes);
+	      mv.addObject("socDocMapping",socDocMapping);
+      
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
 }
 
 

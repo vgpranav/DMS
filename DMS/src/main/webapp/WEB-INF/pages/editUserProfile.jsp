@@ -140,7 +140,7 @@
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Joint Owners </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
+								<div class="col-md-6 col-sm-6 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="jointowners" name="jointowners"
 											class="form-control col-md-12 col-xs-12">

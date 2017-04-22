@@ -13,10 +13,10 @@ public class TestQueryBuilder {
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");  
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/dms","root","12345");  
+			Connection con=DriverManager.getConnection("jdbc:mysql://166.62.90.161:3306/dms","odsdbuser","12345");  
 			
 			
-			String tablename = "callreferencemeeting";
+			String tablename = "smslogger";
 			 String QueryType = "insert";
 			//String QueryType = "update";
 			

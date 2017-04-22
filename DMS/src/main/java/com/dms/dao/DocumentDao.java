@@ -14,6 +14,7 @@ import com.dms.util.DMSQueries;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.dbutils.DbUtils;
@@ -727,5 +728,25 @@ public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBe
       }
     }
     return null;
+  }
+
+public int deleteDocById(Document document) {
+    Connection conn = null;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      int rowsUpdated = qr.update(conn, DMSQueries.deleteDocumentByDocId,document.getDocumentid());
+      return rowsUpdated;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return 0;
   }
 }

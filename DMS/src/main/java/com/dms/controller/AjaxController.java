@@ -532,5 +532,22 @@ public class AjaxController
     }
     return profiles;
   }
+  
+  @RequestMapping(value={"/deleteDocById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String deleteDocById(@ModelAttribute Document document)
+  {
+    int rowsUpdated = 0;
+    DocumentDao documentDao = new DocumentDao();
+    try {
+      rowsUpdated = documentDao.deleteDocById(document);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
 }
 

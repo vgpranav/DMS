@@ -144,14 +144,17 @@
 							</div>
 							
 							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Joint Owners </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="jointowners" name="jointowners"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
+							<strong>Joint Owners</strong>
+							<input type="hidden" id="jointowners" name="jointowners">
+							<hr/>
+							
+							<button onclick="addJo();return false;" class="btn btn-success btn-sm">Add Joint Owner </button>
+								<br/>
+							<div id="jocontainerouter">
+							<div id="jocontainer">
+							</div>
+							</div>
+								 
 							</div>
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
@@ -645,6 +648,8 @@
 	
 	function saveMemberDetails(){
 		
+		makeJoString();
+		
 		var userid = $('#userid').val();
 		var firstName = $('#firstName').val();
 		var lastName = $('#lastName').val();
@@ -888,6 +893,11 @@
 	        data :"userid="+userid,
 	        success: function(response){
 	        	if(response.userid>0) {
+	        		
+	        		$('.editmodeind').css({"background-color":"#ffffe0"});
+	        		$('.editmodeicon').show();
+	        		$('#firstName').focus();
+	        		
 	        		//notify('success','SUCCESS','Added Successfully',2000);
 	        		$('#userid').val(response.userid);
 	        		$('#firstName').val(response.firstName);
@@ -897,7 +907,6 @@
 	        		$('#alternateno').val(response.alternateno);
 	        		$('#email').val(response.email);
 	        		$('#aadharno').val(response.aadharno);
-	        		$('#jointowners').val(response.jointowners);
 	        		$('#password').val(response.password);
 	        		$('#purchasedate').val(new Date(response.purchasedate).toString("yyyy/MM/dd"));
 	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
@@ -914,9 +923,13 @@
 	        		$('#floor').val(response.floor);
 	        		$('#builtuparea').val(response.builtuparea);
 	        		$('#carpetarea').val(response.carpetarea);
-	        		$('#tenantname').val(response.tenantname.split(' ')[0]);
-	        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
-	        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+	        		
+	        		if(response.tenantname!=null && response.tenantname.length>0){
+	        			$('#tenantname').val(response.tenantname.split(' ')[0]);
+		        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
+		        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+	        		}
+	        		
 	        		$('#tenantaddress').val(response.tenantaddress);
 	        		$('#tenantcontactnumber').val(response.tenantcontactnumber);
 	        		$('#tenantaltnumber').val(response.tenantaltnumber);
@@ -936,12 +949,11 @@
 	        		$('#vehicleno').val(response.vehicleno);
 
 	        		
-	        		$('#tenantfrom').val(response.vehicleno);
-	        		$('#tenantto').val(response.vehicleno);
+	        		$('#tenantfrom').val(response.tenantfrom);
+	        		$('#tenantto').val(response.tenantto);
+	        		$('#jointowners').val('');
+	        		splitJo(response.jointowners);
 	        		
-	        		$('.editmodeind').css({"background-color":"#ffffe0"});
-	        		$('.editmodeicon').show();
-	        		$('#firstName').focus();
 	        	}  
 	        },
 				error : function(e) {
@@ -951,6 +963,82 @@
 	}
 </script>
 
+<script>
+							
+							var jocnt=0;
+								function addJo(){
+									var newinput = '<div class="form-group jodiv" id="jogrp'+jocnt+'">';
+										newinput +='<label class="control-label col-md-2 col-sm-2 col-xs-12">Joint Owner : </label>';
+										newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="jofn'+jocnt+'" name="jofn'+jocnt+'" placeholder="First Name" class="form-control col-md-12 col-xs-12"></div></div>';
+										newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="jomn'+jocnt+'" name="jomn'+jocnt+'" placeholder="Middle Name" class="form-control col-md-12 col-xs-12"></div></div>';
+										newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="joln'+jocnt+'" name="joln'+jocnt+'" placeholder="Last Name" class="form-control col-md-12 col-xs-12"></div></div>';
+										newinput += '<button onclick="removeJo('+jocnt+');return false;" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>';
+										newinput += '</div>';
+									$(newinput).appendTo('#jocontainer');
+									jocnt++;
+									return false;
+								}
+								
+								function removeJo(divid){
+									console.log(divid);
+									$('#jogrp'+divid).remove();
+								}
+								
+								function makeJoString(){
+									
+									var joStr = "";
+									$(".jodiv").each(function() {
+									    
+									    var cnt = $(this).attr('id').replace('jogrp','');	
+									    var internaljostr = '';
+									    
+									    internaljostr += $('#jofn'+cnt).val();
+									    internaljostr += ' '+$('#jomn'+cnt).val();
+									    internaljostr += ' '+$('#joln'+cnt).val();
+									    
+									    if(joStr.length>0)
+									    	joStr += ',';
+									    
+									    if(internaljostr.length>0)
+									   		joStr += internaljostr;
+									    
+									});
+									
+									$("#jointowners").val(joStr);
+								}
+								
+								function splitJo(joString){
+									
+									$('#jocontainer').html('<div id="jocontainer"></div>');
+									
+									if(joString.trim().length > 0){
+										
+										var joArr = joString.split(',');
+										console.log("joArr ::"+joArr.length);
+										
+										var arrind=0;
+										
+										for(arrind = 0; arrind < joArr.length ; arrind++){
+											
+											var joArrInt = joArr[arrind].split(' ');
+											console.log("joArrInt ::"+joArrInt);
+											var newinput = '<div class="form-group jodiv" id="jogrp'+jocnt+'">';
+											newinput +='<label class="control-label col-md-2 col-sm-2 col-xs-12">Joint Owner : </label>';
+											newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="jofn'+jocnt+'" name="jofn'+jocnt+'" placeholder="First Name" class="form-control col-md-12 col-xs-12" value="'+joArrInt[0]+'"></div></div>';
+											newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="jomn'+jocnt+'" name="jomn'+jocnt+'" placeholder="Middle Name" class="form-control col-md-12 col-xs-12" value="'+joArrInt[1]+'"></div></div>';
+											newinput += '<div class="col-md-2 col-sm-2 col-xs-12"><div class="col-md-12 col-sm-12 col-xs-12"><input type="text" id="joln'+jocnt+'" name="joln'+jocnt+'" placeholder="Last Name" class="form-control col-md-12 col-xs-12" value="'+joArrInt[2]+'"></div></div>';
+											newinput += '<button onclick="removeJo('+jocnt+');return false;" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>';
+											newinput += '</div>';
+											
+											$(newinput).appendTo('#jocontainer');
+											jocnt++;
+											 
+										}
+									}
+								
+								}
+							</script>
+							
 <style>
 	.headcolor{
 		color: red;

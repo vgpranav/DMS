@@ -85,6 +85,7 @@
 		                    <ul class="nav child_menu">
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
+		                      <li><a href="managerDocViewAuth.do">Manager Document View Auth</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>
@@ -101,6 +102,7 @@
 		                      <li><a href="addDocument1.do">Add Document</a></li>
 		                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
 		                      <li><a href="viewDocument.do">View Document</a></li>
+		                      <li><a href="deleteDocument.do">Delete Document</a></li>
 		                    </ul>
 		                  </li>
 		             </c:if>
