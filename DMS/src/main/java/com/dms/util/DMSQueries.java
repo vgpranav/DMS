@@ -79,7 +79,7 @@ public static String getAllAdminUsers = "SELECT u.*,r.rolename as userrolename F
 public static String getUserById = "select * from user where userid=?";
 public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
 public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by documentid,createdon ";
-public static String getDocStubtypesToDispay = "select * from docsubtype where displayflag=1";
+public static String getDocStubtypesToDispay = "select * from  docsubtype dst, socdocviewmapping dm  where dst.docsubtypeid = dm.docsubtypeid and dm.displayflag=1 and dm.societyid=?";
 public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
 public static String getDocumentDatabyDoctypeIdUserId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
 		    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.doctypeid=? and d.userid=?";
@@ -111,6 +111,14 @@ public static String getmodNameBySocId="";
 
 public static String insertSmsLog="insert into smslogger(smstype, smsmsg, smscount, smsusers, smsdate, smsresponse, smshttpcode) values (?,?,?,?,?,?,?)";
 public static String deleteDocumentByDocId="delete from document where documentid=?";
+public static String saveSocViewMapping = "insert into socdocviewmapping (societyid, doctypeid, docsubtypeid, displayflag, confFlag, createdby, datakey) values (?,?,?,?,?,?,?)";
+public static String getSocDocMappingBySocId= "select dt.doctypename,dst.docsubtypename,dm.* from socdocviewmapping dm, doctype dt, docsubtype dst where dm.doctypeid = dt.doctypeid and dm.docsubtypeid = dst.docsubtypeid and dm.societyid=?";
+public static String removeSocDocViewMapping = "delete from socdocviewmapping where socdocviewmappingid=?";
+public static String authenticateUserByMobNo = "select * from user where mobileNo=?";
+public static String insertOTPHandler = "insert into otphandler(mobileNo,otp,active) values (?,?,?)" ;
+public static String deactAllOldOTP = "update otphandler set active=0 where mobileNo=?";
+public static String validateOTPMessage = "select * from otphandler where mobileNo=? and otp=? and active=1";
+public static String setNewPasswordForUser = "update user set password=? where mobileNo=?";
 
 
 

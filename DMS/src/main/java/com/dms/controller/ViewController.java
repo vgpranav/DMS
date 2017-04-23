@@ -125,7 +125,7 @@ public class ViewController
 		  userprofile.setUserid(authenticatedUser.getUserid());
 		  userprofile = societyDao.getUserDataById(userprofile);
 		  
-		  docSubType = ddao.getDocStubtypesToDispay(docSubType);
+		  docSubType = ddao.getDocStubtypesToDispay(docSubType,userprofile.getSocietyid());
 		  
 		  mv = new ModelAndView("home");
 		  mv.addObject("userprofile", userprofile);
@@ -156,7 +156,7 @@ public class ViewController
           request.getSession().setAttribute("userObject", authenticatedUser);
           userprofile.setUserid(authenticatedUser.getUserid());
 		  userprofile = societyDao.getUserDataById(userprofile);
-		  docSubType = ddao.getDocStubtypesToDispay(docSubType);
+		  docSubType = ddao.getDocStubtypesToDispay(docSubType,userprofile.getSocietyid());
 		  
 		  request.getSession().setAttribute("userprofile", userprofile);
 		  mv.addObject("docSubType", docSubType);

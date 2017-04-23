@@ -16,7 +16,7 @@ public class TestQueryBuilder {
 			Connection con=DriverManager.getConnection("jdbc:mysql://166.62.90.161:3306/dms","odsdbuser","12345");  
 			
 			
-			String tablename = "smslogger";
+			String tablename = "socdocviewmapping";
 			 String QueryType = "insert";
 			//String QueryType = "update";
 			

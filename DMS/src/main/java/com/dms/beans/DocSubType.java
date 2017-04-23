@@ -13,7 +13,7 @@ public class DocSubType
     private int active;
     private String doctypename;
     private int displayflag;
-    
+    private int confFlag;
     
     public int getDisplayflag() {
 		return displayflag;
@@ -107,6 +107,14 @@ public class DocSubType
 				+ docsubtypename + ", docsubtypedesc=" + docsubtypedesc + ", createdby=" + createdby + ", createdon="
 				+ createdon + ", active=" + active + ", doctypename=" + doctypename + ", displayflag=" + displayflag
 				+ "]";
+	}
+
+	public int getConfFlag() {
+		return confFlag;
+	}
+
+	public void setConfFlag(int confFlag) {
+		this.confFlag = confFlag;
 	}
 
 	 

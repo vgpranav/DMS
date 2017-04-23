@@ -32,6 +32,7 @@ import com.dms.beans.User;
 import com.dms.beans.Userprofile;
 import com.dms.beans.Vendor;
 import com.dms.dao.DocumentDao;
+import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
 
 @Controller
@@ -549,5 +550,111 @@ public class AjaxController
       return "success";
     return "failed";
   }
+
+
+
+  @RequestMapping(value={"/saveSocViewMapping"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public GenericBean saveSocViewMapping(@ModelAttribute GenericBean gbean,HttpServletRequest request)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    User user = null;
+    try {
+    	user = (User)request.getSession().getAttribute("userObject");
+    	gbean.setCreatedby(String.valueOf(user.getUserid()));
+    	gbean = societyDao.saveSocViewMapping(gbean);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return gbean;
+  }
+
+  @RequestMapping(value={"/getMappedDocsBySocId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public List<GenericBean> getMappedDocsBySocId(@ModelAttribute GenericBean gbean)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    List<GenericBean> beans = null;
+    try {
+    	beans = societyDao.getMappedDocsBySocId(gbean.getSocietyid(), beans);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return beans;
+  }
+
+
+  @RequestMapping(value={"/removeSocDocViewMapping"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String removeSocDocViewMapping(@ModelAttribute GenericBean bean)
+  {
+    int rowsUpdated = 0;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+      rowsUpdated = societyDao.removeSocDocViewMapping(bean);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
+
+
+  @RequestMapping(value={"/generateAndSendOTP"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String generateAndSendOTP(@ModelAttribute User user)
+  {
+    int rowsUpdated = 0;
+    LoginDao loginDao = new LoginDao();
+    try {
+      rowsUpdated = loginDao.generateAndSendOTP(user);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    } 
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
+
+  @RequestMapping(value={"/validateAndSetNewPW"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String validateAndSetNewPW(@ModelAttribute User user)
+  {
+	int otpaValid = 0;
+	int passwordSet = 0;
+    LoginDao loginDao = new LoginDao();
+    try {
+    	otpaValid = loginDao.validateOTP(user);
+      if(otpaValid>0){
+    	  if(user.getPassword()!=null && user.getPassword().trim().length()>5)
+    		  passwordSet = loginDao.setNewpasswordForUser(user);
+      }
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    } 
+    if (passwordSet > 0)
+      return "success";
+    return "failed";
+  }
+  
+  @RequestMapping(value={"/validateOTPForDocAccess"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String validateOTPForDocAccess(@ModelAttribute User user)
+  {
+	int otpaValid = 0;
+    LoginDao loginDao = new LoginDao();
+    try {
+    	otpaValid = loginDao.validateOTP(user);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    } 
+    if (otpaValid > 0)
+      return "success";
+    return "failed";
+  }
+
+  //end of class
 }
 

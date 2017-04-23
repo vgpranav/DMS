@@ -85,7 +85,7 @@
 		                    <ul class="nav child_menu">
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
-		                      <li><a href="managerDocViewAuth.do">Manager Document View Auth</a></li>
+		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

@@ -1915,11 +1915,8 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    {
 	      qr = new QueryRunner();
 	      conn = ConnectionPoolManager.getInstance().getConnection();
-	      
 	      countObj =  qr.query(conn, DMSQueries.getCountOfSocsAsManager,new ScalarHandler<Object>(),userid);
-	      
 	      count = CommomUtility.convertToLong(countObj);
-	      
 	    }
 	    catch (Exception e) {
 	      logger.error("Error getMembersForSociety :: " + e.getMessage());
@@ -1936,5 +1933,88 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    return count;
 	  }
+
+	public GenericBean saveSocViewMapping(GenericBean gbean) {
+	    Connection conn = null;
+	    long mappingId = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      String key = gbean.getSocietyid()+","+gbean.getDoctypeid()+","+gbean.getDocsubtypeid();
+	      
+	    	  Object obj = qr.insert(conn, DMSQueries.saveSocViewMapping, rsh, 
+	    			  gbean.getSocietyid(),
+	    			  gbean.getDoctypeid(),
+	    			  gbean.getDocsubtypeid(),
+	    			  gbean.getDisplayflag(),
+	    			  gbean.getConfFlag(),
+	    			  gbean.getCreatedby(),
+	    			  key
+			        );
+	    	  
+	    	  mappingId = CommomUtility.convertToLong(obj);  
+	    	  gbean.setSocdocviewmappingid(mappingId);
+	    	  
+	      return gbean;
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<GenericBean> getMappedDocsBySocId(long societyid, List<GenericBean> beans) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+	      beans =  qr.query(conn, DMSQueries.getSocDocMappingBySocId, rsh,societyid);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return beans;
+	  }
+
+	public int removeSocDocViewMapping(GenericBean bean) {
+		Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeSocDocViewMapping, 
+	    		  bean.getSocdocviewmappingid());
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	}
 
 }

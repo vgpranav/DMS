@@ -3,13 +3,11 @@ package com.dms.beans;
 public class GenericBean {
 	
 	private long societyid;
-	
 	private long doctypeid;
 	private String doctypename;
-	private String docsubtypeid;
+	private long docsubtypeid;
 	private String docsubtypename;
 	private String doccount;
-	
 	private String createdby;
 	private long societydocmappingid;
 	private String societyname;
@@ -18,13 +16,29 @@ public class GenericBean {
 	private int active;
 	private String fieldname;
 	private String fieldvalue;
+	private int displayflag;
+	private int confFlag;
+	private long socdocviewmappingid;
 	
 	
 	
-	public String getDocsubtypeid() {
+	
+	public int getDisplayflag() {
+		return displayflag;
+	}
+	public void setDisplayflag(int displayflag) {
+		this.displayflag = displayflag;
+	}
+	public int getConfFlag() {
+		return confFlag;
+	}
+	public void setConfFlag(int confFlag) {
+		this.confFlag = confFlag;
+	}
+	public long getDocsubtypeid() {
 		return docsubtypeid;
 	}
-	public void setDocsubtypeid(String docsubtypeid) {
+	public void setDocsubtypeid(long docsubtypeid) {
 		this.docsubtypeid = docsubtypeid;
 	}
 	public String getDocsubtypename() {
@@ -105,15 +119,20 @@ public class GenericBean {
 	public void setDoccount(String doccount) {
 		this.doccount = doccount;
 	}
-	
 	@Override
 	public String toString() {
-		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", createdby=" + createdby
-				+ ", societydocmappingid=" + societydocmappingid + ", societyname=" + societyname + ", doctypename="
-				+ doctypename + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
-				+ fieldname + ", fieldvalue=" + fieldvalue + ", docsubtypeid=" + docsubtypeid + ", docsubtypename="
-				+ docsubtypename + ", doccount=" + doccount + "]";
+		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", doctypename=" + doctypename
+				+ ", docsubtypeid=" + docsubtypeid + ", docsubtypename=" + docsubtypename + ", doccount=" + doccount
+				+ ", createdby=" + createdby + ", societydocmappingid=" + societydocmappingid + ", societyname="
+				+ societyname + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
+				+ fieldname + ", fieldvalue=" + fieldvalue + ", displayflag=" + displayflag + ", confFlag=" + confFlag
+				+ "]";
 	}
-	
+	public long getSocdocviewmappingid() {
+		return socdocviewmappingid;
+	}
+	public void setSocdocviewmappingid(long socdocviewmappingid) {
+		this.socdocviewmappingid = socdocviewmappingid;
+	}
 	
 }

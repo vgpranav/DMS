@@ -2,7 +2,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Society Document View Authorization</h2>
+                  <h2>Document View Access</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -14,8 +14,8 @@
                     <div class="row">
 			<div class="col-md-7 col-sm-7 col-xs-12">
  				<form id="addCommitteeMember" data-parsley-validate
-					class="form-horizontal form-label-left" action="addSocDocMapping.do"
-					method="post" onsubmit="">
+					class="form-horizontal form-label-left" action="#"
+					method="post" onsubmit="return saveSocViewMapping()">
 
 				
 					<div class="form-group">
@@ -104,30 +104,14 @@
                         <thead>
                           <tr class="headings">
                             <!-- <th class="column-title">Sr.No</th> -->
-                            <th class="column-title">Society Name</th>
-                            <th class="column-title">Document Name</th>
+                            <th class="column-title">Document Type</th>
+                            <th class="column-title">Document Sub Type</th>
+                            <th class="column-title">User Display</th>
+                            <th class="column-title">Confidential</th>
                             <th class="column-title" width="10%">Remove</th>
                           </tr>
                         </thead>
-
                          <tbody>
-                        	<c:forEach items="${socDocMapping}" var="myItem" varStatus="loopStatus">
-								<c:if test="${loopStatus.index%2==0}">
-									<tr class="even pointer">
-								</c:if>
-								<c:if test="${loopStatus.index%2!=0}">
-									<tr class="odd pointer">
-								</c:if>
-									<%-- <td class=" ">${loopStatus.index+1}</td> --%>
-									<td class=" ">${myItem.societyname}</td>
-									<td class=" ">${myItem.doctypename}</td> 
-									<td class=" ">
-										<a class="btn btn-default btn-sm" onclick="removeSocDocMapping('${myItem.societydocmappingid}')">
-											<i class="fa fa-times"></i>
-										</a>
-									</td>
-								</tr>
-							</c:forEach>
                         </tbody>
                       </table>
                   </div>
@@ -142,21 +126,89 @@
 	 
 });
  
-  
+ function getMappedDocsBySocId(){
+		var societyid = $('#societyid').val();
+		var table = $('#thetable1').DataTable();
+			
+		
+		table .clear() .draw();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getMappedDocsBySocId.do",
+	        data :"societyid="+societyid,
+	        success: function(response){
+	        	var srno=1;
+	        	
+	        	$.each(response, function(i, item) {
+	        		
+	        		var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeSocDocViewMapping(\'' + item.socdocviewmappingid + '\')"><i class="fa fa-times"></i></button>';
+	        		var disMsg = "No";
+	        		var conMsg="No";
+	        		
+	        		if(item.displayflag=='1')
+	        			disMsg = "Yes";
+	        		if(item.confFlag=='1')
+	        			conMsg = "Yes";
+	        		
+	        		table.row.add( [
+	        			item.doctypename,
+	        			item.docsubtypename,
+	        			disMsg,
+	        			conMsg,
+	        			removebtn,
+	                ] ).draw( false );
+	        	 });
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
  
- function removeSocDocMapping(societydocmappingid){
+ function saveSocViewMapping(){
+		
+		var societyid = $('#societyid').val();
+		var doctypeid = $('#doctypeid').val();
+		var docsubtypeid = $('#docsubtypeid').val();
+		var displayflag = $("input[name='displayflag']:checked").val();  
+		var confFlag = $("input[name='confFlag']:checked").val(); 
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/saveSocViewMapping.do",
+	        data :"societyid="+societyid
+			        +"&doctypeid="+doctypeid
+			        +"&docsubtypeid="+docsubtypeid
+			        +"&displayflag="+displayflag
+			        +"&confFlag="+confFlag,
+		        success: function(response){
+		        	if(response.socdocviewmappingid>0) {
+		        		getMappedDocsBySocId();
+	 	        		notify('success','SUCCESS','Added Successfully',2000);
+		        	}  
+		        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+		
+		return false;
+	}
+ 
+ function removeSocDocViewMapping(socdocviewmappingid){
 	 
 		if(confirm('Are you Sure?')){
 			  
 			$.ajax({
 		        type: "GET",
-		        url: "<%=request.getContextPath()%>/removeSocietyDocmapping.do",
-		       data :"societydocmappingid="+societydocmappingid,
+		        url: "<%=request.getContextPath()%>/removeSocDocViewMapping.do",
+		       data :"socdocviewmappingid="+socdocviewmappingid,
 		        success: function(response){
 		        //alert()
 		        	if(response=='success') {
 		        		notify('success','SUCCESS','Removed Successfully',2000);
-		        		location.reload();
+		        		getMappedDocsBySocId();
 		        	}  else {
 		        		notify('error','Failed','Failed to Remove Member',2000);
 		        	}
@@ -188,6 +240,7 @@
 					notify('error','ERROR','Error occured',2000);
 				}
 			});
+		getMappedDocsBySocId();
 	}
  
 	function getDocSubTypes(){

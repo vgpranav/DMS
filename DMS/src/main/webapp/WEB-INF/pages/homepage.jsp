@@ -281,7 +281,14 @@
 					</div>
 					
 					<c:forEach items="${docSubType}" var="myItem" varStatus="loopStatus">
-						<h2><a target="_blank" href="displayDocument.do?doctypeid=${myItem.doctypeid}&userid=${userprofile.userid}">${myItem.docsubtypedesc}</a></h2>
+						<h2>
+							<a onClick="displayDocumentPage('${myItem.docsubtypeid}','${userprofile.userid}','${myItem.confFlag}');" >
+								${myItem.docsubtypename}
+								<c:if test="${myItem.confFlag==1}">
+									<i class="fa fa-lock text-warning"></i>						
+								</c:if>
+							</a>
+						</h2>
 						<br>
 					</c:forEach>
 					
@@ -290,3 +297,130 @@
 		</div>
 	</div>
 	</div>
+	
+	
+	<div id="confOTPDialog">
+		<form method="post" action="#">
+		<br>
+              <div>
+                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
+              </div>
+              <div align="center">
+              <button class="btn btn-warning" onclick="generateOTPInit();return false;" style="margin-top: 10px;" id="otpbtn">Send OTP</button>
+              </div>
+              <hr/>
+              <div>
+                <input type="password" name ="otp" id ="otp" class="form-control" autocomplete="off" placeholder="Enter OTP Here" />
+              </div>
+              <div align="center">
+                <button class="btn btn-success" style="margin-top: 10px;" onclick="validateOTPForDocAccess();return false;">Validate</button>
+              </div>
+              <input type="hidden" id="hash">
+ 			</form>
+	</div>
+<script>
+	
+	$(document).ready(function(){
+		$( "#confOTPDialog" ).dialog({
+			  autoOpen: false,
+			  modal: true,
+			  title: "Please Authenticate yourself",
+			  width: 270,
+			  height: 300
+		});
+	});
+	
+	function displayDocumentPage(docId,userId,confFlag){
+		
+		var URL = 'displayDocument.do?doctypeid='+docId+'&userid='+userId;
+
+		if(confFlag=='1'){
+			$( "#hash" ).val(URL);
+			$( "#confOTPDialog" ).dialog( "open" );
+		}
+		else {
+			 openURL(URL);
+		}
+	 }
+		
+	function openURL(URL){
+		var win = window.open(URL, '_blank');
+		if (win) {
+		    win.focus();
+		} else {
+		    alert('Please allow popups for this website');
+		}
+	}
+	
+	function generateOTPInit(){
+		
+		var counter = 30;
+		var interval = setInterval(function() {
+		    counter--;
+		    console.log("genOPT cntr "+counter);
+		    $('#otpbtn').attr('disabled','disabled').html('Resend in '+counter+' sec');
+		    if (counter == 0) {
+		    	clearInterval(interval);
+		    	$('#otpbtn').removeAttr('disabled').html('Resend OTP');
+		    }
+		}, 1000);
+		
+		generateOTP(interval);
+	}
+	
+	function generateOTP(interval){
+		var mobileNo = $('#mobileNoOTP').val();
+		$('#otp').val('');
+		
+		$.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
+		       data :"mobileNo="+mobileNo,
+		        success: function(response){
+		        //alert()
+		        	if(response=='success') {
+		        		notify('success','OTP SENT','You Will Receive OTP Shortly',2000);
+		        	}  else {
+		        		notify('error','FAILED','Invalid Mobile Number',2000);
+		        		clearInterval(interval);
+				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
+		        	}
+		        },
+					error : function(e) {
+						notify('error','ERROR','Error occured',2000);
+					}
+				});
+	}
+	
+	function validateOTPForDocAccess(){
+		var mobileNo = $('#mobileNoOTP').val();
+		var otp = $('#otp').val();
+		
+		if(otp.length>0){
+					$.ajax({
+				        type: "GET",
+				        url: "<%=request.getContextPath()%>/validateOTPForDocAccess.do",
+				        data :"mobileNo="+mobileNo
+			        	+"&otp="+otp,
+				        success: function(response){
+				        	if(response=='success') {
+				        		notify('success','AUTHENTICATED','You have been authenticated',2000);
+				        		var URL1 = $( "#hash" ).val();
+				        		openURL(URL1);
+				        		$( "#confOTPDialog" ).dialog( "close" );
+				        	}  else {
+				        		notify('error','FAILED','Invalid OTP or Mobile Number',2000);
+						    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
+				        	}
+				        },
+							error : function(e) {
+								notify('error','ERROR','Error occured',2000);
+							}
+						});
+		}else{
+			alert('Please Enter OTP');
+		}
+		
+	}
+	
+</script>

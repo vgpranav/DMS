@@ -16,7 +16,7 @@ public class User
     private long userroleid;
     private String userrolename;
     private String createdby;
-    
+    private String otp;
     
     
     public String getUserrolename() {
@@ -109,8 +109,6 @@ public class User
     {
         this.userid = userid;
     }
-
- 
  
 	public String getCreatedby() {
 		return createdby;
@@ -128,12 +126,20 @@ public class User
 		this.userroleid = userroleid;
 	}
 
+	public String getOtp() {
+		return otp;
+	}
+
+	public void setOtp(String otp) {
+		this.otp = otp;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
 				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
 				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
-				+ ", createdby=" + createdby + "]";
+				+ ", createdby=" + createdby + ", otp=" + otp + "]";
 	}
 
 }

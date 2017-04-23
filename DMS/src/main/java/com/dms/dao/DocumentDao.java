@@ -630,7 +630,7 @@ public GenericBean insertSocDocMapping(GenericBean bean) {
     return bean;
   }
 
-public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType) {
+public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType,String societyid) {
     Connection conn = null;
 
     try {
@@ -638,7 +638,7 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType) {
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler<DocSubType>(DocSubType.class);
       
-      docSubType = qr.query(conn,DMSQueries.getDocStubtypesToDispay,rsh);
+      docSubType = qr.query(conn,DMSQueries.getDocStubtypesToDispay,rsh,societyid);
       
       return docSubType;
     } catch (Exception e) {

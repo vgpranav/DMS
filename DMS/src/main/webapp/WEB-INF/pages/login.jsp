@@ -24,6 +24,9 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
+          
+          <div id="login-section">
+          
             <form method="post" action="authenticateUser.do">
               <h1>Login Here</h1>
               <div>
@@ -43,25 +46,57 @@
 				  <div class="text-danger">${errorMessage}</div>
 				</c:if>
               </div>
-
+ 			</form>
+ 				
+ 				 <p class="change_link">
+                	<a class="" href="#" onclick="showOtpSection()">Lost your password?</a>
+                </p>
+                
+ 			</div>
+ 			
               <div class="clearfix"></div>
 
               <div class="separator">
-                <p class="change_link">
-                	<a class="" href="#">Lost your password?</a>
-                </p>
-
+               
                 <div class="clearfix"></div>
                 <br />
+			
+			<div id="otp-section" style="display: none;">
+ 			<form method="post" action="#">
+              <div>
+                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
+              </div>
+              <div align="center">
+              <button class="btn btn-warning" onclick="generateOTPInit();return false;" id="otpbtn">Send OTP</button>
+              </div>
+              <hr/>
+              <div>
+                <input type="password" autocomplete="off" name ="otp" id ="otp" class="form-control" placeholder="Enter OTP Here" />
+              </div>
+               <div>
+                <input type="password" autocomplete="off" name ="passwordotp" id ="passwordotp" class="form-control" placeholder="Enter New Password" />
+              </div>
+               <div>
+                <input type="password" autocomplete="off" name ="passwordotp1" id ="passwordotp1" class="form-control" placeholder="Repeat New password" />
+              </div>
+              <div align="center">
+               
+                <button class="btn btn-success" style="margin-top: 10px;" onclick="validateAndSetNewPW();return false;">Reset Password</button>
+                 
+                
+              </div>
+              
+ 			</form>
+			</div>
+			
+
 
                 <div>
-                  <!-- <h1><i class="fa fa-leaf"></i> Document Management System</h1> -->
-                  
                   <img src="<%= request.getContextPath() %>/resources/images/ods-logo.png" height="80">
                   <p>©20167-18 All Rights Reserved.</p>
                 </div>
               </div>
-            </form>
+           
           </section>
         </div>
  		</div>
@@ -71,4 +106,102 @@
        
   </body>
 </html>
+
+
+<script>
+
+	function showOtpSection(){
+		$('#login-section').hide("fold", { direction: "up" }, "slow" );
+		$('#otp-section').show();
+	}
+	
+	function showLoginSection(){
+		$('#otp-section').hide("fold", { direction: "up" }, "slow" );
+		$('#login-section').show();
+	}
+
+	function generateOTPInit(){
+		
+		var counter = 30;
+		var interval = setInterval(function() {
+		    counter--;
+		    console.log("genOPT cntr "+counter);
+		    $('#otpbtn').attr('disabled','disabled').html('Resend in '+counter+' sec');
+		    if (counter == 0) {
+		    	clearInterval(interval);
+		    	$('#otpbtn').removeAttr('disabled').html('Resend OTP');
+		    }
+		}, 1000);
+		
+		generateOTP(interval);
+	}
+	
+	function generateOTP(interval){
+		var mobileNo = $('#mobileNoOTP').val();
+		$.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
+		       data :"mobileNo="+mobileNo,
+		        success: function(response){
+		        //alert()
+		        	if(response=='success') {
+		        		notify('success','OTP SENT','You Will Receive OTP Shortly',2000);
+		        	}  else {
+		        		notify('error','FAILED','Invalid Mobile Number',2000);
+		        		clearInterval(interval);
+				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
+		        	}
+		        },
+					error : function(e) {
+						notify('error','ERROR','Error occured',2000);
+					}
+				});
+	}
+	
+	
+	function validateAndSetNewPW(){
+		var mobileNo = $('#mobileNoOTP').val();
+		var otp = $('#otp').val();
+		var passwordotp = $('#passwordotp').val();
+		var passwordotp1 = $('#passwordotp1').val();
+		
+		if(otp.length>0){
+			if(passwordotp.length<6){
+				alert('Passoword should be Min 6 characters');
+			}else{
+				if(passwordotp!=passwordotp1){
+					alert('Both Passwords Do Not Match');
+					return false;
+				}else{
+					
+					$.ajax({
+				        type: "GET",
+				        url: "<%=request.getContextPath()%>/validateAndSetNewPW.do",
+				        data :"mobileNo="+mobileNo
+			        	+"&otp="+otp
+			        	+"&password="+passwordotp,
+				        success: function(response){
+				        	if(response=='success') {
+				        		notify('success','NEW PASSWORD SET','Login with your new password',2000);
+				        		showLoginSection();
+				        	}  else {
+				        		notify('error','FAILED','Invalid OTP or Mobile Number',2000);
+						    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
+				        	}
+				        },
+							error : function(e) {
+								notify('error','ERROR','Error occured',2000);
+							}
+						});
+					
+					
+				}
+			}
+		}else{
+			alert('Please Enter OTP');
+		}
+		
+	}
+	
+</script>
  
