@@ -271,6 +271,8 @@
 		 
 		 function editBuilder(builderid){
 		
+			 editMode();
+			 
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getBuilderDetailsById.do",

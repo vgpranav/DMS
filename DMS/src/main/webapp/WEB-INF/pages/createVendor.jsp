@@ -262,7 +262,8 @@
 	
 	function editVendor(vendorId){
 		
-
+		editMode();
+		
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorDataById.do",

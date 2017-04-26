@@ -34,4 +34,10 @@
             delay : delay
        });
 	}
+	
+	
+	function editMode(){
+		$('form').parent().prepend( "<div><h2><span class='label label-warning label-xs '><i class='fa fa-circle-o-notch fa-spin fa-sm fa-fw'></i> Edit Mode</span></h2></div>")
+		.css({"background-color":"#ffffe0"});
+	}
 </script>

@@ -182,6 +182,8 @@
 	
 function editDocSubtype(docsubtypeid){
 		
+	editMode();
+	
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDocumentSubTypeById.do",

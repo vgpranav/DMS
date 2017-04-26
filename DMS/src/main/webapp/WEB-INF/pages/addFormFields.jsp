@@ -239,6 +239,8 @@
 	
 	function editFormField(fieldid){
 		
+		editMode();
+		
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getFormFieldById.do",

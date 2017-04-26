@@ -35,7 +35,7 @@ public class DMSQueries
   public static String insertPhotoInfo = "insert into photos(phototype,docid,docpath,docname,contenttype) values (?,?,?,?,?)";
   public static String getPhotoInfo = "select * from photos where docid=? and isactive=1 and phototype=?";
   public static String deactOldPhotos="update photos set isactive=0 where docid=? and phototype=?";
-  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive,vendors) values (?,?,?,?,?,?,?,?,?,?)";
+  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive,createdby) values (?,?,?,?,?,?,?,?,?,?)";
   public static String insertVendorSocMapping = "insert into vendorsocietymapping(vendorid,societyid) values (?,?)";
   public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
   public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";

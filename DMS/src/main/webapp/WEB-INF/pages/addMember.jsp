@@ -30,9 +30,18 @@
 							onsubmit="return false;">
 
 							<div class="editmodeind">
-							
-							<div class="editmodeicon" style="display: none;"><h2><span class="label label-warning label-xs "><i class="fa fa-circle-o-notch fa-spin fa-sm fa-fw"></i> Edit Mode</span></h2></div> 
 
+							<!-- <div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> 
+								<h2><span class="label label-success label-md">Owner Photo</span></h2> 
+								<hr />
+							</div> -->
+							<div class="form-group" >
+								<div class="col-md-3 col-sm-3 col-xs-12 pull-right">
+									<div id="photodiv" align="right"></div>
+								</div>
+							</div>
+							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> 
 								<h2><span class="label label-success label-md">Owner Details</span></h2> 
@@ -41,6 +50,8 @@
 							<div class="clearfix"></div>
 
 							<input type="hidden" id="userid" name="userid" value="0">
+							
+							
 							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
@@ -887,6 +898,8 @@
 	 
 	function editUserData(userid){
 		
+		//editMode();
+		
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
@@ -894,9 +907,9 @@
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		
-	        		$('.editmodeind').css({"background-color":"#ffffe0"});
-	        		$('.editmodeicon').show();
-	        		$('#firstName').focus();
+	        		editMode();
+	        		$('#photodiv').html("<img width='120' src='<%=request.getContextPath()%>/resources/images/spin.gif'>");
+	        		getMemberPhoto(userid,'photodiv');
 	        		
 	        		//notify('success','SUCCESS','Added Successfully',2000);
 	        		$('#userid').val(response.userid);
@@ -1037,6 +1050,29 @@
 									}
 								
 								}
+								
+								function getMemberPhoto(memberId,divId){
+							    	console.log(memberId+"-"+divId);
+							    	$.ajax({
+								        type: "GET",
+								        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
+								        data :"userid="+memberId,
+								        enctype: 'multipart/form-data',
+								        processData: false,
+							            contentType: false 
+										}).done(function(data) {
+										$('#'+divId).html("");
+										var img='';
+										var cnt =1;
+							               $.each(data, function(i, item) {
+							               		img = '<img class="dp" height="150"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+							               });
+							               $('#'+divId).html(img);
+							               $(".dp").popImg();
+							          }).fail(function(jqXHR, textStatus) {
+							              alert('File Fetch failed ...');
+							          });;
+							    }
 							</script>
 							
 <style>

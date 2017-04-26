@@ -244,6 +244,8 @@
 		 
 		 function editProject(projectid){
 		
+			 editMode();
+			 
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getProjectDetailsById.do",

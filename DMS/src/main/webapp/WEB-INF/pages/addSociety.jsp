@@ -361,6 +361,7 @@
 	function getSocietyDetailsById(societyid){
 		
 		//var societyId = $('#searchText').val();
+		editMode();
 		
 		$.ajax({
 	        type: "GET",
