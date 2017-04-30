@@ -100,6 +100,24 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-6 col-sm-6 col-xs-12"
+							for="first-name">Contract Period From 
+						</label> 
+						<div class="col-md-2 col-sm-2 col-xs-12">
+								<input type="text" id="contractfrom" name="contractfrom"
+								 readonly="readonly" class="form-control col-md-7 col-xs-12 customdatepicker">
+						</div>
+						<label class="control-label col-md-2 col-sm-2 col-xs-12"
+							for="first-name">To  
+						</label> 
+						<div class="col-md-2 col-sm-2 col-xs-12">
+								<input type="text" id="contractto" name="contractto"
+								 readonly="readonly" class="form-control col-md-7 col-xs-12 customdatepicker">
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<label class="control-label col-md-6 col-sm-6 col-xs-12"
 							for="first-name">Remark<span class="required">*</span>
 						</label> 
 						<div class="col-md-6 col-sm-6 col-xs-12">
@@ -109,10 +127,10 @@
 					</div>
 					
 					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+						<label class="control-label col-md-6 col-sm-6 col-xs-12"
 							for="first-name">Status<span class="required">*</span>
 						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12" style="padding-top:6px;">
+						<div class="col-md-6 col-sm-6 col-xs-12" style="padding-top:6px;">
 							<input type="radio" name="isactive" id="isactive" value="1" checked="checked"> Active
 							<input type="radio" name="isactive" id="isactive" value="0"> Inactive
 						</div>
@@ -152,6 +170,8 @@
                             <th class="column-title">Contact Person</th>
                             <th class="column-title">Contact Number</th>
                             <th class="column-title">Alternate Number</th>
+                            <th class="column-title">Contract From </th>
+                            <th class="column-title">Contract To </th>
                             <th class="column-title">Created On </th>
                             <th class="column-title no-link last">
                             	<span class="nobr">Action</span>
@@ -186,6 +206,10 @@
 		var email = $('#email').val();
 		var remark = $('#remark').val();
 		var isactive = $('#isactive:checked').val();
+		var contractto = $('#contractto').val();
+		var contractfrom = $('#contractfrom').val();
+		
+		
 		
 		if(societyid.length<1 ||  companyname.length<1 || jobnature.length<1 || contactperson.length<1 ||
 				address.length<1 || contactno.length<1 || alternateno.length<1 || email.length<1 ||
@@ -207,6 +231,8 @@
 			        +"&alternateno="+alternateno
 			        +"&email="+email
 			        +"&remark="+remark
+			        +"&contractfrom="+contractfrom
+			        +"&contractto="+contractto
 			        +"&isactive="+isactive,
 	        success: function(response){
 	        	//alert();
@@ -246,6 +272,8 @@
 	        			item.contactperson,
 	        			item.contactno,
 	        			item.alternateno,
+	        			new Date(item.contractfrom).toString("dd MMM yyyy"),
+	        			new Date(item.contractto).toString("dd MMM yyyy"),
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
 	        			editBtn,
 	                ] ).draw( false );

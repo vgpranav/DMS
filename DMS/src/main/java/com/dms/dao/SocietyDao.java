@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -133,7 +134,10 @@ public class SocietyDao
 		    society.getPincode(), 
 		    userId, 
 		    society.getRegistrationno(), 
-		    society.getEstdate()
+		    society.getEstdate(),
+		    society.getLandmark(),
+		    society.getCity(),
+		    society.getCountry()
 		);
 		
 		societyProfileId = CommomUtility.convertToLong(obj1);
@@ -157,6 +161,9 @@ public class SocietyDao
       				society.getPincode(),
       				society.getRegistrationno(),
       				society.getEstdate(),
+      				society.getLandmark(),
+      			    society.getCity(),
+      			    society.getCountry(),
       				society.getSocietyid());
     	  
       }
@@ -648,7 +655,9 @@ public Vendor saveVendorDetails(Vendor vendor) {
         		  vendor.getEmail(),
         		  vendor.getRemark(),
         		  vendor.getIsactive(),
-        		  vendor.getCreatedby()
+        		  vendor.getCreatedby(),
+        		  vendor.getContractfrom(),
+        		  vendor.getContractto()
             );
           
           vendorId = CommomUtility.convertToLong(obj);
@@ -672,6 +681,8 @@ public Vendor saveVendorDetails(Vendor vendor) {
         		  vendor.getEmail(),
         		  vendor.getRemark(),
         		  vendor.getIsactive(),
+        		   vendor.getContractfrom(),
+        		  vendor.getContractto(),
         		  vendor.getVendorid()
             );
           
@@ -1536,6 +1547,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	            
 	            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
 	            HashMap<String, Object> hmap = new HashMap<String, Object>();
+	            hmap.put("fileid", file.getFilesid());
 	            hmap.put("filename", file.getFilename());
 	            hmap.put("documentid", file.getDocumentid());
 	            hmap.put("contenttype", file.getMimetype());
@@ -1605,6 +1617,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	            
 	            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
 	            HashMap<String, Object> hmap = new HashMap<String, Object>();
+	            hmap.put("fileid", file.getFilesid());
 	            hmap.put("filename", file.getFilename());
 	            hmap.put("documentid", file.getDocumentid());
 	            hmap.put("contenttype", file.getMimetype());
@@ -2016,5 +2029,140 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    return 0;
 	}
+
+	public List<GenericBean> getAllDesignations(List<GenericBean> desigList) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+	      desigList =  qr.query(conn, DMSQueries.getAllDesignations, rsh);
+	    }
+	    catch (Exception e) {
+	      logger.error("Error getAllDesignations :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return desigList;
+	  }
+
+	public GenericBean getDesignationById(GenericBean gbean) {
+	    Connection conn = null;
+	    
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<GenericBean> rsh = new BeanHandler<GenericBean>(GenericBean.class);
+	      gbean = qr.query(conn, DMSQueries.getDesignationById, rsh, 
+	    		  gbean.getPositionid()
+	        );
+	      return gbean;
+	    } catch (Exception e) {
+	      logger.error("Error getting getDesignationById :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+ 
+public GenericBean saveDesignationDetails(GenericBean gbean) {
+
+    Connection conn = null;
+    
+    long gbeanId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      
+      conn.setAutoCommit(false);
+      
+      if(gbean.getPositionid()==0){
+    	  
+    	  ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+          Object obj = qr.insert(conn, DMSQueries.insertNewDesignation, rsh, 
+        		  gbean.getPositionname(),
+        		  gbean.getIsactive()
+            );
+          
+          gbeanId = CommomUtility.convertToLong(obj);
+          
+          
+          
+          gbean.setPositionid(gbeanId);
+          
+      } else {
+    					  
+          Object obj = qr.update(conn, DMSQueries.updateNewDesignation,  
+        		  gbean.getPositionname(),
+        		  gbean.getIsactive(),
+        		  gbean.getPositionid()
+            );
+          
+      }
+      
+      conn.commit();
+      return gbean;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public boolean checkIfNewNoticeAdded(String societyid) { 
+	    Connection conn = null;
+	    boolean flag= false;
+	    long cnt=0;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      LocalDate today = LocalDate.now();
+		  //LocalDate yesterday = today.minusDays(1);
+		  
+		  String dateStr = today + " 00:00:00";
+	      
+	      Object obj  = qr.query(conn, DMSQueries.checkIfNewNoticeAdded, rsh, societyid,dateStr);
+	      cnt = CommomUtility.convertToLong(obj);
+	      
+	      System.out.println("Notice existe ::> "+cnt);
+	      
+	      if(cnt>0)
+	      return true;
+	    } catch (Exception e) {
+	      logger.error("Error getting getDesignationById :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return false;
+	  }
+
+
 
 }

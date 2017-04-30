@@ -24,9 +24,37 @@ public class Society
     private String projectname;
     private String societytype;
     
+    private String country;
+    private String city;
+    private String landmark;
     
     
-    public String getProjectname() {
+    
+    public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getLandmark() {
+		return landmark;
+	}
+
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
+	}
+
+	public String getProjectname() {
 		return projectname;
 	}
 
@@ -207,8 +235,8 @@ public class Society
 				+ addressline2 + ", ward=" + ward + ", district=" + district + ", state=" + state + ", pincode="
 				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive
 				+ ", registrationno=" + registrationno + ", estdate=" + estdate + ", projectid=" + projectid
-				+ ", projectname=" + projectname + ", societytype=" + societytype + "]";
+				+ ", projectname=" + projectname + ", societytype=" + societytype + ", country=" + country + ", city="
+				+ city + ", landmark=" + landmark + "]";
 	}
 
-	
 }

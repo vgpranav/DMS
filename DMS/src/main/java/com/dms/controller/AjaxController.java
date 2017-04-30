@@ -24,6 +24,7 @@ import com.dms.beans.Committee;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
+import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Project;
@@ -655,6 +656,55 @@ public class AjaxController
     return "failed";
   }
 
+  
+  @RequestMapping(value={"/getDesignationById"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public GenericBean getDesignationById(@ModelAttribute GenericBean gbean)
+  {
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	gbean = societyDao.getDesignationById(gbean);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return gbean;
+  }
+  
+  @RequestMapping(value={"/saveDesignationDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public GenericBean saveDesignationDetails(@ModelAttribute GenericBean gbean,HttpServletRequest request, HttpServletResponse response)
+  {
+	User user = null;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	user = (User)request.getSession().getAttribute("userObject");
+    	gbean.setCreatedby(String.valueOf(user.getUserid()));
+    	gbean = societyDao.saveDesignationDetails(gbean);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return gbean;
+  }
+  
+  
+  @RequestMapping(value={"/deleteDocumentPage"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public String deleteDocumentPage(@ModelAttribute Files files)
+  {
+    int rowsUpdated = 0;
+    DocumentDao docDao = new DocumentDao();
+    try {
+      rowsUpdated = docDao.deleteDocumentPage(files);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    
+    if (rowsUpdated > 0)
+      return "success";
+    return "failed";
+  }
+  
+  
   //end of class
 }
 

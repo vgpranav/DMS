@@ -215,4 +215,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/managerDocViewAuth.jsp" />   
     </definition> 
     
+     <definition name="manageDesignation" extends="base-definition">  
+      <put-attribute name="title" value="Manager View Auth for Document" />  
+      <put-attribute name="body" value="/WEB-INF/pages/manageDesignation.jsp" />   
+    </definition> 
+    
+    
 </tiles-definitions>

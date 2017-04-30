@@ -41,8 +41,10 @@
 						 	<div class="clearfix"></div><hr>
 						 </c:if>
 						
-						<div class="col-md-2 col-sm-2 col-xs-12 printable">
-						<img  class="img-fluid thumbs" width="200" src="data:image/jpeg;base64,${myItem.file}"/>
+						<div id="fileCont${myItem.fileid}" class="col-md-2 col-sm-2 col-xs-12 printable" align="center" style="border: thin solid #ccc">
+							<button class="btn btn-xs btn-danger pull-right" onclick="deletePage('${myItem.fileid}');return false;">x</button>
+							<img  class="img-fluid thumbs" width="200" src="data:image/jpeg;base64,${myItem.file}" />
+							
 						 </div>
 						 
 						
@@ -72,4 +74,34 @@
  		$('.printable>img').attr('width','');
  		window.print();
  	}
+ 	
+ 	function deletePage(filesid){
+ 		if(confirm('Are you Sure?')){
+			if(filesid.length < 1){
+ 			alert('Some Mandatory Fields  are Missing');
+ 			return false;
+ 		} else { 
+ 			$.ajax({
+ 		        type: "GET",
+ 		        url: "<%=request.getContextPath()%>/deleteDocumentPage.do",
+ 		       data :"filesid="+filesid,
+ 		        success: function(response){
+ 		        //alert()
+  		        	if(response=='success') {
+ 		        		notify('success','SUCCESS','Page Deleted',1000);
+ 		        		$('#fileCont'+filesid).hide();
+ 		        	}  else {
+ 		        		notify('error','Failed','Failed to Delete page',1000);
+ 		        	}
+ 		        },
+ 					error : function(e) {
+ 						notify('error','ERROR','Error occured',2000);
+ 					}
+ 				});
+ 		}
+		}
+ 		return false;
+ 	}
+ 	
+ 	
  </script>

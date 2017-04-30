@@ -17,9 +17,22 @@ public class Vendor {
 	private int isactive;
 	private Date createdon;
 	private String createdby;
+	private Date contractto;
+	private Date contractfrom;
 	
 	
-	
+	public Date getContractto() {
+		return contractto;
+	}
+	public void setContractto(Date contractto) {
+		this.contractto = contractto;
+	}
+	public Date getContractfrom() {
+		return contractfrom;
+	}
+	public void setContractfrom(Date contractfrom) {
+		this.contractfrom = contractfrom;
+	}
 	public long getVendorid() {
 		return vendorid;
 	}
@@ -101,14 +114,14 @@ public class Vendor {
 	public void setCreatedby(String createdby) {
 		this.createdby = createdby;
 	}
+	
 	@Override
 	public String toString() {
 		return "Vendor [vendorid=" + vendorid + ", societyid=" + societyid + ", companyname=" + companyname
 				+ ", jobnature=" + jobnature + ", contactperson=" + contactperson + ", address=" + address
 				+ ", contactno=" + contactno + ", alternateno=" + alternateno + ", email=" + email + ", remark="
-				+ remark + ", isactive=" + isactive + ", createdon=" + createdon + ", createdby=" + createdby + "]";
+				+ remark + ", isactive=" + isactive + ", createdon=" + createdon + ", createdby=" + createdby
+				+ ", contractto=" + contractto + ", contractfrom=" + contractfrom + "]";
 	}
-	
-	
 	
 }

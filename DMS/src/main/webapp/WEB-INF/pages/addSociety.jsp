@@ -74,7 +74,7 @@
 
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Address Line 1 <span class="required">*</span>
+							for="first-name"> House/Bldg/Apt <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="addressline1" name="addressline1"
@@ -84,21 +84,40 @@
 
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Address Line 2 <span class="required"></span>
+							for="first-name"> Street/Road/Lane  
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="addressline2" name="addressline2"
-								required="required" class="form-control col-md-7 col-xs-12">
+								 class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name"> Landmark  
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="landmark" name="landmark"
+								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Ward / Zone / Sector <span
-							class="required">*</span>
+							for="first-name"> Area/Locality/Sector  
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="ward" name="ward" required="required"
+							<input type="text" id="ward" name="ward"  
+								class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name"> Vilage/Town/City  
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="city" name="city"  
 								class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
@@ -123,6 +142,16 @@
 						</div>
 					</div>
 
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name"> Country <span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="country" name="country"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name"> Pincode <span class="required">*</span>

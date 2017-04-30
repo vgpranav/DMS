@@ -83,6 +83,7 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
+		                     <li><a href="manageDesignation.do">Manage Soc. Designations</a></li>
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>

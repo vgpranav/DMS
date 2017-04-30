@@ -188,6 +188,8 @@ public class ViewController
           request.getSession().setAttribute("modNAme",modNAme);
           mv.addObject("userprofile", userprofile);
           
+          boolean newNoticeAdded = societyddao.checkIfNewNoticeAdded(userprofile.getSocietyid());
+          mv.addObject("newNoticeAdded", newNoticeAdded);
         } else {
           mv = new ModelAndView("login");
           request.setAttribute("errorMessage", "Account is Locked. Please contact Administrator");
@@ -1228,6 +1230,23 @@ public class ViewController
     }
     return mv;
   }
+  
+  
+  @RequestMapping(value={"/manageDesignation"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView manageDesignation() {
+    ModelAndView mv = null;
+    List<GenericBean> desigList = null;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	desigList = societyDao.getAllDesignations(desigList);
+      mv = new ModelAndView("manageDesignation");
+      mv.addObject("desigList", desigList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
   
 }
 

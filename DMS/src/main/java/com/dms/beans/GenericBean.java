@@ -1,5 +1,7 @@
 package com.dms.beans;
 
+import java.util.Date;
+
 public class GenericBean {
 	
 	private long societyid;
@@ -19,10 +21,36 @@ public class GenericBean {
 	private int displayflag;
 	private int confFlag;
 	private long socdocviewmappingid;
+	private String positionname;
+	private Date createdon;
+	private int isactive;
+	private long positionid;
 	
 	
-	
-	
+	public long getPositionid() {
+		return positionid;
+	}
+	public void setPositionid(long positionid) {
+		this.positionid = positionid;
+	}
+	public String getPositionname() {
+		return positionname;
+	}
+	public void setPositionname(String positionname) {
+		this.positionname = positionname;
+	}
+	public Date getCreatedon() {
+		return createdon;
+	}
+	public void setCreatedon(Date createdon) {
+		this.createdon = createdon;
+	}
+	public int getIsactive() {
+		return isactive;
+	}
+	public void setIsactive(int isactive) {
+		this.isactive = isactive;
+	}
 	public int getDisplayflag() {
 		return displayflag;
 	}
@@ -119,6 +147,14 @@ public class GenericBean {
 	public void setDoccount(String doccount) {
 		this.doccount = doccount;
 	}
+	 
+	public long getSocdocviewmappingid() {
+		return socdocviewmappingid;
+	}
+	public void setSocdocviewmappingid(long socdocviewmappingid) {
+		this.socdocviewmappingid = socdocviewmappingid;
+	}
+	
 	@Override
 	public String toString() {
 		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", doctypename=" + doctypename
@@ -126,13 +162,8 @@ public class GenericBean {
 				+ ", createdby=" + createdby + ", societydocmappingid=" + societydocmappingid + ", societyname="
 				+ societyname + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
 				+ fieldname + ", fieldvalue=" + fieldvalue + ", displayflag=" + displayflag + ", confFlag=" + confFlag
-				+ "]";
-	}
-	public long getSocdocviewmappingid() {
-		return socdocviewmappingid;
-	}
-	public void setSocdocviewmappingid(long socdocviewmappingid) {
-		this.socdocviewmappingid = socdocviewmappingid;
+				+ ", socdocviewmappingid=" + socdocviewmappingid + ", positionname=" + positionname + ", createdon="
+				+ createdon + ", isactive=" + isactive + ", positionid=" + positionid + "]";
 	}
 	
 }

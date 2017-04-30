@@ -503,7 +503,7 @@ public class DocumentDao
     return docs;
   }
   
-  public long savePhotoInfo(String phototype, int docid, String docname, String docpath, String contentType) {
+  public long savePhotoInfo(String phototype, int docid, String docname, String docpath, String contentType,boolean keepOld) {
     Connection conn = null;
     
     long fieldid = 0L;
@@ -514,7 +514,8 @@ public class DocumentDao
       
       conn.setAutoCommit(false);
       
-      qr.update(conn,DMSQueries.deactOldPhotos,docid,phototype);
+      if(keepOld)
+    	  qr.update(conn,DMSQueries.deactOldPhotos,docid,phototype);
       
       Object obj = qr.insert(conn, DMSQueries.insertPhotoInfo, rsh, new Object[] {
         phototype, 
@@ -749,4 +750,25 @@ public int deleteDocById(Document document) {
     }
     return 0;
   }
+
+ public int deleteDocumentPage(Files files) {
+    Connection conn = null;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      int rowsUpdated = qr.update(conn, DMSQueries.deleteDocumentPage,files.getFilesid());
+      return rowsUpdated;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return 0;
+  }
+
 }

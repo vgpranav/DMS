@@ -424,3 +424,20 @@
 	}
 	
 </script>
+
+
+<c:if test="${newNoticeAdded==true}">
+	<script>
+	$(document).ready(function(){
+		console.log($.cookie('edocAlertShown'));
+		if($.cookie('edocAlertShown') == null){
+ 			 notify('success','Alert','New Document added to Notice Board',8000);
+			 var date = new Date();
+			 var minutes = 60*24;
+			 date.setTime(date.getTime() + (minutes * 60 * 1000));
+			 $.cookie("edocAlertShown", "true", { expires: date });
+		}
+		
+	});
+	</script>
+</c:if>

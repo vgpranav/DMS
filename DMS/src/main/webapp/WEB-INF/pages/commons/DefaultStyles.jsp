@@ -1,4 +1,6 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.cookie.js"></script>
+
 
 <!-- Bootstrap -->
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">

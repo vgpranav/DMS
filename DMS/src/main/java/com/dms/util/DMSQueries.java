@@ -9,7 +9,7 @@ public class DMSQueries
   public static String getAllSociety = "select * from society where societytype=?";
   public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
   public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby,projectid,societytype) values (?,?,?,?,?)";
-  public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate) values (?,?,?,?,?,?,?,?,?,?)";
+  public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate,landmark,city,country) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
   public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
   public static String getAllDocumentSubTypes = "SELECT st.displayflag,st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
   public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active,displayflag) values (?,?,?,?,?,?)";
@@ -35,12 +35,12 @@ public class DMSQueries
   public static String insertPhotoInfo = "insert into photos(phototype,docid,docpath,docname,contenttype) values (?,?,?,?,?)";
   public static String getPhotoInfo = "select * from photos where docid=? and isactive=1 and phototype=?";
   public static String deactOldPhotos="update photos set isactive=0 where docid=? and phototype=?";
-  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive,createdby) values (?,?,?,?,?,?,?,?,?,?)";
+  public static String insertNewVendor="insert into vendors(companyname,jobnature,contactperson,address,contactno,alternateno,email,remark,isactive,createdby,contractfrom,contractto) values (?,?,?,?,?,?,?,?,?,?,?,?)";
   public static String insertVendorSocMapping = "insert into vendorsocietymapping(vendorid,societyid) values (?,?)";
   public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
   public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";
   public static String updateSociety = "Update society set societytypeid=?, societyname=? ,projectid=? where societyid=?";
-  public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=? where societyid=?";
+  public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=?,landmark=?,city=?,country=? where societyid=?";
   public static String getDocumentTypeById = "select * from doctype where doctypeid=?";
   public static String updateDoctype="Update doctype set doctypename=?, doctypedesc=?, active=? where doctypeid=?";
   public static String getDocumentSubTypeById = "select * from docsubtype where docsubtypeid=?";
@@ -56,7 +56,7 @@ public static String updateNewUser = "Update user set firstname=?, lastname=?,  
 public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=?,bloodgroup=?,sharecertno=?,nominee1=?,percent1=?,nominee2=?,percent2=?,nominee3=?,percent3=?,vehicleno=? where userid=?";
 public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=?,tenanttype=?,tenantPVstatus=?,tenantfrom=?,tenantto=? where userid=?";
 public static String getVendorDataById = "select * from vendors where vendorid=?";
-public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=? where vendorid=?";
+public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=?,contractfrom=?,contractto=? where vendorid=?";
 public static String updateVendorSocMapping="Update vendorsocietymapping set societyid=? where vendorid=?";
 public static String getExistingDocDetails = "select dd.* from documentdetails dd,document d where dd.documentid=d.documentid and d.societyid=? and d.doctypeid=? and d.docsubtypeid=? and d.userid=?";
 public static String getSocietyManagerList = "select sm.societymanagerid as societymanagerid,concat(u.firstname,' ',u.lastname) as userName,sm.isactive as isactive from societymanager sm, user u where sm.userid=u.userid and sm.societyid=?";
@@ -119,6 +119,12 @@ public static String insertOTPHandler = "insert into otphandler(mobileNo,otp,act
 public static String deactAllOldOTP = "update otphandler set active=0 where mobileNo=?";
 public static String validateOTPMessage = "select * from otphandler where mobileNo=? and otp=? and active=1";
 public static String setNewPasswordForUser = "update user set password=? where mobileNo=?";
+public static String getAllDesignations="select * from committeemaster";
+public static String getDesignationById="select * from committeemaster where positionid=? limit 1";
+public static String insertNewDesignation = "insert into committeemaster(positionname,isactive) values (?,?)";
+public static String updateNewDesignation ="update committeemaster set positionname=?,isactive=? where positionid=?";
+public static String checkIfNewNoticeAdded="select count(*) from document where doctypeid=999 and docsubtypeid=999 and userid=999 and societyid=? and createdon>? ";
+public static String deleteDocumentPage = "delete from files where filesid=?";
 
 
 
