@@ -529,6 +529,7 @@ public class ViewController
     	societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
     	mv = new ModelAndView("addMember");
     	mv.addObject("societyList", societyList);
+    	mv.addObject("randomHash", RandomStringUtils.randomAlphanumeric(10));
     } catch (Exception e) {
       logger.error(e.getMessage());
     }

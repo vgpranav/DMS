@@ -10,11 +10,13 @@ import com.dms.beans.Document;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.Parking;
 import com.dms.beans.Photos;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
+import com.dms.beans.UserSCNominee;
 import com.dms.beans.Userprofile;
 import com.dms.beans.Vendor;
 import com.dms.util.CommomUtility;
@@ -349,6 +351,17 @@ public class SocietyDao
 	    			  );
 	      }
       }
+      
+      qr.update(conn, DMSQueries.updateParkingDetails, 
+			  userprofile.getUserid(),
+			  userprofile.getRandomHash()
+			  );
+      
+      qr.update(conn, DMSQueries.updateSCDetails, 
+			  userprofile.getUserid(),
+			  userprofile.getRandomHash()
+			  );
+      
       
       conn.commit();
       
@@ -2161,6 +2174,162 @@ public boolean checkIfNewNoticeAdded(String societyid) {
 	      }
 	    }
 	    return false;
+	  }
+
+public Parking saveMemberparkingDetails(Parking parking) {
+    Connection conn = null;
+    long gbeanId = 0L;
+    try {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      conn.setAutoCommit(false);
+    	  
+    	  ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+          Object obj = qr.insert(conn, DMSQueries.saveMemberparkingDetails, rsh, 
+        		  parking.getUserid(),parking.getParkingtype(),parking.getVehicletype(),parking.getParkingallotmentno(),parking.getVehicleno(),parking.getRandomHash()
+            );
+          gbeanId = CommomUtility.convertToLong(obj);
+          parking.setUserparkingdetailsid(gbeanId); 
+      conn.commit();
+      return parking;
+    } catch (Exception e) {
+      logger.error("Error getting soc list :: " + e.getMessage());
+      e.printStackTrace();
+    } finally {
+      try {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    return null;
+  }
+
+public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> parkingList) { 
+	  Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Parking>> rsh = new BeanListHandler<Parking>(Parking.class);
+	      
+	      if(parking.getUserid()!=0)
+	    	  parkingList = qr.query(conn, DMSQueries.getParkingDetailsForMemberByUserId, rsh,parking.getUserid());
+	      else
+	    	  parkingList = qr.query(conn, DMSQueries.getParkingDetailsForMemberByHashValue, rsh,parking.getRandomHash());
+	      
+	    } catch (Exception e) {
+	      logger.error("Error fetching SocType List :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return parkingList;
+	  }
+
+	public int removeParkingData(Parking parking) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeParkingData,parking.getUserparkingdetailsid());
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	public UserSCNominee addShareCertDetails(UserSCNominee userSCNominee) {
+	    Connection conn = null;
+	    long gbeanId = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      conn.setAutoCommit(false);
+	    	  
+	    	  ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	          Object obj = qr.insert(conn, DMSQueries.addShareCertDetails, rsh, 
+	        		  userSCNominee.getNominee(),userSCNominee.getPercent(),userSCNominee.getUserid(),userSCNominee.getRandomHash()
+	            );
+	          gbeanId = CommomUtility.convertToLong(obj);
+	          userSCNominee.setUserscnomineeid(gbeanId);
+	      conn.commit();
+	      return userSCNominee;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<UserSCNominee> getShareCertDetails(UserSCNominee userSCNominee, List<UserSCNominee> scList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<UserSCNominee>> rsh = new BeanListHandler<UserSCNominee>(UserSCNominee.class);
+		      
+		      if(userSCNominee.getUserid()!=0)
+		    	  scList = qr.query(conn, DMSQueries.getShareCertDetailsForMemberByUserId, rsh,userSCNominee.getUserid());
+		      else
+		    	  scList = qr.query(conn, DMSQueries.getShareCertDetailsForMemberByHashValue, rsh,userSCNominee.getRandomHash());
+		      
+		    } catch (Exception e) {
+		      logger.error("Error fetching SocType List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return scList;
+		  }
+
+	public int removeShareCertDetails(UserSCNominee userSCNominee) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeShareCertDetails,userSCNominee.getUserscnomineeid());
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
 	  }
 
 

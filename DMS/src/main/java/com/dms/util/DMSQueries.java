@@ -125,6 +125,16 @@ public static String insertNewDesignation = "insert into committeemaster(positio
 public static String updateNewDesignation ="update committeemaster set positionname=?,isactive=? where positionid=?";
 public static String checkIfNewNoticeAdded="select count(*) from document where doctypeid=999 and docsubtypeid=999 and userid=999 and societyid=? and createdon>? ";
 public static String deleteDocumentPage = "delete from files where filesid=?";
+public static String saveMemberparkingDetails = "insert into userparkingdetails(userid,parkingtype,vehicletype,parkingallotmentno,vehicleno,randomhash) values (?,?,?,?,?,?)";
+public static String getParkingDetailsForMemberByUserId ="select * from userparkingdetails where userid=?";
+public static String getParkingDetailsForMemberByHashValue ="select * from userparkingdetails where randomhash=?";
+public static String removeParkingData = "delete from userparkingdetails where userparkingdetailsid=?";
+public static String addShareCertDetails ="insert into userscnominee (nominee,percent,userid,randomHash) values (?,?,?,?)";
+public static String getShareCertDetailsForMemberByUserId ="select * from userscnominee where userid=?";
+public static String getShareCertDetailsForMemberByHashValue ="select * from userscnominee where randomhash=?";
+public static String removeShareCertDetails = "delete from userscnominee where userscnomineeid=?";
+public static String updateParkingDetails="update userparkingdetails set userid=?,randomHash='' where randomHash=?";
+public static String updateSCDetails="update userscnominee set userid=?,randomHash='' where randomHash=?";
 
 
 

@@ -27,9 +27,11 @@ import com.dms.beans.Document;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.Parking;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.User;
+import com.dms.beans.UserSCNominee;
 import com.dms.beans.Userprofile;
 import com.dms.beans.Vendor;
 import com.dms.dao.DocumentDao;
@@ -704,7 +706,104 @@ public class AjaxController
     return "failed";
   }
   
+   @RequestMapping(value={"/saveMemberparkingDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  @ResponseBody
+  public Parking saveMemberparkingDetails(@ModelAttribute Parking parking,HttpServletRequest request, HttpServletResponse response)
+  {
+	User user = null;
+    SocietyDao societyDao = new SocietyDao();
+    try {
+    	user = (User)request.getSession().getAttribute("userObject");
+    	parking.setCreatedby(String.valueOf(user.getUserid()));
+    	parking = societyDao.saveMemberparkingDetails(parking);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return parking;
+  }
+   
+   
+   @RequestMapping(value={"/getParkingDetailsForMember"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<Parking> getParkingDetailsForMember(@ModelAttribute Parking parking)
+   {
+     SocietyDao societyDao = new SocietyDao();
+     List<Parking> parkingList = null;
+     try {
+    	 parkingList = societyDao.getParkingDetailsForMember(parking, parkingList);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return parkingList;
+   }
   
-  //end of class
-}
+   
+   @RequestMapping(value={"/removeParkingData"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String removeParkingData(@ModelAttribute Parking parking)
+   {
+     int rowsUpdated = 0;
+     SocietyDao docDao = new SocietyDao();
+     try {
+       rowsUpdated = docDao.removeParkingData(parking);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   
+   @RequestMapping(value={"/addShareCertDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public UserSCNominee addShareCertDetails(@ModelAttribute UserSCNominee userSCNominee,HttpServletRequest request, HttpServletResponse response)
+   {
+ 	User user = null;
+     SocietyDao societyDao = new SocietyDao();
+     try {
+     	user = (User)request.getSession().getAttribute("userObject");
+     	userSCNominee.setCreatedby(String.valueOf(user.getUserid()));
+     	userSCNominee = societyDao.addShareCertDetails(userSCNominee);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return userSCNominee;
+   }
+ 
+   
+   
+   @RequestMapping(value={"/getShareCertDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<UserSCNominee> getShareCertDetails(@ModelAttribute UserSCNominee userSCNominee)
+   {
+     SocietyDao societyDao = new SocietyDao();
+     List<UserSCNominee> scList = null;
+     try {
+    	 scList = societyDao.getShareCertDetails(userSCNominee, scList);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return scList;
+   }
+  
+   
+   @RequestMapping(value={"/removeShareCertDetails"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String removeParkingData(@ModelAttribute UserSCNominee userSCNominee)
+   {
+     int rowsUpdated = 0;
+     SocietyDao docDao = new SocietyDao();
+     try {
+       rowsUpdated = docDao.removeShareCertDetails(userSCNominee);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+} //end of class
 

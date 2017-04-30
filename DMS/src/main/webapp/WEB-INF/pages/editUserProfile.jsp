@@ -780,9 +780,14 @@
 	        		$('#floor').val(response.floor);
 	        		$('#builtuparea').val(response.builtuparea);
 	        		$('#carpetarea').val(response.carpetarea);
-	        		$('#tenantname').val(response.tenantname.split(' ')[0]);
-	        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
-	        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+	        		
+	        		if(response.tenantname!=null && response.tenantname.length>0){
+	        			$('#tenantname').val(response.tenantname.split(' ')[0]);
+		        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
+		        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+	        		}
+	        		
+	        		
 	        		$('#tenantaddress').val(response.tenantaddress);
 	        		$('#tenantcontactnumber').val(response.tenantcontactnumber);
 	        		$('#tenantaltnumber').val(response.tenantaltnumber);

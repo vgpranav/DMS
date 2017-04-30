@@ -53,9 +53,17 @@ public class Userprofile
     private String tenantfrom;
     private String tenantto;
 
+    private String randomHash;
     
-    
-    public String getTenantfrom() {
+    public String getRandomHash() {
+		return randomHash;
+	}
+
+	public void setRandomHash(String randomHash) {
+		this.randomHash = randomHash;
+	}
+
+	public String getTenantfrom() {
 		return tenantfrom;
 	}
 

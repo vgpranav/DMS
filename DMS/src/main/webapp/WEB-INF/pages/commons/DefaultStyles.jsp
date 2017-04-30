@@ -1,5 +1,6 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.min.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.cookie.js"></script>
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.blockUI.js"></script>
 
 
 <!-- Bootstrap -->

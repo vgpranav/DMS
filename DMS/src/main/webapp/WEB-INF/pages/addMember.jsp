@@ -436,9 +436,11 @@
 								</div>
 							</div>
 							
+							<hr/>
+							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Nominee 1</label>
+									for="first-name">Nominee</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="nominee1" name="nominee1"
@@ -454,9 +456,35 @@
 											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
+								
 							</div>
 							
-							<div class="form-group">
+							
+							<div class="form-group" align="center">
+								<button class="btn btn-primary btn-xs" onclick="addShareCertDetails();return false;">Add Nominee</button>
+							</div>
+							
+							
+							 <div class="table-responsive col-sm-offset-2 col-md-offset-2 col-sm-8 col-md-8 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetableSC">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Nominee</th>
+											<th class="column-title">Percentage</th>
+											<th class="column-title">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							
+							
+							
+							
+							
+							<div class="form-group" style="display: none;">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Nominee 2</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
@@ -476,7 +504,7 @@
 								</div>
 							</div>
 							
-							<div class="form-group">
+							<div class="form-group" style="display: none;">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Nominee 3</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
@@ -500,11 +528,11 @@
 								<br /><h2><span class="label label-success label-md">Parking Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
-
+							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Vehicle Type </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
+								<div class="col-md-1 col-sm-1 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select class="form-control" name="vehicletype" id="vehicletype">
 											<option value=""> -- select --</option>
@@ -517,7 +545,7 @@
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Parking Type </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
+								<div class="col-md-1 col-sm-1 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select class="form-control" name="parkingtype" id="parkingtype">
 											<option value=""> -- select --</option>
@@ -529,19 +557,17 @@
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Parking Allotment No </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
+								<div class="col-md-1 col-sm-1 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="parkingallotmentno"
 											name="parkingallotmentno"
 											class="form-control col-md-12 col-xs-12">
 									</div>
 								</div>
-							</div>
-							
-							<div class="form-group">
+							 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Vehicle No </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
+								<div class="col-md-1 col-sm-1 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="vehicleno"
 											name="vehicleno"
@@ -549,10 +575,34 @@
 									</div>
 								</div>
 							</div>
-
+							<div class="form-group" align="center">
+								<button class="btn btn-primary btn-xs" onclick="addParkingDetails();return false;">Add Parking Detail</button>
+							</div>
+							
+							
+							 <div class="table-responsive col-sm-offset-2 col-md-offset-2 col-sm-8 col-md-8 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetablePK">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Vehicle&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+											<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
+											<th class="column-title">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+			
+						<div class="clearfix"></div>
+			
 							<div class="form-group" align="center">
 								<br />
 								<br />
+								<hr/>
 								<button class="btn btn-warning" type="reset">Reset</button>
 								<button class="btn btn-success" onclick="saveMemberDetails()">Save</button>
 							</div>
@@ -592,7 +642,7 @@
                 <div class="x_content">
                   <div class="dashboard-widget-content">
                     
-                    <div class="table-responsive">
+               <div class="table-responsive">
 				<table class="table table-striped jambo_table bulk_action"
 					id="thetable">
 					<thead>
@@ -615,10 +665,6 @@
 							<th class="column-title">Possession&nbsp;Date</th>
 							<th class="column-title">Builtup&nbsp;Area</th>
 							<th class="column-title">Carpet&nbsp;Area</th>
-							<th class="column-title">Vehicle&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
-							<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -644,6 +690,20 @@
 	
 	$(document).ready(function(){
 		$('#thetable').DataTable();
+		
+		$('#thetablePK').DataTable({
+	        "paging":   false,
+	        "ordering": false,
+	        "bFilter": false,
+	        "info":     false
+	    });
+		$('#thetableSC').DataTable({
+	        "paging":   false,
+	        "ordering": false,		       
+	        "bFilter": false,
+	        "info":     false
+	    });
+		
 		
 		$( "#memberDetails" ).dialog({
 		      autoOpen: false,
@@ -678,9 +738,12 @@
 		var floor = $('#floor').val();
 		var builtuparea = $('#builtuparea').val();
 		var carpetarea = $('#carpetarea').val();
+		
 		var vehicletype = $('#vehicletype').val();
 		var parkingtype = $('#parkingtype').val();
 		var parkingallotmentno = $('#parkingallotmentno').val();
+		var vehicleno = $('#vehicleno').val();
+		
 		var societyid = $('#societyid').val();
 		var password = $('#password').val();
 		
@@ -707,10 +770,12 @@
 		var middleName = $('#middleName').val();
 		var tenantType = $('#tenantType').val();
 		var tenantPVstatus = $('#tenantPVstatus').val();
-		var vehicleno = $('#vehicleno').val();
+		
 		
 		var tenantfrom =  $('#tenantfrom').val();
 		var tenantto =  $('#tenantto').val();
+		
+		var randomHash = '${randomHash}';
 		
 		if(occupancy=='leased'){
 			if(tenantname.length<1 || tenantaddress.length<1 || tenantcontactnumber.length<1 || tenantaadharno.length<1 ){
@@ -778,7 +843,8 @@
 			        +"&vehicleno="+vehicleno
 
 			        +"&tenantfrom="+tenantfrom
-			        +"&tenantto="+tenantto,
+			        +"&tenantto="+tenantto
+			        +"&randomHash="+randomHash,
 
 	        success: function(response){
 	        	if(response.userid>0) {
@@ -874,10 +940,6 @@
 	        			new Date(item.possessiondate).toString("dd MMM yyyy"),
 	        			item.builtuparea,
 	        			item.carpetarea,
-	        			item.vehicletype,
-	        			item.parkingtype,
-	        			item.parkingallotmentno,
-	        			item.vehicleno,
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
@@ -966,6 +1028,9 @@
 	        		$('#tenantto').val(response.tenantto);
 	        		$('#jointowners').val('');
 	        		splitJo(response.jointowners);
+	        		
+	        		getParkingDetailsForMember();
+	        		getSCDetailsForMember();
 	        		
 	        	}  
 	        },
@@ -1073,6 +1138,219 @@
 							              alert('File Fetch failed ...');
 							          });;
 							    }
+								
+								
+								function addParkingDetails(){
+									var vehicletype = $('#vehicletype').val();
+									var parkingtype = $('#parkingtype').val();
+									var parkingallotmentno = $('#parkingallotmentno').val();
+									var vehicleno = $('#vehicleno').val();
+									var userid = $('#userid').val();
+									var randomHash = '${randomHash}';
+									
+									if(vehicletype.trim().length < 1 || parkingtype.trim().length < 1 || parkingallotmentno.trim().length < 1 || vehicleno.trim().length < 1 ){
+										alert('All fields are mandatory for parking details');
+										return false;
+									}else{ 
+										$.ajax({
+									        type: "GET",
+									        url: "<%=request.getContextPath()%>/saveMemberparkingDetails.do",
+									        data :"randomHash="+randomHash 
+									        +"&userid="+userid
+									        +"&vehicletype="+vehicletype
+											        +"&parkingtype="+parkingtype
+											        +"&parkingallotmentno="+parkingallotmentno 
+											        +"&vehicleno="+vehicleno,
+									        success: function(response){
+									        	//alert(response);
+									        	if(response.userparkingdetailsid>0) {
+									        		getParkingDetailsForMember();
+									        		notify('success','SUCCESS','Added Successfully',2000);
+ 										        		$('#vehicletype').val("");
+										        		$('#parkingtype').val("");
+										        		$('#parkingallotmentno').val("");
+										        		$('#vehicleno').val(""); 
+									        	}  
+									        },
+												error : function(e) {
+													notify('error','ERROR','Error occured',2000);
+												}
+											});
+									}
+									
+								}
+								
+								
+								function getParkingDetailsForMember(){
+									var randomHash = '${randomHash}';
+									var userid = $('#userid').val();
+									
+									var table = $('#thetablePK').DataTable();
+										
+									
+									table .clear() .draw();
+									$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
+									$.ajax({
+								        type: "GET",
+								        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
+								        data :"userid="+userid
+								        		+"&randomHash="+randomHash,
+								        success: function(response){
+								        	var srno=1;
+								        	$.each(response, function(i, item) {
+
+								        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
+
+								        		table.row.add( [
+								        			item.vehicletype,
+								        			item.parkingtype,
+								        			item.parkingallotmentno,
+								        			item.vehicleno,
+								        			delBtn,
+								                ] ).draw( false );
+								        		srno++;
+								        	 });
+								        	$.unblockUI();
+								        },
+											error : function(e) {
+												notify('error','ERROR','Error occured',2000);
+												$.unblockUI();
+											}
+										});
+								}
+								
+								
+								function deleteParkingData(userparkingdetailsid){
+									if(confirm('Are you Sure?')){
+										if(userparkingdetailsid.length < 1){
+							 			alert('Some Mandatory Fields  are Missing');
+							 			return false;
+							 		} else { 
+							 			$.ajax({
+							 		        type: "GET",
+							 		        url: "<%=request.getContextPath()%>/removeParkingData.do",
+							 		       data :"userparkingdetailsid="+userparkingdetailsid,
+							 		        success: function(response){
+							 		        //alert()
+							  		        	if(response=='success') {
+							 		        		notify('success','SUCCESS','Removed Successfully',2000);
+							 		        		getParkingDetailsForMember();
+							 		        	}  else {
+							 		        		notify('error','Failed','Failed to Remove Member',2000);
+							 		        	}
+							 		        },
+							 					error : function(e) {
+							 						notify('error','ERROR','Error occured',2000);
+							 					}
+							 				});
+							 		}
+									}
+							 		return false;
+								}
+								
+								
+								function addShareCertDetails(){
+									var nominee1 = $('#nominee1').val();
+									var percent1 = $('#percent1').val();
+									var randomHash = '${randomHash}';
+									var sharecertno = $('#sharecertno').val();
+									var userid = $('#userid').val();
+									
+									
+									if(sharecertno.trim().length < 1 || nominee1.trim().length < 1 || percent1.trim().length < 1 ){
+										alert('All fields are mandatory for Adding Nominee');
+										return false;
+									}else{ 
+										$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
+										$.ajax({
+									        type: "GET",
+									        url: "<%=request.getContextPath()%>/addShareCertDetails.do",
+									        data :"randomHash="+randomHash 
+											        +"&userid="+userid
+											        +"&nominee="+nominee1
+											        +"&percent="+percent1,
+									        success: function(response){
+									        	//alert(response);
+									        	if(response.userscnomineeid>0) {
+									        		getSCDetailsForMember();
+									        		notify('success','SUCCESS','Added Successfully',2000);
+ 										        		$('#nominee1').val("");
+										        		$('#percent1').val("");
+									        	}  
+									        	$.unblockUI();
+									        },
+												error : function(e) {
+													notify('error','ERROR','Error occured',2000);
+													$.unblockUI();
+												}
+									        
+											});
+									}
+									
+								}
+								
+								function getSCDetailsForMember(){
+									var randomHash = '${randomHash}';
+									var userid = $('#userid').val();
+									
+									var table = $('#thetableSC').DataTable();
+										
+									
+									table .clear() .draw();
+									
+									$.ajax({
+								        type: "GET",
+								        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
+								        data :"userid="+userid
+								        		+"&randomHash="+randomHash,
+								        success: function(response){
+								        	var srno=1;
+								        	$.each(response, function(i, item) {
+
+								        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
+
+								        		table.row.add( [
+								        			item.nominee,
+								        			item.percent,
+								        			delBtn,
+								                ] ).draw( false );
+								        		srno++;
+								        	 });
+								        },
+											error : function(e) {
+												notify('error','ERROR','Error occured',2000);
+											}
+										});
+								}
+								
+								
+								function deleteSCData(userscnomineeid){
+									if(confirm('Are you Sure?')){
+										if(userscnomineeid.length < 1){
+							 			alert('Some Mandatory Fields  are Missing');
+							 			return false;
+							 		} else { 
+							 			$.ajax({
+							 		        type: "GET",
+							 		        url: "<%=request.getContextPath()%>/removeShareCertDetails.do",
+							 		       data :"userscnomineeid="+userscnomineeid,
+							 		        success: function(response){
+							 		        //alert()
+							  		        	if(response=='success') {
+							 		        		notify('success','SUCCESS','Removed Successfully',2000);
+							 		        		getSCDetailsForMember();
+							 		        	}  else {
+							 		        		notify('error','Failed','Failed to Remove Member',2000);
+							 		        	}
+							 		        },
+							 					error : function(e) {
+							 						notify('error','ERROR','Error occured',2000);
+							 					}
+							 				});
+							 		}
+									}
+							 		return false;
+								}
 							</script>
 							
 <style>

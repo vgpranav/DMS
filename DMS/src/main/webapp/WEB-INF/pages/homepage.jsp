@@ -1,40 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<!-- top tiles
-          <div class="row tile_count">
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Users</span>
-              <div class="count">2500</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-clock-o"></i> Average Time</span>
-              <div class="count">123.50</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Males</span>
-              <div class="count green">2,500</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Females</span>
-              <div class="count">4,567</div>
-              <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
-              <div class="count">2,315</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-user"></i> Total Connections</span>
-              <div class="count">7,325</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-          </div>
-          /top tiles -->
+ 
 
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
@@ -59,217 +25,427 @@
 		              }
 		              %>
 	  				</div>
-	  			 
+	  			 	
+	  			 	<input type="hidden" id="userid" value="${userprofile.userid}">
 	  				
 	  				<div class="col-md-9 col-sm-9 col-xs-12">
 	  					
-	  					<c:if test="${fn:length(userprofile.firstName)>0}">
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Name of Flat Owner</label>
-	  						<div>${userprofile.firstName} ${userprofile.lastName}</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.mobileNo)>0}">
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Contact Number</label>
-	  						<div>${userprofile.mobileNo}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					
-	  					<c:if test="${fn:length(userprofile.alternateno)>0}">
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Alternate Number</label>
-	  						<div>${userprofile.alternateno}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.email)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Email</label>
-	  						<div>${userprofile.email}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.jointowners)>0}">	
-		  					<c:forEach items="${fn:split(userprofile.jointowners,',')}" var="myItem" varStatus="loopStatus">
+	  					<form id="addDocSubTypeForm" data-parsley-validate
+							class="form-horizontal form-label-left" action="#" method="post"
+							onsubmit="return false;">
+
+							<div class="editmodeind">
+							
+							<div class="editmodeicon" style="display: none;"><h2><span class="label label-warning label-xs "><i class="fa fa-circle-o-notch fa-spin fa-sm fa-fw"></i> Edit Mode</span></h2></div> 
+
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> 
+								<h2><span class="label label-success label-md">Owner Details</span></h2> 
+								<hr />
+							</div>
+							<div class="clearfix"></div>
+
+							<input type="hidden" id="userid" name="userid" value="0">
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">First Name 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="firstName" name="firstName"
+											class="form-control1 col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Middle Name
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="middleName" name="middleName"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Last Name 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="lastName" name="lastName"
+											class="form-control1 col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								
+							</div>
+
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Mobile No 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="mobileNo" name="mobileNo"
+											class="form-control1 col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Alternate Number </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="alternateno" name="alternateno"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+
+
+							</div>
+
+							<div class="form-group">
+							
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Aadhar No. </label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
-		  							<label class="control-label">Joint Owner ${loopStatus.index+1}</label>
-		  							<div> ${myItem} </div> 
-		  							<br>
-		  						</div>
-							</c:forEach>
-	  					</c:if>
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="aadharno" name="aadharno"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								 
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Blood Group  
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="bloodgroup" name="bloodgroup"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div> 
+
+							</div>
+							
+							<div class="form-group">
+							<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Email </label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="email" name="email"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Joint Owners </label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="jointowners" name="jointowners"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
+							</div>
+							<div class="clearfix"></div>
+
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Purchase Date </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="purchasedate" name="purchasedate"
+											class="form-control1 col-md-12 col-xs-12 customdatepicker"
+											readonly="readonly">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Possession Date </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="possessiondate" name="possessiondate"
+											class="form-control1 col-md-12 col-xs-12 customdatepicker"
+											readonly="readonly">
+									</div>
+								</div>
+
+								 <label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Floor </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="floor" name="floor"
+											class="form-control1 col-md-12 col-xs-12" placeholder="">
+									</div>
+								</div>
+								 
+								 
+							</div>
+
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Flat No 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="flatno" name="flatno"
+											class="form-control1 col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Wing 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="wing" name="wing"
+											class="form-control1 col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Tower </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tower" name="tower"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Built-up Area </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="builtuparea" name="builtuparea"
+											class="form-control1 col-md-12 col-xs-12"
+											placeholder="sq. ft.">
+									</div>
+								</div>
+
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Carpet Area </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="carpetarea" name="carpetarea"
+											class="form-control1 col-md-12 col-xs-12"
+											placeholder="sq. ft.">
+									</div>
+								</div>
+
+							</div>
+							
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Occupancy </span></h2> <hr />
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Occupancy 
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control1" name="occupancy" id="occupancy"
+											required="required" onchange="showhidetenant()">
+											<option value="self">Self Occupied</option>
+											<option value="leased">Leased</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
+							
+							<section id="tenantdetails" style="display: none;">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Lease Tenant Details</span></h2> <hr />
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">First Name </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname" name=tenantname
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Middle Name </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname2" name=tenantname2
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Last Name </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantname3" name=tenantname3
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Permanent Address </label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaddress" name=tenantaddress
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Lease Type</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control1" name="tenantType" id="tenantType">
+											<option value="Residential">Residential</option>
+											<option value="Commercial">Commercial</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Contact Number </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantcontactnumber" name=tenantcontactnumber
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Alternate Number</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaltnumber" name=tenantaltnumber
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Email</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantemail" name=tenantemail
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Aadhar Number </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantaadharno" name=tenantaadharno
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Tenant Police Verification Done</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control1" name="tenantPVstatus" id="tenantPVstatus">
+											<option value="Yes">Yes</option>
+											<option value="No">No</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							</section>
+							
+							 
+							
+							 
+							</div>
+
+						</form>
 	  					
-	  					 <c:if test="${fn:length(userprofile.flatno)>0}">	
-	  					 <div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Flat No.</label>
-	  						<div>${userprofile.flatno}  </div> 
-	  						<br>
+	  						  					
+	  					<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Share Certificate Details</span></h2> <hr />
+						</div>
+						
+						<div class="form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"
+									for="first-name">Share Certificate No </label>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="sharecertno" name="sharecertno"
+											class="form-control1 col-md-12 col-xs-12">
+									</div>
+								</div>
+							</div>
+							
+	  					<div class="col-md-12 col-sm-12 col-xs-12">
+	  					 <div class="table-responsive  col-sm-12 col-md-12 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetableSC">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Nominee</th>
+											<th class="column-title">Percentage</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 	  					</div>
-	  					</c:if>
+	  					<br/>
+	  					<hr/>
 	  					
-	  					<c:if test="${fn:length(userprofile.floor)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Floor</label>
-	  						<div>${userprofile.floor}</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.tower)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Tower</label>
-	  						<div>${userprofile.tower} </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.wing)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Wing</label>
-	  						<div>${userprofile.wing}</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${userprofile.purchasedate!=null}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Registration Date</label>
-	  						<div>${userprofile.purchasedate}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${userprofile.possessiondate!=null}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Possession Date</label>
-	  						<div>${userprofile.possessiondate}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.bloodgroup)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Blood Group</label>
-	  						<div>${userprofile.bloodgroup}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.aadharno)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Aadhar No.</label>
-	  						<div>${userprofile.aadharno}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.sharecertno)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Share Certificate No.</label>
-	  						<div>${userprofile.sharecertno}  </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.nominee1)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Nominee 1</label>
-	  						<div>${userprofile.nominee1} (${userprofile.percent1}%)</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.nominee2)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Nominee 2</label>
-	  						<div>${userprofile.nominee2} (${userprofile.percent2}%)</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.nominee3)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Nominee 3</label>
-	  						<div>${userprofile.nominee3} (${userprofile.percent3}%)</div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<c:if test="${fn:length(userprofile.occupancy)>0}">	
-	  					<div class="col-md-4 col-sm-4 col-xs-12">
-	  						<label class="control-label">Occupancy</label>
-	  						<div>${userprofile.occupancy} </div> 
-	  						<br>
-	  					</div>
-	  					</c:if>
-	  					
-	  					<div class="clearfix"></div>
-	  					
-	  					<c:if test="${userprofile.occupancy=='leased'}">
-	  					
-	  						<c:if test="${fn:length(userprofile.tenantname)>0}">	
-	  						<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Name of Lease Owner</label>
-		  						<div>${userprofile.tenantname} </div> 
-		  						<br>
-		  					</div>
-		  					</c:if>
-		  					
-		  					<c:if test="${fn:length(userprofile.tenantaddress)>0}">	
-		  					<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Address</label>
-		  						<div>${userprofile.tenantaddress} </div> 
-		  						<br>
-		  					</div>
-		  					</c:if>
-		  					
-		  					<c:if test="${fn:length(userprofile.tenantcontactnumber)>0}">	
-		  					<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Contact Number</label>
-		  						<div>${userprofile.tenantcontactnumber} </div> 
-		  						<br>
-		  					</div>
-		  					</c:if>
-		  					
-		  					<c:if test="${fn:length(userprofile.tenantaltnumber)>0}">	
-		  					<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Alternate Number</label>
-		  						<div>${userprofile.tenantaltnumber} </div> 
-		  						<br>
-		  					</div>
-		  					</c:if>
-		  					
-		  					<c:if test="${fn:length(userprofile.tenantemail)>0}">	
-		  					<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Email</label>
-		  						<div>${userprofile.tenantemail} </div> 
-		  						<br>
-		  					</div>
-		  					</c:if>
-		  					
-		  					<c:if test="${fn:length(userprofile.tenantaadharno)>0}">	
-		  					<div class="col-md-4 col-sm-4 col-xs-12">
-		  						<label class="control-label">Aadhar No.</label>
-		  						<div>${userprofile.tenantaadharno} </div> 
-		  						<br>
-		  					</div>
-	  						</c:if>
-	  						
-	  					</c:if>
+	  					<div class="col-md-12 col-sm-12 col-xs-12">
+								<br /> <h2><span class="label label-success label-md">Parking Details</span></h2> <hr />
+						</div>
+	  					<div class="col-md-12 col-sm-12 col-xs-12">
+	  						 <div class="table-responsive   col-sm-12 col-md-12 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetablePK">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Vehicle&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+											<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+	  				  </div>
 	  					
 	  				</div>
 				</div>
+	
+							
 				
-				
-				<div class="row">
-				<hr>
+				<div class="row" style="margin-top:20px !important">
+				<br>	<br>	<br>	
+				<hr/>
 					<div class="col-md-4 col-sm-4 col-xs-12">
 						<h2><a href="displaySelfSociety.do">Self Society Details</a></h2>
 						<br>
@@ -303,14 +479,14 @@
 		<form method="post" action="#">
 		<br>
               <div>
-                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
+                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control1" placeholder="Registered 10 Digit Mobile Number"/>
               </div>
               <div align="center">
               <button class="btn btn-warning" onclick="generateOTPInit();return false;" style="margin-top: 10px;" id="otpbtn">Send OTP</button>
               </div>
               <hr/>
               <div>
-                <input type="password" name ="otp" id ="otp" class="form-control" autocomplete="off" placeholder="Enter OTP Here" />
+                <input type="password" name ="otp" id ="otp" class="form-control1" autocomplete="off" placeholder="Enter OTP Here" />
               </div>
               <div align="center">
                 <button class="btn btn-success" style="margin-top: 10px;" onclick="validateOTPForDocAccess();return false;">Validate</button>
@@ -328,7 +504,33 @@
 			  width: 270,
 			  height: 300
 		});
+		
+			
+			$('#thetablePK').DataTable({
+		        "paging":   false,
+		        "ordering": false,
+		        "bFilter": false,
+		        "info":     false
+		    });
+			$('#thetableSC').DataTable({
+		        "paging":   false,
+		        "ordering": false,		       
+		        "bFilter": false,
+		        "info":     false
+		    });
+			
+			getParkingDetailsForMember();
+   		 	getSCDetailsForMember();
+			editUserData();
 	});
+	
+	function showhidetenant(){
+		var occupancy = $('#occupancy').val();
+		if(occupancy=='self')
+		 $('#tenantdetails').hide('slideDown');
+		else
+			$('#tenantdetails').show('slideDown');
+	}
 	
 	function displayDocumentPage(docId,userId,confFlag){
 		
@@ -423,6 +625,140 @@
 		
 	}
 	
+	
+	function getParkingDetailsForMember(){
+		var randomHash = '${randomHash}';
+		var userid = $('#userid').val();
+		
+		var table = $('#thetablePK').DataTable();
+			
+		
+		table .clear() .draw();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.vehicletype,
+	        			item.parkingtype,
+	        			item.parkingallotmentno,
+	        			item.vehicleno,
+	        			 
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
+	
+	
+	function getSCDetailsForMember(){
+		var randomHash = '${randomHash}';
+		var userid = $('#userid').val();
+		
+		var table = $('#thetableSC').DataTable();
+			
+		
+		table .clear() .draw();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.nominee,
+	        			item.percent,
+	        			 
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
+	
+	
+function editUserData(){
+		
+		var userid = $('#userid').val();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getUserDataById.do",
+	        data :"userid="+userid,
+	        success: function(response){
+	        	if(response.userid>0) {
+ 
+	        		$('#firstName').val(response.firstName);
+	        		$('#middleName').val(response.middleName);
+	        		$('#lastName').val(response.lastName);
+	        		$('#mobileNo').val(response.mobileNo);
+	        		$('#alternateno').val(response.alternateno);
+	        		$('#email').val(response.email);
+	        		$('#aadharno').val(response.aadharno);
+	        		$('#jointowners').val(response.jointowners);
+	        		$('#password').val(response.password);
+	        		$('#purchasedate').val(new Date(response.purchasedate).toString("yyyy/MM/dd"));
+	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
+	        		
+	        		$('#occupancy option[value="'+response.occupancy+'"]').prop("selected",true).change();
+
+	        		$('#tenantType option[value="'+response.tenantType+'"]').prop("selected",true).change();
+
+	        		$('#tenantPVstatus option[value="'+response.tenantPVstatus+'"]').prop("selected",true).change();
+	        		
+	        		$('#flatno').val(response.flatno);
+	        		$('#wing').val(response.wing);
+	        		$('#tower').val(response.tower);
+	        		$('#floor').val(response.floor);
+	        		$('#builtuparea').val(response.builtuparea);
+	        		$('#carpetarea').val(response.carpetarea);
+	        		if(response.tenantname!=null && response.tenantname.length>0){
+	        			$('#tenantname').val(response.tenantname.split(' ')[0]);
+		        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
+		        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+		        		
+		        		$('#tenantaddress').val(response.tenantaddress);
+		        		$('#tenantcontactnumber').val(response.tenantcontactnumber);
+		        		$('#tenantaltnumber').val(response.tenantaltnumber);
+		        		$('#tenantemail').val(response.tenantemail);
+		        		$('#tenantaadharno').val(response.tenantaadharno);
+	        		}
+	        		
+	        		$('#vehicletype').val(response.vehicletype);
+	        		$('#parkingtype').val(response.parkingtype);
+	        		$('#parkingallotmentno').val(response.parkingallotmentno);
+	        		$('#bloodgroup').val(response.bloodgroup);
+	        		$('#sharecertno').val(response.sharecertno);
+	        		 
+	        		$('#occupancy').prop('disabled', 'disabled');
+	        	}  
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+				}
+			});
+	}
 </script>
 
 
@@ -441,3 +777,12 @@
 	});
 	</script>
 </c:if>
+
+
+
+<style>
+	.form-control1{
+		border: none;
+		padding-top: 7px;
+	}
+</style>
