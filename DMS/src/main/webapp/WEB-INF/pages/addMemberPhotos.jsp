@@ -101,7 +101,7 @@ $(document).ready(function() {
             alert('Please browse a JPG/PNG file to upload ...');
             return;
         }
-        
+        blockUI();
         $.ajax({
             url: 'uploadMemberPhoto.do',
             type: "POST",
@@ -110,6 +110,7 @@ $(document).ready(function() {
             processData: false,
             contentType: false
           }).done(function(data) {
+        	  unblockUI();
               //imgContainer.html('');
               //var img = '<div class="col-md-4 col-sm-4 col-xs-12"><img height="100" width="50" src="data:' + data.contenttype + ';base64,'
                   //+ data.base64 + '"/></div>';
@@ -117,6 +118,7 @@ $(document).ready(function() {
               getSocietyPhotos();
           }).fail(function(jqXHR, textStatus) {
               alert('File upload failed ...');
+              unblockUI();
           });
     });
     
@@ -162,7 +164,7 @@ $(document).ready(function() {
     function getSocietyPhotos(){
     	
     	var userid = $('#userid').val();
-    	
+    	blockUI();
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
@@ -181,8 +183,10 @@ $(document).ready(function() {
                		cnt++;
                });
                $('#imgContainer').html(img);
+               unblockUI();
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
+              unblockUI();
           });;
     }
 </script>

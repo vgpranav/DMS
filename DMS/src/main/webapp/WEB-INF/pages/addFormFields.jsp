@@ -167,7 +167,7 @@
 		var table = $('#thetable').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getFieldsForDocSubtype.do",
@@ -196,9 +196,11 @@
 	        	    
 	        	  });
 	        	}
+	        unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -212,7 +214,7 @@
 		var sequence = $('#sequence').val();
 		var fieldtype = $('#fieldtype:checked').val();
 		var active = $('#active:checked').val();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveFormFields.do",
@@ -228,9 +230,11 @@
 	        		getFieldsForDocSubtype();
 	        		notify('success','SUCCESS','Added Successfully',2000);
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		
@@ -240,7 +244,7 @@
 	function editFormField(fieldid){
 		
 		editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getFormFieldById.do",
@@ -256,10 +260,12 @@
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
 	        		$('input[name=fieldtype][value="'+response.fieldtype+'"]').prop("checked","checked").change();
 	        		//$('#societyname').val(response.societyname);
-	        	}  
+	        	}
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}

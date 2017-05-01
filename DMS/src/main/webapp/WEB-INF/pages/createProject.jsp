@@ -242,10 +242,9 @@
 	});
  
 		 
-		 function editProject(projectid){
-		
-			 editMode();
-			 
+	function editProject(projectid){
+		editMode();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getProjectDetailsById.do",
@@ -266,11 +265,12 @@
 	        		$('#shopnos').val(response.shopnos);
 	        		$('#galanos').val(response.galanos);
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
-
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

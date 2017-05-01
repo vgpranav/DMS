@@ -626,7 +626,7 @@
 			return false;
 		}
 		
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveMemberDetails.do",
@@ -677,10 +677,12 @@
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
 	        		notify('success','SUCCESS','Added Successfully',2000);
-	        	}  
+	        	} 
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		return false;
@@ -693,7 +695,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMembersForSociety.do",
@@ -731,9 +733,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -747,7 +751,7 @@
 	}
 	 
 	function editUserData(userid){
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
@@ -810,9 +814,11 @@
 	        		$('.editmodeicon').show();
 	        		$('#firstName').focus();
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}

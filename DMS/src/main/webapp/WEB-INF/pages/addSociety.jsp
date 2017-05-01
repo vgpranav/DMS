@@ -391,7 +391,7 @@
 		
 		//var societyId = $('#searchText').val();
 		editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getSocietyDetailsById.do",
@@ -414,10 +414,12 @@
 	        		$('#projectid option[value="'+response.projectid+'"]').prop("selected",true).change();
 	        		//$('#societyname').val(response.societyname);
 	        		
-	        	}  
+	        	} 
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

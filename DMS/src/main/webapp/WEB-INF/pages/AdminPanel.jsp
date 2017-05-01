@@ -15,7 +15,9 @@
 		</div>
 		<div class="pull-right">
 		<div align="left">
-			<div id="imgContainer" style="max-height: 300px !important; overflow-y:auto" ></div>
+			<div id="imgContainer" >
+			<img width="150" src="<%=request.getContextPath()%>/resources/images/spin.gif">
+				</div>
 		</div>
 		</div>
 	</div>
@@ -58,9 +60,6 @@
 							<th class="column-title">Possession&nbsp;Date</th>
 							<th class="column-title">Builtup&nbsp;Area</th>
 							<th class="column-title">Carpet&nbsp;Area</th>
-							<th class="column-title">Vehicle&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Type</th>
-							<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
 							<th class="column-title">Photograph</th>
 						</tr>
 					</thead>
@@ -276,7 +275,7 @@
 			
 		table.clear().draw();
 		table5.clear().draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getCommitteMembersForSociety.do",
@@ -322,9 +321,11 @@
 	        		 });
 	        		 
 	        	  });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -336,7 +337,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMembersForSociety.do",
@@ -364,50 +365,48 @@
 	        			new Date(item.possessiondate).toString("dd MMM yyyy"),
 	        			item.builtuparea,
 	        			item.carpetarea,
-	        			item.vehicletype,
-	        			item.parkingtype,
-	        			item.parkingallotmentno,
 	        			photodiv,
 	                ] ).draw( false );
 	        		
 	        		getMemberPhoto(item.userid,divid);
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
 	
-	function getSocietyPhotos(){
-    	
-    	var societyid = $('#societyid').val();
-    	
-    	$.ajax({
+ function getSocietyPhotos(){
+ 	
+ 	var societyid = $('#societyid').val();
+ 	blockUI();
+ 	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getSocietyPhotos.do",
 	        data :"societyid="+societyid,
 	        enctype: 'multipart/form-data',
 	        processData: false,
-            contentType: false 
+         contentType: false 
 			}).done(function(data) {
-			var img='<ul class="imgslider"><li><br></li>';
+			var img='<div class="slider"><ul style="margin-left:-40px;">';
 			var cnt =1;
-               $.each(data, function(i, item) {
-               		img += '<li><img height="150" src="data:' + item.contenttype + ';base64,' +  item.file + '"/></li>';
-               		if(cnt%3==0){
-               			//img+='<div class="clearfix"></div><br/>';
-               		}
-               		cnt++;
-               });
-               img += '</ul>';
-               $('#imgContainer').html(img);
-               
-          }).fail(function(jqXHR, textStatus) {
-              alert('File Fetch failed ...');
-          });;
-    }
+            $.each(data, function(i, item) {
+            		img += '<li><img style="max-height: 200px;border: thick solid #fff;" src="data:' + item.contenttype + ';base64,' +  item.file + '"/></li><li>&nbsp;</li>';
+            		cnt++;
+            });
+            img += '</ul></div>';
+            //console.log(img);
+            $('#imgContainer').html(img);
+            unblockUI();
+       }).fail(function(jqXHR, textStatus) {
+           alert('File Fetch failed ...');
+           unblockUI();
+       });;
+ }
 	
 	
 	function getVendorsBySocId(){
@@ -415,7 +414,7 @@
 		var table = $('#thetable2').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorsBySocId.do",
@@ -445,15 +444,18 @@
 	        		
 	        	  });
 	        	}
+	        unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
 	
 	function getMemberPhoto(memberId,divId){
     	console.log(memberId+"-"+divId);
+    	blockUI();
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
@@ -470,13 +472,16 @@
                });
                $('#'+divId).html(img);
                $(".dp").popImg();
+               unblockUI();
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
+              unblockUI();
           });;
     }
 	
 	function getVendorPhotos(vendorid,divId){
     	//console.log(memberId+"-"+divId);
+    	blockUI();
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorPhotos.do",
@@ -493,19 +498,27 @@
                });
                $('#'+divId).html(img);
                $(".dp").popImg();
+               unblockUI();
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
+              unblockUI();
           });;
     }
  </script>
  
- <style>
-	 ul.imgslider{
-	 	list-style-type:none;
- 	 }
+<style>
+ #imgContainer{
+ 	overflow-x: auto;
+    white-space: nowrap;
+    max-height: 240px;
+    max-width: 300px;
+ }
  
- 	ul.imgslider > li {
- 		display: inline;
- 	}
- 	
+ .slider ul{
+  list-style: none;
+}
+ .slider li{
+  display: inline;
+}
+ 
  </style>

@@ -81,6 +81,7 @@
  			alert('Some Mandatory Fields  are Missing');
  			return false;
  		} else { 
+ 			blockUI();
  			$.ajax({
  		        type: "GET",
  		        url: "<%=request.getContextPath()%>/deleteDocumentPage.do",
@@ -93,9 +94,11 @@
  		        	}  else {
  		        		notify('error','Failed','Failed to Delete page',1000);
  		        	}
+ 		        unblockUI();
  		        },
  					error : function(e) {
  						notify('error','ERROR','Error occured',2000);
+ 						unblockUI();
  					}
  				});
  		}

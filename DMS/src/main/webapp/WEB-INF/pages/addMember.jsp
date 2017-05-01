@@ -795,7 +795,7 @@
 			return false;
 		}
 		
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveMemberDetails.do",
@@ -894,9 +894,11 @@
 	        		$('#tenantto').val("");
 
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		return false;
@@ -909,7 +911,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMembersForSociety.do",
@@ -943,9 +945,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -961,7 +965,7 @@
 	function editUserData(userid){
 		
 		//editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
@@ -1033,9 +1037,11 @@
 	        		getSCDetailsForMember();
 	        		
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -1152,6 +1158,7 @@
 										alert('All fields are mandatory for parking details');
 										return false;
 									}else{ 
+										blockUI();
 										$.ajax({
 									        type: "GET",
 									        url: "<%=request.getContextPath()%>/saveMemberparkingDetails.do",
@@ -1171,9 +1178,11 @@
 										        		$('#parkingallotmentno').val("");
 										        		$('#vehicleno').val(""); 
 									        	}  
+									        	unblockUI();
 									        },
 												error : function(e) {
 													notify('error','ERROR','Error occured',2000);
+													unblockUI();
 												}
 											});
 									}
@@ -1189,7 +1198,9 @@
 										
 									
 									table .clear() .draw();
-									$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
+									
+									blockUI();
+									
 									$.ajax({
 								        type: "GET",
 								        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
@@ -1210,11 +1221,11 @@
 								                ] ).draw( false );
 								        		srno++;
 								        	 });
-								        	$.unblockUI();
+								        	unblockUI();
 								        },
 											error : function(e) {
 												notify('error','ERROR','Error occured',2000);
-												$.unblockUI();
+												unblockUI();
 											}
 										});
 								}
@@ -1226,6 +1237,7 @@
 							 			alert('Some Mandatory Fields  are Missing');
 							 			return false;
 							 		} else { 
+							 			blockUI();
 							 			$.ajax({
 							 		        type: "GET",
 							 		        url: "<%=request.getContextPath()%>/removeParkingData.do",
@@ -1238,9 +1250,11 @@
 							 		        	}  else {
 							 		        		notify('error','Failed','Failed to Remove Member',2000);
 							 		        	}
+							 		        unblockUI();
 							 		        },
 							 					error : function(e) {
 							 						notify('error','ERROR','Error occured',2000);
+							 						unblockUI();
 							 					}
 							 				});
 							 		}
@@ -1261,7 +1275,7 @@
 										alert('All fields are mandatory for Adding Nominee');
 										return false;
 									}else{ 
-										$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
+										blockUI();
 										$.ajax({
 									        type: "GET",
 									        url: "<%=request.getContextPath()%>/addShareCertDetails.do",
@@ -1277,11 +1291,11 @@
  										        		$('#nominee1').val("");
 										        		$('#percent1').val("");
 									        	}  
-									        	$.unblockUI();
+									        	unblockUI();
 									        },
 												error : function(e) {
 													notify('error','ERROR','Error occured',2000);
-													$.unblockUI();
+													unblockUI();
 												}
 									        
 											});
@@ -1297,7 +1311,7 @@
 										
 									
 									table .clear() .draw();
-									
+									blockUI();
 									$.ajax({
 								        type: "GET",
 								        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
@@ -1316,9 +1330,11 @@
 								                ] ).draw( false );
 								        		srno++;
 								        	 });
+								        	unblockUI();
 								        },
 											error : function(e) {
 												notify('error','ERROR','Error occured',2000);
+												unblockUI();
 											}
 										});
 								}
@@ -1330,6 +1346,7 @@
 							 			alert('Some Mandatory Fields  are Missing');
 							 			return false;
 							 		} else { 
+							 			blockUI();
 							 			$.ajax({
 							 		        type: "GET",
 							 		        url: "<%=request.getContextPath()%>/removeShareCertDetails.do",
@@ -1342,9 +1359,11 @@
 							 		        	}  else {
 							 		        		notify('error','Failed','Failed to Remove Member',2000);
 							 		        	}
+							 		        unblockUI();
 							 		        },
 							 					error : function(e) {
 							 						notify('error','ERROR','Error occured',2000);
+							 						unblockUI();
 							 					}
 							 				});
 							 		}

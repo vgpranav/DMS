@@ -138,6 +138,7 @@
 	
 	function generateOTP(interval){
 		var mobileNo = $('#mobileNoOTP').val();
+		blockUI();
 		$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
@@ -151,9 +152,11 @@
 		        		clearInterval(interval);
 				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 		        	}
+		        unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
+						unblockUI();
 					}
 				});
 	}
@@ -173,7 +176,7 @@
 					alert('Both Passwords Do Not Match');
 					return false;
 				}else{
-					
+					blockUI();
 					$.ajax({
 				        type: "GET",
 				        url: "<%=request.getContextPath()%>/validateAndSetNewPW.do",
@@ -188,9 +191,11 @@
 				        		notify('error','FAILED','Invalid OTP or Mobile Number',2000);
 						    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 				        	}
+				        	unblockUI();
 				        },
 							error : function(e) {
 								notify('error','ERROR','Error occured',2000);
+								unblockUI();
 							}
 						});
 					

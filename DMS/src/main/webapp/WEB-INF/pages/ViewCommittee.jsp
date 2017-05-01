@@ -87,6 +87,7 @@
  			return false;
  		} else {
  			$('#userid').val("");
+ 			blockUI();
  			$.ajax({
  		        type: "GET",
  		        url: "<%=request.getContextPath()%>/addCommitteeMember.do",
@@ -99,9 +100,11 @@
  		        	notify('success','SUCCESS','Added Successfully',2000);
  		        		getCommitteMembersForSociety();
  		        	}  
+ 		        	unblockUI();
  		        },
  					error : function(e) {
  						notify('error','ERROR','Error occured',2000);
+ 						unblockUI();
  					}
  				});
  		}
@@ -153,6 +156,7 @@
  			alert('Some Mandatory Fields  are Missing');
  			return false;
  		} else { 
+ 			blockUI();
  			$.ajax({
  		        type: "GET",
  		        url: "<%=request.getContextPath()%>/removeCommitteeMember.do",
@@ -165,9 +169,11 @@
  		        	}  else {
  		        		notify('error','Failed','Failed to Remove Member',2000);
  		        	}
+ 		        unblockUI();
  		        },
  					error : function(e) {
  						notify('error','ERROR','Error occured',2000);
+ 						unblockUI();
  					}
  				});
  		}
@@ -185,7 +191,7 @@
 			
 		table.clear().draw();
 		table1.clear().draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getCommitteMembersForSociety.do",
@@ -226,9 +232,11 @@
 	        		 });
 	        		 
 	        	  });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}

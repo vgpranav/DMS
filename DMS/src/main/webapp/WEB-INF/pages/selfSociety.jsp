@@ -164,7 +164,7 @@
 			
 		table.clear().draw();
 		table5.clear().draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getCommitteMembersForSociety.do",
@@ -211,9 +211,11 @@
 	        		 });
 	        		 
 	        	  });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -224,7 +226,7 @@
 		var table = $('#thetable1').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMembersForSociety.do",
@@ -247,9 +249,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -261,7 +265,7 @@
 		var table = $('#thetable6').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getNeighborDetails.do",
@@ -283,9 +287,11 @@
 	        		getMemberPhoto(item.userid,divid);
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -297,7 +303,7 @@
 		var table = $('#thetable2').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorsBySocId.do",
@@ -317,15 +323,18 @@
 	        	    
 	        	  });
 	        	}
+	        unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
 	
 	function getMemberPhoto(memberId,divId){
     	console.log(memberId+"-"+divId);
+    	blockUI();
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
@@ -342,15 +351,17 @@
                });
                $('#'+divId).html(img);
                $(".dp").popImg();
+               unblockUI();
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
+              unblockUI();
           });;
     }
 	
 	function getSocietyPhotos(){
     	
     	var societyid = $('#societyid').val();
-    	
+    	blockUI();
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getSocietyPhotos.do",
@@ -368,8 +379,10 @@
                img += '</ul></div>';
                //console.log(img);
                $('#imgContainer').html(img);
+               unblockUI();
           }).fail(function(jqXHR, textStatus) {
               alert('File Fetch failed ...');
+              unblockUI();
           });;
     }
 

@@ -124,14 +124,12 @@
 		var positionname = $('#positionname').val();
 		var isactive = $('#isactive:checked').val();
 		 
-		
-		
-		
 		if(positionid.length<1 ||  positionname.length<1 || isactive.length<1 ){
 			alert("Some Mandatory Fields Missing");
 			return false;
 		}
 			
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveDesignationDetails.do",
@@ -143,10 +141,12 @@
 	        	if(response.positionid>0) {
 	        		notify('success','SUCCESS','Added Successfully',2000);
 	        		location.reload();
-	        	}  
+	        	}
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		
@@ -158,7 +158,7 @@
  function editDoc(positionid){
 		
 		editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDesignationById.do",
@@ -169,9 +169,11 @@
 	        		$('#positionname').val(response.positionname);
 	        		$('input[name=isactive][value="'+response.isactive+'"]').prop("checked","checked").change();
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

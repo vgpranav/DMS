@@ -272,7 +272,7 @@
 		 function editBuilder(builderid){
 		
 			 editMode();
-			 
+			 blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getBuilderDetailsById.do",
@@ -299,9 +299,11 @@
 	        		$('#email').val(response.email);
 
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

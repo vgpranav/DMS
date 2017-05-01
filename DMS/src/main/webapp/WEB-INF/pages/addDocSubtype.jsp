@@ -182,8 +182,8 @@
 	
 function editDocSubtype(docsubtypeid){
 		
-	editMode();
-	
+		editMode();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDocumentSubTypeById.do",
@@ -198,11 +198,12 @@ function editDocSubtype(docsubtypeid){
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
 	        		$('input[name=displayflag][value="'+response.displayflag+'"]').prop("checked","checked").change();
 	        		//$('#societyname').val(response.societyname);
-	        		
-	        	}  
+	        	} 
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

@@ -161,7 +161,7 @@
 		var table = $('#thetable').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getFieldsForDocSubtype.do",
@@ -181,9 +181,11 @@
 	                ] ).draw( false );
 	        	    
 	        	  });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -192,6 +194,7 @@
 	
 	function getDocTypes(){
 		var societyid = $('#societyid').val();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDoctypeBySocId.do",
@@ -203,9 +206,11 @@
 	        	    $.each(response, function() {
 	        	    	$select.append($("<option />").val(this.doctypeid).text(this.doctypename));
 	        	    });
+	        	    unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -213,6 +218,7 @@
 	
 	function getDocSubTypes(){
 		var doctypeid = $('#doctypeid').val();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDocSubtypeByDocId.do",
@@ -224,9 +230,11 @@
 	        	    $.each(response, function() {
 	        	    	$select.append($("<option />").val(this.docsubtypeid).text(this.docsubtypename));
 	        	    });
+	        	    unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -240,7 +248,7 @@
 		var sequence = $('#sequence').val();
 		var fieldtype = $('#fieldtype:checked').val();
 		var active = $('#active:checked').val();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveFormFields.do",
@@ -255,9 +263,11 @@
 	        		getFieldsForDocSubtype();
 	        		notify('success','SUCCESS','Added Successfully',2000);
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		

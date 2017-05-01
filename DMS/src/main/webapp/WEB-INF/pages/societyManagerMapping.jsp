@@ -132,7 +132,7 @@
 			return false;
 			
 		table1.clear().draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getManagersForSociety.do",
@@ -147,9 +147,11 @@
 					        			removebtn,
 				                ] ).draw( false ); 
 	        				});
+	        		unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -157,7 +159,7 @@
  function removeSocietymanagerid(societymanagerid){
 	 
 		if(confirm('Are you Sure?')){
-			  
+			blockUI();
 			$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/removeSocietyManager.do",
@@ -170,9 +172,11 @@
 		        	}  else {
 		        		notify('error','Failed','Failed to Remove Member',2000);
 		        	}
+		        unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
+						unblockUI();
 					}
 				}); 
 		}
@@ -191,6 +195,7 @@
 		} else {
 			$('#userid').val("");
 			$('#username').val("");
+			blockUI();
 			$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/addSocietyManager.do",
@@ -201,9 +206,11 @@
 		        	notify('success','SUCCESS','Added Successfully',2000);
 		        		getCommitteMembersForSociety();
 		        	}  
+		        	unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
+						unblockUI();
 					}
 				});
 		}

@@ -217,7 +217,7 @@
 			alert("Some Mandatory Fields Missing");
 			return false;
 		}
-			
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveVendorDetails.do",
@@ -240,9 +240,11 @@
 	        		getVendorsBySocId();
 	        		notify('success','SUCCESS','Added Successfully',2000);
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		
@@ -254,7 +256,7 @@
 		var table = $('#thetable').DataTable();
 			
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorsBySocId.do",
@@ -280,9 +282,11 @@
 	        	    
 	        	  });
 	        	}
+	        unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -291,7 +295,7 @@
 	function editVendor(vendorId){
 		
 		editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorDataById.do",
@@ -310,9 +314,11 @@
 	        		$('#remark').val(response.remark);
 	        		$('input[name=isactive][value="'+response.isactive+'"]').prop("checked","checked").change();
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}

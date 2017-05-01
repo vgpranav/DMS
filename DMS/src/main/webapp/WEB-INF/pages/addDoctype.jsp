@@ -148,7 +148,7 @@
 	function editDoc(doctypeid){
 		
 		editMode();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDocumentTypeById.do",
@@ -163,12 +163,13 @@
 	        		//$('#societyname').val(response.societyname);
 	        		
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
-		 
 	}
 
 </script>

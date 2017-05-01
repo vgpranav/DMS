@@ -573,7 +573,7 @@
 	function generateOTP(interval){
 		var mobileNo = $('#mobileNoOTP').val();
 		$('#otp').val('');
-		
+		blockUI();
 		$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
@@ -587,9 +587,11 @@
 		        		clearInterval(interval);
 				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 		        	}
+		        unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
+						unblockUI();
 					}
 				});
 	}
@@ -599,6 +601,7 @@
 		var otp = $('#otp').val();
 		
 		if(otp.length>0){
+			blockUI();
 					$.ajax({
 				        type: "GET",
 				        url: "<%=request.getContextPath()%>/validateOTPForDocAccess.do",
@@ -614,9 +617,11 @@
 				        		notify('error','FAILED','Invalid OTP or Mobile Number',2000);
 						    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 				        	}
+				        	unblockUI();
 				        },
 							error : function(e) {
 								notify('error','ERROR','Error occured',2000);
+								unblockUI();
 							}
 						});
 		}else{
@@ -634,7 +639,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
@@ -655,9 +660,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -671,7 +678,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
@@ -690,9 +697,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -701,7 +710,7 @@
 function editUserData(){
 		
 		var userid = $('#userid').val();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
@@ -753,9 +762,11 @@ function editUserData(){
 	        		 
 	        		$('#occupancy').prop('disabled', 'disabled');
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}

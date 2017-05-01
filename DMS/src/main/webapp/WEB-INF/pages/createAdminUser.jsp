@@ -178,7 +178,7 @@
  
 		 
  function editAdminUser(userid){
-		
+	 blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/editAdminUser.do",
@@ -194,9 +194,11 @@
 	        		$('#userroleid option[value="'+response.userroleid+'"]').prop("selected",true).change();
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
 	        	}  
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		 

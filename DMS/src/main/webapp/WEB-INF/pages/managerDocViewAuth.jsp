@@ -132,7 +132,7 @@
 			
 		
 		table .clear() .draw();
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getMappedDocsBySocId.do",
@@ -159,9 +159,11 @@
 	        			removebtn,
 	                ] ).draw( false );
 	        	 });
+	        	unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
@@ -173,7 +175,7 @@
 		var docsubtypeid = $('#docsubtypeid').val();
 		var displayflag = $("input[name='displayflag']:checked").val();  
 		var confFlag = $("input[name='confFlag']:checked").val(); 
-		
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveSocViewMapping.do",
@@ -187,9 +189,11 @@
 		        		getMappedDocsBySocId();
 	 	        		notify('success','SUCCESS','Added Successfully',2000);
 		        	}  
+		        	unblockUI();
 		        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		
@@ -199,7 +203,7 @@
  function removeSocDocViewMapping(socdocviewmappingid){
 	 
 		if(confirm('Are you Sure?')){
-			  
+			blockUI();
 			$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/removeSocDocViewMapping.do",
@@ -212,9 +216,11 @@
 		        	}  else {
 		        		notify('error','Failed','Failed to Remove Member',2000);
 		        	}
+		        unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
+						unblockUI();
 					}
 				}); 
 		}
@@ -224,6 +230,7 @@
  
  function getDocTypes(){
 		var societyid = $('#societyid').val();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDoctypeBySocId.do",
@@ -235,9 +242,11 @@
 	        	    $.each(response, function() {
 	        	    	$select.append($("<option />").val(this.doctypeid).text(this.doctypename));
 	        	    });
+	        	    unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 		getMappedDocsBySocId();
@@ -245,6 +254,7 @@
  
 	function getDocSubTypes(){
 		var doctypeid = $('#doctypeid').val();
+		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getDocSubtypeByDocId.do",
@@ -256,9 +266,11 @@
 	        	    $.each(response, function() {
 	        	    	$select.append($("<option />").val(this.docsubtypeid).text(this.docsubtypename));
 	        	    });
+	        	    unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
+					unblockUI();
 				}
 			});
 	}
