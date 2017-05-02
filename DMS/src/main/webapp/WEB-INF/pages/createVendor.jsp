@@ -80,21 +80,21 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-6 col-sm-6 col-xs-12"
-							for="first-name">Alternate Number<span class="required">*</span>
+							for="first-name">Alternate Number 
 						</label> 
 						<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="alternateno" name="alternateno"
-								required="required" class="form-control col-md-7 col-xs-12">
+							 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<label class="control-label col-md-6 col-sm-6 col-xs-12"
-							for="first-name">E Mail<span class="required">*</span>
+							for="first-name">E Mail 
 						</label> 
 						<div class="col-md-6 col-sm-6 col-xs-12">
 								<input type="text" id="email" name="email"
-								required="required" class="form-control col-md-7 col-xs-12">
+								  class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 					
@@ -118,7 +118,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-6 col-sm-6 col-xs-12"
-							for="first-name">Remark<span class="required">*</span>
+							for="first-name">Remark 
 						</label> 
 						<div class="col-md-6 col-sm-6 col-xs-12">
 							<textarea id="remark" name="remark" rows="2" cols="" 

@@ -45,16 +45,79 @@
 					</div>
 					
 					
-					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Site Address <span class="required">*</span>
+							for="first-name">Street/Road/Lane 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<textarea id="siteaddress" name="siteaddress"
-								required="required" class="form-control col-md-7 col-xs-12"></textarea>
+							<input type="text" id="street" name="street"
+								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Landmark 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="landmark" name="landmark"
+								  class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Area/Locality/Sector 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="area" name="area"
+								 class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Vilage/Town/City 
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="city" name="city"
+								  class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">District <span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="district " name="district"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">State<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="state" name="state"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Country<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="country" name="country"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">Pincode<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="pincode" name="pincode"
+								required="required" class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"

@@ -1754,6 +1754,8 @@ if (typeof NProgress != 'undefined') {
 			  //console.log(start.toISOString(), end.toISOString(), label);
 			});
   
+			
+			
 			$('.customdatepicker').daterangepicker({
 				  singleDatePicker: true,
 				  singleClasses: "picker_2",
@@ -1761,6 +1763,8 @@ if (typeof NProgress != 'undefined') {
 				}, function(start, end, label) {
 				  //console.log(start.toISOString(), end.toISOString(), label);
 				});
+			
+			$('.customdatepicker').val("");
 			
 			$('.customdatepicker').on('apply.daterangepicker', function(ev, picker) {
  				  $(this).val(picker.startDate.format('YYYY/MM/DD'));

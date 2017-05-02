@@ -63,13 +63,13 @@ public static String getSocietyManagerList = "select sm.societymanagerid as soci
 public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
 public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
 public static String getAllBuilders = "select * from builder";
-public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active,contact,altcontact,email) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? ,contact=? ,altcontact=? ,email=? where builderid=?";
+public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active,contact,altcontact,email,district) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? ,contact=? ,altcontact=? ,email=?,district=? where builderid=?";
 public static String getBuilderDetailsById="select * from builder where builderid=?";
 public static String getAllProjects="SELECT p.*,b.builderid,b.buildername FROM project p, builder b where p.builderid=b.builderid ";
 public static String getProjectDetailsById="select * from project where projectid=?";
-public static String insertNewProject="insert into project(projectname, builderid, siteaddress, plotarea, registrationdate, towernos, resnos, bungnos, pentanos, shopnos, galanos, createdby) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateProject="Update project set projectname=?, builderid=?, siteaddress=?, plotarea=?, registrationdate=?, towernos=?, resnos=?, bungnos=?, pentanos=?, shopnos=?, galanos=?, createdby=?,active=? where projectid=?";
+public static String insertNewProject="insert into project(projectname, builderid, plotarea, registrationdate, towernos, resnos, bungnos, pentanos, shopnos, galanos, createdby,street,landmark,area,city,district,state,country,pincode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+public static String updateProject="Update project set projectname=?, builderid=?, plotarea=?, registrationdate=?, towernos=?, resnos=?, bungnos=?, pentanos=?, shopnos=?, galanos=?, createdby=?,active=?,street=?,landmark=?,area=?,city=?,district=?,state=?,country=?,pincode=? where projectid=?";
 public static String insertSocDocMapping="insert into societydocmapping(doctypeid, societyid, createdby) values (?,?,?)";
 public static String getAllSocDocMapping= "select m.societydocmappingid,d.doctypename,s.societyname from societydocmapping m, society s, doctype d where m.societyid=s.societyid and m.doctypeid=d.doctypeid";
 public static String removeSocietyDocmapping="delete from societydocmapping where societydocmappingid=?";
@@ -135,6 +135,7 @@ public static String getShareCertDetailsForMemberByHashValue ="select * from use
 public static String removeShareCertDetails = "delete from userscnominee where userscnomineeid=?";
 public static String updateParkingDetails="update userparkingdetails set userid=?,randomHash='' where randomHash=?";
 public static String updateSCDetails="update userscnominee set userid=?,randomHash='' where randomHash=?";
+public static String getAllTxnRoles = "select * from role";
 
 
 

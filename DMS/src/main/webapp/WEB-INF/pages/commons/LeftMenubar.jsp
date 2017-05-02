@@ -17,6 +17,16 @@
 		                    <ul class="nav child_menu">
 		                    
 		                      <c:if test="${sessionScope.userObject.userroleid==1}">
+		                      
+		                       	  <!-- <li>
+			                      	<a><i class="fa fa-folder-o"></i> Auth Mgmt</a>
+			                      	<ul class="nav child_menu">
+			                      		  <li><a href="createRole.do">Create Role</a></li>
+					                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
+					                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
+			                      	</ul>
+			                      </li> -->
+			                      
 			                      <li>
 			                      	<a><i class="fa fa-folder-o"></i> Documents</a>
 			                      	<ul class="nav child_menu">
@@ -66,7 +76,8 @@
 		                      	<a> <i class="fa fa-folder-o"></i> Vendors</a>
 		                      	<ul class="nav child_menu">
 		                      		<li><a href="createVendor.do">Create Vendor</a></li>
-		                      		<li><a href="createVendorCards.do">Add Vendor Photo / Visiting Card</a></li>
+		                      		<li><a href="createVendorCards.do">Add Visiting Card</a></li>
+		                      		<li><a href="createVendorPhoto.do">Add Vendor Photo</a></li>
 		                      	</ul>
 		                      </li>
 		                      </c:if>

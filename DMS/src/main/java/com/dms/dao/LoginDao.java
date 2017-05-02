@@ -2,16 +2,20 @@ package com.dms.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.LoggerFactory;
 
 import com.dms.beans.Otphandler;
+import com.dms.beans.RoleTransaction;
 import com.dms.beans.User;
+import com.dms.beans.UserSCNominee;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.SmsApi;
@@ -139,4 +143,30 @@ public class LoginDao {
 	    }
 	    return rowsUpdated;
 	}
+
+	public List<RoleTransaction> getAllRoles(List<RoleTransaction> roleList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<RoleTransaction>> rsh = new BeanListHandler<RoleTransaction>(RoleTransaction.class);
+		      
+		      roleList = qr.query(conn, DMSQueries.getAllTxnRoles, rsh);
+		      
+		    } catch (Exception e) {
+		      logger.error("Error fetching SocType List :: " + e.getMessage());
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        logger.error("Error releasing connection :: " + e.getMessage());
+		      }
+		    }
+		    return roleList;
+		  }
 }

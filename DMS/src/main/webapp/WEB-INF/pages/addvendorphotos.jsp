@@ -3,7 +3,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Add Vendor Visiting Card</h2>
+                  <h2>Add Vendor Photo </h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -103,7 +103,7 @@ $(document).ready(function() {
         }
         blockUI();
         $.ajax({
-            url: 'uploadVendorCards.do',
+            url: 'uploadVendorPhoto.do',
             type: "POST",
             data: new FormData(document.getElementById("fileForm")),
             enctype: 'multipart/form-data',
@@ -167,7 +167,7 @@ $(document).ready(function() {
     	blockUI();
     	$.ajax({
 	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getVendorCards.do",
+	        url: "<%=request.getContextPath()%>/getVendorPhotos.do",
 	        data :"vendorid="+vendorid,
 	        enctype: 'multipart/form-data',
 	        processData: false,
@@ -176,7 +176,7 @@ $(document).ready(function() {
 			var img='';
 			var cnt =1;
                $.each(data, function(i, item) {
-               		img += '<div class="col-md-4 col-sm-4 col-xs-12"><img height="300"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/></div>';
+               		img += '<div class="col-md-4 col-sm-4 col-xs-12"><img height="350"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/></div>';
                		if(cnt%3==0){
                			img+='<div class="clearfix"></div><br/>';
                		}

@@ -212,6 +212,7 @@
                             <th class="column-title">Alternate Number</th>
                             <th class="column-title">Email</th>
                             <th class="column-title">Remarks</th>
+                            <th class="column-title">Photo</th>
                             <th class="column-title">Visiting Card</th>
                           </tr>
                         </thead>
@@ -426,7 +427,9 @@
 	        	
 	        	$.each(response, function(i, item) {
 	        		var divid="vend"+srno;
+	        		var divid1 = "vendc"+srno;
 		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+		        	var carddiv = '<div id="'+divid1+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
 	        		table.row.add( [
 	        			item.companyname,
 	        			item.jobnature,
@@ -437,9 +440,11 @@
 	        			item.email,
 	        			item.remark,
 	        			photodiv,
+	        			carddiv,
 	                ] ).draw( false );
 	        	    
 	        		getVendorPhotos(item.vendorid,divid);
+	        		getVendorCards(item.vendorid,divid1);
 	        		srno++;
 	        		
 	        	  });
@@ -485,6 +490,33 @@
     	$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getVendorPhotos.do",
+	        data :"vendorid="+vendorid,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+            contentType: false 
+			}).done(function(data) {
+			$('#'+divId).html("");
+			var img='';
+			var cnt =1;
+               $.each(data, function(i, item) {
+               		img = '<img class="dp" height="30"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+               });
+               $('#'+divId).html(img);
+               $(".dp").popImg();
+               unblockUI();
+          }).fail(function(jqXHR, textStatus) {
+              alert('File Fetch failed ...');
+              unblockUI();
+          });;
+    }
+	
+	
+	function getVendorCards(vendorid,divId){
+    	//console.log(memberId+"-"+divId);
+    	blockUI();
+    	$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getVendorCards.do",
 	        data :"vendorid="+vendorid,
 	        enctype: 'multipart/form-data',
 	        processData: false,

@@ -16,7 +16,7 @@
                    <div class="col-md-12 col-sm-12 col-xs-12">
                     <form id="fileForm">
                     	<div class="col-md-4 col-sm-4 col-xs-4">
-	                    	<select name="societyid" id="societyid" class="form-control" onchange="getDocTypes()">
+	                    	<select name="societyid" id="societyid" class="form-control" onchange="getSocietyPhotos()">
 								<c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
 									<option value="${myItem.societyid}">${myItem.societyname}</option>
 								</c:forEach>

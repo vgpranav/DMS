@@ -173,6 +173,11 @@
       <put-attribute name="body" value="/WEB-INF/pages/addvendorcards.jsp" />   
     </definition> 
     
+    <definition name="createVendorPhoto" extends="base-definition">  
+      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addvendorphotos.jsp" />   
+    </definition> 
+    
      <definition name="SocietySelectionForAdmin" extends="base-definition">  
       <put-attribute name="title" value="Create Admin User" />  
       <put-attribute name="body" value="/WEB-INF/pages/SocietySelectionForAdmin.jsp" />   

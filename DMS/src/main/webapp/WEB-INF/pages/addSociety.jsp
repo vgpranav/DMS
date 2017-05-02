@@ -20,7 +20,7 @@
                     <div class="col-md-7 col-sm-7 col-xs-12">
 				<form id="addSocietyForm" data-parsley-validate
 					class="form-horizontal form-label-left" action="saveSociety.do"
-					method="post">
+					method="post" onsubmit="return validateFields()">
 
 					<input type="hidden" id="societyid" name="societyid" value="0">
 					<input type="hidden" name="societytype" id="societytype" value="${societytype}">
@@ -387,6 +387,15 @@
 	});
 	
 
+	function validateFields(){
+		
+		if($('#estdate').val().trim().length<1)
+			$('#estdate').attr("disabled","disabled");
+		
+		return true;
+	}
+	
+	
 	function getSocietyDetailsById(societyid){
 		
 		//var societyId = $('#searchText').val();
@@ -408,8 +417,9 @@
 	        		$('#state').val(response.state);
 	        		$('#pincode').val(response.pincode);
 	        		$('#registrationno').val(response.registrationno);
-	        		$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));
 	        		
+	        			$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));	
+	        		 
 	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();
 	        		$('#projectid option[value="'+response.projectid+'"]').prop("selected",true).change();
 	        		//$('#societyname').val(response.societyname);

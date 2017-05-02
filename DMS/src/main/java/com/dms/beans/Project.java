@@ -7,8 +7,7 @@ public class Project {
 	private long projectid; 
 	private long builderid;
 	private String projectname;
-	private String siteaddress;
-	private String plotarea;
+ 	private String plotarea;
 	private Date registrationdate;
 	private String towernos;
 	private String resnos;
@@ -21,18 +20,83 @@ public class Project {
 	private int active;
 	private String buildername;
 	
+	private String	street;
+	private String	landmark;
+	private String	area;
+	private String	city;
+	private String	district;
+	private String	state;
+	private String	country;
+	private String	pincode;
+	 
+	
+	
+	@Override
+	public String toString() {
+		return "Project [projectid=" + projectid + ", builderid=" + builderid + ", projectname=" + projectname
+				+ ", plotarea=" + plotarea + ", registrationdate=" + registrationdate + ", towernos=" + towernos
+				+ ", resnos=" + resnos + ", bungnos=" + bungnos + ", pentanos=" + pentanos + ", shopnos=" + shopnos
+				+ ", galanos=" + galanos + ", createdby=" + createdby + ", createdon=" + createdon + ", active="
+				+ active + ", buildername=" + buildername + ", street=" + street + ", landmark=" + landmark + ", area="
+				+ area + ", city=" + city + ", district=" + district + ", state=" + state + ", country=" + country
+				+ ", pincode=" + pincode + "]";
+	}
+	
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getLandmark() {
+		return landmark;
+	}
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getPincode() {
+		return pincode;
+	}
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
 	public long getProjectid() {
 		return projectid;
 	}
 	public void setProjectid(long projectid) {
 		this.projectid = projectid;
 	}
-	public String getSiteaddress() {
-		return siteaddress;
-	}
-	public void setSiteaddress(String siteaddress) {
-		this.siteaddress = siteaddress;
-	}
+	 
 	public String getPlotarea() {
 		return plotarea;
 	}
@@ -121,13 +185,6 @@ public class Project {
 		this.buildername = buildername;
 	}
 	
-	@Override
-	public String toString() {
-		return "Project [projectid=" + projectid + ", builderid=" + builderid + ", projectname=" + projectname
-				+ ", siteaddress=" + siteaddress + ", plotarea=" + plotarea + ", registrationdate=" + registrationdate
-				+ ", towernos=" + towernos + ", resnos=" + resnos + ", bungnos=" + bungnos + ", pentanos=" + pentanos
-				+ ", shopnos=" + shopnos + ", galanos=" + galanos + ", createdby=" + createdby + ", createdon="
-				+ createdon + ", active=" + active + ", buildername=" + buildername + "]";
-	}
+	 
 	
 }

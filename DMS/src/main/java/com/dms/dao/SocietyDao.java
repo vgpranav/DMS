@@ -1031,7 +1031,8 @@ public Builder insertOrUpdateBuilder(Builder builder) {
       			  builder.getActive(),
       			  builder.getContact(),
       			  builder.getAltcontact(),
-      			  builder.getEmail()
+      			  builder.getEmail(),
+      			  builder.getDistrict()
 		        );
 
     	  builderId = CommomUtility.convertToLong(obj);
@@ -1055,6 +1056,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
       			  builder.getContact(),
     			  builder.getAltcontact(),
     			  builder.getEmail(),
+    			  builder.getDistrict(),
       			  builder.getBuilderid());
       }
       
@@ -1189,7 +1191,6 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    	  Object obj = qr.insert(conn, DMSQueries.insertNewProject, rsh, 
 	    			  project.getProjectname(),
 	    			  project.getBuilderid(),
-	    			  project.getSiteaddress(),
 	    			  project.getPlotarea(),
 	    			  project.getRegistrationdate(),
 	    			  project.getTowernos(),
@@ -1198,7 +1199,16 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    			  project.getPentanos(),
 	    			  project.getShopnos(),
 	    			  project.getGalanos(),
-	    			  project.getCreatedby()
+	    			  project.getCreatedby(),
+	    			  
+	    			  project.getStreet(),
+	    			  project.getLandmark(),
+	    			  project.getArea(),
+	    			  project.getCity(),
+	    			  project.getDistrict(),
+	    			  project.getState(),
+	    			  project.getCountry(),
+	    			  project.getPincode()
 			        );
 
 	    	  projectId = CommomUtility.convertToLong(obj);
@@ -1209,7 +1219,6 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      		qr.update(conn,DMSQueries.updateProject,
 	      				  project.getProjectname(),
 		    			  project.getBuilderid(),
-		    			  project.getSiteaddress(),
 		    			  project.getPlotarea(),
 		    			  project.getRegistrationdate(),
 		    			  project.getTowernos(),
@@ -1220,6 +1229,14 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		    			  project.getGalanos(),
 		    			  project.getCreatedby(),
 		    			  project.getActive(),
+		    			  project.getStreet(),
+		    			  project.getLandmark(),
+		    			  project.getArea(),
+		    			  project.getCity(),
+		    			  project.getDistrict(),
+		    			  project.getState(),
+		    			  project.getCountry(),
+		    			  project.getPincode(),
 		    			  project.getProjectid()); 
 	      		}
 	      

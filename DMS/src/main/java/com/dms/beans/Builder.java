@@ -23,8 +23,17 @@ public class Builder {
 	public String contact;
 	public String altcontact;
 	public String email;
+
+	public String district;
+
 	
 	
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
 	public String getAddress() {
 		return address;
 	}
@@ -140,7 +149,8 @@ public class Builder {
 				+ ", blockno=" + blockno + ", premisesname=" + premisesname + ", streetname=" + streetname
 				+ ", landmark=" + landmark + ", area=" + area + ", city=" + city + ", pincode=" + pincode + ", state="
 				+ state + ", country=" + country + ", createdby=" + createdby + ", createdon=" + createdon + ", active="
-				+ active + ", contact=" + contact + ", altcontact=" + altcontact + ", email=" + email + "]";
+				+ active + ", contact=" + contact + ", altcontact=" + altcontact + ", email=" + email + ", district="
+				+ district + "]";
 	}
 	
 }

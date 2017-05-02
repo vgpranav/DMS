@@ -32,6 +32,7 @@ import com.dms.beans.Documentdetails;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Project;
+import com.dms.beans.RoleTransaction;
 import com.dms.beans.Society;
 import com.dms.beans.SocietyType;
 import com.dms.beans.User;
@@ -1051,6 +1052,27 @@ public class ViewController
     return mv;
   }
   
+  
+  @RequestMapping(value={"/createVendorPhoto"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createVendorPhoto(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("createVendorPhoto");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
   @RequestMapping(value={"/addCallRef"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView addCallRef(HttpServletRequest request, HttpServletResponse response)
   {
@@ -1242,6 +1264,21 @@ public class ViewController
     	desigList = societyDao.getAllDesignations(desigList);
       mv = new ModelAndView("manageDesignation");
       mv.addObject("desigList", desigList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  @RequestMapping(value={"/createRole"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createRole() {
+    ModelAndView mv = null;
+    List<RoleTransaction> roleList = null;
+    LoginDao loginDao = new LoginDao();
+    try {
+    	roleList = loginDao.getAllRoles(roleList);
+      mv = new ModelAndView("manageDesignation");
+      mv.addObject("roleList", roleList);
     } catch (Exception e) {
       logger.error(e.getMessage());
     }

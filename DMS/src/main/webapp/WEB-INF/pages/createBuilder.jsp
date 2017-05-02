@@ -62,7 +62,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Street Name 
+							for="first-name">Street/Road/Lane 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="streetname" name="streetname"
@@ -82,7 +82,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Area 
+							for="first-name">Area/Locality/Sector 
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="area" name="area"
@@ -92,7 +92,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">City <span class="required">*</span>
+							for="first-name">Vilage/Town/City <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="city" name="city"
@@ -110,6 +110,17 @@
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">District<span class="required">*</span>
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="district" name="district"
+								required="required" class="form-control col-md-7 col-xs-12" value="">
+						</div>
+					</div>
+					
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
