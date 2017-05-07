@@ -25,8 +25,6 @@ public class Builder {
 	public String email;
 
 	public String district;
-
-	
 	
 	public String getDistrict() {
 		return district;

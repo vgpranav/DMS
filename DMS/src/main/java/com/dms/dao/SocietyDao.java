@@ -139,7 +139,9 @@ public class SocietyDao
 		    society.getEstdate(),
 		    society.getLandmark(),
 		    society.getCity(),
-		    society.getCountry()
+		    society.getCountry(),
+		    society.getNoofshop(),
+		    society.getNoofflat()
 		);
 		
 		societyProfileId = CommomUtility.convertToLong(obj1);
@@ -166,6 +168,8 @@ public class SocietyDao
       				society.getLandmark(),
       			    society.getCity(),
       			    society.getCountry(),
+      			    society.getNoofshop(),
+      			  	society.getNoofflat(),
       				society.getSocietyid());
     	  
       }
@@ -336,19 +340,44 @@ public class SocietyDao
 	          );
     	  
     	  if(userprofile.getOccupancy().equalsIgnoreCase("leased")){
-	    	  qr.update(conn, DMSQueries.updateNewTenant, 
-	    			  userprofile.getTenantname(),
-	    			  userprofile.getTenantaddress(),
-	    			  userprofile.getTenantcontactnumber(),
-	    			  userprofile.getTenantaltnumber(),
-	    			  userprofile.getTenantemail(),
-	    			  userprofile.getTenantaadharno(),
-	    			  userprofile.getTenantType(),
-	    			  userprofile.getTenantPVstatus(),
-			          userprofile.getTenantfrom(),
-			          userprofile.getTenantto(),
-	    			  userprofile.getUserid()
-	    			  );
+    		  
+    		  ResultSetHandler<Userprofile> rsh1 = new BeanHandler<Userprofile>(Userprofile.class);
+    		  Userprofile tenantExists = qr.query(conn,DMSQueries.getTenantByUserId,rsh1,userprofile.getUserid()); 
+    				  
+    		  if(tenantExists!=null){
+    			  
+    			  qr.update(conn, DMSQueries.updateNewTenant, 
+    	    			  userprofile.getTenantname(),
+    	    			  userprofile.getTenantaddress(),
+    	    			  userprofile.getTenantcontactnumber(),
+    	    			  userprofile.getTenantaltnumber(),
+    	    			  userprofile.getTenantemail(),
+    	    			  userprofile.getTenantaadharno(),
+    	    			  userprofile.getTenantType(),
+    	    			  userprofile.getTenantPVstatus(),
+    			          userprofile.getTenantfrom(),
+    			          userprofile.getTenantto(),
+    	    			  userprofile.getUserid()
+    	    			  );
+    		  } else {
+    			  
+    			  qr.insert(conn, DMSQueries.insertNewTenant, rsh,
+    					  userprofile.getUserid(),
+    	    			  userprofile.getTenantname(),
+    	    			  userprofile.getTenantaddress(),
+    	    			  userprofile.getTenantcontactnumber(),
+    	    			  userprofile.getTenantaltnumber(),
+    	    			  userprofile.getTenantemail(),
+    	    			  userprofile.getTenantaadharno(),
+    	    			  userprofile.getTenantType(),
+    	    			  userprofile.getTenantPVstatus(),
+    	    			  userprofile.getTenantfrom(),
+        		          userprofile.getTenantto()
+    	    			  );
+    			  
+    		  }
+    				  
+	    	  
 	      }
       }
       
@@ -1494,6 +1523,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      fileList =  qr.query(conn,DMSQueries.getNoticeboardDocBySocid,rsh,societyid);
 	      
 	      if (fileList.size() > 0) {
+	    	  
 	        if (ftp.connectAndLogin(hostDomain, Id, Password))
 	        {
 	          ftp.setPassiveMode(true);
@@ -1504,16 +1534,18 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	          for (Files file : fileList)
 	          {
 	            InputStream stream = ftp.retrieveFileStream(file.getFilename());
-	            byte[] bytes = IOUtils.toByteArray(stream);
-	            
-	            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
-	            HashMap<String, Object> hmap = new HashMap<String, Object>();
-	            hmap.put("filename", file.getFilename());
-	            hmap.put("documentid", file.getDocumentid());
-	            hmap.put("contenttype", file.getMimetype());
-	            hmap.put("createdon", file.getCreatedon());
-	            hmap.put("file",  new String(Base64Utils.encode(bytes)));
-	            photos.add(hmap);
+	            if(stream!=null){
+	            	byte[] bytes = IOUtils.toByteArray(stream);
+		            
+		            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
+		            HashMap<String, Object> hmap = new HashMap<String, Object>();
+		            hmap.put("filename", file.getFilename());
+		            hmap.put("documentid", file.getDocumentid());
+		            hmap.put("contenttype", file.getMimetype());
+		            hmap.put("createdon", file.getCreatedon());
+		            hmap.put("file",  new String(Base64Utils.encode(bytes)));
+		            photos.add(hmap);
+	            }
 	            ftp.completePendingCommand();
 	          }
 	           
@@ -2281,7 +2313,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    	  
 	    	  ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
 	          Object obj = qr.insert(conn, DMSQueries.addShareCertDetails, rsh, 
-	        		  userSCNominee.getNominee(),userSCNominee.getPercent(),userSCNominee.getUserid(),userSCNominee.getRandomHash()
+	        		  userSCNominee.getNominee(),
+	        		  userSCNominee.getPercent(),
+	        		  userSCNominee.getUserid(),
+	        		  userSCNominee.getRandomHash(),
+	        		  userSCNominee.getNomineerelation(),
+	        		  userSCNominee.getNomineedob(),
+	        		  userSCNominee.getNomineeaddress()
 	            );
 	          gbeanId = CommomUtility.convertToLong(obj);
 	          userSCNominee.setUserscnomineeid(gbeanId);
@@ -2347,6 +2385,244 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      }
 	    }
 	    return 0;
+	  }
+
+	public List<User> getUserAutosuggestByUsername(String searchText) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
+	      String SQL = " select u.userid,u.firstName,u.lastName from user u,userprofile up where u.userid=up.userid and " + 
+	        " (lower(u.firstName) like '%" + searchText.toLowerCase() + "%' or lower(u.lastName) like '%" + searchText.toLowerCase() + "%') "
+	        		+ " union all "
+	        		+ " select userid,firstName,concat(lastName,' (Admin)') as lastName from user where userroleid <> 0 and (lower(firstName) like "
+	        		+ " '%" + searchText.toLowerCase() + "%' or lower(lastName) like '%" + searchText.toLowerCase() + "%') ";
+	      return qr.query(conn,SQL,rsh);
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public int saveConfDocAccess(String userid, long createdBy) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.insertConfDocAccess,userid,createdBy);
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	public List<HashMap<String, Object>> getBrochure(GenericBean gbean, List<HashMap<String, Object>> photos) {
+	    Connection conn = null;
+	    
+	    List<Files> fileList = null;
+	    FtpWrapper ftp = new FtpWrapper();
+	    String hostDomain = ftp.getServerName();
+	    String Id = ftp.getUsername();
+	    String Password = ftp.getPassword();
+	    try { 
+	    	
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Files>> rsh = new BeanListHandler<Files>(Files.class);
+	      
+	      fileList =  qr.query(conn,DMSQueries.getBrochure,rsh,gbean.getGenId(),gbean.getTypeVal());
+	      
+	      if (fileList.size() > 0) {
+	    	  
+	        if (ftp.connectAndLogin(hostDomain, Id, Password))
+	        {
+	          ftp.setPassiveMode(true);
+	          ftp.binary();
+	          ftp.setBufferSize(1024000);
+	          ftp.changeWorkingDirectory("DMS/");
+	          
+	          for (Files file : fileList)
+	          {
+	            InputStream stream = ftp.retrieveFileStream(file.getFilename());
+	            if(stream!=null){
+	            	byte[] bytes = IOUtils.toByteArray(stream);
+		            
+		            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
+		            HashMap<String, Object> hmap = new HashMap<String, Object>();
+		            hmap.put("filename", file.getFilename());
+		            hmap.put("documentid", file.getDocumentid());
+		            hmap.put("contenttype", file.getMimetype());
+		            hmap.put("createdon", file.getCreatedon());
+		            hmap.put("file",  new String(Base64Utils.encode(bytes)));
+		            photos.add(hmap);
+	            }
+	            ftp.completePendingCommand();
+	          }
+	           
+	        }
+	      } else System.out.println("No Files");
+	    }
+	    catch (Exception e)
+	    {
+	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	      try {
+	        if (ftp.isConnected()) {
+	          ftp.logout();
+	          ftp.disconnect();
+	        }
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
+	    }
+	    return photos;
+	  }
+
+	public int genericRemove(GenericBean gbean) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      
+	      String SQL = "delete from "+gbean.getTypeVal()+" where "+gbean.getPkName()+" = '"+gbean.getGenId()+"'"; 
+	      
+	      System.out.println("Generic remove SQL: "+SQL);
+	      
+	      int rowsUpdated = qr.update(conn, SQL);
+	      
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	public int addTenantToHistory(User user) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	       
+	      int rowsUpdated = qr.update(conn, DMSQueries.addTenantToHistory,user.getUserid());
+	      
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	 
+
+	public List<HashMap<String, Object>> getSocietyPolicyDocuments(long societyid, List<HashMap<String, Object>> photos) {
+	    Connection conn = null;
+	    
+	    List<Files> fileList = null;
+	    FtpWrapper ftp = new FtpWrapper();
+	    String hostDomain = ftp.getServerName();
+	    String Id = ftp.getUsername();
+	    String Password = ftp.getPassword();
+	    try { 
+	    	
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Files>> rsh = new BeanListHandler<Files>(Files.class);
+	      
+	      fileList =  qr.query(conn,DMSQueries.getSocietyPolicyDocuments,rsh,societyid);
+	      
+	      if (fileList.size() > 0) {
+	    	  
+	        if (ftp.connectAndLogin(hostDomain, Id, Password))
+	        {
+	          ftp.setPassiveMode(true);
+	          ftp.binary();
+	          ftp.setBufferSize(1024000);
+	          ftp.changeWorkingDirectory("DMS/");
+	          
+	          for (Files file : fileList)
+	          {
+	            InputStream stream = ftp.retrieveFileStream(file.getFilename());
+	            if(stream!=null){
+	            	byte[] bytes = IOUtils.toByteArray(stream);
+		            
+		            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
+		            HashMap<String, Object> hmap = new HashMap<String, Object>();
+		            hmap.put("filename", file.getFilename());
+		            hmap.put("documentid", file.getDocumentid());
+		            hmap.put("contenttype", file.getMimetype());
+		            hmap.put("createdon", file.getCreatedon());
+		            hmap.put("file",  new String(Base64Utils.encode(bytes)));
+		            photos.add(hmap);
+	            }
+	            ftp.completePendingCommand();
+	          }
+	           
+	        }
+	      } else System.out.println("No Files");
+	    }
+	    catch (Exception e)
+	    {
+	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	      try {
+	        if (ftp.isConnected()) {
+	          ftp.logout();
+	          ftp.disconnect();
+	        }
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
+	    }
+	    return photos;
 	  }
 
 

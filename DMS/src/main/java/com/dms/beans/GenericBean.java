@@ -6,27 +6,60 @@ public class GenericBean {
 	
 	private long societyid;
 	private long doctypeid;
-	private String doctypename;
+	private long societydocmappingid;
 	private long docsubtypeid;
+	private long roleid;
+	private long socdocviewmappingid;
+	private long positionid;
+	private long confidentialdocaccessid;
+	
+	private long genId;
+	private String typeVal;
+	private String pkName;
+	
+	private int active;
+	private int displayflag;
+	private int confFlag;
+	private int isactive;
+	
 	private String docsubtypename;
 	private String doccount;
 	private String createdby;
-	private long societydocmappingid;
+	private String doctypename;
 	private String societyname;
-	private long roleid;
 	private String rolename;
-	private int active;
 	private String fieldname;
 	private String fieldvalue;
-	private int displayflag;
-	private int confFlag;
-	private long socdocviewmappingid;
 	private String positionname;
+	private String username;
+
 	private Date createdon;
-	private int isactive;
-	private long positionid;
 	
+	public String getTypeVal() {
+		return typeVal;
+	}
+	public void setTypeVal(String typeVal) {
+		this.typeVal = typeVal;
+	}
 	
+	public long getGenId() {
+		return genId;
+	}
+	public void setGenId(long genId) {
+		this.genId = genId;
+	}
+	public long getConfidentialdocaccessid() {
+		return confidentialdocaccessid;
+	}
+	public void setConfidentialdocaccessid(long confidentialdocaccessid) {
+		this.confidentialdocaccessid = confidentialdocaccessid;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public long getPositionid() {
 		return positionid;
 	}
@@ -155,6 +188,7 @@ public class GenericBean {
 		this.socdocviewmappingid = socdocviewmappingid;
 	}
 	
+	
 	@Override
 	public String toString() {
 		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", doctypename=" + doctypename
@@ -163,7 +197,14 @@ public class GenericBean {
 				+ societyname + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
 				+ fieldname + ", fieldvalue=" + fieldvalue + ", displayflag=" + displayflag + ", confFlag=" + confFlag
 				+ ", socdocviewmappingid=" + socdocviewmappingid + ", positionname=" + positionname + ", createdon="
-				+ createdon + ", isactive=" + isactive + ", positionid=" + positionid + "]";
+				+ createdon + ", isactive=" + isactive + ", positionid=" + positionid + ", username=" + username
+				+ ", confidentialdocaccessid=" + confidentialdocaccessid + "]";
+	}
+	public String getPkName() {
+		return pkName;
+	}
+	public void setPkName(String pkName) {
+		this.pkName = pkName;
 	}
 	
 }

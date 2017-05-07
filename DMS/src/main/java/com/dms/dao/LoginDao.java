@@ -169,4 +169,29 @@ public class LoginDao {
 		    }
 		    return roleList;
 		  }
+
+	public boolean verifyConfidentialAccess(User user) {
+		Connection conn = null;
+		User userNew = null;
+	    try {
+	    	qr = new QueryRunner();
+	    	ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+	      	conn = ConnectionPoolManager.getInstance().getConnection();
+	      	userNew = qr.query(conn, DMSQueries.verifyConfidentialDocAccess,rsh,user.getMobileNo());
+	    	
+	      	if(userNew!= null && userNew.getActive()==1)
+	      		return true;
+	      	
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return false;
+	}
 }

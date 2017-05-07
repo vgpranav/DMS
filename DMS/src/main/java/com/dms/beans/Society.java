@@ -28,9 +28,26 @@ public class Society
     private String city;
     private String landmark;
     
+    private String noofshop;
+    private String noofflat;
     
-    
-    public String getCountry() {
+    public String getNoofshop() {
+		return noofshop;
+	}
+
+	public void setNoofshop(String noofshop) {
+		this.noofshop = noofshop;
+	}
+
+	public String getNoofflat() {
+		return noofflat;
+	}
+
+	public void setNoofflat(String noofflat) {
+		this.noofflat = noofflat;
+	}
+
+	public String getCountry() {
 		return country;
 	}
 
@@ -236,7 +253,7 @@ public class Society
 				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive
 				+ ", registrationno=" + registrationno + ", estdate=" + estdate + ", projectid=" + projectid
 				+ ", projectname=" + projectname + ", societytype=" + societytype + ", country=" + country + ", city="
-				+ city + ", landmark=" + landmark + "]";
+				+ city + ", landmark=" + landmark + ", noofshop=" + noofshop + ", noofflat=" + noofflat + "]";
 	}
 
 }

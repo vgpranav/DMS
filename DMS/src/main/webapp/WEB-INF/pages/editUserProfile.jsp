@@ -552,7 +552,7 @@
 		$('#tenantaltnumber').removeAttr('readonly');
 		$('#tenantemail').removeAttr('readonly');
 		$('#tenantPVstatus').removeAttr('disabled');
-		
+		//$('#occupancy :not(:selected)').removeAttr('disabled');
 		
 	});
 

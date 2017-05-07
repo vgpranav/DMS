@@ -12,7 +12,28 @@ public class UserSCNominee {
 	private String randomHash;
 	private String createdby;
 	
+	private String nomineerelation;
+	private Date nomineedob;
+	private String nomineeaddress;
 	
+	public String getNomineerelation() {
+		return nomineerelation;
+	}
+	public void setNomineerelation(String nomineerelation) {
+		this.nomineerelation = nomineerelation;
+	}
+	public Date getNomineedob() {
+		return nomineedob;
+	}
+	public void setNomineedob(Date nomineedob) {
+		this.nomineedob = nomineedob;
+	}
+	public String getNomineeaddress() {
+		return nomineeaddress;
+	}
+	public void setNomineeaddress(String nomineeaddress) {
+		this.nomineeaddress = nomineeaddress;
+	}
 	public long getUserscnomineeid() {
 		return userscnomineeid;
 	}
@@ -60,7 +81,8 @@ public class UserSCNominee {
 	public String toString() {
 		return "UserSCNominee [userscnomineeid=" + userscnomineeid + ", userid=" + userid + ", nominee=" + nominee
 				+ ", percent=" + percent + ", createdon=" + createdon + ", randomHash=" + randomHash + ", createdby="
-				+ createdby + "]";
+				+ createdby + ", nomineerelation=" + nomineerelation + ", nomineedob=" + nomineedob
+				+ ", nomineeaddress=" + nomineeaddress + "]";
 	}
 	
 	}

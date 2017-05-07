@@ -225,5 +225,25 @@
       <put-attribute name="body" value="/WEB-INF/pages/manageDesignation.jsp" />   
     </definition> 
     
+    <definition name="addConfidentialDocAccess" extends="base-definition">  
+      <put-attribute name="title" value="Confidential Document Access" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addConfidentialDocAccess.jsp" />   
+    </definition> 
+    
+    <definition name="createBrochure" extends="base-definition">  
+      <put-attribute name="title" value="Create Brochure" />  
+      <put-attribute name="body" value="/WEB-INF/pages/createBrochure.jsp" />   
+    </definition> 
+  
+    <definition name="brochureSelection" extends="base-definition">  
+      <put-attribute name="title" value="Confidential Document Access" />  
+      <put-attribute name="body" value="/WEB-INF/pages/brochureSelection.jsp" />   
+    </definition> 
+    
+    
+    <definition name="addPolicy" extends="base-definition">  
+      <put-attribute name="title" value="Add Society Policy" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addPolicy.jsp" />   
+    </definition> 
     
 </tiles-definitions>

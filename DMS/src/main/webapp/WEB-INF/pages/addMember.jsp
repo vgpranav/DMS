@@ -416,6 +416,29 @@
 								</div>
 							
 							</div>
+							
+							<div class="form-group" align="center">
+								<button id="removeTenant" class="btn btn-primary btn-sm" onclick="addTenentToHistory();return false;" disabled="disabled">Remove Current Tenant</button>
+							</div>
+							
+							<div class="table-responsive col-sm-offset-2 col-md-offset-2 col-sm-8 col-md-8 col-xs-12"  >
+							<h4>Lease Tenant History</h4>
+							
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetableTen">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Name</th>
+											<th class="column-title">Contact No</th>
+											<th class="column-title">From Date</th>
+											<th class="column-title">To Date</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+							
 							</section>
 							
 							
@@ -457,11 +480,40 @@
 									</div>
 								</div>
 								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Relationship with Owner</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nomineerelation" name="nomineerelation"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
+								
+							</div>
+							<div class="form-group">
+							
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Date of Birth</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nomineedob" name="nomineedob"
+											class="form-control col-md-12 col-xs-12 customdatepicker">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Permanent Address</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="nomineeaddress" name="nomineeaddress"
+											class="form-control col-md-12 col-xs-12">
+									</div>
+								</div>
 							</div>
 							
 							
 							<div class="form-group" align="center">
-								<button class="btn btn-primary btn-xs" onclick="addShareCertDetails();return false;">Add Nominee</button>
+								<button class="btn btn-primary btn-sm" onclick="addShareCertDetails();return false;">+ Add Nominee</button>
 							</div>
 							
 							
@@ -472,6 +524,8 @@
 										<tr class="headings"> 
 											<th class="column-title">Nominee</th>
 											<th class="column-title">Percentage</th>
+											<th class="column-title">Relation</th>
+											<th class="column-title">DOB</th>
 											<th class="column-title">Action</th>
 										</tr>
 									</thead>
@@ -649,7 +703,7 @@
 						<tr class="headings">
 							<th class="column-title">Sr.No</th>
 							<th class="column-title">Edit</th>
-							<!-- <th class="column-title">Deact</th> -->
+							<th class="column-title">Remove</th>
 							<th class="column-title">Flat&nbsp;No</th>
 							<th class="column-title">Wing</th>
 							<th class="column-title">Floor</th>
@@ -703,6 +757,14 @@
 	        "bFilter": false,
 	        "info":     false
 	    });
+		
+		$('#thetableTen').DataTable({
+	        "paging":   false,
+	        "ordering": false,		       
+	        "bFilter": false,
+	        "info":     false
+	    });
+		
 		
 		
 		$( "#memberDetails" ).dialog({
@@ -783,10 +845,10 @@
 				return false;
 			}
 			
-			if(tenantname2.length>1)
+			if(tenantname2.length>0)
 				tenantname = tenantname+' '+tenantname2;
 			
-			if(tenantname3.length>1)
+			if(tenantname3.length>0)
 				tenantname = tenantname+' '+tenantname3;
 		}
 			
@@ -795,57 +857,62 @@
 			return false;
 		}
 		
+		
+		var datastr = "userid="+userid
+				+"&firstName="+firstName
+				+"&lastName="+lastName
+				+"&middleName="+middleName
+		        +"&mobileNo="+mobileNo
+		        +"&alternateno="+alternateno
+		        +"&email="+email
+		        +"&aadharno="+aadharno
+		        +"&password="+password
+		        +"&jointowners="+jointowners
+		        +"&purchasedate="+purchasedate
+		        +"&possessiondate="+possessiondate
+		        +"&occupancy="+occupancy
+		        +"&flatno="+flatno
+		        +"&wing="+wing
+		        +"&floor="+floor
+		        +"&tower="+tower
+		        +"&societyid="+societyid
+		        +"&builtuparea="+builtuparea
+		        +"&carpetarea="+carpetarea
+		        +"&vehicletype="+vehicletype
+		        +"&parkingtype="+parkingtype
+		        +"&parkingallotmentno="+parkingallotmentno
+		        +"&tenantname="+tenantname
+		        +"&tenantaddress="+tenantaddress
+		        +"&tenantcontactnumber="+tenantcontactnumber
+		        +"&tenantaltnumber="+tenantaltnumber
+		        +"&tenantemail="+tenantemail
+		        +"&tenantaadharno="+tenantaadharno
+		        
+		        +"&bloodgroup="+bloodgroup
+		        +"&sharecertno="+sharecertno
+		        +"&nominee1="+nominee1
+		        +"&percent1="+percent1
+		        +"&nominee2="+nominee2
+		        +"&percent2="+percent2
+		        +"&nominee3="+nominee3
+		        +"&percent3="+percent3
+		        
+		        +"&tenantType="+tenantType
+		        +"&tenantPVstatus="+tenantPVstatus
+		        +"&vehicleno="+vehicleno
+		        +"&randomHash="+randomHash;
+		
+				if(tenantfrom!=null && tenantfrom.length>0)
+					datastr += "&tenantfrom="+tenantfrom
+					
+				if(tenantto!=null && tenantto.length>0)
+					datastr += "&tenantto="+tenantto;
+		
 		blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveMemberDetails.do",
-	        data :"userid="+userid
-	        		+"&firstName="+firstName
-	        		+"&lastName="+lastName
-	        		+"&middleName="+middleName
-			        +"&mobileNo="+mobileNo
-			        +"&alternateno="+alternateno
-			        +"&email="+email
-			        +"&aadharno="+aadharno
-			        +"&password="+password
-			        +"&jointowners="+jointowners
-			        +"&purchasedate="+purchasedate
-			        +"&possessiondate="+possessiondate
-			        +"&occupancy="+occupancy
-			        +"&flatno="+flatno
-			        +"&wing="+wing
-			        +"&floor="+floor
-			        +"&tower="+tower
-			        +"&societyid="+societyid
-			        +"&builtuparea="+builtuparea
-			        +"&carpetarea="+carpetarea
-			        +"&vehicletype="+vehicletype
-			        +"&parkingtype="+parkingtype
-			        +"&parkingallotmentno="+parkingallotmentno
-			        +"&tenantname="+tenantname
-			        +"&tenantaddress="+tenantaddress
-			        +"&tenantcontactnumber="+tenantcontactnumber
-			        +"&tenantaltnumber="+tenantaltnumber
-			        +"&tenantemail="+tenantemail
-			        +"&tenantaadharno="+tenantaadharno
-			        
-			        +"&bloodgroup="+bloodgroup
-			        +"&sharecertno="+sharecertno
-			        +"&nominee1="+nominee1
-			        +"&percent1="+percent1
-			        +"&nominee2="+nominee2
-			        +"&percent2="+percent2
-			        +"&nominee3="+nominee3
-			        +"&percent3="+percent3
-			        
-			        +"&tenantType="+tenantType
-			        +"&tenantPVstatus="+tenantPVstatus
-			        +"&vehicleno="+vehicleno
-
-			        +"&tenantfrom="+tenantfrom
-			        +"&tenantto="+tenantto
-			        +"&randomHash="+randomHash,
-
+	        data : datastr,
 	        success: function(response){
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
@@ -921,12 +988,12 @@
 	        	$.each(response, function(i, item) {
 	        		
 	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editUserData(\'' + item.userid + '\')"><i class="fa fa-edit"></i></a>';
-	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteUserData(\'' + item.userid + '\')"><i class="fa fa-times"></i></a>';
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="genericRemove(\'' + item.userid + '\',\'user\',\'userid\',getMembersForSociety)"><i class="fa fa-times"></i></a>';
 
 	        		table.row.add( [
 	        			srno,
 	        			editBtn,
-	        			/* delBtn, */
+	        			delBtn,
 	        			item.flatno,
 	        			item.wing,
 	        			item.floor,
@@ -1007,6 +1074,8 @@
 	        			$('#tenantname').val(response.tenantname.split(' ')[0]);
 		        		$('#tenantname2').val(response.tenantname.split(' ')[1]);
 		        		$('#tenantname3').val(response.tenantname.split(' ')[2]);
+		        		$('#tenantfrom').val(new Date(response.tenantfrom).toString("dd MMM yyyy"));
+		        		$('#tenantto').val(new Date(response.tenantto).toString("dd MMM yyyy"));
 	        		}
 	        		
 	        		$('#tenantaddress').val(response.tenantaddress);
@@ -1028,13 +1097,15 @@
 	        		$('#vehicleno').val(response.vehicleno);
 
 	        		
-	        		$('#tenantfrom').val(response.tenantfrom);
-	        		$('#tenantto').val(response.tenantto);
+	        		
 	        		$('#jointowners').val('');
 	        		splitJo(response.jointowners);
 	        		
 	        		getParkingDetailsForMember();
 	        		getSCDetailsForMember();
+	        		getTenantHistory();
+	        		
+	        		$('#removeTenant').removeAttr('disabled');
 	        		
 	        	}  
 	        	unblockUI();
@@ -1266,12 +1337,21 @@
 								function addShareCertDetails(){
 									var nominee1 = $('#nominee1').val();
 									var percent1 = $('#percent1').val();
+
+									var nomineerelation = $('#nomineerelation').val();
+									var nomineedob = $('#nomineedob').val();
+									var nomineeaddress = $('#nomineeaddress').val();
+									
 									var randomHash = '${randomHash}';
 									var sharecertno = $('#sharecertno').val();
 									var userid = $('#userid').val();
 									
 									
-									if(sharecertno.trim().length < 1 || nominee1.trim().length < 1 || percent1.trim().length < 1 ){
+									if(sharecertno.trim().length < 1 || nominee1.trim().length < 1 || percent1.trim().length < 1 
+											|| nomineerelation.trim().length < 1 
+											|| nomineedob.trim().length < 1 
+											|| nomineeaddress.trim().length < 1 
+										){
 										alert('All fields are mandatory for Adding Nominee');
 										return false;
 									}else{ 
@@ -1282,6 +1362,9 @@
 									        data :"randomHash="+randomHash 
 											        +"&userid="+userid
 											        +"&nominee="+nominee1
+											        +"&nomineerelation="+nomineerelation
+											        +"&nomineedob="+nomineedob
+											        +"&nomineeaddress="+nomineeaddress
 											        +"&percent="+percent1,
 									        success: function(response){
 									        	//alert(response);
@@ -1289,7 +1372,10 @@
 									        		getSCDetailsForMember();
 									        		notify('success','SUCCESS','Added Successfully',2000);
  										        		$('#nominee1').val("");
-										        		$('#percent1').val("");
+ 										        		$('#percent1').val("");
+ 										        		$('#nomineerelation').val("");
+ 										        		$('#nomineedob').val("");
+ 										        		$('#nomineeaddress').val("");
 									        	}  
 									        	unblockUI();
 									        },
@@ -1326,6 +1412,8 @@
 								        		table.row.add( [
 								        			item.nominee,
 								        			item.percent,
+								        			item.nomineerelation,
+								        			new Date(item.nomineedob).toString("dd MMM yyyy"),
 								        			delBtn,
 								                ] ).draw( false );
 								        		srno++;
@@ -1369,6 +1457,85 @@
 							 		}
 									}
 							 		return false;
+								}
+								
+								function addTenentToHistory(){
+									
+									var userid = $('#userid').val();
+									
+									if(confirm('Are you Sure?')){
+									if(userid.trim().length < 1 ){
+										alert('User Not Created');
+										return false;
+									}else{ 
+										blockUI();
+										$.ajax({
+									        type: "GET",
+									        url: "<%=request.getContextPath()%>/addTenantToHistory.do",
+									        data :"userid="+userid,
+									        success: function(response){
+									        	//alert(response);
+									        	if(response=='success') {
+									        		//getSCDetailsForMember();
+									        		notify('success','SUCCESS','Added Successfully',2000);
+										        		$('#tenantto').val("");
+										        		$('#tenantfrom').val("");
+										        		$('#tenantaadharno').val("");
+										        		$('#tenantemail').val("");
+										        		$('#tenantaltnumber').val("");
+										        		$('#tenantcontactnumber').val("");
+										        		$('#tenantaddress').val("");
+										        		$('#tenantname3').val("");
+										        		$('#tenantname2').val("");
+										        		$('#tenantname').val("");
+										        		getTenantHistory();
+									        	}  else {
+							 		        		notify('error','Failed','Failed to Remove Tenant',2000);
+							 		        	}
+									        	unblockUI();
+									        },
+												error : function(e) {
+													notify('error','ERROR','Error occured',2000);
+													unblockUI();
+												}
+									        
+											});
+									}
+									}
+								}
+								
+								
+								function getTenantHistory(){
+								 
+									var userid = $('#userid').val();
+									
+									var table = $('#thetableTen').DataTable();
+									
+									table .clear() .draw();
+									blockUI();
+									$.ajax({
+								        type: "GET",
+								        url: "<%=request.getContextPath()%>/getTenantHistory.do",
+								        data :"userid="+userid,
+								        success: function(response){
+								        	var srno=1;
+								        	$.each(response, function(i, item) {
+
+								        		table.row.add( [
+								        			item.tenantname,
+								        			item.tenantcontactnumber,
+								        			new Date(item.tenantfrom).toString("dd MMM yyyy"),
+								        			new Date(item.tenantto).toString("dd MMM yyyy"),
+								                ] ).draw( false );
+								        		srno++;
+								        	 });
+								        	unblockUI();
+								        },
+											error : function(e) {
+												notify('error','ERROR','Error occured',2000);
+												unblockUI();
+											}
+										});
 								}
 							</script>
 							

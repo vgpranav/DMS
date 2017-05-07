@@ -129,9 +129,8 @@
                             <th class="column-title">Role</th>
                             <th class="column-title">Created On</th>
                             <th class="column-title">Status </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Edit</span>
-                            </th>
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Remove</th>
                              
                           </tr>
                         </thead>
@@ -159,6 +158,11 @@
 									<td class=" ">
 										<a class="btn btn-default btn-sm" onclick="editAdminUser('${myItem.userid}')">
 											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="genericRemove('${myItem.userid}','user','userid','reload')">
+											<i class="fa fa-times"></i>
 										</a>
 									</td>
 								</tr>

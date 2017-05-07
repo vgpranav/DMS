@@ -65,6 +65,30 @@ public class AjaxController
     return codeList1;
   }
   
+  
+  @RequestMapping(value={"/userAutosuggest"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers={"Accept=*/*"}, produces={"application/json"})
+  @ResponseStatus(HttpStatus.OK)
+  @ResponseBody
+  public List<String> userAutosuggest(@RequestParam("searchText") String searchText) {
+    SocietyDao societyDao = new SocietyDao();
+    List<String> codeList1 = new ArrayList();
+    
+    try
+    {
+      List<User> userList = societyDao.getUserAutosuggestByUsername(searchText);
+      for (int i = 0; i < userList.size(); i++) {
+        User user = (User)userList.get(i);
+        String name = user.getUserid() + "--" + user.getFirstName() + " " + user.getLastName();
+        codeList1.add(i, name);
+      }
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return codeList1;
+  }
+  
+  
   @RequestMapping(value={"/userAutosuggestForSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers={"Accept=*/*"}, produces={"application/json"})
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
@@ -612,7 +636,14 @@ public class AjaxController
     int rowsUpdated = 0;
     LoginDao loginDao = new LoginDao();
     try {
-      rowsUpdated = loginDao.generateAndSendOTP(user);
+    	if(user.getOtpType().equals("confidential")){
+    		if(!loginDao.verifyConfidentialAccess(user)){
+    			return "unauthorized";
+    		}
+    	}
+    	
+    	rowsUpdated = loginDao.generateAndSendOTP(user);
+    	
     } catch (Exception e) {
       logger.error(e.getMessage());
     } 
@@ -805,5 +836,119 @@ public class AjaxController
        return "success";
      return "failed";
    }
+   
+   @RequestMapping(value={"/saveConfDocAccess"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String saveConfDocAccess(@RequestParam("userid") String userid,HttpServletRequest request)
+   {
+     int rowsUpdated = 0;
+     SocietyDao docDao = new SocietyDao();
+     User user;
+     try {
+    	 user = (User)request.getSession().getAttribute("userObject");
+         rowsUpdated = docDao.saveConfDocAccess(userid,user.getUserid());
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   
+   @RequestMapping(value={"/getConfDocAccessList"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<GenericBean> getConfDocAccessList()
+   {
+     DocumentDao documentDao = new DocumentDao();
+     List<GenericBean> formFields = null;
+     try {
+       formFields = documentDao.getConfDocAccessList(formFields);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return formFields;
+   }
+   
+   @RequestMapping(value={"/getProjectsByBuilderId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<Project> getProjectsByBuilderId(@ModelAttribute Builder builder)
+   {
+     DocumentDao documentDao = new DocumentDao();
+     List<Project> docSubTypes = null;
+     try {
+       docSubTypes = documentDao.getProjectsByBuilderId(builder.getBuilderid(), docSubTypes);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return docSubTypes;
+   }
+   
+   @RequestMapping(value={"/getSubProjectsByProjectId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<Society> getSubProjectsByProjectId(@ModelAttribute Project project)
+   {
+     DocumentDao documentDao = new DocumentDao();
+     List<Society> docSubTypes = null;
+     try {
+       docSubTypes = documentDao.getSubProjectsByProjectId(project.getProjectid(), docSubTypes);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return docSubTypes;
+   }
+   
+   
+   @RequestMapping(value={"/genericRemove"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String genericRemove(@ModelAttribute GenericBean gbean)
+   {
+     int rowsUpdated = 0;
+     SocietyDao societyDao = new SocietyDao();
+     try {
+       rowsUpdated = societyDao.genericRemove(gbean);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   
+   @RequestMapping(value={"/addTenantToHistory"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String addTenantToHistory(@ModelAttribute User user)
+   {
+     int rowsUpdated = 0;
+     SocietyDao societyDao = new SocietyDao();
+     try {
+       rowsUpdated = societyDao.addTenantToHistory(user);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   @RequestMapping(value={"/getTenantHistory"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<Userprofile> getTenantHistory(@ModelAttribute User user)
+   {
+     DocumentDao documentDao = new DocumentDao();
+     List<Userprofile> docSubTypes = null;
+     try {
+       docSubTypes = documentDao.getTenantHistory(user.getUserid(), docSubTypes);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return docSubTypes;
+   }
+   
+   
 } //end of class
 

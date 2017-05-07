@@ -4,12 +4,18 @@ public class DMSQueries
 {
 	
   public static String authenticateUser = "select * from user where mobileNo=? and password=?";
+  
   public static String getAllActiveUser = "select * from user where active=1 ";
+  
   public static String getAllActiveSocietyTypes = "select * from societytypemaster where isactive=1";
+  
   public static String getAllSociety = "select * from society where societytype=?";
-  public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
+  
+  public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as "
+  											+ " createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
+  
   public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby,projectid,societytype) values (?,?,?,?,?)";
-  public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate,landmark,city,country) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate,landmark,city,country,noofshop,noofflat) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
   public static String insertNewDoctype = "insert into doctype(doctypename,doctypedesc,active,createdby) values (?,?,?,?)";
   public static String getAllDocumentSubTypes = "SELECT st.displayflag,st.docsubtypeid,st.docsubtypename,st.docsubtypedesc,st.active,st.createdon,concat(u.firstname,' ',u.lastname) as createdby,dt.doctypename as doctypename,st.doctypeid FROM docsubtype st,doctype dt,user u where st.doctypeid=dt.doctypeid and st.createdby=u.userid";
   public static String insertNewDocSubtype = "insert into docsubtype(doctypeid,docsubtypename,docsubtypedesc,createdby,active,displayflag) values (?,?,?,?,?,?)";
@@ -40,7 +46,7 @@ public class DMSQueries
   public static String getAllVendorsBySocId = "SELECT * FROM vendors v,vendorsocietymapping m where m.vendorid = v.vendorid and m.societyid=?";
   public static String getSocietyDetailsById="select * from society s,societyprofile sp where s.societyid = sp.societyid and s.societyid=?";
   public static String updateSociety = "Update society set societytypeid=?, societyname=? ,projectid=? where societyid=?";
-  public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=?,landmark=?,city=?,country=? where societyid=?";
+  public static String updateSocProfile = "Update societyprofile set addressline1=?, addressline2=?, ward=?, district=?, state=?, pincode=?, registrationno=?, estdate=?,landmark=?,city=?,country=?,noofshop=?,noofflat=? where societyid=?";
   public static String getDocumentTypeById = "select * from doctype where doctypeid=?";
   public static String updateDoctype="Update doctype set doctypename=?, doctypedesc=?, active=? where doctypeid=?";
   public static String getDocumentSubTypeById = "select * from docsubtype where docsubtypeid=?";
@@ -48,96 +54,116 @@ public class DMSQueries
   public static String getFormFieldDetailsById = "select * from formstructure where fieldid=?";
   public static String updateFormFieldData = "Update formstructure set fieldname=?, fieldtype=?, datatype=?, sequence=?, active=?, docsubtypeid=? where fieldid=?";
   public static String insertNewTenant = "insert into tenant(userid, tenantname, tenantaddress, tenantcontactnumber, tenantaltnumber, tenantemail, tenantaadharno,tenanttype,tenantPVstatus,tenantfrom,tenantto) values (?,?,?,?,?,?,?,?,?,?,?)";
-public static String getUserDataById = "select * from user ud,userprofile up where ud.userid=up.userid and up.userid=?";
-public static String getTenantDataByUserId = "select * from tenant where userid=?";
+	public static String getUserDataById = "select * from user ud,userprofile up where ud.userid=up.userid and up.userid=?";
+	public static String getTenantDataByUserId = "select * from tenant where userid=? and active=1";
+	
+	
+	public static String updateNewUser = "Update user set firstname=?, lastname=?,  password=?, active=?, mobileNo=? ,middlename=? where userid=?";
+	public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=?,bloodgroup=?,sharecertno=?,nominee1=?,percent1=?,nominee2=?,percent2=?,nominee3=?,percent3=?,vehicleno=? where userid=?";
+	public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=?,tenanttype=?,tenantPVstatus=?,tenantfrom=?,tenantto=? where userid=?";
+	public static String getVendorDataById = "select * from vendors where vendorid=?";
+	public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=?,contractfrom=?,contractto=? where vendorid=?";
+	public static String updateVendorSocMapping="Update vendorsocietymapping set societyid=? where vendorid=?";
+	public static String getExistingDocDetails = "select dd.* from documentdetails dd,document d where dd.documentid=d.documentid and d.societyid=? and d.doctypeid=? and d.docsubtypeid=? and d.userid=?";
+	public static String getSocietyManagerList = "select sm.societymanagerid as societymanagerid,concat(u.firstname,' ',u.lastname) as userName,sm.isactive as isactive from societymanager sm, user u where sm.userid=u.userid and sm.societyid=?";
+	public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
+	public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
+	public static String getAllBuilders = "select * from builder";
+	public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active,contact,altcontact,email,district) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? ,contact=? ,altcontact=? ,email=?,district=? where builderid=?";
+	public static String getBuilderDetailsById="select * from builder where builderid=?";
+	public static String getAllProjects="SELECT p.*,b.builderid,b.buildername FROM project p, builder b where p.builderid=b.builderid ";
+	public static String getProjectDetailsById="select * from project where projectid=?";
+	public static String insertNewProject="insert into project(projectname, builderid, plotarea, registrationdate, towernos, resnos, bungnos, pentanos, shopnos, galanos, createdby,street,landmark,area,city,district,state,country,pincode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String updateProject="Update project set projectname=?, builderid=?, plotarea=?, registrationdate=?, towernos=?, resnos=?, bungnos=?, pentanos=?, shopnos=?, galanos=?, createdby=?,active=?,street=?,landmark=?,area=?,city=?,district=?,state=?,country=?,pincode=? where projectid=?";
+	public static String insertSocDocMapping="insert into societydocmapping(doctypeid, societyid, createdby) values (?,?,?)";
+	public static String getAllSocDocMapping= "select m.societydocmappingid,d.doctypename,s.societyname from societydocmapping m, society s, doctype d where m.societyid=s.societyid and m.doctypeid=d.doctypeid";
+	public static String removeSocietyDocmapping="delete from societydocmapping where societydocmappingid=?";
+	public static String getAllRoles ="select * from rolemaster";
+	public static String insertNewAdminUser="insert into user(firstname, lastname, password, mobileNo, createdBy, userroleid) values (?,?,?,?,?,?)";
+	public static String getAllAdminUsers = "SELECT u.*,r.rolename as userrolename FROM dms.user u,dms.rolemaster r where u.userroleid=r.roleid and userroleid <> 0" ;
+	public static String getUserById = "select * from user where userid=?";
+	public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
+	public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by createdon desc,documentid";
+	public static String getDocStubtypesToDispay = "select * from  docsubtype dst, socdocviewmapping dm  where dst.docsubtypeid = dm.docsubtypeid and dm.displayflag=1 and dm.societyid=?";
+	public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
+	public static String getDocumentDatabyDoctypeIdUserId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+			    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.doctypeid=? and d.userid=?";
+	  
+	
+	public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and f.documentid=?";
+	
+	public static String getDocumentDatabyDocId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+			+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
+	
+	public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
+			+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst "
+			+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and societyid=? "
+			+ " group by dst.docsubtypename,dt.doctypename order by dt.doctypename,dst.docsubtypename";
+	
+	public static String getNeighborProfile = "SELECT n.*,u.* FROM dms.userprofile o,dms.userprofile n,dms.user u "
+			+ " where o.wing=n.wing and o.tower=n.tower and upper(o.floor)=upper(n.floor) and o.societyid=n.societyid "
+			+ " and n.userid=u.userid and o.userid!=n.userid and o.userid=?";
+	
+	public static String addNewCallRef = "insert into callreference(refno, initiatorname, societytype, buildingno, streetname, landmark, area, pincode, city, state, country, resno, shopsno, initiatedate, remark, closingchance) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String updateCallRef ="Update callreference set refno=?, initiatorname=?, societytype=?, buildingno=?, streetname=?, landmark=?, area=?, pincode=?, city=?, state=?, country=?, resno=?, shopsno=?, initiatedate=?, remark=?, closingchance=?";
+	public static String insertNewCallRefContact="insert into callreferencecontact( callrefid, contactname, contactdesignation, contactmobileno, contactlandlineno, contactemail) values ( ?,?,?,?,?,?)";
+	public static String getContactsByCallRefId ="select * from callreferencecontact where callrefid=?";
+	public static String saveCallrefMeeting = "insert into callreferencemeeting(callrefid, meetingdate, meetingperson, meetingremarks) values (?,?,?,?)";
+	public static String getMeetingsByCallRefId ="select * from callreferencemeeting where callrefid=?";
+	public static String getAllCallRefs = "select * from callreference";
+	public static String getCountOfSocsAsManager="select count(societymanagerid) from societymanager where userid=? and isactive=1";
+	
+	public static String getmodNameBySocId="";
+	
+	public static String insertSmsLog="insert into smslogger(smstype, smsmsg, smscount, smsusers, smsdate, smsresponse, smshttpcode) values (?,?,?,?,?,?,?)";
+	public static String deleteDocumentByDocId="delete from document where documentid=?";
+	public static String saveSocViewMapping = "insert into socdocviewmapping (societyid, doctypeid, docsubtypeid, displayflag, confFlag, createdby, datakey) values (?,?,?,?,?,?,?)";
+	public static String getSocDocMappingBySocId= "select dt.doctypename,dst.docsubtypename,dm.* from socdocviewmapping dm, doctype dt, docsubtype dst where dm.doctypeid = dt.doctypeid and dm.docsubtypeid = dst.docsubtypeid and dm.societyid=?";
+	public static String removeSocDocViewMapping = "delete from socdocviewmapping where socdocviewmappingid=?";
+	public static String authenticateUserByMobNo = "select * from user where mobileNo=?";
+	public static String insertOTPHandler = "insert into otphandler(mobileNo,otp,active) values (?,?,?)" ;
+	public static String deactAllOldOTP = "update otphandler set active=0 where mobileNo=?";
+	public static String validateOTPMessage = "select * from otphandler where mobileNo=? and otp=? and active=1";
+	public static String setNewPasswordForUser = "update user set password=? where mobileNo=?";
+	public static String getAllDesignations="select * from committeemaster";
+	public static String getDesignationById="select * from committeemaster where positionid=? limit 1";
+	public static String insertNewDesignation = "insert into committeemaster(positionname,isactive) values (?,?)";
+	public static String updateNewDesignation ="update committeemaster set positionname=?,isactive=? where positionid=?";
+	public static String checkIfNewNoticeAdded="select count(*) from document where doctypeid=999 and docsubtypeid=999 and userid=999 and societyid=? and createdon>? ";
+	public static String deleteDocumentPage = "delete from files where filesid=?";
+	public static String saveMemberparkingDetails = "insert into userparkingdetails(userid,parkingtype,vehicletype,parkingallotmentno,vehicleno,randomhash) values (?,?,?,?,?,?)";
+	public static String getParkingDetailsForMemberByUserId ="select * from userparkingdetails where userid=?";
+	public static String getParkingDetailsForMemberByHashValue ="select * from userparkingdetails where randomhash=?";
+	public static String removeParkingData = "delete from userparkingdetails where userparkingdetailsid=?";
+	public static String addShareCertDetails ="insert into userscnominee (nominee,percent,userid,randomHash,nomineerelation,nomineedob,nomineeaddress) values (?,?,?,?,?,?,?)";
+	public static String getShareCertDetailsForMemberByUserId ="select * from userscnominee where userid=?";
+	public static String getShareCertDetailsForMemberByHashValue ="select * from userscnominee where randomhash=?";
+	public static String removeShareCertDetails = "delete from userscnominee where userscnomineeid=?";
+	public static String updateParkingDetails="update userparkingdetails set userid=?,randomHash='' where randomHash=?";
+	public static String updateSCDetails="update userscnominee set userid=?,randomHash='' where randomHash=?";
+	public static String getAllTxnRoles = "select * from role";
+	public static String insertConfDocAccess="insert into confidentialdocaccess(userid,createdby) values (?,?)";
+	public static String getAllConfDocAccessList = "SELECT da.confidentialdocaccessid,da.isactive,da.createdon, concat(u.firstname,' ' ,u.lastname) as createdby, "
+													+ " concat(u1.firstname,' ' ,u1.lastname) as username FROM confidentialdocaccess da,user u,user u1 "
+													+ " where da.userid=u.userid and da.createdby=u1.userid";
 
 
-public static String updateNewUser = "Update user set firstname=?, lastname=?,  password=?, active=?, mobileNo=? ,middlename=? where userid=?";
-public static String updateNewUserProfile = "Update userprofile set  flatno=?, wing=?, tower=?, occupancy=?, alternateno=?, email=?, aadharno=?, jointowners=?, purchasedate=?, possessiondate=?, builtuparea=?, carpetarea=?, parkingtype=?, vehicletype=?, parkingallotmentno=?, floor=?, societyid=?,bloodgroup=?,sharecertno=?,nominee1=?,percent1=?,nominee2=?,percent2=?,nominee3=?,percent3=?,vehicleno=? where userid=?";
-public static String updateNewTenant = "Update tenant set  tenantname=?, tenantaddress=?, tenantcontactnumber=?, tenantaltnumber=?, tenantemail=?, tenantaadharno=?,tenanttype=?,tenantPVstatus=?,tenantfrom=?,tenantto=? where userid=?";
-public static String getVendorDataById = "select * from vendors where vendorid=?";
-public static String updateNewVendor = "Update vendors set companyname=?, jobnature=?, contactperson=?, address=?, contactno=?, alternateno=?, email=?, remark=?, isactive=?,contractfrom=?,contractto=? where vendorid=?";
-public static String updateVendorSocMapping="Update vendorsocietymapping set societyid=? where vendorid=?";
-public static String getExistingDocDetails = "select dd.* from documentdetails dd,document d where dd.documentid=d.documentid and d.societyid=? and d.doctypeid=? and d.docsubtypeid=? and d.userid=?";
-public static String getSocietyManagerList = "select sm.societymanagerid as societymanagerid,concat(u.firstname,' ',u.lastname) as userName,sm.isactive as isactive from societymanager sm, user u where sm.userid=u.userid and sm.societyid=?";
-public static String removeSocietyManager = "delete from societymanager where societymanagerid=?";
-public static String addSocietyManager = "insert into societymanager(societyid,userid) values (?,?)";
-public static String getAllBuilders = "select * from builder";
-public static String insertNewBuilder = "insert into builder( buildername, address, blockno, premisesname, streetname, landmark, area, city, pincode, state, country, createdby,active,contact,altcontact,email,district) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateBuilder="Update builder set buildername=?, address=?, blockno=?, premisesname=?, streetname=?, landmark=?, area=?, city=?, pincode=?, state=?, country=?, active=? ,contact=? ,altcontact=? ,email=?,district=? where builderid=?";
-public static String getBuilderDetailsById="select * from builder where builderid=?";
-public static String getAllProjects="SELECT p.*,b.builderid,b.buildername FROM project p, builder b where p.builderid=b.builderid ";
-public static String getProjectDetailsById="select * from project where projectid=?";
-public static String insertNewProject="insert into project(projectname, builderid, plotarea, registrationdate, towernos, resnos, bungnos, pentanos, shopnos, galanos, createdby,street,landmark,area,city,district,state,country,pincode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateProject="Update project set projectname=?, builderid=?, plotarea=?, registrationdate=?, towernos=?, resnos=?, bungnos=?, pentanos=?, shopnos=?, galanos=?, createdby=?,active=?,street=?,landmark=?,area=?,city=?,district=?,state=?,country=?,pincode=? where projectid=?";
-public static String insertSocDocMapping="insert into societydocmapping(doctypeid, societyid, createdby) values (?,?,?)";
-public static String getAllSocDocMapping= "select m.societydocmappingid,d.doctypename,s.societyname from societydocmapping m, society s, doctype d where m.societyid=s.societyid and m.doctypeid=d.doctypeid";
-public static String removeSocietyDocmapping="delete from societydocmapping where societydocmappingid=?";
-public static String getAllRoles ="select * from rolemaster";
-public static String insertNewAdminUser="insert into user(firstname, lastname, password, mobileNo, createdBy, userroleid) values (?,?,?,?,?,?)";
-public static String getAllAdminUsers = "SELECT u.*,r.rolename as userrolename FROM dms.user u,dms.rolemaster r where u.userroleid=r.roleid and userroleid <> 0" ;
-public static String getUserById = "select * from user where userid=?";
-public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
-public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by documentid,createdon ";
-public static String getDocStubtypesToDispay = "select * from  docsubtype dst, socdocviewmapping dm  where dst.docsubtypeid = dm.docsubtypeid and dm.displayflag=1 and dm.societyid=?";
-public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
-public static String getDocumentDatabyDoctypeIdUserId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
-		    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.doctypeid=? and d.userid=?";
-  
+	public static String getBrochure = " SELECT * FROM files where societyid=? and docsubtypeid=? order by createdon desc,documentid";
 
-public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and f.documentid=?";
+	public static String getProjectsByBuilderId = "select * from project where builderid=?";
 
-public static String getDocumentDatabyDocId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
-		+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
+	public static String getSubProjectsByProjectId = "select * from society where projectid=?";
 
-public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
-		+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst "
-		+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and societyid=? "
-		+ " group by dst.docsubtypename,dt.doctypename order by dt.doctypename,dst.docsubtypename";
+	public static String verifyConfidentialDocAccess = "select u.* from confidentialdocaccess da, user u where da.userid=u.userid and u.mobileNo=?";
 
-public static String getNeighborProfile = "SELECT n.*,u.* FROM dms.userprofile o,dms.userprofile n,dms.user u "
-		+ " where o.wing=n.wing and o.tower=n.tower and upper(o.floor)=upper(n.floor) and o.societyid=n.societyid "
-		+ " and n.userid=u.userid and o.userid!=n.userid and o.userid=?";
-public static String addNewCallRef = "insert into callreference(refno, initiatorname, societytype, buildingno, streetname, landmark, area, pincode, city, state, country, resno, shopsno, initiatedate, remark, closingchance) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-public static String updateCallRef ="Update callreference set refno=?, initiatorname=?, societytype=?, buildingno=?, streetname=?, landmark=?, area=?, pincode=?, city=?, state=?, country=?, resno=?, shopsno=?, initiatedate=?, remark=?, closingchance=?";
-public static String insertNewCallRefContact="insert into callreferencecontact( callrefid, contactname, contactdesignation, contactmobileno, contactlandlineno, contactemail) values ( ?,?,?,?,?,?)";
-public static String getContactsByCallRefId ="select * from callreferencecontact where callrefid=?";
-public static String saveCallrefMeeting = "insert into callreferencemeeting(callrefid, meetingdate, meetingperson, meetingremarks) values (?,?,?,?)";
-public static String getMeetingsByCallRefId ="select * from callreferencemeeting where callrefid=?";
-public static String getAllCallRefs = "select * from callreference";
-public static String getCountOfSocsAsManager="select count(societymanagerid) from societymanager where userid=? and isactive=1";
+	public static String addTenantToHistory = "update tenant set active=0 where userid=?";
 
-public static String getmodNameBySocId="";
+	public static String getTenantByUserId ="select * from tenant where userid=? and active=1";
 
-public static String insertSmsLog="insert into smslogger(smstype, smsmsg, smscount, smsusers, smsdate, smsresponse, smshttpcode) values (?,?,?,?,?,?,?)";
-public static String deleteDocumentByDocId="delete from document where documentid=?";
-public static String saveSocViewMapping = "insert into socdocviewmapping (societyid, doctypeid, docsubtypeid, displayflag, confFlag, createdby, datakey) values (?,?,?,?,?,?,?)";
-public static String getSocDocMappingBySocId= "select dt.doctypename,dst.docsubtypename,dm.* from socdocviewmapping dm, doctype dt, docsubtype dst where dm.doctypeid = dt.doctypeid and dm.docsubtypeid = dst.docsubtypeid and dm.societyid=?";
-public static String removeSocDocViewMapping = "delete from socdocviewmapping where socdocviewmappingid=?";
-public static String authenticateUserByMobNo = "select * from user where mobileNo=?";
-public static String insertOTPHandler = "insert into otphandler(mobileNo,otp,active) values (?,?,?)" ;
-public static String deactAllOldOTP = "update otphandler set active=0 where mobileNo=?";
-public static String validateOTPMessage = "select * from otphandler where mobileNo=? and otp=? and active=1";
-public static String setNewPasswordForUser = "update user set password=? where mobileNo=?";
-public static String getAllDesignations="select * from committeemaster";
-public static String getDesignationById="select * from committeemaster where positionid=? limit 1";
-public static String insertNewDesignation = "insert into committeemaster(positionname,isactive) values (?,?)";
-public static String updateNewDesignation ="update committeemaster set positionname=?,isactive=? where positionid=?";
-public static String checkIfNewNoticeAdded="select count(*) from document where doctypeid=999 and docsubtypeid=999 and userid=999 and societyid=? and createdon>? ";
-public static String deleteDocumentPage = "delete from files where filesid=?";
-public static String saveMemberparkingDetails = "insert into userparkingdetails(userid,parkingtype,vehicletype,parkingallotmentno,vehicleno,randomhash) values (?,?,?,?,?,?)";
-public static String getParkingDetailsForMemberByUserId ="select * from userparkingdetails where userid=?";
-public static String getParkingDetailsForMemberByHashValue ="select * from userparkingdetails where randomhash=?";
-public static String removeParkingData = "delete from userparkingdetails where userparkingdetailsid=?";
-public static String addShareCertDetails ="insert into userscnominee (nominee,percent,userid,randomHash) values (?,?,?,?)";
-public static String getShareCertDetailsForMemberByUserId ="select * from userscnominee where userid=?";
-public static String getShareCertDetailsForMemberByHashValue ="select * from userscnominee where randomhash=?";
-public static String removeShareCertDetails = "delete from userscnominee where userscnomineeid=?";
-public static String updateParkingDetails="update userparkingdetails set userid=?,randomHash='' where randomHash=?";
-public static String updateSCDetails="update userscnominee set userid=?,randomHash='' where randomHash=?";
-public static String getAllTxnRoles = "select * from role";
+	public static String getTenantHistory ="select * from tenant where userid=? and active=0";
 
-
+	public static String getSocietyPolicyDocuments = " SELECT * FROM files where societyid=? and docsubtypeid=995 order by createdon desc,documentid";
 
 
 

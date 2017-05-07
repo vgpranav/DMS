@@ -39,12 +39,22 @@
 		                      
 		                      <c:if test="${sessionScope.userObject.userroleid==1}">
 			                      <li>
-			                      	<a><i class="fa fa-folder-o"></i> Builder/Project</a>
+			                      	<a><i class="fa fa-folder-o"></i> Builder &amp; Developer</a>
+			                      	
 			                      	<ul class="nav child_menu">
 			                      		 <li><a href="createBuilder.do">Create Builder Profile</a></li>
+			                      		 <li><a href="createBrochureBuilder.do">Add Builder Brochure</a></li>
+			                      		 <li><a href="brochureSelectionBuilder.do">View Builder Brochure</a></li>
+			                      		 
 			                      		<li><a href="createProject.do">Create Project</a></li>
+			                      		<li><a href="createBrochureProject.do">Add Project Brochure</a></li>
+			                      		<li><a href="brochureSelectionProject.do">View Project Brochure</a></li>
+			                      		
 			                      		<li><a href="createSubProject.do">Create Sub Project</a></li>
+			                      		<li><a href="createBrochureSubProject.do">Add Sub Project Brochure</a></li>
+			                      		<li><a href="brochureSelectionSubProject.do">View Sub Project Brochure</a></li>
 			                      	</ul>
+			                      	
 			                      </li>
 		                     </c:if>
 		                     
@@ -98,6 +108,7 @@
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>
+		                      <li><a href="addConfidentialDocAccess.do">Confidential Doc Access</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>
@@ -115,6 +126,8 @@
 		                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
 		                      <li><a href="viewDocument.do">View Document</a></li>
 		                      <li><a href="deleteDocument.do">Delete Document</a></li>
+							  <li><a href="addPolicy.do">Add Policy/Amenities</a></li>
+		                      
 		                    </ul>
 		                  </li>
 		             </c:if>

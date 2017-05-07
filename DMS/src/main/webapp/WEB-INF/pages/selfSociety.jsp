@@ -1,23 +1,28 @@
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
 <input type="hidden" name="userid" id="userid" value="${userObject.userid}">
 
 
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
-		<div class="pull-left">
-			<h3>${society.societyname}</h3>
-		    <b>Society Reg. No. ${society.registrationno}</b>
-			<br><b>Estd. on ${society.estdate}</b>
-			<br><br><em>${society.addressline1}</em>
-			<br><em>${society.addressline2}</em>
-			<br><em>${society.ward} ${society.district} ${society.state}</em>
-		</div>
-		<div class="pull-right">
-		<div align="left">
-			<div id="imgContainer" >
-			<img width="150" src="<%=request.getContextPath()%>/resources/images/spin.gif">
+		<div class=" col-md-10 col-sm-10  col-md-offset-1 col-sm-offset-1 col-xs-12">
+				<div class="pull-left">
+					<h3>${society.societyname}</h3>
+				    <b>Society Reg. No. ${society.registrationno}</b>
+					<br><b>Estd. on <fmt:formatDate type = "date" value = "${society.estdate}" /></b>
+					<br><br><em>${society.addressline1}</em>
+					<br><em>${society.addressline2}</em>
+					<br><em>${society.ward} ${society.district} ${society.state}</em>
+					<br><em>Pincode: ${society.pincode}</em>
 				</div>
-		</div>
+				<div class="pull-right">
+				<div align="left">
+					<div id="imgContainer" >
+					<img width="150" src="<%=request.getContextPath()%>/resources/images/spin.gif">
+						</div>
+				</div>
+				</div>
 		</div>
 	</div>
 </div>

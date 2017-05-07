@@ -180,7 +180,27 @@
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="estdate" name="estdate"
-								readonly class="form-control col-md-7 col-xs-12 customdatepicker">
+								 class="form-control col-md-7 col-xs-12 customdatepicker">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of Falt/Apartments/Rooms
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noofflat" name="noofflat"
+								 class="form-control col-md-7 col-xs-12">
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of Shop/Offices/Gala
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noofshop" name="noofshop"
+								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
 
@@ -253,9 +273,8 @@
                             <th class="column-title">Project Name</th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Edit</span>
-                            </th>
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Remove</th>
                              
                           </tr>
                         </thead>
@@ -286,6 +305,11 @@
 											<i class="fa fa-edit"></i>
 										</a>
 									</td>
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="genericRemove('${myItem.societyid}','society','societyid','reload')">
+											<i class="fa fa-times"></i>
+										</a>
+									</td>
 								</tr>
 								</c:if>
 								
@@ -303,9 +327,8 @@
                             <th class="column-title">Project Name</th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Edit</span>
-                            </th>
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Remove</th>
                              
                           </tr>
                         </thead>
@@ -334,6 +357,11 @@
 									<td class=" ">
 										<a class="btn btn-default btn-sm" onclick="getSocietyDetailsById('${myItem.societyid}')">
 											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="genericRemove('${myItem.societyid}','society','societyid','reload')">
+											<i class="fa fa-times"></i>
 										</a>
 									</td>
 								</tr>
@@ -416,8 +444,13 @@
 	        		$('#district').val(response.district);
 	        		$('#state').val(response.state);
 	        		$('#pincode').val(response.pincode);
+	        		$('#country').val(response.country);
 	        		$('#registrationno').val(response.registrationno);
 	        		
+	        		$('#noofshop').val(response.noofshop);
+	        		$('#noofflat').val(response.noofflat);
+	        		
+	        		if(response.estdate!=null)
 	        			$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));	
 	        		 
 	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();

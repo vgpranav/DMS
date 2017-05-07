@@ -142,7 +142,8 @@
 		$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
-		       data :"mobileNo="+mobileNo,
+		       data :"mobileNo="+mobileNo
+		       		+"&otpType=login",
 		        success: function(response){
 		        //alert()
 		        	if(response=='success') {

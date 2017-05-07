@@ -174,7 +174,7 @@
                             <th class="column-title">Tower</th>
                             <th class="column-title">Contact No</th>
                             <th class="column-title">Appointed On</th>
-                            <th class="column-title">Removed On</th>
+                            <th class="column-title">Dissolved On</th>
                             <th class="column-title">Photograph</th>
                           </tr>
                         </thead>

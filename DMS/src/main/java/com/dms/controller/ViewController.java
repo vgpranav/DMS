@@ -928,6 +928,27 @@ public class ViewController
     return mv;
   }
   
+  
+  @RequestMapping(value={"/addPolicy"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView addPolicy(HttpServletRequest request, HttpServletResponse response)
+  {
+    ModelAndView mv = null;
+    List<Society> societyList = null;
+    User user = null;
+    SocietyDao sdao = new SocietyDao();
+    try
+    {
+      user = (User)request.getSession().getAttribute("userObject");
+      societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+      mv = new ModelAndView("addPolicy");
+      mv.addObject("societyList", societyList);
+    }
+    catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
   @RequestMapping(value={"/viewNoticeboard"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView viewNoticeboard(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response)
   {
@@ -938,6 +959,7 @@ public class ViewController
 	    {
 	      docList = sdao.getNoticeboardDocs(society.getSocietyid(), docList);
 	      mv = new ModelAndView("viewNoticeboard");
+	      mv.addObject("pageTitle","Society Notice Board");
 	      mv.addObject("docList", docList);
 	    }
 	    catch (Exception e) {
@@ -945,6 +967,27 @@ public class ViewController
 	    }
 	    return mv;
 	  }
+  
+	  @RequestMapping(value={"/viewSocietyPolicy"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+	  public ModelAndView viewSocietyPolicy(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response)
+	  {
+	    ModelAndView mv = null;
+	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+	    SocietyDao sdao = new SocietyDao();
+	    try
+	    {
+	      docList = sdao.getSocietyPolicyDocuments(society.getSocietyid(), docList);
+	      mv = new ModelAndView("viewNoticeboard");
+	      mv.addObject("pageTitle","Society Policies/Amenities");
+	      mv.addObject("docList", docList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+	  }
+  
+  
   
   @RequestMapping(value={"/displaySelfSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView displaySelfSociety(HttpServletRequest request, HttpServletResponse response) {
@@ -1285,7 +1328,160 @@ public class ViewController
     return mv;
   }
   
+  @RequestMapping(value={"/addConfidentialDocAccess"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView addConfidentialDocAccess() {
+    ModelAndView mv = null;
+    List<RoleTransaction> roleList = null;
+    LoginDao loginDao = new LoginDao();
+    try {
+    	roleList = loginDao.getAllRoles(roleList);
+      mv = new ModelAndView("addConfidentialDocAccess");
+      mv.addObject("roleList", roleList);
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
   
-}
+  @RequestMapping(value={"/createBrochureBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createBuilderBrochure() {
+    ModelAndView mv = null;
+    SocietyDao documentDao = new SocietyDao();
+    List<Builder>  builderList = null;
+    try {
+    	builderList = documentDao.getAllBuilder(builderList);
+    	 mv = new ModelAndView("createBrochure");
+    	 mv.addObject("builderList", builderList);
+    	 mv.addObject("pageTitle","Add Builder Brochure");
+	     mv.addObject("typeVal","998");
+	     mv.addObject("type","builder");
+	     
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  
+  @RequestMapping(value={"/createBrochureProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createBrochureProject() {
+    ModelAndView mv = null;
+    SocietyDao documentDao = new SocietyDao();
+    List<Builder>  builderList = null;
+    try {
+    	builderList = documentDao.getAllBuilder(builderList);
+    	 mv = new ModelAndView("createBrochure");
+    	 mv.addObject("builderList", builderList);
+    	 mv.addObject("pageTitle","Add Project Brochure");
+	     mv.addObject("typeVal","997");
+	     mv.addObject("type","project");
+	     
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  @RequestMapping(value={"/createBrochureSubProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView createBrochureSubProject() {
+    ModelAndView mv = null;
+    SocietyDao documentDao = new SocietyDao();
+    List<Builder>  builderList = null;
+    try {
+    	builderList = documentDao.getAllBuilder(builderList);
+    	 mv = new ModelAndView("createBrochure");
+    	 mv.addObject("builderList", builderList);
+    	 mv.addObject("pageTitle","Add Sub-Project Brochure");
+	     mv.addObject("typeVal","996");
+	     mv.addObject("type","subproject");
+	     
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
+  @RequestMapping(value={"/brochureSelectionBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView brochureSelectionBuilder(HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    SocietyDao sdao = new SocietyDao();
+	    List<Builder>  builderList = null;
+	    try {
+	      builderList = sdao.getAllBuilder(builderList);
+	      mv = new ModelAndView("brochureSelection");
+	      mv.addObject("pageTitle","View Builder Brochure");
+	      mv.addObject("type","builder");
+	      mv.addObject("typeVal","998");
+	      mv.addObject("builderList", builderList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+  }
+  
+  @RequestMapping(value={"/brochureSelectionProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView brochureSelectionProject(HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    SocietyDao sdao = new SocietyDao();
+	    List<Builder>  builderList = null;
+	    try {
+	      builderList = sdao.getAllBuilder(builderList);
+	      mv = new ModelAndView("brochureSelection");
+	      mv.addObject("pageTitle","View Project Brochure");
+	      mv.addObject("type","project");
+	      mv.addObject("typeVal","997");
+	      mv.addObject("builderList", builderList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+  }
+  
+  @RequestMapping(value={"/brochureSelectionSubProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView brochureSelectionSubProject(HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    SocietyDao sdao = new SocietyDao();
+	    List<Builder>  builderList = null;
+	    try {
+	      builderList = sdao.getAllBuilder(builderList);
+	      mv = new ModelAndView("brochureSelection");
+	      mv.addObject("pageTitle","View Sub Project Brochure");
+	      mv.addObject("type","subproject");
+	      mv.addObject("typeVal","996");
+	      mv.addObject("builderList", builderList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+  }
+  
+  @RequestMapping(value={"/viewBrochure"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
+  public ModelAndView viewBuilderBrochure(@ModelAttribute GenericBean gbean,HttpServletRequest request, HttpServletResponse response)
+  {
+	    ModelAndView mv = null;
+	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+	    SocietyDao sdao = new SocietyDao();
+	    try
+	    {
+	      docList = sdao.getBrochure(gbean, docList);
+	      mv = new ModelAndView("viewNoticeboard");
+	      mv.addObject("pageTitle","Brochure");
+	      mv.addObject("docList", docList);
+	    }
+	    catch (Exception e) {
+	      logger.error(e.getMessage());
+	    }
+	    return mv;
+  }
+  
+  
+  
+} //End Of class
 
 

@@ -30,7 +30,7 @@
 						</div>
 					</div>
 					
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
 							for="first-name">Office Address <span class="required">*</span>
 						</label>
@@ -48,7 +48,7 @@
 							<input type="text" id="blockno" name="blockno"
 								  class="form-control col-md-7 col-xs-12">
 						</div>
-					</div>
+					</div> -->
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
@@ -229,10 +229,8 @@
                             <th class="column-title">State</th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Edit</span>
-                            </th>
-                             
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Remove</th>
                           </tr>
                         </thead>
 
@@ -260,6 +258,11 @@
 									<td class=" ">
 										<a class="btn btn-default btn-sm" onclick="editBuilder('${myItem.builderid}')">
 											<i class="fa fa-edit"></i>
+										</a>
+									</td>
+									<td class=" ">
+										<a class="btn btn-default btn-sm" onclick="genericRemove('${myItem.builderid}','builder','builderid','reload')">
+											<i class="fa fa-times"></i>
 										</a>
 									</td>
 								</tr>

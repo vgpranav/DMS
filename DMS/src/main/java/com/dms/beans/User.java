@@ -17,9 +17,19 @@ public class User
     private String userrolename;
     private String createdby;
     private String otp;
+    private String otpType;
     
     
-    public String getUserrolename() {
+    
+    public String getOtpType() {
+		return otpType;
+	}
+
+	public void setOtpType(String otpType) {
+		this.otpType = otpType;
+	}
+
+	public String getUserrolename() {
 		return userrolename;
 	}
 

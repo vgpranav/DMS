@@ -138,9 +138,8 @@
                             <th class="column-title">Created By </th>
                             <th class="column-title">Created On </th>
                             <th class="column-title">Status </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Action</span>
-                            </th>
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Delete</th>
                           </tr>
                         </thead>
 
@@ -182,6 +181,7 @@
 	        			activeflag = "Active";
 	        		
 	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.fieldid + '\')"><i class="fa fa-edit"></i></a>';
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="genericRemove(\'' + item.fieldid + '\',\'formstructure\',\'fieldid\',getFieldsForDocSubtype)"><i class="fa fa-times"></i></a>';
 	        		
 	        		table.row.add( [
 	        			item.fieldname,
@@ -192,6 +192,7 @@
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
 	        			activeflag,
 	        			editBtn,
+	        			delBtn,
 	                ] ).draw( false );
 	        	    
 	        	  });

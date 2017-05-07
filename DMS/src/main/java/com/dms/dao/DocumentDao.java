@@ -8,7 +8,10 @@ import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Parking;
+import com.dms.beans.Project;
+import com.dms.beans.Society;
 import com.dms.beans.User;
+import com.dms.beans.Userprofile;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
@@ -772,4 +775,125 @@ public int deleteDocById(Document document) {
     return 0;
   }
 
+ 	public List<GenericBean> getConfDocAccessList(List<GenericBean> formFields) {
+    Connection conn = null;
+    try
+    {
+      qr = new QueryRunner();
+      conn = ConnectionPoolManager.getInstance().getConnection();
+      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+      formFields = (List<GenericBean>)qr.query(conn, DMSQueries.getAllConfDocAccessList,rsh);
+    } catch (Exception e) {
+      logger.error("Error fetching form fields :: " + e.getMessage());
+      e.printStackTrace();
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException ex) {
+        logger.error("Error releasing connection :: " + ex.getMessage());
+      }
+    }
+    finally
+    {
+      try
+      {
+        DbUtils.close(conn);
+      } catch (SQLException e) {
+        logger.error("Error releasing connection :: " + e.getMessage());
+      }
+    }
+    
+    return formFields;
+  }
+
+	public List<Project> getProjectsByBuilderId(long builderid, List<Project> docSubTypes) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
+	      docSubTypes =  qr.query(conn, DMSQueries.getProjectsByBuilderId, rsh,builderid);
+	    } catch (Exception e) {
+	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        logger.error("Error releasing connection :: " + ex.getMessage());
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return docSubTypes;
+	  }
+
+	public List<Society> getSubProjectsByProjectId(long projectid, List<Society> docSubTypes) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
+	      docSubTypes =  qr.query(conn, DMSQueries.getSubProjectsByProjectId,rsh,projectid);
+	    } catch (Exception e) {
+	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        logger.error("Error releasing connection :: " + ex.getMessage());
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return docSubTypes;
+	  }
+
+	public List<Userprofile> getTenantHistory(long userid, List<Userprofile> docSubTypes) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler<Userprofile>(Userprofile.class);
+	      docSubTypes =  qr.query(conn, DMSQueries.getTenantHistory,rsh,userid);
+	    } catch (Exception e) {
+	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        logger.error("Error releasing connection :: " + ex.getMessage());
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return docSubTypes;
+	  }
+ 
 }

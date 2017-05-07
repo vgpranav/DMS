@@ -407,6 +407,8 @@
 										<tr class="headings"> 
 											<th class="column-title">Nominee</th>
 											<th class="column-title">Percentage</th>
+											<th class="column-title">Relation</th>
+											<th class="column-title">DOB</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -452,7 +454,23 @@
 					</div>
 					
 					<div class="col-md-4 col-sm-4 col-xs-12">
-						<h2><a href="viewNoticeboard.do?societyid=${userprofile.societyid}">Society Notice Board</a></h2>
+						<h2>
+							<a href="viewNoticeboard.do?societyid=${userprofile.societyid}">
+								Society Notice Board
+								<c:if test="${newNoticeAdded==true}">
+									<span class="badge newNoticeBadge success">New</span>
+								</c:if>	
+							</a>
+						</h2>
+						<br>
+					</div>
+					
+					<div class="col-md-4 col-sm-4 col-xs-12">
+						<h2>
+							<a href="viewSocietyPolicy.do?societyid=${userprofile.societyid}">
+								Society Policies/Amenities
+							</a>
+						</h2>
 						<br>
 					</div>
 					
@@ -577,12 +595,17 @@
 		$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
-		       data :"mobileNo="+mobileNo,
+		        data :"mobileNo="+mobileNo
+	       				+"&otpType=confidential",
 		        success: function(response){
 		        //alert()
 		        	if(response=='success') {
 		        		notify('success','OTP SENT','You Will Receive OTP Shortly',2000);
-		        	}  else {
+		        	}  else if(response=='unauthorized') {
+		        		notify('error','UNAUTHORIZED','You do not have access to this document',2000);
+		        		clearInterval(interval);
+				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
+		        	} else {
 		        		notify('error','FAILED','Invalid Mobile Number',2000);
 		        		clearInterval(interval);
 				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
@@ -693,7 +716,8 @@
 	        		table.row.add( [
 	        			item.nominee,
 	        			item.percent,
-	        			 
+	        			item.nomineerelation,
+	        			new Date(item.nomineedob).toString("dd MMM yyyy"),
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
@@ -783,6 +807,8 @@ function editUserData(){
 			 var minutes = 60*24;
 			 date.setTime(date.getTime() + (minutes * 60 * 1000));
 			 $.cookie("edocAlertShown", "true", { expires: date });
+		}else{
+			$('.newNoticeBadge').hide();
 		}
 		
 	});

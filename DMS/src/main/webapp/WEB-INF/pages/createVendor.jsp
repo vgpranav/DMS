@@ -173,9 +173,8 @@
                             <th class="column-title">Contract From </th>
                             <th class="column-title">Contract To </th>
                             <th class="column-title">Created On </th>
-                            <th class="column-title no-link last">
-                            	<span class="nobr">Action</span>
-                            </th>
+                            <th class="column-title">Edit</th>
+                            <th class="column-title">Remove</th>
                           </tr>
                         </thead>
 
@@ -267,6 +266,7 @@
 	        	$.each(response, function(i, item) {
 	  
 	        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editVendor(\'' + item.vendorid + '\')"><i class="fa fa-edit"></i></a>';
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="genericRemove(\'' + item.vendorid + '\',\'vendors\',\'vendorid\',getVendorsBySocId)"><i class="fa fa-times"></i></a>';
 	        		
 	        		table.row.add( [
 	        			item.companyname,
@@ -278,6 +278,7 @@
 	        			new Date(item.contractto).toString("dd MMM yyyy"),
 	        			new Date(item.createdon).toString("dd MMM yyyy"),
 	        			editBtn,
+	        			delBtn,
 	                ] ).draw( false );
 	        	    
 	        	  });

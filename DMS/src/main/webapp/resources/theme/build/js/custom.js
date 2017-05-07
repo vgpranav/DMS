@@ -1756,7 +1756,7 @@ if (typeof NProgress != 'undefined') {
   
 			
 			
-			$('.customdatepicker').daterangepicker({
+			$('.customdatepicker1').daterangepicker({
 				  singleDatePicker: true,
 				  singleClasses: "picker_2",
 				  showDropdowns: true,
@@ -1764,11 +1764,22 @@ if (typeof NProgress != 'undefined') {
 				  //console.log(start.toISOString(), end.toISOString(), label);
 				});
 			
-			$('.customdatepicker').val("");
+			$('.customdatepicker1').val("");
 			
-			$('.customdatepicker').on('apply.daterangepicker', function(ev, picker) {
+			$('.customdatepicker1').on('apply.daterangepicker', function(ev, picker) {
  				  $(this).val(picker.startDate.format('YYYY/MM/DD'));
 				});
+			
+			$('.customdatepicker').datepicker({
+				"changeMonth":true,
+				"changeYear":true,
+				"dateFormat":"yy/mm/dd",
+				"constrainInput":true,
+				"yearRange":"c-30:c+30"
+			});
+			
+			$('.customdatepicker').removeAttr('readonly');
+			$('.customdatepicker').attr('placeholder','yyyy/mm/dd');
 		}
 		
 		 

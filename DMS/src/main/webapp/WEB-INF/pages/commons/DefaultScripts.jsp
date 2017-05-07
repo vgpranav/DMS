@@ -59,4 +59,41 @@
 	});
 	
 	
+	function genericRemove(genId,typeVal,pkName,callback){
+		
+		if(confirm('Are you Sure?')){
+			if(genId.length < 1){
+ 			alert('Some Mandatory Fields  are Missing');
+ 			return false;
+ 		} else { 
+ 			blockUI();
+ 			$.ajax({
+ 		        type: "GET",
+ 		        url: "<%=request.getContextPath()%>/genericRemove.do",
+ 		       data :"genId="+genId
+ 		      		+"&pkName="+pkName
+ 		      		+"&typeVal="+typeVal,
+ 		        success: function(response){
+ 		        //alert()
+  		        	if(response=='success') {
+ 		        		notify('success','SUCCESS','Removed Successfully',2000);
+ 		        		if(callback=='reload')
+ 		        			location.reload();
+ 		        		else
+ 		        			callback();
+ 		        	}  else {
+ 		        		notify('error','Failed','Failed to Remove Member',2000);
+ 		        	}
+ 		        unblockUI();
+ 		        },
+ 					error : function(e) {
+ 						notify('error','ERROR','Error occured',2000);
+ 						unblockUI();
+ 					}
+ 				});
+ 		}
+		}
+ 		return false;
+	}
+	
 </script>

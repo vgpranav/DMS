@@ -50,8 +50,8 @@ public class Userprofile
     private String vehicleno;
 
     
-    private String tenantfrom;
-    private String tenantto;
+    private Date tenantfrom;
+    private Date tenantto;
 
     private String randomHash;
     
@@ -63,19 +63,19 @@ public class Userprofile
 		this.randomHash = randomHash;
 	}
 
-	public String getTenantfrom() {
+	public Date getTenantfrom() {
 		return tenantfrom;
 	}
 
-	public void setTenantfrom(String tenantfrom) {
+	public void setTenantfrom(Date tenantfrom) {
 		this.tenantfrom = tenantfrom;
 	}
 
-	public String getTenantto() {
+	public Date getTenantto() {
 		return tenantto;
 	}
 
-	public void setTenantto(String tenantto) {
+	public void setTenantto(Date tenantto) {
 		this.tenantto = tenantto;
 	}
 

@@ -3,7 +3,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Notice Board</h2>
+                  <h2>${pageTitle}</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -19,7 +19,7 @@
 							<c:set var="docId" value="${myItem.documentid}"></c:set>
 							<div class="clearfix"></div>
 							<hr/>
-							<b>Notice Date : ${myItem.createdon}</b>
+							<b>Date : ${myItem.createdon}</b>
 							<hr/>
 						</c:if>
 						
