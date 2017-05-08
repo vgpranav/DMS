@@ -5,7 +5,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
 		<div class="x_title">
-			<h2>Personal Details</h2>
+			<h2>Tenant Details</h2>
 			<ul class="nav navbar-right panel_toolbox">
 				<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 				</li>
@@ -781,7 +781,7 @@ function editUserData(){
 	        		$('#vehicletype').val(response.vehicletype);
 	        		$('#parkingtype').val(response.parkingtype);
 	        		$('#parkingallotmentno').val(response.parkingallotmentno);
-	        		$('#bloodgroup').val(response.bloodgroup);
+	        		$('#bloodgroup').val(response.bloodgroup.replace('n',' -ve').replace('p',' +ve'));
 	        		$('#sharecertno').val(response.sharecertno);
 	        		 
 	        		$('#occupancy').prop('disabled', 'disabled');

@@ -123,11 +123,11 @@
 							<div class="form-group">
 							
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Aadhar No. </label>
+									for="first-name">Aadhar No. <span class="required">*</span></label> 
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="aadharno" name="aadharno"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12" required="required">
 									</div>
 								</div>
 								
@@ -138,7 +138,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="password" id="password" name="password"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12" required="required">
 									</div>
 								</div>
 								
@@ -147,8 +147,17 @@
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="bloodgroup" name="bloodgroup"
-											class="form-control col-md-12 col-xs-12">
+										<select id="bloodgroup" name="bloodgroup" class="form-control col-md-12 col-xs-12">
+											<option value="an">A -Ve</option>
+											<option value="ap">A +Ve</option>
+											<option value="bn">B -Ve</option>
+											<option value="bp">B +Ve</option>
+											<option value="on">O -Ve</option>
+											<option value="op">O +Ve</option>
+											<option value="abn">AB -Ve</option>
+											<option value="abp">AB +Ve</option>
+										</select>
+										
 									</div>
 								</div> 
 
@@ -845,6 +854,11 @@
 				return false;
 			}
 			
+			if(tenantaadharno.length!=	12){
+				alert("Lease Owner Aadhar Invalid");
+				return false;
+			}
+			
 			if(tenantname2.length>0)
 				tenantname = tenantname+' '+tenantname2;
 			
@@ -857,6 +871,10 @@
 			return false;
 		}
 		
+		if(aadharno.length!=12){
+			alert("Aadhar Invalid");
+			return false;
+		}
 		
 		var datastr = "userid="+userid
 				+"&firstName="+firstName
@@ -1086,7 +1104,7 @@
 	        		$('#vehicletype').val(response.vehicletype);
 	        		$('#parkingtype').val(response.parkingtype);
 	        		$('#parkingallotmentno').val(response.parkingallotmentno);
-	        		$('#bloodgroup').val(response.bloodgroup);
+	        		$('#bloodgroup option[value="'+response.bloodgroup+'"]').prop("selected",true).change();
 	        		$('#sharecertno').val(response.sharecertno);
 	        		$('#nominee1').val(response.nominee1);
 	        		$('#percent1').val(response.percent1);

@@ -16,6 +16,7 @@
         		
         		
               <ul class="nav navbar-nav navbar-right">
+              	<li><a href="showHomepage.do">Home</a></li>
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   
@@ -31,6 +32,7 @@
                     ${sessionScope.userObject.firstName}
                     <span class=" fa fa-angle-down"></span>
                   </a>
+                  
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <li><a href="showHomepage.do">Home</a></li>
                     <li><a href="logout.do"><i class="fa fa-sign-out pull-right"></i> 
