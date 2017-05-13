@@ -1773,9 +1773,9 @@ if (typeof NProgress != 'undefined') {
 			$('.customdatepicker').datepicker({
 				"changeMonth":true,
 				"changeYear":true,
-				"dateFormat":"yy/mm/dd",
+				"dateFormat":"dd/mm/yy",
 				"constrainInput":true,
-				"yearRange":"c-30:c+30"
+				"yearRange":"c-100:c+30"
 			});
 			
 			$('.customdatepicker').removeAttr('readonly');

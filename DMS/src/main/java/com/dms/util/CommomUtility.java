@@ -2,6 +2,10 @@ package com.dms.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -44,4 +48,13 @@ public class CommomUtility {
 		}
 	return configvalue;
 }
+	
+	public static Date formatDate(Date inDate) throws ParseException{
+		SimpleDateFormat dt = new SimpleDateFormat("MM-dd-yyyy hh:mm:ss"); 
+		String dtString = dt.format(inDate);
+		SimpleDateFormat dt1 = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+		Date outDate = dt1.parse(dtString); 
+		return outDate;
+	}
+	
 }

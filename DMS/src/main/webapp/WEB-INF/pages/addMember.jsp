@@ -535,6 +535,7 @@
 											<th class="column-title">Percentage</th>
 											<th class="column-title">Relation</th>
 											<th class="column-title">DOB</th>
+											<th class="column-title">Address</th>
 											<th class="column-title">Action</th>
 										</tr>
 									</thead>
@@ -595,7 +596,7 @@
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Vehicle Type </label>
-								<div class="col-md-1 col-sm-1 col-xs-12">
+								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select class="form-control" name="vehicletype" id="vehicletype">
 											<option value=""> -- select --</option>
@@ -608,7 +609,7 @@
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Parking Type </label>
-								<div class="col-md-1 col-sm-1 col-xs-12">
+								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<select class="form-control" name="parkingtype" id="parkingtype">
 											<option value=""> -- select --</option>
@@ -620,7 +621,7 @@
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Parking Allotment No </label>
-								<div class="col-md-1 col-sm-1 col-xs-12">
+								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="parkingallotmentno"
 											name="parkingallotmentno"
@@ -628,9 +629,11 @@
 									</div>
 								</div>
 							 
+							 </div>
+							 <div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Vehicle No </label>
-								<div class="col-md-1 col-sm-1 col-xs-12">
+								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="vehicleno"
 											name="vehicleno"
@@ -1432,6 +1435,7 @@
 								        			item.percent,
 								        			item.nomineerelation,
 								        			new Date(item.nomineedob).toString("dd MMM yyyy"),
+								        			item.nomineeaddress,
 								        			delBtn,
 								                ] ).draw( false );
 								        		srno++;

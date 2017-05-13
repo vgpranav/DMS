@@ -449,7 +449,11 @@
 	        		
 	        		$('#noofshop').val(response.noofshop);
 	        		$('#noofflat').val(response.noofflat);
+
 	        		
+	        		$('#city').val(response.city);
+	        		$('#landmark').val(response.landmark);
+
 	        		if(response.estdate!=null)
 	        			$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));	
 	        		 

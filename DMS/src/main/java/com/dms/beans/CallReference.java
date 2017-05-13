@@ -27,17 +27,17 @@ public class CallReference {
 	private String  contactlandlineno;
 	private String  contactemail;
 	
-	private String  meetingdate;
+	private Date  meetingdate;
 	private String  meetingperson;
 	private String  meetingremarks;
 	
 	
 	
 	
-	public String getMeetingdate() {
+	public Date getMeetingdate() {
 		return meetingdate;
 	}
-	public void setMeetingdate(String meetingdate) {
+	public void setMeetingdate(Date meetingdate) {
 		this.meetingdate = meetingdate;
 	}
 	public String getMeetingperson() {

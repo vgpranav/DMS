@@ -1,3 +1,4 @@
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
@@ -7,11 +8,17 @@
 	<div class="x_panel tile">
 		<div class="pull-left">
 			<h3>${society.societyname}</h3>
-		    <b>Society Reg. No. ${society.registrationno}</b>
-			<br><b>Estd. on ${society.estdate}</b>
-			<br><br><em>${society.addressline1}</em>
-			<br><em>${society.addressline2}</em>
-			<br><em>${society.ward} ${society.district} ${society.state}</em>
+				    <b>Society Reg. No. ${society.registrationno}</b>
+					<br><b>Estd. on <fmt:formatDate type = "date" value = "${society.estdate}" /></b>
+					<br><br><em>Address: ${society.addressline1}</em>
+					<br><em>${society.addressline2}</em>
+					<br><em>Landmark : ${society.landmark}</em>
+					<br><em>City: ${society.city}</em>
+					<br><em>${society.ward}, ${society.district}, ${society.state}</em>
+					<br><em>${society.country}</em>
+					<br><em>Pincode: ${society.pincode}</em>
+					<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
+					<br><em>No of Shop/Offices/Gala : ${society.noofshop}</em>
 		</div>
 		<div class="pull-right">
 		<div align="left">
