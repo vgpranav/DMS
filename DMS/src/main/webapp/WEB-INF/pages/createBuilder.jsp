@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
@@ -29,26 +30,6 @@
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
-					
-					<!-- <div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Office Address <span class="required">*</span>
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<textarea id="address" name="address"
-								required="required" class="form-control col-md-7 col-xs-12"></textarea>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">Block Number 
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="blockno" name="blockno"
-								  class="form-control col-md-7 col-xs-12">
-						</div>
-					</div> -->
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
@@ -246,7 +227,7 @@
 									<td class=" ">${myItem.area}</td>
 									<td class=" ">${myItem.city}</td> 
 									<td class=" ">${myItem.state}</td>
-									<td class=" ">${myItem.createdon}</td>
+									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 										<c:if test="${myItem.active==1}">
 											Active

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
@@ -272,7 +273,7 @@
 									<td class=" ">${myItem.projectname}</td>
 									<td class=" ">${myItem.buildername}</td>
 									<td class=" ">${myItem.registrationdate}</td> 
-									<td class=" ">${myItem.createdon}</td>
+									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 										<c:if test="${myItem.active==1}">
 											Active
@@ -325,7 +326,7 @@
 	        		$('#builderid option[value="'+response.builderid+'"]').prop("selected",true).change();
 	        		$('#siteaddress').val(response.siteaddress);
 	        		$('#plotarea').val(response.plotarea);
-	        		$('#registrationdate').val(new Date(response.registrationdate).toString("yyyy/MM/dd"));
+	        		$('#registrationdate').val(new Date(response.registrationdate).toString("dd/MM/yyyy"));
 	        		$('#towernos').val(response.towernos);
 	        		$('#resnos').val(response.resnos);
 	        		$('#bungnos').val(response.bungnos);

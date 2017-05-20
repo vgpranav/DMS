@@ -889,8 +889,6 @@
 		        +"&aadharno="+aadharno
 		        +"&password="+password
 		        +"&jointowners="+jointowners
-		        +"&purchasedate="+purchasedate
-		        +"&possessiondate="+possessiondate
 		        +"&occupancy="+occupancy
 		        +"&flatno="+flatno
 		        +"&wing="+wing
@@ -929,6 +927,13 @@
 				if(tenantto!=null && tenantto.length>0)
 					datastr += "&tenantto="+tenantto;
 		
+				if(purchasedate!=null && purchasedate.length>0)
+					datastr += "&purchasedate="+purchasedate;
+				
+				if(possessiondate!=null && possessiondate.length>0)
+					datastr += "&possessiondate="+possessiondate;
+				
+				
 		blockUI();
 		$.ajax({
 	        type: "GET",
@@ -1075,8 +1080,8 @@
 	        		$('#email').val(response.email);
 	        		$('#aadharno').val(response.aadharno);
 	        		$('#password').val(response.password);
-	        		$('#purchasedate').val(new Date(response.purchasedate).toString("yyyy/MM/dd"));
-	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
+	        		$('#purchasedate').val(new Date(response.purchasedate).toString("dd/MM/yyyy"));
+	        		$('#possessiondate').val(new Date(response.possessiondate).toString("dd/MM/yyyy"));
 	        		
 	        		$('#occupancy option[value="'+response.occupancy+'"]').prop("selected",true).change();
 

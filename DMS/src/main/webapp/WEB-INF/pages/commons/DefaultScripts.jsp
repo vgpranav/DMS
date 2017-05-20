@@ -23,6 +23,8 @@
 
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/popupimage/popImg.js"></script>
 
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/ionzoom/js/ion-zoom/ion.zoom.js"></script>
+
 
 <script>
 	function notify(type,title,message,delay){
@@ -95,5 +97,5 @@
 		}
  		return false;
 	}
-	
-</script>
+
+

@@ -67,6 +67,8 @@
 							<th class="column-title">Possession&nbsp;Date</th>
 							<th class="column-title">Builtup&nbsp;Area</th>
 							<th class="column-title">Carpet&nbsp;Area</th>
+							<th class="column-title">Share Cert.</th>
+							<th class="column-title">Lease Owner.</th>
 							<th class="column-title">Photograph</th>
 						</tr>
 					</thead>
@@ -170,24 +172,7 @@
                    
                    <h4>Past Members</h4>
                    <hr>
-                   <div class="table-responsive">
-                       <table class="table table-striped jambo_table bulk_action" id="thetable5">
-                        <thead>
-                          <tr class="headings">
-                            <th class="column-title">Sr.No</th>
-                            <th class="column-title">Member Name</th>
-                            <th class="column-title">Designation</th>
-                            <th class="column-title">Wing/Flat</th>
-                            <th class="column-title">Tower</th>
-                            <th class="column-title">Contact No</th>
-                            <th class="column-title">Appointed On</th>
-                            <th class="column-title">Dissolved On</th>
-                            <th class="column-title">Photograph</th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
-                    </div>
+                   <div id="pastMemCont"></div>
                       
                   </div>
                 </div>
@@ -217,6 +202,8 @@
                             <th class="column-title">Address</th>
                             <th class="column-title">Contact Number</th>
                             <th class="column-title">Alternate Number</th>
+                             <th class="column-title">Contract From</th>
+                            <th class="column-title">Contract To</th>
                             <th class="column-title">Email</th>
                             <th class="column-title">Remarks</th>
                             <th class="column-title">Photo</th>
@@ -231,12 +218,122 @@
               </div>
  </div>
  <div class="clearfix"></div>
+ 
+ <div id="SCDialog">
+ 		<div class="table-responsive  col-sm-12 col-md-12 col-xs-12"  >
+			<table class="table table-striped jambo_table bulk_action"
+				id="thetableSC">
+				<thead>
+					<tr class="headings"> 
+						<th class="column-title">Nominee</th>
+						<th class="column-title">Percentage</th>
+						<th class="column-title">Relation</th>
+						<th class="column-title">DOB</th>
+						<th class="column-title">Address</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+ </div>
+ 
+ <div id="TDialog">
+ 		<div class="clearfix"></div>
+							<div class="form-group">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">First Name</sup>
+									 <br><span class="bigger" id="tenantname"></span>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Middle Name</sup>
+									 <br><span class="bigger" id="tenantname2"></span>
+								</div>
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Last Name</sup>
+									 <br><span class="bigger" id="tenantname3"></span>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="form-group">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Contact Number</sup>
+									 <br><span class="bigger" id="tenantcontactnumber"></span>
+								</div>
+								
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Alternate Number</sup>
+									 <br><span class="bigger" id="tenantaltnumber"></span>
+								</div>
+								
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Email</sup>
+									 <br><span class="bigger" id="tenantemail"></span>
+								</div>
+							</div>
+							<div class="form-group">
+							
+								<div class="col-md-12 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Permanent Address</sup>
+									 <br><span class="bigger" id="tenantaddress"></span>
+								</div>
+								
+							   <div class="col-md-12 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Lease Type</sup>
+									 <br><span class="bigger" id="tenantType"></span>
+								</div>
+								
+							</div>
+							<div class="form-group">
+								 <div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Aadhar Number</sup>
+									 <br><span class="bigger" id="tenantaadharno"></span>
+								</div>
+								
+								<div class="col-md-4 col-sm-4 col-xs-12">
+								 	 <sup class="text-muted">Tenant Police Verification Done</sup>
+									 <br><span class="bigger" id="tenantPVstatus"></span>
+								</div>
+							</div>
+ </div>
+ 
+ 
+ <!-- <button onclick="openSCDialog()">Test</button> -->
  <script>
+ 
+ function openSCDialog(){
+		$( "#SCDialog" ).dialog( "open" )
+	 }
+ 
+ function openTDialog(){
+		$( "#TDialog" ).dialog( "open" )
+	 }
+  
  
  $(document).ready(function(){
 	 
-	
+	 $( "#SCDialog" ).dialog({
+	      autoOpen: false,
+	      height: 500,
+	      width: 600,
+	      modal: true,
+	      title:"Share Certificate Details",
+	    });
 	 
+	 $( "#TDialog" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 700,
+	      modal: true,
+	      title:"Lease Owner Details",
+	    });
+	 
+	 $('#thetableSC').DataTable({
+	        "paging":   false,
+	        "ordering": false,		       
+	        "bFilter": false,
+	        "info":     false
+	    });
 	 
 	 $('#thetable').DataTable({
 		 	"paging":   false,
@@ -252,12 +349,12 @@
 	        "bFilter": false
 	    });
 	 
-	 $('#thetable5').DataTable({
+		/* $('#thetable5').DataTable({
 	        
 	        "ordering": false,
 	        "info":     false,
 	        "bFilter": false
-	    });
+	    }); */
 	 
 	 $('#thetable2').DataTable({
 	        
@@ -272,17 +369,50 @@
 		getVendorsBySocId();
  });
  
+ function getSCDetailsForMember(userid){
+		var randomHash = '1';
+		var table = $('#thetableSC').DataTable();
+		table .clear() .draw();
+		blockUI();
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.nominee,
+	        			item.percent,
+	        			item.nomineerelation,
+	        			new Date(item.nomineedob).toString("dd MMM yyyy"),
+	        			item.nomineeaddress,
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        	unblockUI();
+	        	openSCDialog();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+	}
  
  function getCommitteMembersForSociety(){
 		var societyid = $('#societyid').val();
 		var table = $('#thetable').DataTable();
-		var table5 = $('#thetable5').DataTable();
 			
 		if(societyid.length<1)
 			return false;
 			
 		table.clear().draw();
-		table5.clear().draw();
+		
 		blockUI();
 		$.ajax({
 	        type: "GET",
@@ -292,6 +422,9 @@
 	        var k=1;
 	        var j=1;
 	        var srno=1;
+	        var testKey='';
+	        var currTabId='';
+	        
 	        	$.each(response, function(i, item) {
 	        		$.each(item, function(i, item1) {
 	        			var divid="commem"+srno;
@@ -311,6 +444,15 @@
 				                ] ).draw( false ); 
 				                k++;
 	        				} else{
+	        					
+	        					if(item1.tower!=testKey){
+	        						testKey=item1.tower;
+	        						getPastMemTable(testKey,item1.removedon);
+	        						currTabId=testKey;
+	        					}
+	        					
+	        					var table5 = $('#'+currTabId).DataTable();
+	        					
 	        					table5.row.add( [
 	        						j,
 				        			item1.userName,
@@ -356,6 +498,9 @@
 	        	$.each(response, function(i, item) {
 	        		var divid="soc"+srno;
 		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+		        	var scbtn = '<a href="#" onclick="getSCDetailsForMember(\'' + item.userid + '\')">view</a>';
+		        	var tbtn = '<a href="#" onclick="editUserData(\'' + item.userid + '\')">view</a>';
+		        	
 	        		table.row.add( [
 	        			srno,
 	        			item.flatno,
@@ -373,6 +518,8 @@
 	        			new Date(item.possessiondate).toString("dd MMM yyyy"),
 	        			item.builtuparea,
 	        			item.carpetarea,
+	        			scbtn,
+	        			tbtn,
 	        			photodiv,
 	                ] ).draw( false );
 	        		
@@ -444,6 +591,8 @@
 	        			item.address,
 	        			item.contactno,
 	        			item.alternateno,
+	        			new Date(item.contractfrom).toString("dd MMM yyyy"),
+	        			new Date(item.contractto).toString("dd MMM yyyy"),
 	        			item.email,
 	        			item.remark,
 	        			photodiv,
@@ -543,6 +692,85 @@
               unblockUI();
           });;
     }
+	
+	
+function editUserData(userid){
+		
+		$('#tenantPVstatus').html('');
+		$('#tenantname').html('');
+		$('#tenantname2').html('');
+		$('#tenantname3').html('');
+		$('#tenantaddress').html('');
+		$('#tenantcontactnumber').html('');
+		$('#tenantaltnumber').html('');
+		$('#tenantemail').html('');
+		$('#tenantaadharno').html('');
+		$('#tenantType').html('');
+	
+		blockUI();
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getUserDataById.do",
+	        data :"userid="+userid,
+	        success: function(response){
+	        	if(response.userid>0) {
+ 
+	        		if(response.tenantname!=null && response.tenantname.length>0){
+		        		$('#tenantPVstatus').html(response.tenantPVstatus.toUpperCase());
+	        			$('#tenantname').html(response.tenantname.split(' ')[0]);
+		        		$('#tenantname2').html(response.tenantname.split(' ')[1]);
+		        		$('#tenantname3').html(response.tenantname.split(' ')[2]);
+		        		$('#tenantaddress').html(response.tenantaddress);
+		        		$('#tenantcontactnumber').html(response.tenantcontactnumber);
+		        		$('#tenantaltnumber').html(response.tenantaltnumber);
+		        		$('#tenantemail').html(response.tenantemail);
+		        		$('#tenantaadharno').html(response.tenantaadharno);
+		        		$('#tenantType').html(response.tenantType);
+	        		}
+	        	 
+	        	}  
+	        	unblockUI();
+	        	openTDialog();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+	}
+	
+	function getPastMemTable(tblId,remOn){
+		
+		var remDate = new Date(remOn).toString("dd MMM yyyy");
+		
+		var tbl = '<strong>Dissolved On: '+remDate+'</strong><div class="table-responsive">'
+				        +'<table class="table table-striped jambo_table bulk_action" id="'+tblId+'">'
+				        +'<thead>'
+				        +'<tr class="headings">'
+				        +'<th class="column-title">Sr.No</th>'
+				        +'<th class="column-title">Member Name</th>'
+				        +'<th class="column-title">Designation</th>'
+				        +'<th class="column-title">Wing/Flat</th>'
+				        +'<th class="column-title">Tower</th>'
+				        +'<th class="column-title">Contact No</th>'
+				        +'<th class="column-title">Appointed On</th>'
+				        +'<th class="column-title">Dissolved On</th>'
+				        +'<th class="column-title">Photograph</th>'
+				        +'</tr>'
+				        +'</thead>'
+				        +'<tbody></tbody>'
+				        +'</table>'
+				        +'</div>';
+		
+		$('#pastMemCont').append(tbl);
+		
+		$('#'+tblId).DataTable({
+			"paging":   false,
+	        "ordering": false,
+	        "info":     false,
+	        "bFilter": false
+	    });
+	}
  </script>
  
 <style>
@@ -561,3 +789,20 @@
 }
  
  </style>
+ 
+ 
+ <style>
+	 
+	.bigger{
+		font-size: medium;
+		margin-left: 38px !important;
+		font-style: italic;
+		font-weight: bolder;
+	}
+	
+	sup {
+		top:0.5em !important;
+		margin-left: 35px !important;
+	}
+	 
+</style>

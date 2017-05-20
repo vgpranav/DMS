@@ -13,102 +13,7 @@
 
     <title><tiles:insertAttribute name="title" /> | Document Management System</title>
      
-    <tiles:insertAttribute name="imports" />  
-  </head>
-
-  <body class="login">
-    <div>
-      <a class="hiddenanchor" id="signup"></a>
-      <a class="hiddenanchor" id="signin"></a>
-
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-          
-          <div id="login-section">
-          
-            <form method="post" action="authenticateUser.do">
-              <h1>Login Here</h1>
-              <div>
-                <input type="text" name="mobileNo" class="form-control" placeholder="Mobile No"/>
-              </div>
-              <div>
-                <input type="password" name ="password" class="form-control" placeholder="Password" />
-              </div>
-              <div align="center">
-                <input type="submit" class="btn btn-success" value="Log In" style="display: block;"/>
-                <c:if test="${not empty errorMessage}">
-                  <script>
-		                $(document).ready(function(){
-		                	notify('error','ERROR','${errorMessage}',2000);
-		                });
-				  </script>
-				  <div class="text-danger">${errorMessage}</div>
-				</c:if>
-              </div>
- 			</form>
- 				
- 				 <p class="change_link">
-                	<a class="" href="#" onclick="showOtpSection()">Lost your password?</a>
-                </p>
-                
- 			</div>
- 			
-              <div class="clearfix"></div>
-
-              <div class="separator">
-               
-                <div class="clearfix"></div>
-                <br />
-			
-			<div id="otp-section" style="display: none;">
- 			<form method="post" action="#">
-              <div>
-                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
-              </div>
-              <div align="center">
-              <button class="btn btn-warning" onclick="generateOTPInit();return false;" id="otpbtn">Send OTP</button>
-              </div>
-              <hr/>
-              <div>
-                <input type="password" autocomplete="off" name ="otp" id ="otp" class="form-control" placeholder="Enter OTP Here" />
-              </div>
-               <div>
-                <input type="password" autocomplete="off" name ="passwordotp" id ="passwordotp" class="form-control" placeholder="Enter New Password" />
-              </div>
-               <div>
-                <input type="password" autocomplete="off" name ="passwordotp1" id ="passwordotp1" class="form-control" placeholder="Repeat New password" />
-              </div>
-              <div align="center">
-               
-                <button class="btn btn-success" style="margin-top: 10px;" onclick="validateAndSetNewPW();return false;">Reset Password</button>
-                 
-                
-              </div>
-              
- 			</form>
-			</div>
-			
-
-
-                <div>
-                  <img src="<%= request.getContextPath() %>/resources/images/ods-logo.png" height="80">
-                  <p>©20167-18 All Rights Reserved.</p>
-                </div>
-              </div>
-           
-          </section>
-        </div>
- 		</div>
-    </div>
-   
-     <tiles:insertAttribute name="importJScript" />
-       
-  </body>
-</html>
-
-
-<script>
+     <script>
 
 	function showOtpSection(){
 		$('#login-section').hide("fold", { direction: "up" }, "slow" );
@@ -210,4 +115,101 @@
 	}
 	
 </script>
+
+    <tiles:insertAttribute name="imports" />  
+  </head>
+
+  <body class="login">
+    <div>
+      <a class="hiddenanchor" id="signup"></a>
+      <a class="hiddenanchor" id="signin"></a>
+
+      <div class="login_wrapper">
+        <div class="animate form login_form">
+          <section class="login_content">
+          
+          <div id="login-section">
+          
+            <form method="post" action="authenticateUser.do">
+              <h1>Login Here</h1>
+              <div>
+                <input type="text" name="mobileNo" class="form-control" placeholder="Mobile No"/>
+              </div>
+              <div>
+                <input type="password" name ="password" class="form-control" placeholder="Password" />
+              </div>
+              <div align="center">
+                <input type="submit" class="btn btn-success" value="Log In" style="display: block;"/>
+                <c:if test="${not empty errorMessage}">
+                  <script>
+		                $(document).ready(function(){
+		                	notify('error','ERROR','${errorMessage}',2000);
+		                });
+				  </script>
+				  <div class="text-danger">${errorMessage}</div>
+				</c:if>
+              </div>
+ 			</form>
+ 				
+ 				 <p class="change_link">
+                	<a class="" href="#" onclick="showOtpSection()">Lost your password?</a>
+                </p>
+                
+ 			</div>
+ 			
+              <div class="clearfix"></div>
+
+              <div class="separator">
+               
+                <div class="clearfix"></div>
+                <br />
+			
+			<div id="otp-section" style="display: none;">
+ 			<form method="post" action="#">
+              <div>
+                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
+              </div>
+              <div align="center">
+              <button class="btn btn-warning" onclick="generateOTPInit();return false;" id="otpbtn">Send OTP</button>
+              </div>
+              <hr/>
+              <div>
+                <input type="password" autocomplete="off" name ="otp" id ="otp" class="form-control" placeholder="Enter OTP Here" />
+              </div>
+               <div>
+                <input type="password" autocomplete="off" name ="passwordotp" id ="passwordotp" class="form-control" placeholder="Enter New Password" />
+              </div>
+               <div>
+                <input type="password" autocomplete="off" name ="passwordotp1" id ="passwordotp1" class="form-control" placeholder="Repeat New password" />
+              </div>
+              <div align="center">
+               
+                <button class="btn btn-success" style="margin-top: 10px;" onclick="validateAndSetNewPW();return false;">Reset Password</button>
+                 
+                
+              </div>
+              
+ 			</form>
+			</div>
+			
+
+
+                <div>
+                  <img src="<%= request.getContextPath() %>/resources/images/ods-logo-ws.png" height="45"/>
+                  <p>©20167-18 All Rights Reserved.</p>
+                </div>
+              </div>
+           
+          </section>
+        </div>
+ 		</div>
+    </div>
+   
+     <tiles:insertAttribute name="importJScript" />
+       
+  </body>
+</html>
+
+
+
  

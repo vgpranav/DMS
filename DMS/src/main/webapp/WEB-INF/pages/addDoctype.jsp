@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
@@ -111,7 +112,7 @@
 									<td class=" ">${myItem.doctypename}</td>
 									<td class=" ">${myItem.doctypedesc}</td>
 									<td class=" ">${myItem.createdby}</td>
-									<td class=" ">${myItem.createdon}</td>
+									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 										<c:if test="${myItem.active==1}">
 											Active

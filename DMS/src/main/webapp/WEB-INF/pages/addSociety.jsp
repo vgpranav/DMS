@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -291,7 +291,7 @@
 								</c:if>
 									<td class=" ">${myItem.societyname}</td>
 									<td class=" ">${myItem.projectname}</td>
-									<td class=" ">${myItem.createdon}</td>
+									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 										<c:if test="${myItem.isactive==1}">
 											Active
@@ -345,7 +345,7 @@
 								</c:if>
 									<td class=" ">${myItem.societyname}</td>
 									<td class=" ">${myItem.projectname}</td>
-									<td class=" ">${myItem.createdon}</td>
+									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 										<c:if test="${myItem.isactive==1}">
 											Active
@@ -455,7 +455,7 @@
 	        		$('#landmark').val(response.landmark);
 
 	        		if(response.estdate!=null)
-	        			$('#estdate').val(new Date(response.estdate).toString("yyyy/MM/dd"));	
+	        			$('#estdate').val(new Date(response.estdate).toString("dd/MM/yyyy"));	
 	        		 
 	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();
 	        		$('#projectid option[value="'+response.projectid+'"]').prop("selected",true).change();

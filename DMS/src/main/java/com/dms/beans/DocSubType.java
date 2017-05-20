@@ -1,5 +1,6 @@
 package com.dms.beans;
 
+import java.util.Date;
 
 public class DocSubType
 {
@@ -9,7 +10,7 @@ public class DocSubType
     private String docsubtypename;
     private String docsubtypedesc;
     private String createdby;
-    private String createdon;
+    private Date createdon;
     private int active;
     private String doctypename;
     private int displayflag;
@@ -73,12 +74,12 @@ public class DocSubType
         this.createdby = createdby;
     }
 
-    public String getCreatedon()
+    public Date getCreatedon()
     {
         return createdon;
     }
 
-    public void setCreatedon(String createdon)
+    public void setCreatedon(Date createdon)
     {
         this.createdon = createdon;
     }

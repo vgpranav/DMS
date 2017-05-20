@@ -216,17 +216,10 @@
 									 <br><span class="bigger" id="tenantaddress"></span>
 								</div>
 								
-							 
-								<!-- <label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Lease Type</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<select class="form-control1" name="tenantType" id="tenantType">
-											<option value="Residential">Residential</option>
-											<option value="Commercial">Commercial</option>
-										</select>
-									</div>
-								</div> -->
+							   <div class="col-md-12 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Lease Type</sup>
+									 <br><span class="bigger" id="tenantType"></span>
+								</div>
 								
 							</div>
 							
@@ -411,9 +404,8 @@
 			editUserData();
 	});
 	
-	function showhidetenant(){
-		var occupancy = $('#occupancy').val();
-		if(occupancy=='self')
+	function showhidetenant(occ){
+		if(occ=='self')
 		 $('#tenantdetails').hide('slideDown');
 		else
 			$('#tenantdetails').show('slideDown');
@@ -624,13 +616,9 @@ function editUserData(){
 	        		$('#purchasedate').html	(new Date(response.purchasedate).toString("dd/MM/yyyy"));
 	        		$('#possessiondate').html(new Date(response.possessiondate).toString("dd/MM/yyyy"));
 	        		
-
-	        		$('#tenantType option[value="'+response.tenantType+'"]').prop("selected",true).change();
-
-	        		$('#tenantPVstatus').html(response.tenantPVstatus.toUpperCase());
-
 	        		$('#occupancy').html(response.occupancy.toUpperCase());
-
+	        		showhidetenant(response.occupancy);
+	        		
 	        		$('#flatno').html(response.flatno);
 	        		$('#wing').html(response.wing);
 	        		$('#tower').html(response.tower);
@@ -638,15 +626,16 @@ function editUserData(){
 	        		$('#builtuparea').html(response.builtuparea);
 	        		$('#carpetarea').html(response.carpetarea);
 	        		if(response.tenantname!=null && response.tenantname.length>0){
+		        		$('#tenantPVstatus').html(response.tenantPVstatus.toUpperCase());
 	        			$('#tenantname').html(response.tenantname.split(' ')[0]);
 		        		$('#tenantname2').html(response.tenantname.split(' ')[1]);
 		        		$('#tenantname3').html(response.tenantname.split(' ')[2]);
-		        		
 		        		$('#tenantaddress').html(response.tenantaddress);
 		        		$('#tenantcontactnumber').html(response.tenantcontactnumber);
 		        		$('#tenantaltnumber').html(response.tenantaltnumber);
 		        		$('#tenantemail').html(response.tenantemail);
 		        		$('#tenantaadharno').html(response.tenantaadharno);
+		        		$('#tenantType').html(response.tenantType);
 	        		}
 	        		
 	        		$('#vehicletype').val(response.vehicletype);

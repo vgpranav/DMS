@@ -43,7 +43,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="firstName" name="firstName"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12 toDisable" required="required">
 									</div>
 								</div>
 
@@ -53,7 +53,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="middleName" name="middleName"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 								
@@ -63,7 +63,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="lastName" name="lastName"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12 toDisable" required="required">
 									</div>
 								</div>
 
@@ -78,7 +78,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="mobileNo" name="mobileNo"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12 toDisable" required="required">
 									</div>
 								</div>
 								
@@ -87,7 +87,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="alternateno" name="alternateno"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 
@@ -96,7 +96,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="email" name="email"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 
@@ -110,7 +110,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="aadharno" name="aadharno"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 								
@@ -131,7 +131,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="bloodgroup" name="bloodgroup"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div> 
 
@@ -143,7 +143,7 @@
 								<div class="col-md-6 col-sm-6 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="jointowners" name="jointowners"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12  toDisable">
 									</div>
 								</div>
 							</div>
@@ -160,8 +160,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="purchasedate" name="purchasedate"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
+											class="form-control col-md-12 col-xs-12 toDisable" >
 									</div>
 								</div>
 
@@ -170,8 +169,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="possessiondate" name="possessiondate"
-											class="form-control col-md-12 col-xs-12 customdatepicker"
-											readonly="readonly">
+											class="form-control col-md-12 col-xs-12 toDisable" >
 									</div>
 								</div>
 
@@ -180,7 +178,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="floor" name="floor"
-											class="form-control col-md-12 col-xs-12" placeholder="">
+											class="form-control col-md-12 col-xs-12 toDisable" placeholder="">
 									</div>
 								</div>
 								 
@@ -195,7 +193,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="flatno" name="flatno"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12 toDisable" required="required">
 									</div>
 								</div>
 
@@ -205,7 +203,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="wing" name="wing"
-											class="form-control col-md-12 col-xs-12" required="required">
+											class="form-control col-md-12 col-xs-12 toDisable" required="required">
 									</div>
 								</div>
 
@@ -214,7 +212,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="tower" name="tower"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 							</div>
@@ -225,7 +223,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="builtuparea" name="builtuparea"
-											class="form-control col-md-12 col-xs-12"
+											class="form-control col-md-12 col-xs-12 toDisable"
 											placeholder="sq. ft.">
 									</div>
 								</div>
@@ -235,7 +233,7 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="carpetarea" name="carpetarea"
-											class="form-control col-md-12 col-xs-12"
+											class="form-control col-md-12 col-xs-12 toDisable"
 											placeholder="sq. ft.">
 									</div>
 								</div>
@@ -387,69 +385,26 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="sharecertno" name="sharecertno"
-											class="form-control col-md-12 col-xs-12">
+											class="form-control col-md-12 col-xs-12 toDisable">
 									</div>
 								</div>
 							</div>
 							
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Nominee 1</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="nominee1" name="nominee1"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							 
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Percentage</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="percent1" name="percent1"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Nominee 2</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="nominee2" name="nominee2"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							 
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Percentage</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="percent2" name="percent2"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Nominee 3</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="nominee3" name="nominee3"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							 
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Percentage</label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="percent3" name="percent3"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
+							 <div class="table-responsive col-sm-12 col-md-12 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetableSC">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Nominee</th>
+											<th class="column-title">Percentage</th>
+											<th class="column-title">Relation</th>
+											<th class="column-title">DOB</th>
+											<th class="column-title">Address</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
@@ -457,54 +412,23 @@
 							</div>
 							<div class="clearfix"></div>
 
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Vehicle Type </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<select class="form-control" name="vehicletype" id="vehicletype">
-											<option value=""> -- select --</option>
-											<option value="2-Wheeler">2 Wheeler</option>
-											<option value="3-Wheeler">3 Wheeler</option>
-											<option value="4-Wheeler">4 Wheeler</option>
-										</select>
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Parking Type </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<select class="form-control" name="parkingtype" id="parkingtype">
-											<option value=""> -- select --</option>
-											<option value="Slit">Slit</option>
-											<option value="Open">Open</option>
-										</select>
-									</div>
-								</div>
-
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Parking Allotment No </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="parkingallotmentno"
-											name="parkingallotmentno"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
+							<div class="table-responsive  col-sm-12 col-md-12 col-xs-12"  >
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetablePK">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Vehicle&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+											<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
-							
-							<div class="form-group">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Vehicle No </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="vehicleno"
-											name="vehicleno"
-											class="form-control col-md-12 col-xs-12">
-									</div>
-								</div>
-							</div>
+							 
+							<div class="clearfix"></div>
 
 							<div class="form-group" align="center">
 								<br />
@@ -542,21 +466,104 @@
 		
 		editUserData('${userObject.userid}');
 		
-		$('input').attr('readonly','readonly');
-		$('select :not(:selected)').attr('disabled','disabled');
+		$('.toDisable').attr('readonly','readonly');
+		$('select.toDisable :not(:selected)').attr('disabled','disabled');
 		
-		$('#alternateno').removeAttr('readonly');
-		$('#email').removeAttr('readonly');
-		$('#password').removeAttr('readonly');
-		$('#tenantcontactnumber').removeAttr('readonly');
-		$('#tenantaltnumber').removeAttr('readonly');
-		$('#tenantemail').removeAttr('readonly');
-		$('#tenantPVstatus').removeAttr('disabled');
-		//$('#occupancy :not(:selected)').removeAttr('disabled');
+		$('#thetablePK').DataTable({
+	        "paging":   false,
+	        "ordering": false,
+	        "bFilter": false,
+	        "info":     false
+	    });
+		$('#thetableSC').DataTable({
+	        "paging":   false,
+	        "ordering": false,		       
+	        "bFilter": false,
+	        "info":     false
+	    });
+		
+		getSCDetailsForMember('${userObject.userid}');
+		getParkingDetailsForMember('${userObject.userid}');
 		
 	});
 
 
+	function getParkingDetailsForMember(userid){
+		var randomHash = '${randomHash}';
+		 
+		var table = $('#thetablePK').DataTable();
+			
+		
+		table .clear() .draw();
+		
+		blockUI();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.vehicletype,
+	        			item.parkingtype,
+	        			item.parkingallotmentno,
+	        			item.vehicleno,
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        	unblockUI();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+	}
+	
+	function getSCDetailsForMember(userid){
+		var randomHash = '${randomHash}';
+		 
+		
+		var table = $('#thetableSC').DataTable();
+			
+		
+		table .clear() .draw();
+		blockUI();
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.nominee,
+	        			item.percent,
+	        			item.nomineerelation,
+	        			new Date(item.nomineedob).toString("dd MMM yyyy"),
+	        			item.nomineeaddress,
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        	unblockUI();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+	}
+	
 	function saveMemberDetails(){
 		
 		var userid = $('#userid').val();
@@ -769,8 +776,8 @@
 	        		$('#aadharno').val(response.aadharno);
 	        		$('#jointowners').val(response.jointowners);
 	        		$('#password').val(response.password);
-	        		$('#purchasedate').val(new Date(response.purchasedate).toString("yyyy/MM/dd"));
-	        		$('#possessiondate').val(new Date(response.possessiondate).toString("yyyy/MM/dd"));
+	        		$('#purchasedate').val(new Date(response.purchasedate).toString("dd/MM/yyyy"));
+	        		$('#possessiondate').val(new Date(response.possessiondate).toString("dd/MM/yyyy"));
 	        		
 	        		$('#occupancy option[value="'+response.occupancy+'"]').prop("selected",true).change();
 
