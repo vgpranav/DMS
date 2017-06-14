@@ -19,9 +19,16 @@
 	  			 	<input type="hidden" id="userid" value="${userprofile.userid}">
 	  				
 	  				<div class="col-md-9 col-sm-9 col-xs-12">
+	  				
+	  						<div class="form-group">
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<sup class="text-muted">Member Type</sup>
+									<br><span class="bigger" id="membertype"></span>
+								</div>
+							</div>
 	  			 
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<h2><span class="label label-success label-md">Owner Details</span></h2> 
+								<h2><span class="label label-success label-md" id="owndetailsbadge">Owner Details</span></h2> 
 								<hr />
 							</div>
 							
@@ -87,6 +94,23 @@
 									 <br><span class="bigger" id="bloodgroup"></span>
 								</div>
 							</div>
+							
+							<div class="form-group" id="compdetails" style="display: none;">
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									<sup class="text-muted">Company Name</sup>
+									<br><span class="bigger" id="companyname"></span>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+									 <sup class="text-muted">Company Type</sup>
+									 <br><span class="bigger" id="companytype"></span>
+								</div>
+								<div class="col-md-3 col-sm-3 col-xs-12">
+								 	 <sup class="text-muted">Gumasta Lic. No.</sup>
+									 <br><span class="bigger" id="gumastalicno"></span>
+								</div>
+
+								
+							</div>
 				 </div>
 				 <div class="col-md-3 col-sm-3 col-xs-12">
 					<% if(request.getSession().getAttribute("imgBase64")!=null && request.getSession().getAttribute("imgBase64").toString().length()>5){ %>
@@ -103,7 +127,7 @@
 	  			<div class="row">
 	  			<div class="col-md-12 col-sm-12 col-xs-12">
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
+								<br /> <h2><span class="label label-success label-md" id="flatdetailsbadge">Flat Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
 
@@ -127,6 +151,11 @@
 								<div class="col-md-2 col-sm-2 col-xs-12">
 								 	 <sup class="text-muted">Carpet Area</sup>
 									 <br><span class="bigger" id="carpetarea"></span>
+								</div>
+								
+								<div class="col-md-2 col-sm-2 col-xs-12">
+								 	 <sup class="text-muted">Flat Type</sup>
+									 <br><span class="bigger" id="flattype"></span>
 								</div>
 								
 							</div>
@@ -236,6 +265,56 @@
 									 <br><span class="bigger" id="tenantPVstatus"></span>
 								</div>
 								
+							</div>
+							
+							<div class="form-group" id="tenantComDetails" style="display: none;">
+							
+								<div class="col-md-12 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Company Name</sup>
+									 <br><span class="bigger" id="tenantcompanyname"></span>
+								</div>
+								
+							   <div class="col-md-6 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Company Type</sup>
+									 <br><span class="bigger" id="tenantcompanytype"></span>
+								</div>
+								
+								 <div class="col-md-6 col-sm-12 col-xs-12">
+								 	 <sup class="text-muted">Gumasta Lic No.</sup>
+									 <br><span class="bigger" id="tenantgumastalicno"></span>
+								</div>
+								
+							</div>
+							
+							<div class="form-group">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<sup class="text-muted">From Date</sup>
+									 <br><span class="bigger" id="tenantfrom"></span>
+								</div>
+								
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<sup class="text-muted">To Date</sup>
+									 <br><span class="bigger" id="tenantto"></span>
+								</div>
+							</div>
+							
+							<div class="table-responsive col-sm-12 col-md-12 col-xs-12"  >
+							<hr/>
+							<h4>Lease Tenant History</h4>
+							
+								<table class="table table-striped jambo_table bulk_action"
+									id="thetableTen">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Name</th>
+											<th class="column-title">Contact No</th>
+											<th class="column-title">From Date</th>
+											<th class="column-title">To Date</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
 							</div>
 							
 							</section>
@@ -356,14 +435,14 @@
 		<form method="post" action="#">
 		<br>
               <div>
-                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control1" placeholder="Registered 10 Digit Mobile Number"/>
+                <input type="text" name="mobileNoOTP" id="mobileNoOTP" class="form-control" placeholder="Registered 10 Digit Mobile Number"/>
               </div>
               <div align="center">
               <button class="btn btn-warning" onclick="generateOTPInit();return false;" style="margin-top: 10px;" id="otpbtn">Send OTP</button>
               </div>
               <hr/>
               <div>
-                <input type="password" name ="otp" id ="otp" class="form-control1" autocomplete="off" placeholder="Enter OTP Here" />
+                <input type="password" name ="otp" id ="otp" class="form-control" autocomplete="off" placeholder="Enter OTP Here" />
               </div>
               <div align="center">
                 <button class="btn btn-success" style="margin-top: 10px;" onclick="validateOTPForDocAccess();return false;">Validate</button>
@@ -377,14 +456,13 @@
 		
 		showhidetenant();
 		
-		$( "#confOTPDialog" ).dialog({
-			  autoOpen: false,
-			  modal: true,
-			  title: "Please Authenticate yourself",
-			  width: 270,
-			  height: 300
-		});
-		
+			$( "#confOTPDialog" ).dialog({
+				  autoOpen: false,
+				  modal: true,
+				  title: "Please Authenticate yourself",
+				  width: 270,
+				  height: 300
+			});
 			
 			$('#thetablePK').DataTable({
 		        "paging":   false,
@@ -402,6 +480,7 @@
 			getParkingDetailsForMember();
    		 	getSCDetailsForMember();
 			editUserData();
+			getTenantHistory();
 	});
 	
 	function showhidetenant(occ){
@@ -418,6 +497,8 @@
 		if(confFlag=='1'){
 			$( "#hash" ).val(URL);
 			$( "#confOTPDialog" ).dialog( "open" );
+			$( "#mobileNoOTP" ).val("");
+			$( "#otp" ).val("");
 		}
 		else {
 			 openURL(URL);
@@ -452,7 +533,7 @@
 	function generateOTP(interval){
 		var mobileNo = $('#mobileNoOTP').val();
 		$('#otp').val('');
-		blockUI();
+		 blockUI();
 		$.ajax({
 		        type: "GET",
 		        url: "<%=request.getContextPath()%>/generateAndSendOTP.do",
@@ -471,11 +552,11 @@
 		        		clearInterval(interval);
 				    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 		        	}
-		        unblockUI();
+		        	 unblockUI();
 		        },
 					error : function(e) {
 						notify('error','ERROR','Error occured',2000);
-						unblockUI();
+						 unblockUI();
 					}
 				});
 	}
@@ -485,7 +566,7 @@
 		var otp = $('#otp').val();
 		
 		if(otp.length>0){
-			blockUI();
+			 blockUI();
 					$.ajax({
 				        type: "GET",
 				        url: "<%=request.getContextPath()%>/validateOTPForDocAccess.do",
@@ -501,11 +582,11 @@
 				        		notify('error','FAILED','Invalid OTP or Mobile Number',2000);
 						    	$('#otpbtn').removeAttr('disabled').html('Send OTP');
 				        	}
-				        	unblockUI();
+				        	 unblockUI();
 				        },
 							error : function(e) {
 								notify('error','ERROR','Error occured',2000);
-								unblockUI();
+								 unblockUI();
 							}
 						});
 		}else{
@@ -523,7 +604,7 @@
 			
 		
 		table .clear() .draw();
-		blockUI();
+		 blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
@@ -544,11 +625,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
-	        	unblockUI();
+	        	 unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
-					unblockUI();
+					 unblockUI();
 				}
 			});
 	}
@@ -562,7 +643,7 @@
 			
 		
 		table .clear() .draw();
-		blockUI();
+		 blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
@@ -583,11 +664,11 @@
 	                ] ).draw( false );
 	        		srno++;
 	        	 });
-	        	unblockUI();
+	        	 unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
-					unblockUI();
+					 unblockUI();
 				}
 			});
 	}
@@ -596,13 +677,26 @@
 function editUserData(){
 		
 		var userid = $('#userid').val();
-		blockUI();
+		 blockUI();
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/getUserDataById.do",
 	        data :"userid="+userid,
 	        success: function(response){
 	        	if(response.userid>0) {
+	        		
+	        		var comptypes = [];
+        			comptypes["prilc"] = "Private Limited Company";
+        			comptypes["publc"] = "Public Limited Company";
+        			comptypes["uc"] = "Unlimited Company";
+        			comptypes["llp"] = "Limited Liability Partnership";
+        			comptypes["p"] = "Partnership";
+        			comptypes["sp"] = "Sole Proprietorship";
+        			comptypes["lo"] = "Liaison Office / Representative Office";
+        			comptypes["po"] = "Project Office";
+        			comptypes["bo"] = "Branch Office";
+        			comptypes["jvc"] = "Joint Venture Company";
+        			comptypes["sc"] = "Subsidiary Company";
  
 	        		$('#firstName').html(response.firstName);
 	        		$('#middleName').html(response.middleName);
@@ -636,6 +730,11 @@ function editUserData(){
 		        		$('#tenantemail').html(response.tenantemail);
 		        		$('#tenantaadharno').html(response.tenantaadharno);
 		        		$('#tenantType').html(response.tenantType);
+		        		
+		        		if(response.tenantfrom!="")
+		        		    $('#tenantfrom').html(new Date(response.tenantfrom).toString("dd MMM yyyy"));
+		        		if(response.tenantto!="")
+		        			$('#tenantto').html(new Date(response.tenantto).toString("dd MMM yyyy"));
 	        		}
 	        		
 	        		$('#vehicletype').val(response.vehicletype);
@@ -644,7 +743,33 @@ function editUserData(){
 	        		
 	        		$('#bloodgroup').html(response.bloodgroup.toUpperCase().replace('N',' -ve').replace('P',' +ve'));
 	        		$('#sharecertno').html(response.sharecertno);
+	        		
+	        		$('#membertype').html(response.membertype);
+	        		$('#flattype').html(response.flattype.toUpperCase());
 	        		 
+	        		if(response.membertype=='Commercial'){
+
+	        			$('#compdetails').show();
+	        			$('#tenantComDetails').show();
+	        			$('#companyname').html(response.companyname);
+	        			$('#gumastalicno').html(response.gumastalicno);
+	        			$('#companytype').html(comptypes[response.companytype]);
+
+	        			$('#tenantcompanyname').html(response.tenantcompanyname);
+	        			$('#tenantgumastalicno').html(response.tenantgumastalicno);
+	        			$('#tenantcompanytype').html(comptypes[response.tenantcompanytype]);
+	        		
+	        		}
+	        		
+	        		if(response.membertype=='Commercial'){
+						$('#owndetailsbadge').html("Owner/ Proprietor/ Partner/ Promoters/ Director Details");
+						$('#flatdetailsbadge').html("Office/ Shop/ Workshop Details ");
+						
+					} else {
+						$('#owndetailsbadge').html("Owner Details");
+						$('#flatdetailsbadge').html("Flat Details");
+					}
+	        		
 	        		var strJo='';
 	        		var jointowners = response.jointowners.split(',');
 	        		$(jointowners).each(function( index ) {
@@ -669,14 +794,47 @@ function editUserData(){
 	        		});
 	        		$('#joCont').html(strJo);
 	        	}  
-	        	unblockUI();
+	        	 unblockUI();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
-					unblockUI();
+					 unblockUI();
 				}
 			});
 	}
+	
+	function getTenantHistory(){
+	 
+	var userid = $('#userid').val();
+	
+	var table = $('#thetableTen').DataTable();
+	
+	table .clear() .draw();
+	blockUI();
+	$.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/getTenantHistory.do",
+        data :"userid="+userid,
+        success: function(response){
+        	var srno=1;
+        	$.each(response, function(i, item) {
+
+        		table.row.add( [
+        			item.tenantname,
+        			item.tenantcontactnumber,
+        			new Date(item.tenantfrom).toString("dd MMM yyyy"),
+        			new Date(item.tenantto).toString("dd MMM yyyy"),
+                ] ).draw( false );
+        		srno++;
+        	 });
+        	unblockUI();
+        },
+			error : function(e) {
+				notify('error','ERROR','Error occured',2000);
+				unblockUI();
+			}
+		});
+}
 </script>
 
 

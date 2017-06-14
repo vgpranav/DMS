@@ -125,8 +125,11 @@
 		</div>
 		
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 bg-white">
+			<div class="row bg-white">
+				<div class="col-md-4" align="left">
+					<img src="<%= request.getContextPath() %>/resources/images/builder.jpg" style="max-height:200px; "/>
+				</div>
+				<div class="col-md-8 ">
 					<p>
 						Whether it is storing your blueprints or client registry of your real estate property, with this software we can help you simplify the entire process. You can be sure that your data will be stored securely out of other people's reach and you will also be able to access it with an internet connection whenever and wherever needed.       
 					</p>

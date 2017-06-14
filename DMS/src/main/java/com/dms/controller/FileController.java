@@ -68,6 +68,14 @@ public class FileController
       String newFileName = System.currentTimeMillis() + "-" + ogFilename;
       boolean flag = saveToFileSystem(newFileName, in,"SocietyImages");
       
+      //create and save a thumbnail
+      InputStream inThumbs = new ByteArrayInputStream(bytes);
+	  BufferedImage bImageFromConvert = ImageIO.read(inThumbs);
+      byte[] thumb = resizeImageWithHint(bImageFromConvert,1);
+      String newFn = newFileName.substring(0, newFileName.lastIndexOf("."))+"_thumbs"+newFileName.substring(newFileName.lastIndexOf("."));
+	  saveToFileSystem(newFn,new ByteArrayInputStream(thumb),"SocietyImages");
+	  inThumbs.close();
+      
       if (flag) {
         DocumentDao ddao = new DocumentDao();
         ddao.savePhotoInfo("society", societyid, newFileName, "SocietyImages/" + newFileName, contentType,true);
@@ -79,8 +87,6 @@ public class FileController
     }
     catch (IOException e)
     {
-
-
       e.printStackTrace();
     }
     
@@ -92,25 +98,11 @@ public class FileController
     return map;
   }
   
-  private byte[] convertToBytes(BufferedImage resizedImage) {
-    byte[] imageInByte = null;
-    try {
-      ByteArrayOutputStream baos = new ByteArrayOutputStream();
-      ImageIO.write(resizedImage, "jpg", baos);
-      baos.flush();
-      imageInByte = baos.toByteArray();
-      baos.close();
-    } catch (Exception ex) {
-      ex.printStackTrace();
-    }
-    return imageInByte;
-  }
-  
-  private BufferedImage resizeImageWithHint(BufferedImage originalImage, int type)
+  private byte[] resizeImageWithHint(BufferedImage originalImage, int type)
   {
-    BufferedImage resizedImage = new BufferedImage(100, 100, type);
+    BufferedImage resizedImage = new BufferedImage(50, 50, type);
     Graphics2D g = resizedImage.createGraphics();
-    g.drawImage(originalImage, 0, 0, 100, 100, null);
+    g.drawImage(originalImage, 0, 0, 50, 50, null);
     g.dispose();
     g.setComposite(AlphaComposite.Src);
     g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
@@ -119,7 +111,21 @@ public class FileController
       RenderingHints.VALUE_RENDER_QUALITY);
     g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
       RenderingHints.VALUE_ANTIALIAS_ON);
-    return resizedImage;
+    return convertToBytes(resizedImage);
+  }
+ 
+  private byte[] convertToBytes(BufferedImage resizedImage) {
+	    byte[] imageInByte = null;
+	    try {
+	      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	      ImageIO.write(resizedImage, "jpg", baos);
+	      baos.flush();
+	      imageInByte = baos.toByteArray();
+	      baos.close();
+	    } catch (Exception ex) {
+	      ex.printStackTrace();
+	    }
+	    return imageInByte;
   }
   
   private boolean saveToFileSystem(String FileName, InputStream in,String Dir) {
@@ -198,6 +204,14 @@ public class FileController
       String newFileName = System.currentTimeMillis() + "-" + ogFilename;
       boolean flag = saveToFileSystem(newFileName, in,"UserImages");
       
+      //create and save a thumbnail
+      InputStream inThumbs = new ByteArrayInputStream(bytes);
+	  BufferedImage bImageFromConvert = ImageIO.read(inThumbs);
+      byte[] thumb = resizeImageWithHint(bImageFromConvert,1);
+      String newFn = newFileName.substring(0, newFileName.lastIndexOf("."))+"_thumbs"+newFileName.substring(newFileName.lastIndexOf("."));
+	  saveToFileSystem(newFn,new ByteArrayInputStream(thumb),"UserImages");
+	  inThumbs.close();
+	  
       if (flag) {
         DocumentDao ddao = new DocumentDao();
         ddao.savePhotoInfo("user", userid, newFileName, "UserImages/" + newFileName, contentType,false);
@@ -306,6 +320,14 @@ public class FileController
       String newFileName = System.currentTimeMillis() + "-" + ogFilename;
       boolean flag = saveToFileSystem(newFileName, in,"VendorImages");
       
+      //create and save a thumbnail
+      InputStream inThumbs = new ByteArrayInputStream(bytes);
+	  BufferedImage bImageFromConvert = ImageIO.read(inThumbs);
+      byte[] thumb = resizeImageWithHint(bImageFromConvert,1);
+      String newFn = newFileName.substring(0, newFileName.lastIndexOf("."))+"_thumbs"+newFileName.substring(newFileName.lastIndexOf("."));
+	  saveToFileSystem(newFn,new ByteArrayInputStream(thumb),"VendorImages");
+	  inThumbs.close();
+	  
       if (flag) {
         DocumentDao ddao = new DocumentDao();
         ddao.savePhotoInfo("vendor", vendorid, newFileName, "VendorImages/" + newFileName, contentType,false);
@@ -357,6 +379,15 @@ public class FileController
       String newFileName = System.currentTimeMillis() + "-" + ogFilename;
       boolean flag = saveToFileSystem(newFileName, in,"VendorCards");
       
+      
+      //create and save a thumbnail
+      InputStream inThumbs = new ByteArrayInputStream(bytes);
+	  BufferedImage bImageFromConvert = ImageIO.read(inThumbs);
+      byte[] thumb = resizeImageWithHint(bImageFromConvert,1);
+      String newFn = newFileName.substring(0, newFileName.lastIndexOf("."))+"_thumbs"+newFileName.substring(newFileName.lastIndexOf("."));
+	  saveToFileSystem(newFn,new ByteArrayInputStream(thumb),"VendorCards");
+	  inThumbs.close();
+	  
       if (flag) {
         DocumentDao ddao = new DocumentDao();
         ddao.savePhotoInfo("vendorcards", vendorid, newFileName, "VendorCards/" + newFileName, contentType,false);

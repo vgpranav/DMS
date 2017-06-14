@@ -41,11 +41,12 @@
 		</div>
 		
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12 bg-white" align="center">
-					<img src="<%= request.getContextPath() %>/resources/images/sop.jpg">
+			<div class="row bg-white">
+				<div class="col-md-5 bg-white" align="center">
+				<br/>
+					<img src="<%= request.getContextPath() %>/resources/images/sop.jpg" height="250">
 				</div>
-				<div class="col-md-12 bg-white">
+				<div class="col-md-7 ">
 					<p>The entire process of setting up the program to convert documents into online files is kept simple so that all the members of a society can work the software. Here is a step by step narration of how the documents are digitized:</p>
 					<ol>
 						<li>1. The company representatives of Our Digital Society visit each orgnization to demonstrate how it is operated to all the members. </li>

@@ -35,7 +35,6 @@ public class Userprofile
     private String tenantaltnumber;
     private String tenantemail;
     private String tenantaadharno;
-    
     private String bloodgroup;
     private String sharecertno;
     private String nominee1;
@@ -45,17 +44,98 @@ public class Userprofile
     private String nominee3;
     private String percent3;
     private String tenantType;
-    
     private String tenantPVstatus;
     private String vehicleno;
-
-    
     private Date tenantfrom;
     private Date tenantto;
-
     private String randomHash;
+
+    private String membertype;
+    private String companyname;
+    private String companytype;
+    private String gumastalicno;
+    private String tenantcompanyname;
+    private String tenantcompanytype;
+    private String tenantgumastalicno;
     
-    public String getRandomHash() {
+    private String commercialtype;
+    private String flattype;
+    
+    
+    
+    public String getCommercialtype() {
+		return commercialtype;
+	}
+
+	public void setCommercialtype(String commercialtype) {
+		this.commercialtype = commercialtype;
+	}
+
+	public String getFlattype() {
+		return flattype;
+	}
+
+	public void setFlattype(String flattype) {
+		this.flattype = flattype;
+	}
+
+	public String getMembertype() {
+		return membertype;
+	}
+
+	public void setMembertype(String membertype) {
+		this.membertype = membertype;
+	}
+
+	public String getCompanyname() {
+		return companyname;
+	}
+
+	public void setCompanyname(String companyname) {
+		this.companyname = companyname;
+	}
+
+	public String getCompanytype() {
+		return companytype;
+	}
+
+	public void setCompanytype(String companytype) {
+		this.companytype = companytype;
+	}
+
+	public String getGumastalicno() {
+		return gumastalicno;
+	}
+
+	public void setGumastalicno(String gumastalicno) {
+		this.gumastalicno = gumastalicno;
+	}
+
+	public String getTenantcompanyname() {
+		return tenantcompanyname;
+	}
+
+	public void setTenantcompanyname(String tenantcompanyname) {
+		this.tenantcompanyname = tenantcompanyname;
+	}
+
+	public String getTenantcompanytype() {
+		return tenantcompanytype;
+	}
+
+	public void setTenantcompanytype(String tenantcompanytype) {
+		this.tenantcompanytype = tenantcompanytype;
+	}
+
+	public String getTenantgumastalicno() {
+		return tenantgumastalicno;
+	}
+
+	public void setTenantgumastalicno(String tenantgumastalicno) {
+		this.tenantgumastalicno = tenantgumastalicno;
+	}
+
+	public String getRandomHash() {
 		return randomHash;
 	}
 
@@ -453,6 +533,7 @@ public class Userprofile
 		this.vehicleno = vehicleno;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Userprofile [userprofileid=" + userprofileid + ", userid=" + userid + ", firstName=" + firstName
@@ -469,7 +550,10 @@ public class Userprofile
 				+ ", percent1=" + percent1 + ", nominee2=" + nominee2 + ", percent2=" + percent2 + ", nominee3="
 				+ nominee3 + ", percent3=" + percent3 + ", tenantType=" + tenantType + ", tenantPVstatus="
 				+ tenantPVstatus + ", vehicleno=" + vehicleno + ", tenantfrom=" + tenantfrom + ", tenantto=" + tenantto
-				+ "]";
+				+ ", randomHash=" + randomHash + ", membertype=" + membertype + ", companyname=" + companyname
+				+ ", companytype=" + companytype + ", gumastalicno=" + gumastalicno + ", tenantcompanyname="
+				+ tenantcompanyname + ", tenantcompanytype=" + tenantcompanytype + ", tenantgumastalicno="
+				+ tenantgumastalicno + ", commercialtype=" + commercialtype + ", flattype=" + flattype + "]";
 	}
 
 }

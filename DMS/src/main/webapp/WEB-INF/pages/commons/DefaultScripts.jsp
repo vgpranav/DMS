@@ -27,7 +27,16 @@
 
 
 <script>
-	function notify(type,title,message,delay){
+
+function blockUI(){
+	$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
+}
+
+function unblockUI(){
+	$.unblockUI();
+}
+
+function notify(type,title,message,delay){
 		new PNotify({
        	 title: title,
             text: message,
@@ -42,14 +51,6 @@
 		$('.emdiv').remove();
 		$('form').parent().prepend( "<div class='emdiv'><h2><span class='label label-warning label-xs '><i class='fa fa-circle-o-notch fa-spin fa-sm fa-fw'></i> Edit Mode</span></h2></div>")
 		.css({"background-color":"#ffffe0"});
-	}
-	
-	function blockUI(){
-		$.blockUI({ message: '<h2><img width="30" src="<%=request.getContextPath()%>/resources/images/spin.gif"> Just a moment...</h2>' });
-	}
-	
-	function unblockUI(){
-		$.unblockUI();
 	}
 	
 	$('.btn').click(function(){
@@ -98,4 +99,4 @@
  		return false;
 	}
 
-
+</script>

@@ -1,4 +1,5 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
 <input type="hidden" name="userid" id="userid" value="${userObject.userid}">
@@ -17,7 +18,9 @@
 					<br><em>${society.ward}, ${society.district}, ${society.state}</em>
 					<br><em>${society.country}</em>
 					<br><em>Pincode: ${society.pincode}</em>
-					<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
+					<c:if test="${society.societytypeid=='1' }">
+						<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
+					</c:if>
 					<br><em>No of Shop/Offices/Gala : ${society.noofshop}</em>
 				</div>
 				<div class="pull-right">
@@ -64,22 +67,7 @@
                       <hr/>
                       Past Members
                       
-                       <table class="table table-striped jambo_table bulk_action" id="thetable5">
-                        <thead>
-                          <tr class="headings">
-                            <th class="column-title">Sr.No</th>
-                            <th class="column-title">Member Name</th>
-                            <th class="column-title">Designation</th>
-                             <th class="column-title">Wing/Flat</th>
-                            <th class="column-title">Tower</th>
-                            <th class="column-title">Contact No</th>
-                            <th class="column-title">Duration</th>
-                            <th class="column-title">Photograph</th>
-                          </tr>
-                        </thead>
-
-                        <tbody></tbody>
-                      </table>
+                       <div id="pastMemCont"></div>
                       
                       </div>
                   </div>
@@ -165,13 +153,12 @@
  function getCommitteMembersForSociety(){
 		var societyid = $('#societyid').val();
 		var table = $('#thetable').DataTable();
-		var table5 = $('#thetable5').DataTable();
 			
 		if(societyid.length<1)
 			return false;
 			
 		table.clear().draw();
-		table5.clear().draw();
+		
 		blockUI();
 		$.ajax({
 	        type: "GET",
@@ -181,26 +168,39 @@
 	        var k=1;
 	        var j=1;
 	        var srno=1;
+	        var testKey='';
+	        var currTabId='';
+	        
 	        	$.each(response, function(i, item) {
 	        		$.each(item, function(i, item1) {
-	        			
-	        			var divid="memb"+srno;
-			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
-			        	
+	        			var divid="commem"+srno;
+<%-- 			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+ --%>			        	
+ 
+ 							var photodiv = '<a class="ionimage" href="getUserImage/user/UserImages/'+item1.userid+'.do"><img src="getUserImageThumb/user/UserImages/'+item1.userid+'.do" height="30"></a>';
+ 
 	        				if(item1.isactive==1){
 	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeCommitteeMember(\'' + item1.committeememberid + '\')"><i class="fa fa-times"></i></button>';
 			        					table.row.add( [
-			        					k,
-					        			item1.userName,
-					        			item1.positionname, 
-					        			//new Date(item1.appointedon).toString("dd MMM yyyy"),
-					        			item1.flat,
-					        			item1.tower,
-					        			item1.contactNo,
-					        			photodiv,
+			        						k,
+						        			item1.userName,
+						        			item1.positionname, 
+						        			item1.flat,
+						        			item1.tower,
+						        			item1.contactNo,
+						        			photodiv,
 				                ] ).draw( false ); 
 				                k++;
 	        				} else{
+	        					
+	        					if(item1.tower!=testKey){
+	        						testKey=item1.tower;
+	        						getPastMemTable(testKey,item1.removedon);
+	        						currTabId=testKey;
+	        					}
+	        					
+	        					var table5 = $('#'+currTabId).DataTable();
+	        					
 	        					table5.row.add( [
 	        						j,
 				        			item1.userName,
@@ -208,17 +208,19 @@
 				        			item1.flat,
 				        			item1.tower,
 				        			item1.contactNo,
-				        			new Date(item1.appointedon).toString("dd MMM yyyy") +"<br> - "+ new Date(item1.removedon).toString("dd MMM yyyy"),
+				        			new Date(item1.appointedon).toString("dd MMM yyyy"),
+				        			new Date(item1.removedon).toString("dd MMM yyyy"),
 				        			photodiv,
 				                ] ).draw( false ); 
 				                j++;
 	        				}
-	        				
-	        				getMemberPhoto(item1.userid,divid);
-	    	        		srno++;
+	        				//getMemberPhoto(item1.userid,divid);
+	        				srno++;
+	        				$('#committeeSection').show();
 	        		 });
 	        		 
 	        	  });
+	        	$(".ionimage").ionZoom();
 	        	unblockUI();
 	        },
 				error : function(e) {
@@ -227,7 +229,6 @@
 				}
 			});
 	}
- 
  
  function getMembersForSociety(){
 		var societyid = $('#societyid').val();
@@ -282,9 +283,12 @@
 	        	var srno=1;
 	        	$.each(response, function(i, item) {
 	        		var divid="soc"+srno;
-		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+<%-- 		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+ --%>		        	
+ 
+ 					var photodiv = '<a class="ionimage1" href="getUserImage/user/UserImages/'+item.userid+'.do"><img src="getUserImageThumb/user/UserImages/'+item.userid+'.do" height="30"></a>';
 	        		
-	        		table.row.add( [
+ 					table.row.add( [
 	        			item.firstName + ' ' + item.lastName,
 	        			item.floor,
 	        			item.wing+'/'+item.flatno,
@@ -292,9 +296,10 @@
 	        			item.mobileNo,
 	        			photodiv,
 	                ] ).draw( false );
-	        		getMemberPhoto(item.userid,divid);
+	        		//getMemberPhoto(item.userid,divid);
 	        		srno++;
 	        	 });
+	        	$(".ionimage1").ionZoom();
 	        	unblockUI();
 	        },
 				error : function(e) {
@@ -393,6 +398,39 @@
               unblockUI();
           });;
     }
+	
+	function getPastMemTable(tblId,remOn){
+		
+		var remDate = new Date(remOn).toString("dd MMM yyyy");
+		
+		var tbl = '<strong>Dissolved On: '+remDate+'</strong><div class="table-responsive">'
+				        +'<table class="table table-striped jambo_table bulk_action" id="'+tblId+'">'
+				        +'<thead>'
+				        +'<tr class="headings">'
+				        +'<th class="column-title">Sr.No</th>'
+				        +'<th class="column-title">Member Name</th>'
+				        +'<th class="column-title">Designation</th>'
+				        +'<th class="column-title">Wing/Flat</th>'
+				        +'<th class="column-title">Tower</th>'
+				        +'<th class="column-title">Contact No</th>'
+				        +'<th class="column-title">Appointed On</th>'
+				        +'<th class="column-title">Dissolved On</th>'
+				        +'<th class="column-title">Photograph</th>'
+				        +'</tr>'
+				        +'</thead>'
+				        +'<tbody></tbody>'
+				        +'</table>'
+				        +'</div>';
+		
+		$('#pastMemCont').append(tbl);
+		
+		$('#'+tblId).DataTable({
+			"paging":   false,
+	        "ordering": false,
+	        "info":     false,
+	        "bFilter": false
+	    });
+	}
 
  </script>
  

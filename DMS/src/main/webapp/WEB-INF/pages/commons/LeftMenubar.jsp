@@ -4,31 +4,14 @@
  
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>Menu${sessionScope.userObject.userroleid}</h3> 
+                <h3>Menu</h3> 
 	                <ul class="nav side-menu">
 	                
 	                <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
-	                	<li>
-		                  	<a>
-		                  		<i class="fa fa-folder"></i> 
-		                  			Masters  
-		                  		<span class="fa fa-chevron-down"></span>
-		                  	</a>
-		                    <ul class="nav child_menu">
-		                    
-		                      <c:if test="${sessionScope.userObject.userroleid==1}">
-		                      
-		                       	  <!-- <li>
-			                      	<a><i class="fa fa-folder-o"></i> Auth Mgmt</a>
-			                      	<ul class="nav child_menu">
-			                      		  <li><a href="createRole.do">Create Role</a></li>
-					                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
-					                      <li><a href="addFormFields.do">Create Doc Fields</a></li>
-			                      	</ul>
-			                      </li> -->
-			                      
+	                
+	                		  <c:if test="${sessionScope.userObject.userroleid==1}">
 			                      <li>
-			                      	<a><i class="fa fa-folder-o"></i> Documents</a>
+			                      	<a><i class="fa fa-wrench"></i> Documents</a>
 			                      	<ul class="nav child_menu">
 			                      		 <li><a href="addDoctype.do">Create Doctype</a></li>
 					                      <li><a href="addDocSubType.do">Create Doc Subtype</a></li>
@@ -36,10 +19,9 @@
 			                      	</ul>
 			                      </li>
 		                      </c:if>
-		                      
 		                      <c:if test="${sessionScope.userObject.userroleid==1}">
 			                      <li>
-			                      	<a><i class="fa fa-folder-o"></i> Builder &amp; Developer</a>
+			                      	<a><i class="fa fa-wrench"></i> Builder &amp; Developer</a>
 			                      	
 			                      	<ul class="nav child_menu">
 			                      		 <li><a href="createBuilder.do">Create Builder Profile</a></li>
@@ -56,10 +38,9 @@
 			                      	</ul>
 			                      	
 			                      </li>
-		                     </c:if>
-		                     
+		                      </c:if>
 		                      <li>
-		                      	<a> <i class="fa fa-folder-o"></i> Society</a>
+		                      	<a> <i class="fa fa-wrench"></i> Society</a>
 		                      	<ul class="nav child_menu">
 		                      		<c:if test="${sessionScope.userObject.userroleid==1}">
 		                      		 <li><a href="addSociety.do">Create Society</a></li>
@@ -70,30 +51,25 @@
 				                     </c:if>
 		                      	</ul>
 		                      </li>
-		                      
 		                      <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
-		                      <li>
-		                      	<a> <i class="fa fa-folder-o"></i> Members</a>
-		                      	<ul class="nav child_menu">
-				                      <li><a href="addMember.do">Add Members</a></li>
-				                      <li><a href="addMemberPhotos.do">Add Member Photos</a></li>
-		                      	</ul>
-		                      </li>
+			                      <li>
+			                      	<a> <i class="fa fa-wrench"></i> Members</a>
+			                      	<ul class="nav child_menu">
+					                      <li><a href="addMember.do">Add Members</a></li>
+					                      <li><a href="addMemberPhotos.do">Add Member Photos</a></li>
+			                      	</ul>
+			                      </li>
 		                      </c:if>
-		                      
 		                      <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
-		                      <li>
-		                      	<a> <i class="fa fa-folder-o"></i> Vendors</a>
-		                      	<ul class="nav child_menu">
-		                      		<li><a href="createVendor.do">Create Vendor</a></li>
-		                      		<li><a href="createVendorCards.do">Add Visiting Card</a></li>
-		                      		<li><a href="createVendorPhoto.do">Add Vendor Photo</a></li>
-		                      	</ul>
-		                      </li>
+			                      <li>
+			                      	<a> <i class="fa fa-wrench"></i> Vendors</a>
+			                      	<ul class="nav child_menu">
+			                      		<li><a href="createVendor.do">Create Vendor</a></li>
+			                      		<li><a href="createVendorCards.do">Add Visiting Card</a></li>
+			                      		<li><a href="createVendorPhoto.do">Add Vendor Photo</a></li>
+			                      	</ul>
+			                      </li>
 		                      </c:if>
-		                      
-		                    </ul>
-		                  </li>
 	                </c:if>
 		                  
 		            <c:if test="${sessionScope.userObject.userroleid==1}">

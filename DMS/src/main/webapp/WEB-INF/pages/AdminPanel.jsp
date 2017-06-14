@@ -17,8 +17,12 @@
 					<br><em>${society.ward}, ${society.district}, ${society.state}</em>
 					<br><em>${society.country}</em>
 					<br><em>Pincode: ${society.pincode}</em>
-					<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
+					<c:if test="${society.societytypeid=='1' }">
+						<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
+					</c:if>
 					<br><em>No of Shop/Offices/Gala : ${society.noofshop}</em>
+					
+					
 		</div>
 		<div class="pull-right">
 		<div align="left">
@@ -52,9 +56,15 @@
 					<thead>
 						<tr class="headings">
 							<th class="column-title">Sr.No</th>
-							<th class="column-title">Flat&nbsp;No</th>
+							<c:if test="${society.societytypeid=='1' }">
+								<th class="column-title">Flat&nbsp;No</th>
+							</c:if>
+							<c:if test="${society.societytypeid!='1' }">
+								<th class="column-title">Shop&nbsp;No</th>
+							</c:if>
 							<th class="column-title">Wing</th>
 							<th class="column-title">Floor</th>
+							<th class="column-title">Type</th>
 							<th class="column-title">Tower</th>
 							<th class="column-title">Tenant&nbsp;Name</th>
 							<th class="column-title">Mobile&nbsp;No</th>
@@ -69,6 +79,7 @@
 							<th class="column-title">Carpet&nbsp;Area</th>
 							<th class="column-title">Share Cert.</th>
 							<th class="column-title">Lease Owner.</th>
+							<th class="column-title">Parking Details</th>
 							<th class="column-title">Photograph</th>
 						</tr>
 					</thead>
@@ -137,7 +148,7 @@
  		</div>
  
  
- 		<div class="col-md-12 col-sm-12 col-xs-12">
+ 		<div class="col-md-12 col-sm-12 col-xs-12" id="committeeSection" style="display: none;">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Committee Members</h2>
@@ -238,6 +249,24 @@
 		</div>
  </div>
  
+ <div id="PKDialog">
+  <table class="table table-striped jambo_table bulk_action"
+									id="thetablePK">
+									<thead>
+										<tr class="headings"> 
+											<th class="column-title">Vehicle&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Type</th>
+											<th class="column-title">Parking&nbsp;Allotment&nbsp;No</th>
+											<th class="column-title">Vehicle&nbsp;Reg&nbsp;No</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+ </div>
+ 
+ 
+ 
  <div id="TDialog">
  		<div class="clearfix"></div>
 							<div class="form-group">
@@ -295,18 +324,43 @@
 									 <br><span class="bigger" id="tenantPVstatus"></span>
 								</div>
 							</div>
+							
+							<div class="form-group">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<sup class="text-muted">From Date</sup>
+									 <br><span class="bigger" id="tenantfrom"></span>
+								</div>
+								
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<sup class="text-muted">To Date</sup>
+									 <br><span class="bigger" id="tenantto"></span>
+								</div>
+							
+							</div>
  </div>
  
+ <div id="IMGDialog">
+ 
+ </div>
  
  <!-- <button onclick="openSCDialog()">Test</button> -->
  <script>
+ 
  
  function openSCDialog(){
 		$( "#SCDialog" ).dialog( "open" )
 	 }
  
+ function openIMGDialog(){
+		$( "#IMGDialog" ).dialog( "open" )
+	 }
+ 
  function openTDialog(){
 		$( "#TDialog" ).dialog( "open" )
+	 }
+ 
+ function openPKialog(){
+		$( "#PKDialog" ).dialog( "open" )
 	 }
   
  
@@ -320,6 +374,14 @@
 	      title:"Share Certificate Details",
 	    });
 	 
+	 $( "#IMGDialog" ).dialog({
+	      autoOpen: false,
+	      height: 500,
+	      width: 600,
+	      modal: true,
+	      title:"Image",
+	    });
+	 
 	 $( "#TDialog" ).dialog({
 	      autoOpen: false,
 	      height: 400,
@@ -328,7 +390,22 @@
 	      title:"Lease Owner Details",
 	    });
 	 
+	 $( "#PKDialog" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 700,
+	      modal: true,
+	      title:"Parking Details",
+	    });
+	 
 	 $('#thetableSC').DataTable({
+	        "paging":   false,
+	        "ordering": false,		       
+	        "bFilter": false,
+	        "info":     false
+	    });
+	 
+	 $('#thetablePK').DataTable({
 	        "paging":   false,
 	        "ordering": false,		       
 	        "bFilter": false,
@@ -428,8 +505,11 @@
 	        	$.each(response, function(i, item) {
 	        		$.each(item, function(i, item1) {
 	        			var divid="commem"+srno;
-			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
-			        	
+	        			
+	        			   var photodiv = '<a class="ionimage2" href="getUserImage/user/UserImages/'+item1.userid+'.do"><img src="getUserImageThumb/user/UserImages/'+item1.userid+'.do" height="30"></a>';
+	        			
+<%-- 			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+ --%>			        	
 	        				if(item1.isactive==1){
 	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeCommitteeMember(\'' + item1.committeememberid + '\')"><i class="fa fa-times"></i></button>';
 			        					table.row.add( [
@@ -466,11 +546,13 @@
 				                ] ).draw( false ); 
 				                j++;
 	        				}
-	        				getMemberPhoto(item1.userid,divid);
+	        				//getMemberPhoto(item1.userid,divid);
 	        				srno++;
+	        				$('#committeeSection').show();
 	        		 });
 	        		 
 	        	  });
+	        	$(".ionimage2").ionZoom();
 	        	unblockUI();
 	        },
 				error : function(e) {
@@ -497,15 +579,17 @@
 	        	
 	        	$.each(response, function(i, item) {
 	        		var divid="soc"+srno;
-		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+		        	<%-- var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>'; --%>
 		        	var scbtn = '<a href="#" onclick="getSCDetailsForMember(\'' + item.userid + '\')">view</a>';
 		        	var tbtn = '<a href="#" onclick="editUserData(\'' + item.userid + '\')">view</a>';
-		        	
+		        	var pkbtn = '<a href="#" onclick="getParkingDetailsForMember(\'' + item.userid + '\')">view</a>';
+		        	var photodiv = '<a class="ionimage" href="getUserImage/user/UserImages/'+item.userid+'.do"><img src="getUserImageThumb/user/UserImages/'+item.userid+'.do" height="30"></a>';
 	        		table.row.add( [
 	        			srno,
 	        			item.flatno,
 	        			item.wing,
 	        			item.floor,
+	        			item.flattype,
 	        			item.tower,
 	        			item.firstName + ' ' + item.lastName,
 	        			item.mobileNo,
@@ -520,13 +604,15 @@
 	        			item.carpetarea,
 	        			scbtn,
 	        			tbtn,
+	        			pkbtn,
 	        			photodiv,
 	                ] ).draw( false );
 	        		
-	        		getMemberPhoto(item.userid,divid);
+	        		//getMemberPhoto(item.userid,divid);
 	        		srno++;
 	        	 });
 	        	unblockUI();
+	        	$(".ionimage").ionZoom();
 	        },
 				error : function(e) {
 					notify('error','ERROR','Error occured',2000);
@@ -558,7 +644,7 @@
             $('#imgContainer').html(img);
             unblockUI();
        }).fail(function(jqXHR, textStatus) {
-           alert('File Fetch failed ...');
+           //alert('File Fetch failed ...');
            unblockUI();
        });;
  }
@@ -582,9 +668,13 @@
 	        	$.each(response, function(i, item) {
 	        		var divid="vend"+srno;
 	        		var divid1 = "vendc"+srno;
-		        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
-		        	var carddiv = '<div id="'+divid1+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
-	        		table.row.add( [
+		        	<%-- var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>'; --%>
+<%-- 		        	var carddiv = '<div id="'+divid1+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+ --%>	        		
+		        	var photodiv = '<a class="ionimage1" href="getUserImage/vendor/VendorImages/'+item.vendorid+'.do"><img src="getUserImageThumb/vendor/VendorImages/'+item.vendorid+'.do" height="30"></a>';
+		        	var carddiv = '<a class="ionimage1" href="getUserImage/vendorcards/VendorCards/'+item.vendorid+'.do"><img src="getUserImageThumb/vendorcards/VendorCards/'+item.vendorid+'.do" height="30"></a>';
+		        	
+		        	table.row.add( [
 	        			item.companyname,
 	        			item.jobnature,
 	        			item.contactperson,
@@ -598,13 +688,13 @@
 	        			photodiv,
 	        			carddiv,
 	                ] ).draw( false );
-	        	    
-	        		getVendorPhotos(item.vendorid,divid);
-	        		getVendorCards(item.vendorid,divid1);
+	        		/* getVendorPhotos(item.vendorid,divid);
+	        		getVendorCards(item.vendorid,divid1); */
 	        		srno++;
-	        		
 	        	  });
+	        	$(".ionimage1").ionZoom();
 	        	}
+	        
 	        unblockUI();
 	        },
 				error : function(e) {
@@ -635,7 +725,7 @@
                $(".dp").popImg();
                unblockUI();
           }).fail(function(jqXHR, textStatus) {
-              alert('File Fetch failed ...');
+              //alert('File Fetch failed ...');
               unblockUI();
           });;
     }
@@ -661,7 +751,7 @@
                $(".dp").popImg();
                unblockUI();
           }).fail(function(jqXHR, textStatus) {
-              alert('File Fetch failed ...');
+              //alert('File Fetch failed ...');
               unblockUI();
           });;
     }
@@ -688,7 +778,7 @@
                $(".dp").popImg();
                unblockUI();
           }).fail(function(jqXHR, textStatus) {
-              alert('File Fetch failed ...');
+              //alert('File Fetch failed ...');
               unblockUI();
           });;
     }
@@ -706,7 +796,9 @@ function editUserData(userid){
 		$('#tenantemail').html('');
 		$('#tenantaadharno').html('');
 		$('#tenantType').html('');
-	
+		 $('#tenantfrom').html('');
+		 $('#tenantto').html('');
+	 
 		blockUI();
 		$.ajax({
 	        type: "GET",
@@ -726,6 +818,11 @@ function editUserData(userid){
 		        		$('#tenantemail').html(response.tenantemail);
 		        		$('#tenantaadharno').html(response.tenantaadharno);
 		        		$('#tenantType').html(response.tenantType);
+		        		
+		        		if(response.tenantfrom!="")
+		        		    $('#tenantfrom').html(new Date(response.tenantfrom).toString("dd MMM yyyy"));
+		        		if(response.tenantto!="")
+		        			$('#tenantto').html(new Date(response.tenantto).toString("dd MMM yyyy"));
 	        		}
 	        	 
 	        	}  
@@ -770,6 +867,47 @@ function editUserData(userid){
 	        "info":     false,
 	        "bFilter": false
 	    });
+	}
+	
+	
+	function getParkingDetailsForMember(userid){
+		var randomHash = '1';
+		
+		var table = $('#thetablePK').DataTable();
+			
+		
+		table .clear() .draw();
+		
+		blockUI();
+		
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
+	        data :"userid="+userid
+	        		+"&randomHash="+randomHash,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
+
+	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
+
+	        		table.row.add( [
+	        			item.vehicletype,
+	        			item.parkingtype,
+	        			item.parkingallotmentno,
+	        			item.vehicleno,
+	        			
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        	unblockUI();
+	        	openPKialog();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
 	}
  </script>
  

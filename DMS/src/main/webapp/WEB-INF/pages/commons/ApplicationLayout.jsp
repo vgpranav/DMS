@@ -25,7 +25,7 @@
             <div class="navbar nav_title" style="border: 0;">
             
               <a href="showHomepage.do" class="site_title">
-               <img src="<%= request.getContextPath() %>/resources/images/ods-logo1.png" width="200">
+               <img src="<%= request.getContextPath() %>/resources/images/ods-logo-ws.png" width="200">
               		<!-- <i class="fa fa-leaf"></i> 
               		<span>DMS</span> -->
               		

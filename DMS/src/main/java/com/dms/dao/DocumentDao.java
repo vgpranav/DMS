@@ -8,6 +8,7 @@ import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Parking;
+import com.dms.beans.Photos;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.User;
@@ -15,19 +16,35 @@ import com.dms.beans.Userprofile;
 import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
+import com.dms.util.FtpWrapper;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
+
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.Base64Utils;
 
 
 
@@ -895,5 +912,120 @@ public int deleteDocById(Document document) {
 	    }
 	    return docSubTypes;
 	  }
+
+	public byte[] getPhotoFromFTP(long docId, String photoType ,String Path, boolean isThumb) {
+	    Connection conn = null;
+	    List<Photos> photoBeans = null;
+	    FtpWrapper ftp = new FtpWrapper();
+	    String hostDomain = ftp.getServerName();
+	    String Id = ftp.getUsername();
+	    String Password = ftp.getPassword();
+	    byte[] bytes=null;
+	    try { 
+	    	
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Photos>> rsh = new BeanListHandler<Photos>(Photos.class);
+	      
+	      photoBeans =  qr.query(conn,DMSQueries.getOnePhotoInfo,rsh,docId,photoType);
+	      
+	      if (photoBeans.size() > 0) {
+	        if (ftp.connectAndLogin(hostDomain, Id, Password))
+	        {
+	          ftp.setPassiveMode(true);
+	          ftp.binary();
+	          ftp.setBufferSize(1024000);
+	          ftp.changeWorkingDirectory("DMS/"+Path+"/");
+	          
+	          for (Photos photo : photoBeans)
+	          {
+	        	String FileName = photo.getDocname();
+	        	
+	        	if(isThumb){
+	        		String  NewFileName = FileName.substring(0, FileName.lastIndexOf("."))+"_thumbs"+FileName.substring(FileName.lastIndexOf("."));
+	        		InputStream stream = ftp.retrieveFileStream(NewFileName);
+	        		
+	        		if(stream!=null)
+		            bytes = IOUtils.toByteArray(stream);
+		            //ftp.completePendingCommand();
+		            
+		            if(bytes==null){
+		            	
+		            	 InputStream stream1 = ftp.retrieveFileStream(FileName);
+		            	 BufferedImage bImageFromConvert = ImageIO.read(stream1);
+			   			 byte[] bufferThumb = resizeImageWithHint(bImageFromConvert,1);
+			   			 
+			   			 ftp.storeFile(NewFileName,new ByteArrayInputStream(bufferThumb));
+				         ftp.sendSiteCommand("chmod 777 " + NewFileName);
+			   			 
+				         return bufferThumb;
+		            }
+	        		
+	        	}else{
+	        		
+	        		InputStream stream = ftp.retrieveFileStream(FileName);
+		            bytes = IOUtils.toByteArray(stream);
+		            ftp.completePendingCommand();
+	        	}
+	            
+	          }
+	           
+	        }
+	      } else System.out.println("No Files");
+	    }
+	    catch (Exception e)
+	    {
+	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	      try {
+	        if (ftp.isConnected()) {
+	          ftp.logout();
+	          ftp.disconnect();
+	        }
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
+	    }
+	    return bytes;
+	  }
  
+	
+	 private byte[] resizeImageWithHint(BufferedImage originalImage, int type)
+	  {
+	    BufferedImage resizedImage = new BufferedImage(50, 50, type);
+	    Graphics2D g = resizedImage.createGraphics();
+	    g.drawImage(originalImage, 0, 0, 50, 50, null);
+	    g.dispose();
+	    g.setComposite(AlphaComposite.Src);
+	    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, 
+	      RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+	    g.setRenderingHint(RenderingHints.KEY_RENDERING, 
+	      RenderingHints.VALUE_RENDER_QUALITY);
+	    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, 
+	      RenderingHints.VALUE_ANTIALIAS_ON);
+	    return convertToBytes(resizedImage);
+	  }
+	 
+	 private byte[] convertToBytes(BufferedImage resizedImage) {
+		    byte[] imageInByte = null;
+		    try {
+		      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		      ImageIO.write(resizedImage, "jpg", baos);
+		      baos.flush();
+		      imageInByte = baos.toByteArray();
+		      baos.close();
+		    } catch (Exception ex) {
+		      ex.printStackTrace();
+		    }
+		    return imageInByte;
+		  }
 }

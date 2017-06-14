@@ -42,9 +42,23 @@
 								</div>
 							</div>
 							
+							<div class="form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Member Type<span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select id="membertype" name="membertype" class="form-control col-md-12 col-xs-12" onchange="changeMemberType()">
+											<option value="Residential">Residential</option>
+											<option value="Commercial">Commercial</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> 
-								<h2><span class="label label-success label-md">Owner Details</span></h2> 
+								<h2><span class="label label-success label-md" id="owndetailsbadge">Owner Details</span></h2> 
 								<hr />
 							</div>
 							<div class="clearfix"></div>
@@ -167,22 +181,88 @@
 							<strong>Joint Owners</strong>
 							<input type="hidden" id="jointowners" name="jointowners">
 							<hr/>
-							
 							<button onclick="addJo();return false;" class="btn btn-success btn-sm">Add Joint Owner </button>
 								<br/>
-							<div id="jocontainerouter">
-							<div id="jocontainer">
+								<div id="jocontainerouter">
+								<div id="jocontainer">
 							</div>
 							</div>
-								 
+							</div>
+							
+							<hr/>
+							
+							<div id="comdetailsfields" style="display: none;">
+								<div class="form-group">
+
+									<label class="control-label col-md-2 col-sm-2 col-xs-12"
+										for="first-name">Name of Company</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<input type="text" id="companyname" name="companyname"
+												class="form-control col-md-12 col-xs-12">
+										</div>
+									</div>
+							
+								</div>
+								<div class="form-group">
+							
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Type of Company</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="companytype" id="companytype">
+											<option value="prilc">Private Limited Company</option>
+											<option value="publc">Public Limited Company</option>
+											<option value="uc">Unlimited Company</option>
+											<option value="llp">Limited Liability Partnership </option>
+											<option value="p">Partnership</option>
+											<option value="sp">Sole Proprietorship</option>
+											<option value="lo">Liaison Office / Representative Office</option>
+											<option value="po">Project Office </option>
+											<option value="bo">Branch Office </option>
+											<option value="jvc">Joint Venture Company</option>
+											<option value="sc">Subsidiary Company</option>
+										</select>
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Gumasta License no <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="gumastalicno" name="gumastalicno"
+											class="form-control col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+								
+								
+							</div>
 							</div>
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
-								<br /> <h2><span class="label label-success label-md">Flat Details</span></h2> <hr />
+								<br /> <h2><span class="label label-success label-md"  id="flatdetailsbadge">Flat Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="form-group">
+							
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Type</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="flattype" id="flattype" onchange="changeFlattype()">
+											<option value="1rk">1 RHK</option>
+											<option value="1bhk">1 BHK</option>
+											<option value="1.5bhk">1.5 BHK</option>
+											<option value="2bhk">2 BHK</option>
+											<option value="2.5bhk">2.5 BHK</option>
+											<option value="3bhk">3 BHK</option>
+											<option value="3.5bhk">3.5 BHK</option>
+											<option value="shop">Shop</option>
+										</select>
+									</div>
+								</div>
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Purchase Date </label>
@@ -204,14 +284,7 @@
 									</div>
 								</div>
 
-								 <label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Floor </label>
-								<div class="col-md-2 col-sm-2 col-xs-12">
-									<div class="col-md-12 col-sm-12 col-xs-12">
-										<input type="text" id="floor" name="floor"
-											class="form-control col-md-12 col-xs-12" placeholder="">
-									</div>
-								</div>
+								 
 								 
 								 
 							</div>
@@ -219,7 +292,9 @@
 							<div class="form-group">
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
-									for="first-name">Flat No <span class="required">*</span>
+									for="first-name" id="flatnobadge">
+									<span id="flatnolabel">Flat No</span> 
+									<span class="required">*</span>
 								</label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
@@ -250,6 +325,15 @@
 							<div class="form-group">
 
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Floor </label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="floor" name="floor"
+											class="form-control col-md-12 col-xs-12" placeholder="">
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">Built-up Area </label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
@@ -268,8 +352,24 @@
 											placeholder="sq. ft.">
 									</div>
 								</div>
-
+								
 							</div>
+							
+							
+							<!-- <div class="form-group" id="commtypebadge" style="display: none;">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Commercial Type</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="commercialtype" id="commercialtype">
+											<option value="shop">Shop</option>
+											<option value="workshop">Workshop</option>
+											<option value="office">Office</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+							
 							
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<br /> <h2><span class="label label-success label-md">Occupancy </span></h2> <hr />
@@ -295,6 +395,57 @@
 								<br /> <h2><span class="label label-success label-md">Lease Tenant Details</span></h2> <hr />
 							</div>
 							<div class="clearfix"></div>
+							
+							<div id="tenantcomdetilsbadge" style="display: none;">
+								<div class="form-group">
+
+									<label class="control-label col-md-2 col-sm-2 col-xs-12"
+										for="first-name">Name of Company</label>
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<div class="col-md-12 col-sm-12 col-xs-12">
+											<input type="text" id="tenantcompanyname" name="tenantcompanyname"
+												class="form-control col-md-12 col-xs-12">
+										</div>
+									</div>
+							
+							</div>
+								
+							<div class="form-group">
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Company Type<span class="required">*</span></label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<select class="form-control" name="tenantcompanytype" id="tenantcompanytype">
+											<option value="prilc">Private Limited Company</option>
+											<option value="publc">Public Limited Company</option>
+											<option value="uc">Unlimited Company</option>
+											<option value="llp">Limited Liability Partnership </option>
+											<option value="p">Partnership</option>
+											<option value="sp">Sole Proprietorship</option>
+											<option value="lo">Liaison Office / Representative Office</option>
+											<option value="po">Project Office </option>
+											<option value="bo">Branch Office </option>
+											<option value="jvc">Joint Venture Company</option>
+											<option value="sc">Subsidiary Company</option>
+										</select>
+									</div>
+								</div>
+								
+								<label class="control-label col-md-2 col-sm-2 col-xs-12"
+									for="first-name">Gumasta License no <span class="required">*</span>
+								</label>
+								<div class="col-md-2 col-sm-2 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="tenantgumastalicno" name="tenantgumastalicno"
+											class="form-control col-md-12 col-xs-12" required="required">
+									</div>
+								</div>
+							
+							</div>
+							</div>
+							
+							
 							<div class="form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12"
 									for="first-name">First Name <span class="required">*</span></label>
@@ -642,7 +793,7 @@
 								</div>
 							</div>
 							<div class="form-group" align="center">
-								<button class="btn btn-primary btn-xs" onclick="addParkingDetails();return false;">Add Parking Detail</button>
+								<button class="btn btn-primary" onclick="addParkingDetails();return false;">+ Add Parking Detail</button>
 							</div>
 							
 							
@@ -851,6 +1002,19 @@
 		
 		var randomHash = '${randomHash}';
 		
+		var flattype = $('#flattype').val();
+		
+		var membertype = $('#membertype').val();
+		var companyname = $('#companyname').val();
+		var companytype = $('#companytype').val();
+		var gumastalicno = $('#gumastalicno').val();
+		var tenantcompanyname = $('#tenantcompanyname').val();
+		var tenantcompanytype = $('#tenantcompanytype').val();
+		var tenantgumastalicno = $('#tenantgumastalicno').val();
+		var commercialtype = $('#commercialtype').val();
+		
+		
+		
 		if(occupancy=='leased'){
 			if(tenantname.length<1 || tenantaddress.length<1 || tenantcontactnumber.length<1 || tenantaadharno.length<1 ){
 				alert("Tenant Details Are Mandatory");
@@ -933,8 +1097,44 @@
 				if(possessiondate!=null && possessiondate.length>0)
 					datastr += "&possessiondate="+possessiondate;
 				
+				if(membertype!=null && membertype.length>0)
+					datastr += "&membertype="+membertype;
+				
+				if(flattype!=null && flattype.length>0)
+					datastr += "&flattype="+flattype;
+				
+				
+				if(membertype=='Commercial'){
+					
+						if(companyname!=null && companyname.length>0)
+							datastr += "&companyname="+companyname;
+						
+						if(companytype!=null && companytype.length>0)
+							datastr += "&companytype="+companytype;
+						
+						if(gumastalicno!=null && gumastalicno.length>0)
+							datastr += "&gumastalicno="+gumastalicno;
+						
+						if(commercialtype!=null && commercialtype.length>0)
+							datastr += "&commercialtype="+commercialtype;
+						
+							if(occupancy=='leased'){
+								
+								if(tenantcompanyname!=null && tenantcompanyname.length>0)
+									datastr += "&tenantcompanyname="+tenantcompanyname;
+								
+								if(tenantcompanytype!=null && tenantcompanytype.length>0)
+									datastr += "&tenantcompanytype="+tenantcompanytype;
+								
+								if(tenantgumastalicno!=null && tenantgumastalicno.length>0)
+									datastr += "&tenantgumastalicno="+tenantgumastalicno;
+								
+							}
+					
+				}
 				
 		blockUI();
+		
 		$.ajax({
 	        type: "GET",
 	        url: "<%=request.getContextPath()%>/saveMemberDetails.do",
@@ -943,49 +1143,7 @@
 	        	if(response.userid>0) {
 	        		getMembersForSociety();
 	        		notify('success','SUCCESS','Added Successfully',2000);
-	        		
-	        		$('#userid').val("");
-	        		$('#firstName').val("");
-	        		$('#middleName').val("");
-	        		$('#lastName').val("");
-	        		$('#mobileNo').val("");
-	        		$('#alternateno').val("");
-	        		$('#email').val("");
-	        		$('#aadharno').val("");
-	        		$('#jointowners').val("");
-	        		$('#password').val("");
-	        		$('#purchasedate').val("");
-	        		$('#possessiondate').val("");
-	        		
-	        		$('#flatno').val("");
-	        		$('#wing').val("");
-	        		$('#tower').val("");
-	        		$('#floor').val("");
-	        		$('#builtuparea').val("");
-	        		$('#carpetarea').val("");
-	        		$('#tenantname').val("");
-	        		$('#tenantaddress').val("");
-	        		$('#tenantcontactnumber').val("");
-	        		$('#tenantaltnumber').val("");
-	        		$('#tenantemail').val("");
-	        		$('#tenantaadharno').val("");
-	        		$('#vehicletype').val("");
-	        		$('#parkingtype').val("");
-	        		$('#parkingallotmentno').val("");
-	        		
-	        		$('#bloodgroup').val("");
-	        		$('#sharecertno').val("");
-	        		$('#nominee1').val("");
-	        		$('#percent1').val("");
-	        		$('#nominee2').val("");
-	        		$('#percent2').val("");
-	        		$('#nominee3').val("");
-	        		$('#percent3').val("");
-	        		$('#vehicleno').val("");
-	        		
-	        		$('#tenantfrom').val("");
-	        		$('#tenantto').val("");
-
+	        		$('#addDocSubTypeForm').trigger("reset");
 	        	}  
 	        	unblockUI();
 	        },
@@ -997,6 +1155,55 @@
 		return false;
 	}
 	
+	/* 	$('#userid').val("");
+	$('#firstName').val("");
+	$('#middleName').val("");
+	$('#lastName').val("");
+	$('#mobileNo').val("");
+	$('#alternateno').val("");
+	$('#email').val("");
+	$('#aadharno').val("");
+	$('#jointowners').val("");
+	$('#password').val("");
+	$('#purchasedate').val("");
+	$('#possessiondate').val("");
+	
+	$('#flatno').val("");
+	$('#wing').val("");
+	$('#tower').val("");
+	$('#floor').val("");
+	$('#builtuparea').val("");
+	$('#carpetarea').val("");
+	$('#tenantname').val("");
+	$('#tenantaddress').val("");
+	$('#tenantcontactnumber').val("");
+	$('#tenantaltnumber').val("");
+	$('#tenantemail').val("");
+	$('#tenantaadharno').val("");
+	$('#vehicletype').val("");
+	$('#parkingtype').val("");
+	$('#parkingallotmentno').val("");
+	
+	$('#bloodgroup').val("");
+	$('#sharecertno').val("");
+	$('#nominee1').val("");
+	$('#percent1').val("");
+	$('#nominee2').val("");
+	$('#percent2').val("");
+	$('#nominee3').val("");
+	$('#percent3').val("");
+	$('#vehicleno').val("");
+	
+	$('#tenantfrom').val("");
+	$('#tenantto').val("");
+	
+	
+	$('#companyname').val("");
+	$('#companytype').val("");
+	$('#gumastalicno').val("");
+	$('#tenantcompanyname').val("");
+	$('#tenantcompanytype').val("");
+	$('#tenantgumastalicno').val(""); */
 	
 	function getMembersForSociety(){
 		var societyid = $('#societyid').val();
@@ -1055,6 +1262,14 @@
 			$('#tenantdetails').show('slideDown');
 	}
 	 
+	function changeFlattype(){
+		var flattype = $('#flattype').val();
+		if(flattype=='shop')
+		 $('#flatnolabel').html('Shop No');
+		else
+			$('#flatnolabel').html('Flat No');
+	}
+	
 	function editUserData(userid){
 		
 		//editMode();
@@ -1127,9 +1342,21 @@
 	        		$('#jointowners').val('');
 	        		splitJo(response.jointowners);
 	        		
+	        		$('#membertype option[value="'+response.membertype+'"]').prop("selected",true).change();
+	        		$('#companyname').val(response.companyname);
+	        		$('#companytype option[value="'+response.companytype+'"]').prop("selected",true).change();
+	        		$('#gumastalicno').val(response.gumastalicno);
+	        		$('#commercialtype option[value="'+response.commercialtype+'"]').prop("selected",true).change();
+	        		$('#tenantcompanyname').val(response.tenantcompanyname);
+	        		$('#tenantcompanytype option[value="'+response.tenantcompanytype+'"]').prop("selected",true).change();
+	        		$('#tenantgumastalicno').val(response.tenantgumastalicno);
+	        		
+	        		
 	        		getParkingDetailsForMember();
 	        		getSCDetailsForMember();
 	        		getTenantHistory();
+	        		changeMemberType();
+	        		
 	        		
 	        		$('#removeTenant').removeAttr('disabled');
 	        		
@@ -1563,6 +1790,57 @@
 												unblockUI();
 											}
 										});
+								}
+								
+								
+								function changeMemberType(){
+									var membertype = $('#membertype').val();
+									if(membertype=='Commercial'){
+										$('#owndetailsbadge').html("Owner/ Proprietor/ Partner/ Promoters/ Director Details");
+										$('#flatdetailsbadge').html("Office/ Shop/ Workshop Details ");
+										$('#flatnobadge').html("Office/Shop/Workshop No ");
+										$('#comdetailsfields').show();
+										$('#tenantcomdetilsbadge').show();
+										$('#commtypebadge').show();
+										
+										var $select = $('#tenantType');                        
+						        	    $select.find('option').remove(); 
+						        	    $select.append($("<option />").val('Commercial').text('Commercial'));
+						        	    
+						        	    var $select1 = $('#flattype');                        
+						        	    $select1.find('option').remove(); 
+						        	    $select1.append($("<option />").val('shop').text('Shop'));
+						        	    $select1.append($("<option />").val('office').text('Office'));
+						        	    $select1.append($("<option />").val('workshop').text('Workshop'));
+						        	    
+										
+										
+									} else {
+										$('#owndetailsbadge').html("Owner Details");
+										$('#flatdetailsbadge').html("Flat Details");
+										$('#flatnobadge').html("Flat No");
+										$('#comdetailsfields').hide();
+										$('#tenantcomdetilsbadge').hide();
+										$('#commtypebadge').hide();
+										
+										var $select = $('#tenantType');                        
+						        	    $select.find('option').remove(); 
+						        	    $select.append($("<option />").val('Residential').text('Residential'));
+						        	    $select.append($("<option />").val('Commercial').text('Commercial'));
+						        	    
+						        	    
+						        	    var $select1 = $('#flattype');                        
+						        	    $select1.find('option').remove(); 
+						        	    $select1.append($("<option />").val('1rk').text('1 RHK'));
+						        	    $select1.append($("<option />").val('1bhk').text('1 BHK'));
+						        	    $select1.append($("<option />").val('1.5bhk').text('1.5 BHK'));
+						        	    $select1.append($("<option />").val('2bhk').text('2 BHK'));
+						        	    $select1.append($("<option />").val('2.5bhk').text('2.5 BHK'));
+						        	    $select1.append($("<option />").val('3bhk').text('3 BHK'));
+						        	    $select1.append($("<option />").val('3.5bhk').text('3.5 BHK'));
+						        	    $select1.append($("<option />").val('shop').text('Shop'));
+
+									}
 								}
 							</script>
 							

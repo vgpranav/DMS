@@ -35,7 +35,7 @@
 								<h2>Our Digital Society</h2>
 							</div>
 							<div class="col-md-10 col-md-offset-1">
-								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s">								
+								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s" align="center">								
 									<p>Welcome to Our Digital Society - Your online documentation program</p>
 								</div>
 							</div>
@@ -50,7 +50,7 @@
 								<h2>Our Digital Society</h2>
 							</div>
 							<div class="col-md-10 col-md-offset-1">
-								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s">								
+								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s" align="center">								
 									<p>Record smallest details online, eliminating the usage of papers completely</p>
 								</div>
 							</div>
@@ -65,7 +65,7 @@
 								<h2>Our Digital Society</h2>
 							</div>
 							<div class="col-md-10 col-md-offset-1">
-								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s">								
+								<div class="Up" data-wow-offset="0" data-wow-delay="0.6s" align="center">								
 									<p>The right file with you in mere seconds</p>
 								</div>
 							</div>
@@ -149,7 +149,6 @@ Our programs will assist you with uploading documents online and accessing them 
 				<div class="col-md-12">
 					<div class="" data-wow-offset="0" data-wow-delay="0.8s">
 						<div class="align-left">
-						<br/><br/>
 							<br><b class="txt-red">No Misplacing</b><br>
 							<a>
 								Maintaining an archive of records is a difficult thing to do, and there is nothing more annoying than misplacing an important file. With Our Digital Society software, that will never be an issue. Whether the file is years old or brand new, you can find it instantly.    
@@ -211,6 +210,10 @@ Our programs will assist you with uploading documents online and accessing them 
     .file-pile h2{
     	color: #fff;
     	background-color: red;
+    }
+    
+    .container{
+    	padding: 0 !important;
     }
     </style>
 

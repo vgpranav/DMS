@@ -6,12 +6,10 @@ public class Test {
 
 	public static void main(String args[]){
 		
-		try{LocalDate today = LocalDate.now();
-		LocalDate yesterday = today.minusDays(1);
-		
-		System.out.println(yesterday + " 00:00:00");
-		
-		
+		try{
+			
+			String filename = "abc.jpg";
+			System.out.println();
 		
 		}catch(Exception e){
 			e.printStackTrace();

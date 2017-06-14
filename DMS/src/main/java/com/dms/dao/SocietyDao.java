@@ -141,7 +141,14 @@ public class SocietyDao
 		    society.getCity(),
 		    society.getCountry(),
 		    society.getNoofshop(),
-		    society.getNoofflat()
+		    society.getNoofflat(),
+		    society.getNoof1rk(),
+		    society.getNoof1bhk(),
+		    society.getNoof1p5bhk(),
+		    society.getNoof2bhk(),
+		    society.getNoof2p5bhk(),
+		    society.getNoof3bhk(),
+		    society.getNoof3p5bhk()
 		);
 		
 		societyProfileId = CommomUtility.convertToLong(obj1);
@@ -170,6 +177,13 @@ public class SocietyDao
       			    society.getCountry(),
       			    society.getNoofshop(),
       			  	society.getNoofflat(),
+      			    society.getNoof1rk(),
+	      		    society.getNoof1bhk(),
+	      		    society.getNoof1p5bhk(),
+	      		    society.getNoof2bhk(),
+	      		    society.getNoof2p5bhk(),
+	      		    society.getNoof3bhk(),
+	      		    society.getNoof3p5bhk(),
       				society.getSocietyid());
     	  
       }
@@ -273,7 +287,13 @@ public class SocietyDao
     		          userprofile.getPercent2(),
     		          userprofile.getNominee3(),
     		          userprofile.getPercent3(),
-    		          userprofile.getVehicleno() 
+    		          userprofile.getVehicleno(),
+    		          userprofile.getCompanyname(),
+    		          userprofile.getCompanytype(),
+    		          userprofile.getGumastalicno(),
+    		          userprofile.getMembertype(),
+    		          userprofile.getCommercialtype(),
+    		          userprofile.getFlattype()
     	          );
     	        
     	        userProfileId = CommomUtility.convertToLong(obj1);
@@ -291,7 +311,10 @@ public class SocietyDao
     	    			  userprofile.getTenantType(),
     	    			  userprofile.getTenantPVstatus(),
     	    			  userprofile.getTenantfrom(),
-        		          userprofile.getTenantto()
+        		          userprofile.getTenantto(),
+        		          userprofile.getTenantcompanyname(),
+        		          userprofile.getTenantcompanytype(),
+        		          userprofile.getTenantgumastalicno()
     	    			  );
     	      }
     	      
@@ -336,6 +359,12 @@ public class SocietyDao
 		          userprofile.getNominee3(),
 		          userprofile.getPercent3(),
 		          userprofile.getVehicleno(),
+		          userprofile.getCompanyname(),
+		          userprofile.getCompanytype(),
+		          userprofile.getGumastalicno(),
+		          userprofile.getMembertype(),
+		          userprofile.getCommercialtype(),
+		          userprofile.getFlattype(),
 		          userprofile.getUserid()
 	          );
     	  
@@ -357,6 +386,9 @@ public class SocietyDao
     	    			  userprofile.getTenantPVstatus(),
     			          userprofile.getTenantfrom(),
     			          userprofile.getTenantto(),
+    			          userprofile.getTenantcompanyname(),
+        		          userprofile.getTenantcompanytype(),
+        		          userprofile.getTenantgumastalicno(),
     	    			  userprofile.getUserid()
     	    			  );
     		  } else {
@@ -372,12 +404,14 @@ public class SocietyDao
     	    			  userprofile.getTenantType(),
     	    			  userprofile.getTenantPVstatus(),
     	    			  userprofile.getTenantfrom(),
-        		          userprofile.getTenantto()
+        		          userprofile.getTenantto(),
+        		          userprofile.getTenantcompanyname(),
+        		          userprofile.getTenantcompanytype(),
+        		          userprofile.getTenantgumastalicno()
     	    			  );
     			  
     		  }
-    				  
-	    	  
+    		  
 	      }
       }
       
@@ -588,7 +622,7 @@ public class SocietyDao
       ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
       societyList = qr.query(conn, DMSQueries.getSocietyListForManager, rsh,userid);
       
-      //System.out.println("userid :: "+userid+"/nsocietyList :: "+societyList);
+      System.out.println("userid :: "+userid+"/nsocietyList :: "+societyList);
     } catch (Exception e) {
       logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
       e.printStackTrace();

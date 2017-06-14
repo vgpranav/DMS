@@ -31,7 +31,74 @@ public class Society
     private String noofshop;
     private String noofflat;
     
-    public String getNoofshop() {
+    private String noof1rk;
+    private String noof1bhk;
+    private String noof1p5bhk;
+    private String noof2bhk;
+    private String noof2p5bhk;
+    private String noof3bhk;
+    private String noof3p5bhk;
+    
+    
+    
+    
+    public String getNoof1rk() {
+		return noof1rk;
+	}
+
+	public void setNoof1rk(String noof1rk) {
+		this.noof1rk = noof1rk;
+	}
+
+	public String getNoof1bhk() {
+		return noof1bhk;
+	}
+
+	public void setNoof1bhk(String noof1bhk) {
+		this.noof1bhk = noof1bhk;
+	}
+
+	public String getNoof1p5bhk() {
+		return noof1p5bhk;
+	}
+
+	public void setNoof1p5bhk(String noof1p5bhk) {
+		this.noof1p5bhk = noof1p5bhk;
+	}
+
+	public String getNoof2bhk() {
+		return noof2bhk;
+	}
+
+	public void setNoof2bhk(String noof2bhk) {
+		this.noof2bhk = noof2bhk;
+	}
+
+	public String getNoof2p5bhk() {
+		return noof2p5bhk;
+	}
+
+	public void setNoof2p5bhk(String noof2p5bhk) {
+		this.noof2p5bhk = noof2p5bhk;
+	}
+
+	public String getNoof3bhk() {
+		return noof3bhk;
+	}
+
+	public void setNoof3bhk(String noof3bhk) {
+		this.noof3bhk = noof3bhk;
+	}
+
+	public String getNoof3p5bhk() {
+		return noof3p5bhk;
+	}
+
+	public void setNoof3p5bhk(String noof3p5bhk) {
+		this.noof3p5bhk = noof3p5bhk;
+	}
+
+	public String getNoofshop() {
 		return noofshop;
 	}
 
@@ -253,7 +320,9 @@ public class Society
 				+ pincode + ", createdby=" + createdby + ", createdon=" + createdon + ", isactive=" + isactive
 				+ ", registrationno=" + registrationno + ", estdate=" + estdate + ", projectid=" + projectid
 				+ ", projectname=" + projectname + ", societytype=" + societytype + ", country=" + country + ", city="
-				+ city + ", landmark=" + landmark + ", noofshop=" + noofshop + ", noofflat=" + noofflat + "]";
+				+ city + ", landmark=" + landmark + ", noofshop=" + noofshop + ", noofflat=" + noofflat + ", noof1rk="
+				+ noof1rk + ", noof1bhk=" + noof1bhk + ", noof1p5bhk=" + noof1p5bhk + ", noof2bhk=" + noof2bhk
+				+ ", noof2p5bhk=" + noof2p5bhk + ", noof3bhk=" + noof3bhk + ", noof3p5bhk=" + noof3p5bhk + "]";
 	}
 
 }

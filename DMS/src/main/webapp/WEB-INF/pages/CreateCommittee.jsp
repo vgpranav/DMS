@@ -95,6 +95,7 @@
                             <th class="column-title">Member Name</th>
                             <th class="column-title">Designation</th>
                             <th class="column-title">Appointed On</th>
+                            <th class="column-title">Photo</th>
                             <th class="column-title">Remove</th>
                           </tr>
                         </thead>
@@ -120,19 +121,7 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
-                    <table class="table table-striped jambo_table bulk_action" id="thetable1">
-                        <thead>
-                          <tr class="headings">
-                            <th class="column-title">Sr.No</th>
-                            <th class="column-title">Member Name</th>
-                            <th class="column-title">Designation</th>
-                            <th class="column-title">Appointed On</th>
-                            <th class="column-title">Removed On</th>
-                          </tr>
-                        </thead>
-
-                        <tbody></tbody>
-                      </table>
+                   <div id="pastMemCont"></div>
                   </div>
                 </div>
               </div>
@@ -248,13 +237,14 @@
 	function getCommitteMembersForSociety(){
 		var societyid = $('#societyid').val();
 		var table = $('#thetable').DataTable();
-		var table1 = $('#thetable1').DataTable();
 			
 		if(societyid.length<1)
 			return false;
 			
 		table.clear().draw();
-		table1.clear().draw();
+		$('#pastMemCont').html("");
+		
+		
 		blockUI();
 		$.ajax({
 	        type: "GET",
@@ -263,30 +253,51 @@
 	        success: function(response){
 	        var k=1;
 	        var j=1;
+	        var srno=1;
+	        var testKey='';
+	        var currTabId='';
 	        
 	        	$.each(response, function(i, item) {
 	        		$.each(item, function(i, item1) {
+	        			var divid="commem"+srno;
+			        	var photodiv = '<div id="'+divid+'" align="center"><img width="25" src="<%=request.getContextPath()%>/resources/images/spin.gif"></div>';
+			        	
 	        				if(item1.isactive==1){
 	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeCommitteeMember(\'' + item1.committeememberid + '\')"><i class="fa fa-times"></i></button>';
-	        				
 			        					table.row.add( [
-			        					k,
-					        			item1.userName,
-					        			item1.positionname, 
-					        			new Date(item1.appointedon).toString("dd MMM yyyy"),
-					        			removebtn,
+			        						k,
+			        						item1.userName,
+						        			item1.positionname, 
+						        			new Date(item1.appointedon).toString("dd MMM yyyy"),
+						        			photodiv,
+						        			removebtn,
 				                ] ).draw( false ); 
 				                k++;
-	        				}else{
-	        					table1.row.add( [
+	        				} else{
+	        					
+	        					if(item1.tower!=testKey){
+	        						testKey=item1.tower;
+	        						getPastMemTable(testKey,item1.removedon);
+	        						currTabId=testKey;
+	        					}
+	        					
+	        					var table5 = $('#'+currTabId).DataTable();
+	        					
+	        					table5.row.add( [
 	        						j,
 				        			item1.userName,
 				        			item1.positionname, 
+				        			item1.flat,
+				        			item1.tower,
+				        			item1.contactNo,
 				        			new Date(item1.appointedon).toString("dd MMM yyyy"),
 				        			new Date(item1.removedon).toString("dd MMM yyyy"),
+				        			photodiv,
 				                ] ).draw( false ); 
 				                j++;
 	        				}
+	        				getMemberPhoto(item1.userid,divid);
+	        				srno++;
 	        		 });
 	        		 
 	        	  });
@@ -298,4 +309,63 @@
 				}
 			});
 	}
+	
+function getPastMemTable(tblId,remOn){
+		
+		var remDate = new Date(remOn).toString("dd MMM yyyy");
+		
+		var tbl = '<strong>Dissolved On: '+remDate+'</strong><div class="table-responsive">'
+				        +'<table class="table table-striped jambo_table bulk_action" id="'+tblId+'">'
+				        +'<thead>'
+				        +'<tr class="headings">'
+				        +'<th class="column-title">Sr.No</th>'
+				        +'<th class="column-title">Member Name</th>'
+				        +'<th class="column-title">Designation</th>'
+				        +'<th class="column-title">Wing/Flat</th>'
+				        +'<th class="column-title">Tower</th>'
+				        +'<th class="column-title">Contact No</th>'
+				        +'<th class="column-title">Appointed On</th>'
+				        +'<th class="column-title">Dissolved On</th>'
+				        +'<th class="column-title">Photograph</th>'
+				        +'</tr>'
+				        +'</thead>'
+				        +'<tbody></tbody>'
+				        +'</table>'
+				        +'</div>';
+		
+		$('#pastMemCont').append(tbl);
+		
+		$('#'+tblId).DataTable({
+			"paging":   false,
+	        "ordering": false,
+	        "info":     false,
+	        "bFilter": false
+	    });
+	}
+	
+function getMemberPhoto(memberId,divId){
+	console.log(memberId+"-"+divId);
+	blockUI();
+	$.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/getMemberPhotos.do",
+        data :"userid="+memberId,
+        enctype: 'multipart/form-data',
+        processData: false,
+        contentType: false 
+		}).done(function(data) {
+		$('#'+divId).html("");
+		var img='';
+		var cnt =1;
+           $.each(data, function(i, item) {
+           		img = '<img class="dp" height="30"  src="data:' + item.contenttype + ';base64,' +  item.file + '"/>';
+           });
+           $('#'+divId).html(img);
+           $(".dp").popImg();
+           unblockUI();
+      }).fail(function(jqXHR, textStatus) {
+          alert('File Fetch failed ...');
+          unblockUI();
+      });;
+}
 </script>

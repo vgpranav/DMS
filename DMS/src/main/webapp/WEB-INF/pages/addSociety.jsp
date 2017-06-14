@@ -196,13 +196,85 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">No of Shop/Offices/Gala
+							for="first-name">No of Shop/Offices/Workshop
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="noofshop" name="noofshop"
 								 class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
+					
+					
+					
+					
+					<div style="display: none;">
+					
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 1RK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof1rk" name="noof1rk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 1BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof1bhk" name="noof1bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 1.5BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof1p5bhk" name="noof1p5bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 2BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof2bhk" name="noof2bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 2.5BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof2p5bhk" name="noof2p5bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 3BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof3bhk" name="noof3bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-4 col-sm-4 col-xs-12"
+							for="first-name">No of 3.5BHK
+						</label>
+						<div class="col-md-8 col-sm-8 col-xs-12">
+							<input type="text" id="noof3p5bhk" name="noof3p5bhk"
+								 class="form-control col-md-7 col-xs-12" value="0">
+						</div>
+					</div>
+					
+					</div>
+					
 
 					<div class="form-group" align="right">
 						<button class="btn btn-warning" type="reset">Reset</button>
@@ -460,6 +532,14 @@
 	        		$('#societytypeid option[value="'+response.societytypeid+'"]').prop("selected",true).change();
 	        		$('#projectid option[value="'+response.projectid+'"]').prop("selected",true).change();
 	        		//$('#societyname').val(response.societyname);
+	        		
+	        		$('#noof1rk').val(response.noof1rk);
+	        		$('#noof1bhk').val(response.noof1bhk);
+	        		$('#noof1p5bhk').val(response.noof1p5bhk);
+	        		$('#noof2bhk').val(response.noof2bhk);
+	        		$('#noof2p5bhk').val(response.noof2p5bhk);
+	        		$('#noof3bhk').val(response.noof3bhk);
+	        		$('#noof3p5bhk').val(response.noof3p5bhk);
 	        		
 	        	} 
 	        	unblockUI();
