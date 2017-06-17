@@ -85,16 +85,16 @@
                          <tbody>
                         	<c:forEach items="${socDocMapping}" var="myItem" varStatus="loopStatus">
 								<c:if test="${loopStatus.index%2==0}">
-									<tr class="even pointer">
+									<tr class="even pointer" id="ptr${loopStatus.index}">
 								</c:if>
 								<c:if test="${loopStatus.index%2!=0}">
-									<tr class="odd pointer">
+									<tr class="odd pointer" id="ptr${loopStatus.index}">
 								</c:if>
 									<%-- <td class=" ">${loopStatus.index+1}</td> --%>
 									<td class=" ">${myItem.societyname}</td>
 									<td class=" ">${myItem.doctypename}</td> 
 									<td class=" ">
-										<a class="btn btn-default btn-sm" onclick="removeSocDocMapping('${myItem.societydocmappingid}')">
+										<a class="btn btn-default btn-sm" onclick="removeSocDocMapping('${myItem.societydocmappingid}','ptr${loopStatus.index}')">
 											<i class="fa fa-times"></i>
 										</a>
 									</td>
@@ -116,7 +116,7 @@
  
   
  
- function removeSocDocMapping(societydocmappingid){
+ function removeSocDocMapping(societydocmappingid,rowid){
 	 
 		if(confirm('Are you Sure?')){
 			blockUI();
@@ -128,9 +128,11 @@
 		        //alert()
 		        	if(response=='success') {
 		        		notify('success','SUCCESS','Removed Successfully',2000);
-		        		location.reload();
+		        		//location.reload();
+		        		console.log('rowid :: '+rowid)
+		        		$('#'+rowid).hide();
 		        	}  else {
-		        		notify('error','Failed','Failed to Remove Member',2000);
+		        		notify('error','Failed','Failed to Remove',2000);
 		        	}
 		        unblockUI();
 		        },

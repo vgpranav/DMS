@@ -12,8 +12,8 @@
 					<br><b>Estd. on <fmt:formatDate type = "date" value = "${society.estdate}" /></b>
 					<br><br><em>Address: ${society.addressline1}</em>
 					<br><em>${society.addressline2}</em>
-					<br><em>Landmark : ${society.landmark}</em>
-					<br><em>City: ${society.city}</em>
+					<%-- <br><em>Landmark : ${society.landmark}</em> --%>
+					<%-- <br><em>City: ${society.city}</em> --%>
 					<br><em>${society.ward}, ${society.district}, ${society.state}</em>
 					<br><em>${society.country}</em>
 					<br><em>Pincode: ${society.pincode}</em>

@@ -65,6 +65,37 @@ public class ImageController {
 	     IOUtils.copy(in1, response.getOutputStream());
 	   }
 	
+	@RequestMapping(value="/getFileToDisplay/{filename}")
+	   public void getFileToDisplay(HttpServletResponse response , 
+			   @PathVariable("filename") String filename
+			   ) throws IOException{
+		 DocumentDao documentDao = new DocumentDao();
+		 byte[] buffer=null;
+		 try{
+			 buffer = documentDao.getFileToDisplay(filename,false);
+		 }catch(Exception e){
+			logger.error(e.getMessage());
+		 }
+	     response.setContentType("image/jpeg");
+	     InputStream in1 = new ByteArrayInputStream(buffer);
+	     IOUtils.copy(in1, response.getOutputStream());
+	   }
+	
+	@RequestMapping(value="/getFileToDisplayThumb/{filename}")
+	   public void getFileToDisplayThumb(HttpServletResponse response , 
+			   @PathVariable("filename") String filename
+			   ) throws IOException{
+		 DocumentDao documentDao = new DocumentDao();
+		 byte[] buffer=null;
+		 try{
+			 buffer = documentDao.getFileToDisplay(filename,true);
+		 }catch(Exception e){
+			logger.error(e.getMessage());
+		 }
+	     response.setContentType("image/jpeg");
+	     InputStream in1 = new ByteArrayInputStream(buffer);
+	     IOUtils.copy(in1, response.getOutputStream());
+	   }
 	
 	
 	 private byte[] resizeImageWithHint(BufferedImage originalImage, int type)

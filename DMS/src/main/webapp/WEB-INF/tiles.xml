@@ -246,4 +246,8 @@
       <put-attribute name="body" value="/WEB-INF/pages/addPolicy.jsp" />   
     </definition> 
     
+    
+    <definition name="pdfPrint" template="/WEB-INF/pages/pdfPrint.jsp">  
+    </definition>
+    
 </tiles-definitions>

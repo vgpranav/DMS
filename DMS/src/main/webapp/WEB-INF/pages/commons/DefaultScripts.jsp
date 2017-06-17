@@ -26,6 +26,9 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/ionzoom/js/ion-zoom/ion.zoom.js"></script>
 
 
+<script src="<%= request.getContextPath() %>/resources/theme/vendors/printjs/print.min.js"></script>
+
+
 <script>
 
 function blockUI(){
@@ -53,13 +56,13 @@ function notify(type,title,message,delay){
 		.css({"background-color":"#ffffe0"});
 	}
 	
-	$('.btn').click(function(){
+	/* $('.btn').click(function(){
 		var that = $(this);
 		$(that).attr('disabled','disabled');
 		setTimeout(function(){ 
 			$(that).removeAttr('disabled')
 		}, 1000 );
-	});
+	}); */
 	
 	
 	function genericRemove(genId,typeVal,pkName,callback){

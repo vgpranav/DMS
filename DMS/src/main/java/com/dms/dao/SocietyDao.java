@@ -1629,6 +1629,18 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      fileList =  qr.query(conn,DMSQueries.getDocumentsToDisplay,rsh,doctypeid,userid);
 	      
 	      if (fileList.size() > 0) {
+	    	  for (Files file : fileList)
+	          {
+	    		  HashMap<String, Object> hmap = new HashMap<String, Object>();
+		            hmap.put("fileid", file.getFilesid());
+		            hmap.put("filename", file.getFilename());
+		            hmap.put("documentid", file.getDocumentid());
+		            hmap.put("contenttype", file.getMimetype());
+		            hmap.put("createdon", file.getCreatedon());
+		            docList.add(hmap);
+	          }
+	    	  
+	    	  /*
 	        if (ftp.connectAndLogin(hostDomain, Id, Password))
 	        {
 	          ftp.setPassiveMode(true);
@@ -1654,7 +1666,8 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	          }
 	           
 	        }
-	      } else System.out.println("No Files");
+	      */} else 
+	    	  System.out.println("No Files");
 	    }
 	    catch (Exception e)
 	    {

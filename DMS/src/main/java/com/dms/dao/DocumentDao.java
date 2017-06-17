@@ -1,40 +1,27 @@
 package com.dms.dao;
 
-import com.dms.beans.DocSubType;
-import com.dms.beans.Doctype;
-import com.dms.beans.Document;
-import com.dms.beans.Documentdetails;
-import com.dms.beans.Files;
-import com.dms.beans.FormFields;
-import com.dms.beans.GenericBean;
-import com.dms.beans.Parking;
-import com.dms.beans.Photos;
-import com.dms.beans.Project;
-import com.dms.beans.Society;
-import com.dms.beans.User;
-import com.dms.beans.Userprofile;
-import com.dms.util.CommomUtility;
-import com.dms.util.ConnectionPoolManager;
-import com.dms.util.DMSQueries;
-import com.dms.util.FtpWrapper;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
@@ -44,9 +31,34 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.Base64Utils;
 
+import com.dms.beans.DocSubType;
+import com.dms.beans.Doctype;
+import com.dms.beans.Document;
+import com.dms.beans.Documentdetails;
+import com.dms.beans.EmailBean;
+import com.dms.beans.Files;
+import com.dms.beans.FormFields;
+import com.dms.beans.GenericBean;
+import com.dms.beans.Photos;
+import com.dms.beans.Project;
+import com.dms.beans.Society;
+import com.dms.beans.User;
+import com.dms.beans.Userprofile;
+import com.dms.util.CommomUtility;
+import com.dms.util.ConnectionPoolManager;
+import com.dms.util.DMSQueries;
+import com.dms.util.FtpWrapper;
 
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 public class DocumentDao
@@ -953,8 +965,8 @@ public int deleteDocById(Document document) {
 		            	
 		            	 InputStream stream1 = ftp.retrieveFileStream(FileName);
 		            	 BufferedImage bImageFromConvert = ImageIO.read(stream1);
-			   			 byte[] bufferThumb = resizeImageWithHint(bImageFromConvert,1);
-			   			 
+		            	 //compressImage(
+			   			 byte[] bufferThumb = resizeImageWithHint(bImageFromConvert,1,50,50);
 			   			 ftp.storeFile(NewFileName,new ByteArrayInputStream(bufferThumb));
 				         ftp.sendSiteCommand("chmod 777 " + NewFileName);
 			   			 
@@ -999,9 +1011,33 @@ public int deleteDocById(Document document) {
 	  }
  
 	
-	 private byte[] resizeImageWithHint(BufferedImage originalImage, int type)
+	
+	 private byte[] compressImage(BufferedImage image,float compression){
+		 byte[] img = null;
+
+		 try{
+			 
+			 ByteArrayOutputStream compressed = new ByteArrayOutputStream();
+			 ImageOutputStream outputStream = ImageIO.createImageOutputStream(compressed);
+			 ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
+			 ImageWriteParam jpgWriteParam = jpgWriter.getDefaultWriteParam();
+			 jpgWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+			 jpgWriteParam.setCompressionQuality(compression);
+			 jpgWriter.setOutput(outputStream);
+			 jpgWriter.write(null, new IIOImage(image, null, null), jpgWriteParam);
+			 jpgWriter.dispose();
+			 img = compressed.toByteArray();
+			 
+		 }catch(Exception e ){
+			 e.printStackTrace();
+		 }
+		 
+		return img;
+	 }
+	
+	 private byte[] resizeImageWithHint(BufferedImage originalImage, int type,int width,int height)
 	  {
-	    BufferedImage resizedImage = new BufferedImage(50, 50, type);
+	    BufferedImage resizedImage = new BufferedImage(width, height, type);
 	    Graphics2D g = resizedImage.createGraphics();
 	    g.drawImage(originalImage, 0, 0, 50, 50, null);
 	    g.dispose();
@@ -1028,4 +1064,88 @@ public int deleteDocById(Document document) {
 		    }
 		    return imageInByte;
 		  }
+
+	public byte[] getFileToDisplay(String filename,boolean isThumb) {
+		FtpWrapper ftp = new FtpWrapper();
+	    String hostDomain = ftp.getServerName();
+	    String Id = ftp.getUsername();
+	    String Password = ftp.getPassword();
+	    byte[] bytes=null;
+	    
+	    try{
+	    
+	    if (ftp.connectAndLogin(hostDomain, Id, Password))
+	    {
+          ftp.setPassiveMode(true);
+          ftp.binary();
+          ftp.setBufferSize(1024000);
+          ftp.changeWorkingDirectory("DMS/");
+          InputStream stream = ftp.retrieveFileStream(filename);
+          if(isThumb){
+        	  BufferedImage bImageFromConvert = ImageIO.read(stream);
+         	  bytes = compressImage(bImageFromConvert,0.3f);//resizeImageWithHint(bImageFromConvert,1,150,200);
+          }else{
+        	  bytes = IOUtils.toByteArray(stream);
+          }
+          
+     	  ftp.completePendingCommand();
+        }
+	    }
+	    catch (Exception e)
+	    {
+	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      e.printStackTrace();
+	    }
+	    finally
+	    { 
+	      try {
+	        if (ftp.isConnected()) {
+	          ftp.logout();
+	          ftp.disconnect();
+	        }
+	      } catch (IOException e) {
+	        e.printStackTrace();
+	      }
+	    }
+	    return bytes;
+	}
+
+	public int sendDocumentAsMail(EmailBean eBean) {
+		
+		final String username = "info@ourdigitalsociety.com";
+		final String password = "Hot@1234";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtpout.secureserver.net");
+		props.put("mail.smtp.port", "3535");
+		
+		
+		Session session = Session.getInstance(props,
+				  new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				  });
+			try {
+	
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("info@ourdigitalsociety.com"));
+				message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(eBean.getToEmailId()));
+				message.setSubject("Document From ODS");
+				message.setContent("Hello, <br><br><br> You have received a document from "+eBean.getSenderName()+".<br><br><br> <a href='www.ourdigitalsociety.com/downloadAsPdf.do?documentId="+eBean.getDocumentId()+"'>click here to view.</a> <br><br><br><br><br>Regards,<br><a href='www.ourdigitalsociety.com'>OurDigitalSociety.com</a>","text/html");
+	
+				Transport.send(message);
+	
+				
+				System.out.println("Done");
+				return 1;
+	
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
+		
+	}
 }

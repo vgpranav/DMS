@@ -1049,6 +1049,8 @@ public class ViewController
 	      mv = new ModelAndView("displayDocument");
 	      mv.addObject("docList", docList);
 	      mv.addObject("dataList", data);
+	      mv.addObject("documentid", documentid);
+	      
 	    }
 	    catch (Exception e) {
 	      logger.error(e.getMessage());

@@ -1,8 +1,5 @@
 package com.dms.controller;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,13 +8,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +24,7 @@ import com.dms.beans.Committee;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
+import com.dms.beans.EmailBean;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
@@ -954,5 +950,29 @@ public class AjaxController
      return docSubTypes;
    }
    
+   @RequestMapping(value={"/sendDocumentAsMail"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String sendDocumentAsMail(@ModelAttribute EmailBean eBean,HttpServletRequest request)
+   {
+     int rowsUpdated = 0;
+     DocumentDao docDao = new DocumentDao();
+     User user = null;
+     try {
+     	user = (User)request.getSession().getAttribute("userObject"); 
+     	
+     	eBean.setSenderName(user.getFirstName()+" "+user.getLastName());
+     	
+        rowsUpdated = docDao.sendDocumentAsMail(eBean);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+       e.printStackTrace();
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   //
 } //end of class
 

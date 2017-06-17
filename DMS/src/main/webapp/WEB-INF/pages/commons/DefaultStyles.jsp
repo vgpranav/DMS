@@ -23,6 +23,9 @@
 
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/ionzoom/css/ion.zoom.css" rel="stylesheet">
 
+
+<link href="<%= request.getContextPath() %>/resources/theme/vendors/printjs/print.min.css" rel="stylesheet">
+
 <!-- jQuery -->
 
 
