@@ -1,8 +1,6 @@
 package com.dms.views;
 
-import java.awt.Color;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +17,6 @@ import com.dms.util.FtpWrapper;
 import com.lowagie.text.Document;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 
@@ -35,6 +30,7 @@ public class PdfDocumentView extends AbstractPdfView{
 		List<Files> docs = null;
 		List<GenericBean> data = null;
 		try{
+			@SuppressWarnings("unchecked")
 			Map<String,String> params = (Map<String,String>) model.get("params");
 			DocumentDao ddao = new DocumentDao();
 			docs = ddao.getDocPathsByDocId(params.get("documentId"),docs);
@@ -64,12 +60,13 @@ public class PdfDocumentView extends AbstractPdfView{
 	    	String hostDomain = ftp.getServerName();
 			String Id = ftp.getUsername();
 			String Password = ftp.getPassword();
-			List<String> generatedFiles = new ArrayList<String>();
+			/*List<String> generatedFiles = new ArrayList<String>();*/
 			boolean wdFlag=false;
 			if (ftp.connectAndLogin(hostDomain, Id, Password)) {
 				for(Files files : docs){
 					String path = files.getFilepath();
 					String workDir = path.substring(0, path.lastIndexOf("/")+1);
+					ftp.binary();
 					
 					if(!wdFlag){
 						ftp.changeWorkingDirectory(workDir);
@@ -82,20 +79,28 @@ public class PdfDocumentView extends AbstractPdfView{
 					if(stream!=null){
 						byte[] bytes = IOUtils.toByteArray(stream);
 						Image image1 = Image.getInstance(bytes);
+						
 						int indentation = 0;
 						float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
 					               - document.rightMargin() - indentation) / image1.getWidth()) * 100;
 						image1.scalePercent(scaler);
+						/*image1.scaleAbsolute(150f, 150f);
+						image1.setAbsolutePosition(0, 0);*/
+						document.newPage();
 				        document.add(image1);
+				        
+				        scaler=0;
+				        image1=null;
+				        bytes=null;
 					}
 					ftp.completePendingCommand();
-			        
-			        
+					stream.close();
 			        /*fos.close();*/
 			        
 					/*System.out.println("ranfileName ::"+out.getAbsolutePath());*/
 
 			        /*generatedFiles.add(out.getAbsolutePath());*/
+					files=null;
 				}
 			}
 			

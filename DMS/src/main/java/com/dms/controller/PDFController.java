@@ -24,7 +24,7 @@ public class PDFController
     {
         String output = "PDF";
         String documentId = ServletRequestUtils.getStringParameter(request, "documentId");
-        Map params = new HashMap();
+        Map<String,String> params = new HashMap<String,String>();
         params.put("documentId", documentId);
         if("PDF".equals(output.toUpperCase()))
         {

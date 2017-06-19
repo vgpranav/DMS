@@ -461,7 +461,7 @@ public class DocumentDao
       
       String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description,d.documentid, "
       		+ " dt.doctypename,dst.docsubtypename,d.createdby,d.createdon "
-      		+ " from dms.formstructure f,dms.documentdetails d,dms.document doc,dms.doctype dt,dms.docsubtype dst "
+      		+ " from formstructure f,documentdetails d,document doc,doctype dt,docsubtype dst "
       		+ " where f.fieldid = d.datakey and d.documentid = doc.documentid and doc.doctypeid=dt.doctypeid "
       		+ " and doc.docsubtypeid=dst.docsubtypeid "
       		+ " and doc.societyid=? ";
