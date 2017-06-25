@@ -40,6 +40,7 @@ import com.dms.beans.Userprofile;
 import com.dms.dao.DocumentDao;
 import com.dms.dao.LoginDao;
 import com.dms.dao.SocietyDao;
+import com.dms.logging.LoggingHelper;
 import com.dms.util.CommomUtility;
 import com.dms.util.CommonDA;
 import com.dms.util.FtpWrapper;
@@ -51,11 +52,21 @@ public class ViewController
   public ViewController() {}
   
   private static final Logger logger = LoggerFactory.getLogger(ViewController.class);
-  
+  private static final Logger actionlogger = LoggerFactory.getLogger("actionlogger");
+  private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
+
   @RequestMapping(value={"/systemcheck"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public String systemcheck() {
 	  try{
 		  
+		  	logger.debug("Syscheck debug");
+		  	logger.error("Syscheck error");
+		  	logger.info("Syscheck info");
+		  	logger.warn("Syscheck warn");
+		  	
+		  	actionlogger.error("actionlogger");
+			reqreslogger.error("reqreslogger");
+		  	
 		  	String SQLDriver = CommonDA.getProperties().getProperty("SQLDriver").trim();
 			String SQLURL = CommonDA.getProperties().getProperty("SQLURL").trim();
 			String SQLUsername = CommonDA.getProperties().getProperty("SQLUsername").trim();
@@ -92,6 +103,8 @@ public class ViewController
 		  
 	  }catch(Exception e){
 		  e.printStackTrace();
+		  	logger.error("Syscheck error frm exception "+e.getMessage());
+
 		  return "Db Connection Failed";
 	  }
   }
@@ -111,9 +124,13 @@ public class ViewController
     return "login";
   }
   
+  
+  
   @RequestMapping(value={"/showHomepage"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView showHomepage(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString()); 
+	  
 	  ModelAndView mv = null;
 	  User authenticatedUser = null;
 	  Userprofile userprofile = new Userprofile();
@@ -136,11 +153,15 @@ public class ViewController
 	  } catch (Exception e) {
 	      logger.error(e.getMessage());
 	    }
+	  
+	   //reqreslogger.info("[RESPONSE]"+user.toString()); 
 	   return mv;
   }
   @RequestMapping(value={"/authenticateUser"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView welcome(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
   {
+	reqreslogger.info("[REQUEST]"+user.toString()); 
+	  
     LoginDao loginDao = new LoginDao();
     SocietyDao societyddao = new SocietyDao();
     ModelAndView mv = null;
@@ -155,6 +176,8 @@ public class ViewController
         if (authenticatedUser.getActive() == 1) {
           mv = new ModelAndView("home");
           request.getSession().setAttribute("userObject", authenticatedUser);
+          request.getSession().setAttribute("deleteFlag", authenticatedUser.getDeleteflag());
+          
           userprofile.setUserid(authenticatedUser.getUserid());
 		  userprofile = societyDao.getUserDataById(userprofile);
 		  docSubType = ddao.getDocStubtypesToDispay(docSubType,userprofile.getSocietyid());
@@ -232,6 +255,19 @@ public class ViewController
     }
     return mv;
   }
+  
+  @RequestMapping(value={"/deleteAuth"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+  public ModelAndView deleteAuth()
+  {
+    ModelAndView mv = null;
+    try {
+      mv = new ModelAndView("deleteAuth");
+    } catch (Exception e) {
+      logger.error(e.getMessage());
+    }
+    return mv;
+  }
+  
 
   @RequestMapping(value={"/createSubProject"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView createSubProject()
@@ -267,6 +303,9 @@ public class ViewController
   @RequestMapping(value={"/saveSociety"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveSociety(@ModelAttribute Society society,HttpServletRequest request)
   {
+	  
+	reqreslogger.info("[REQUEST]"+society.toString()); 
+	  
     ModelAndView mv = null;
     List<SocietyType> socTypes = null;
     List<Society>  societyList = new ArrayList<Society>();
@@ -318,6 +357,9 @@ public class ViewController
   @RequestMapping(value={"/saveDocumentType"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveDocumentType(@ModelAttribute Doctype doctype,HttpServletRequest request)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+doctype.toString());
+	  
     ModelAndView mv = null;
     List<Doctype> docTypes = null;
     DocumentDao documentDao = new DocumentDao();
@@ -361,6 +403,8 @@ public class ViewController
   @RequestMapping(value={"/saveDocumentSubType"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveDocumentType(@ModelAttribute DocSubType docSubType,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+docSubType.toString());
+	  
     ModelAndView mv = null;
     List<Doctype> docTypes = null;
     List<DocSubType> docSubTypes = null;
@@ -407,6 +451,7 @@ public class ViewController
   
   @RequestMapping(value={"/addDocument1"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView addDocument1(HttpServletRequest request) {
+	  
     ModelAndView mv = null;
     List<Society> societyList = null;
     User user = null;
@@ -424,6 +469,9 @@ public class ViewController
   
   @RequestMapping(value={"/addDocument2"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView addDocument2(@ModelAttribute Document document) {
+	  
+	  reqreslogger.info("[REQUEST]"+document.toString());
+	  
     ModelAndView mv = null;
     List<FormFields> formFields = null;
     List<Documentdetails> documentdetails = null;
@@ -439,7 +487,8 @@ public class ViewController
       
       formFields = documentDao.getFieldsForDocSubtype(document.getDocsubtypeid(), formFields);
       
-      documentdetails = documentDao.getExistingDocumentDetails(document,documentdetails);
+      if(document.getCommondoc().equalsIgnoreCase("false"))
+    	  documentdetails = documentDao.getExistingDocumentDetails(document,documentdetails);
       
       
       mv = new ModelAndView("addDocument2");
@@ -462,7 +511,10 @@ public class ViewController
   
   @RequestMapping(value={"/addDocument3"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView addDocument3(@org.springframework.web.bind.annotation.RequestParam Map<String, String> params,HttpServletRequest request) {
-    long detailsSaved = 0L;
+    
+	  reqreslogger.info("[REQUEST]"+params.toString());
+	  
+	  long detailsSaved = 0L;
     User user = null;
     DocumentDao ddao = new DocumentDao();
     
@@ -591,12 +643,16 @@ public class ViewController
   
   @RequestMapping(value={"/displayAdminPanelBySocId"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView displayAdminPanelBySocId(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response) {
+	  
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
     ModelAndView mv = null;
     User user = null;
     SocietyDao sdao = new SocietyDao();
     List<Society> societyList = null;
     List<GenericBean> docs = null;
-    
+    Builder builder=null;
+    Project project=null;
     try {
       user = (User)request.getSession().getAttribute("userObject");
       societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
@@ -607,10 +663,15 @@ public class ViewController
     	  }
       }
       
-       
+       builder = sdao.getBuilderBySocietyId(society);
+       project = sdao.getProjectBySocietyId(society);
+        
+      
         mv = new ModelAndView("adminPanel");
         docs = sdao.getAllExistingDocsForSoc(society,docs);
         mv.addObject("society",society);
+        mv.addObject("builder",builder);
+        mv.addObject("project",project);
         mv.addObject("docs", docs);
         
     } catch (Exception e) { logger.error(e.getMessage());
@@ -714,6 +775,9 @@ public class ViewController
   @RequestMapping(value={"/saveBuilder"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveBuilder(@ModelAttribute Builder builder,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+builder.toString());
+
+	  
     ModelAndView mv = null;
     List<Builder>  builderList = null;
     SocietyDao documentDao = new SocietyDao();
@@ -755,6 +819,9 @@ public class ViewController
   @RequestMapping(value={"/saveProject"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveProject(@ModelAttribute Project project,HttpServletRequest request)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+project.toString());
+	  
     ModelAndView mv = null;
     List<Builder>  builderList = null;
     List<Project>  projectList = null;
@@ -809,6 +876,9 @@ public class ViewController
   @RequestMapping(value={"/addSocDocMapping"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView addSocDocMapping(@ModelAttribute GenericBean bean,HttpServletRequest request)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+bean.toString());
+	  
     ModelAndView mv = null;
     List<Society> societyList = null;
     List<Doctype> docTypes = null;
@@ -862,6 +932,8 @@ public class ViewController
   @RequestMapping(value={"/saveAdminUser"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveAdminUser(@ModelAttribute User adminUser,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+adminUser.toString());
+	  
     ModelAndView mv = null;
     List<GenericBean>  roleList = null;
     SocietyDao documentDao = new SocietyDao();
@@ -952,6 +1024,8 @@ public class ViewController
   @RequestMapping(value={"/viewNoticeboard"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView viewNoticeboard(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
 	    ModelAndView mv = null;
 	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 	    SocietyDao sdao = new SocietyDao();
@@ -971,6 +1045,8 @@ public class ViewController
 	  @RequestMapping(value={"/viewSocietyPolicy"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	  public ModelAndView viewSocietyPolicy(@ModelAttribute Society society,HttpServletRequest request, HttpServletResponse response)
 	  {
+		  reqreslogger.info("[REQUEST]"+society.toString());
+		  
 	    ModelAndView mv = null;
 	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 	    SocietyDao sdao = new SocietyDao();
@@ -1008,8 +1084,8 @@ public class ViewController
   }
   
   @RequestMapping(value={"/displayDocument"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
-  public ModelAndView displayDocument(@RequestParam("doctypeid") String doctypeid,
-		  @RequestParam("userid") String userid,
+  public ModelAndView displayDocument(@RequestParam("docsubtypeid") String docsubtypeid,
+		  @RequestParam("userid") String userid,@RequestParam("societyid") String societyid,
 		  HttpServletRequest request, HttpServletResponse response)
         {
 	    ModelAndView mv = null;
@@ -1019,12 +1095,18 @@ public class ViewController
 	    DocumentDao ddao = new DocumentDao();
 	    try
 	    {
-	      docList = sdao.displayDocument(doctypeid,userid, docList);
-	      data = ddao.getdisplayData(doctypeid,userid,data);
+	      docList = sdao.displayDocument(docsubtypeid,userid,societyid, docList);
+	      data = ddao.getdisplayData(docsubtypeid,userid,societyid,data);
 	      
 	      mv = new ModelAndView("displayDocument");
 	      mv.addObject("docList", docList);
 	      mv.addObject("dataList", data);
+	    	
+	    	/* mv = new ModelAndView("viewDocumentFromAdminPanel");
+		      mv.addObject("societyid", bean.getSocietyid());
+		      mv.addObject("doctypeid", bean.getDoctypeid());
+		      mv.addObject("docsubtypeid", bean.getDocsubtypeid());*/
+		      
 	    }
 	    catch (Exception e) {
 	      logger.error(e.getMessage());
@@ -1062,6 +1144,8 @@ public class ViewController
   @RequestMapping(value={"/showDocFromAdminPanel"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   public ModelAndView showDocFromAdminPanel(@ModelAttribute GenericBean bean,HttpServletRequest request, HttpServletResponse response)
         {
+	  reqreslogger.info("[REQUEST]"+bean.toString());
+	  
 	    ModelAndView mv = null;
 	    try
 	    {
@@ -1142,6 +1226,9 @@ public class ViewController
   @RequestMapping(value={"/saveCallRef"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveCallRef(@ModelAttribute CallReference callref,HttpServletRequest request, HttpServletResponse response)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
     ModelAndView mv = null;
     SocietyDao documentDao = new SocietyDao();
 
@@ -1168,6 +1255,9 @@ public class ViewController
   @RequestMapping(value={"/saveCallRef3.do"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView saveCallRef3(@ModelAttribute CallReference callref,HttpServletRequest request, HttpServletResponse response)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
 	    ModelAndView mv = null;
 	    try {
 	      mv = new ModelAndView("AddCallReference3");
@@ -1466,6 +1556,8 @@ public class ViewController
   @RequestMapping(value={"/viewBrochure"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
   public ModelAndView viewBuilderBrochure(@ModelAttribute GenericBean gbean,HttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+gbean.toString());
+	  
 	    ModelAndView mv = null;
 	    List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 	    SocietyDao sdao = new SocietyDao();

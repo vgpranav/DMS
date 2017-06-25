@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +20,18 @@ import com.dms.dao.DocumentDao;
 @Controller
 public class PDFController
 {
+	private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
+	
 	@RequestMapping(value={"/downloadAsPdf"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, produces={"application/json"})
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)
         throws Exception
     {
+		String documentId = ServletRequestUtils.getStringParameter(request, "documentId");
+		
+		reqreslogger.info("[REQUEST]"+documentId.toString());
+		
         String output = "PDF";
-        String documentId = ServletRequestUtils.getStringParameter(request, "documentId");
+        
         Map<String,String> params = new HashMap<String,String>();
         params.put("documentId", documentId);
         if("PDF".equals(output.toUpperCase()))

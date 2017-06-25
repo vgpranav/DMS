@@ -17,7 +17,7 @@
 		<file>${DEV_HOME}/actions.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
 			</Pattern>
 		</encoder>
 
@@ -33,13 +33,33 @@
 
 	</appender>
 
+	<appender name="FILE-REQRES"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>${DEV_HOME}/reqres.log</file>
+			<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+				<Pattern>
+					%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
+				</Pattern>
+			</encoder>
+	
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<!-- rollover daily -->
+				<fileNamePattern>${DEV_HOME}/archived/reqres.%d{yyyy-MM-dd}.%i.log
+	                        </fileNamePattern>
+				<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+					<maxFileSize>10MB</maxFileSize>
+				</timeBasedFileNamingAndTriggeringPolicy>
+			</rollingPolicy>
+
+	</appender>
 
 	<appender name="FILE-ACTIONS"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${DEV_HOME}/actions.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
 			</Pattern>
 		</encoder>
 
@@ -60,7 +80,7 @@
 		<file>${DEV_HOME}/error.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
 			</Pattern>
 		</encoder>
 
@@ -76,10 +96,14 @@
 	</appender>
 
 	<!-- Send logs to both console and file audit -->
-	<logger name="com.dms.controller" level="debug"
+	<logger name="actionlogger" level="debug"
 		additivity="false">
 		<appender-ref ref="FILE-ACTIONS" />
-		<appender-ref ref="STDOUT" />
+	</logger>
+	
+	<logger name="reqreslogger" level="debug"
+		additivity="false">
+		<appender-ref ref="FILE-REQRES" />
 	</logger>
 
 	<root level="error">

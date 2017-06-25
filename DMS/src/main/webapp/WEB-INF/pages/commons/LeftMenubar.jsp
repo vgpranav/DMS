@@ -85,6 +85,7 @@
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>
 		                      <li><a href="addConfidentialDocAccess.do">Confidential Doc Access</a></li>
+		                      <li><a href="deleteAuth.do">Delete Authorization</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

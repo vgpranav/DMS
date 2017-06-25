@@ -201,8 +201,16 @@
 	        		descTemp[0]='';
 	        		var fullText = descTemp.join('<br>');
 	        		var text = desc[0]+" <a href='#!' onclick=showhide('more"+i+"')><span id='sh"+i+"'>[more]</span></a><br><div id='more"+i+"' style='display:none'>"+fullText+"</div>";
-
-	        		var delBtn = '<a class="btn btn-default btn-sm" target="_blank" onClick=deleteDoc(\'' + item.documentid + '\')><i class="fa fa-times"></i></a>';
+	        		var delBtn ='';
+	        		
+	        		<%
+	        			if(session.getAttribute("deleteFlag").toString().equals("1")){
+	        		%>
+	        			var delBtn = '<a class="btn btn-default btn-sm" target="_blank" onClick=deleteDoc(\'' + item.documentid + '\')><i class="fa fa-times"></i></a>';
+	        		<% 
+	        			}
+	        		%>
+	        		
 	        		//var ttipbtn = '<button data-toggle="tooltip" data-placement="left" title="'+text+'">Hii</button>';
 	        		//item.documentid
 	        		table.row.add( [

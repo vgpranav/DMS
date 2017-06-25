@@ -18,10 +18,17 @@ public class User
     private String createdby;
     private String otp;
     private String otpType;
+    private int deleteflag;
     
-    
-    
-    public String getOtpType() {
+    public int getDeleteflag() {
+		return deleteflag;
+	}
+
+	public void setDeleteflag(int deleteflag) {
+		this.deleteflag = deleteflag;
+	}
+
+	public String getOtpType() {
 		return otpType;
 	}
 
@@ -149,7 +156,8 @@ public class User
 		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
 				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
 				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
-				+ ", createdby=" + createdby + ", otp=" + otp + "]";
+				+ ", createdby=" + createdby + ", otp=" + otp + ", otpType=" + otpType + ", deleteflag=" + deleteflag
+				+ "]";
 	}
 
 }

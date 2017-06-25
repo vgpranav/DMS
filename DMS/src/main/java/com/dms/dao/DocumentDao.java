@@ -697,7 +697,7 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType,Stri
     return null;
   }
 
-public List<GenericBean> getdisplayData(String doctypeid, String userid, List<GenericBean> data) {
+public List<GenericBean> getdisplayData(String doctypeid, String userid, String societyid, List<GenericBean> data) {
     Connection conn = null;
 
     try {
@@ -705,7 +705,7 @@ public List<GenericBean> getdisplayData(String doctypeid, String userid, List<Ge
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
       
-      data = qr.query(conn,DMSQueries.getDocumentDatabyDoctypeIdUserId,rsh,doctypeid,userid);
+      data = qr.query(conn,DMSQueries.getDocumentDatabyDoctypeIdUserId,rsh,doctypeid,userid,societyid);
       
       return data;
     } catch (Exception e) {
@@ -1148,4 +1148,37 @@ public int deleteDocById(Document document) {
 			}
 		
 	}
+
+	public List<User> getDeleteAuth(List<User> users) {
+	    Connection conn = null;
+
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
+	      
+	      users = qr.query(conn,DMSQueries.getDeleteAuth,rsh);
+	      
+	      return users;
+	    } catch (Exception e) {
+	      logger.error("Error Saving Doctype :: " + e.getMessage());
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        logger.error("Error releasing connection :: " + ex.getMessage());
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
 }

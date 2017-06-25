@@ -32,7 +32,16 @@ public class GenericBean {
 	private String fieldvalue;
 	private String positionname;
 	private String username;
+	private String documentid;
+	
+	
 
+	public String getDocumentid() {
+		return documentid;
+	}
+	public void setDocumentid(String documentid) {
+		this.documentid = documentid;
+	}
 	private Date createdon;
 	
 	public String getTypeVal() {
@@ -188,23 +197,25 @@ public class GenericBean {
 		this.socdocviewmappingid = socdocviewmappingid;
 	}
 	
-	
-	@Override
-	public String toString() {
-		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", doctypename=" + doctypename
-				+ ", docsubtypeid=" + docsubtypeid + ", docsubtypename=" + docsubtypename + ", doccount=" + doccount
-				+ ", createdby=" + createdby + ", societydocmappingid=" + societydocmappingid + ", societyname="
-				+ societyname + ", roleid=" + roleid + ", rolename=" + rolename + ", active=" + active + ", fieldname="
-				+ fieldname + ", fieldvalue=" + fieldvalue + ", displayflag=" + displayflag + ", confFlag=" + confFlag
-				+ ", socdocviewmappingid=" + socdocviewmappingid + ", positionname=" + positionname + ", createdon="
-				+ createdon + ", isactive=" + isactive + ", positionid=" + positionid + ", username=" + username
-				+ ", confidentialdocaccessid=" + confidentialdocaccessid + "]";
-	}
 	public String getPkName() {
 		return pkName;
 	}
 	public void setPkName(String pkName) {
 		this.pkName = pkName;
+	}
+	
+	@Override
+	public String toString() {
+		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", societydocmappingid="
+				+ societydocmappingid + ", docsubtypeid=" + docsubtypeid + ", roleid=" + roleid
+				+ ", socdocviewmappingid=" + socdocviewmappingid + ", positionid=" + positionid
+				+ ", confidentialdocaccessid=" + confidentialdocaccessid + ", genId=" + genId + ", typeVal=" + typeVal
+				+ ", pkName=" + pkName + ", active=" + active + ", displayflag=" + displayflag + ", confFlag="
+				+ confFlag + ", isactive=" + isactive + ", docsubtypename=" + docsubtypename + ", doccount=" + doccount
+				+ ", createdby=" + createdby + ", doctypename=" + doctypename + ", societyname=" + societyname
+				+ ", rolename=" + rolename + ", fieldname=" + fieldname + ", fieldvalue=" + fieldvalue
+				+ ", positionname=" + positionname + ", username=" + username + ", documentid=" + documentid
+				+ ", createdon=" + createdon + "]";
 	}
 	
 }

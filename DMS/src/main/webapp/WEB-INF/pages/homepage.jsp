@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  
+<input type="hidden" id="societyid" value="${userprofile.societyid}">
 
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
@@ -492,7 +493,8 @@
 	
 	function displayDocumentPage(docId,userId,confFlag){
 		
-		var URL = 'displayDocument.do?doctypeid='+docId+'&userid='+userId;
+		var societyid = $('#societyid').val();
+		var URL = 'displayDocument.do?docsubtypeid='+docId+'&userid='+userId+'&societyid='+societyid;
 
 		if(confFlag=='1'){
 			$( "#hash" ).val(URL);

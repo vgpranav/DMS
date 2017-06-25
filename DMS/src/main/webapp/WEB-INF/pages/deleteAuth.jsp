@@ -2,7 +2,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Society Manager Mapping</h2>
+                  <h2>Delete Authorization</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -15,27 +15,12 @@
 			<div class="col-md-7 col-sm-7 col-xs-12">
  				<form id="addCommitteeMember" data-parsley-validate
 					class="form-horizontal form-label-left" action="#"
-					method="post" onsubmit="return addSocietyManager()">
+					method="post" onsubmit="return addDeleteAuth()">
 
-				
-					<div class="form-group">
-						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name"> Society Name <span class="required">*</span>
-						</label>
-						<div class="col-md-8 col-sm-8 col-xs-12">
-							<select name="societyid" id="societyid" class="form-control" onchange="getCommitteMembersForSociety()">
-							<option value=""> -- select society -- </option>
-							<c:forEach items="${societyList}" var="myItem" varStatus="loopStatus">
-								<option value="${myItem.societyid}">${myItem.societyname}</option>
-							</c:forEach>
-						</select>
-						</div>
-						
-						</div>
 						
 						<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"
-								for="first-name"> Manager
+								for="first-name"> User
 								 Name <span class="required">*</span>
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
@@ -55,7 +40,7 @@
 								<input type="radio" name="deleteFlag" value="1" checked="checked"> Yes
 								<input type="radio" name="deleteFlag" value="0"> No
 							</div>
-						</div> -->
+						</div> --> 
 						
 					
 					<div class="form-group" align="center">
@@ -75,7 +60,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Society Managers</h2>
+                  <h2>Users With Delete Access</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -88,7 +73,7 @@
                         <thead>
                           <tr class="headings">
                             <th class="column-title">Sr.No</th>
-                            <th class="column-title">Manager Name</th>
+                            <th class="column-title">UserName</th>
                             <th class="column-title" width="10%">Remove</th>
                           </tr>
                         </thead>
@@ -105,6 +90,7 @@
 	 
 	 $('#thetable1').DataTable();
 	 
+	 
 		$("#username").click(function(){
 			//$('#userid').val("");
 				if($('#societyid').val().length<1)
@@ -115,9 +101,8 @@
 			
 			$( "#username").autocomplete({
 				 source: function (request, response) {
-			            $.getJSON("${pageContext. request. contextPath}/userAutosuggestForSociety.do", {
-			            	searchText: request.term,
-			            	societyid: $('#societyid').val(),
+			            $.getJSON("${pageContext. request. contextPath}/userAutosuggest.do", {
+			            	searchText: request.term, 
 			            }, response);
 			        },
 				focus: function () {
@@ -134,29 +119,26 @@
 				}
 			});
 			
+			getDeleteAuthList();
+			
 });
  
  
- function getCommitteMembersForSociety(){
-		var societyid = $('#societyid').val();
+ function getDeleteAuthList(){
 		var table1 = $('#thetable1').DataTable();
-			
-		if(societyid.length<1)
-			return false;
 			
 		table1.clear().draw();
 		blockUI();
 		$.ajax({
 	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getManagersForSociety.do",
-	        data :"societyid="+societyid,
+	        url: "<%=request.getContextPath()%>/getDeleteAuth.do",
 	        success: function(response){
 	        		$.each(response, function(j, item1) {
-	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeSocietymanagerid(\'' + item1.societymanagerid + '\')"><i class="fa fa-times"></i></button>';
+	        				var removebtn = '<button class="btn btn-xs btn-danger" onClick="removeDeleteAuth(\'' + item1.userid + '\')"><i class="fa fa-times"></i></button>';
 	        				var k = j+1;
 	        				table1.row.add( [
 			        					k,
-					        			item1.userName,
+					        			item1.firstName+' '+item1.lastName,
 					        			removebtn,
 				                ] ).draw( false ); 
 	        				});
@@ -169,21 +151,21 @@
 			});
 	}
  
- function removeSocietymanagerid(societymanagerid){
+ function removeDeleteAuth(userid){
 	 
 		if(confirm('Are you Sure?')){
 			blockUI();
 			$.ajax({
 		        type: "GET",
-		        url: "<%=request.getContextPath()%>/removeSocietyManager.do",
-		       data :"societymanagerid="+societymanagerid,
+		        url: "<%=request.getContextPath()%>/removeDeleteAuth.do",
+		       data :"userid="+userid,
 		        success: function(response){
 		        //alert()
 		        	if(response=='success') {
 		        		notify('success','SUCCESS','Removed Successfully',2000);
-		        		getCommitteMembersForSociety();
+		        		getDeleteAuthList();
 		        	}  else {
-		        		notify('error','Failed','Failed to Remove Member',2000);
+		        		notify('error','Failed','Failed to Remove User',2000);
 		        	}
 		        unblockUI();
 		        },
@@ -198,11 +180,10 @@
  
   
  
- function addSocietyManager(){
-		var societyid 		= $('#societyid').val();
-		var userid 			= $('#userid').val();
+ function addDeleteAuth(){
+		var userid = $('#userid').val();
 		
-		if(societyid.length < 1 || userid.length < 1 ){
+		if(userid.length < 1 ){
 			alert('Some Mandatory Fields  are Missing');
 			return false;
 		} else {
@@ -211,14 +192,15 @@
 			blockUI();
 			$.ajax({
 		        type: "GET",
-		        url: "<%=request.getContextPath()%>/addSocietyManager.do",
-		       data :"societyid="+societyid
-	        	+"&userid="+userid,
+		        url: "<%=request.getContextPath()%>/addDeleteAuth.do",
+		       data :"userid="+userid,
 		        success: function(response){
-		        	if(response.societymanagerid>0) {
-		        	notify('success','SUCCESS','Added Successfully',2000);
-		        		getCommitteMembersForSociety();
-		        	}  
+		        	if(response=='success') {
+		        		notify('success','SUCCESS','Added Successfully',2000);
+		        		getDeleteAuthList();
+		        	}  else {
+		        		notify('error','Failed','Failed to add authorization',2000);
+		        	}
 		        	unblockUI();
 		        },
 					error : function(e) {

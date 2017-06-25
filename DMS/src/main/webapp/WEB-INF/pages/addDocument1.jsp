@@ -93,6 +93,8 @@
 						</c:if>
 					</div>
 					
+					<input type="hidden" name="commondoc" id="commondoc" value="false"> 
+					
  				</form>
  			</div>
  			</div>
@@ -107,11 +109,13 @@
 	function changememreq(){
 		var common =  $('#common').is(":checked")
 		if(common){
-		 	$('#username').attr("disabled","disabled");
-		 	$('#userid').attr("disabled","disabled");
+			 	$('#username').attr("disabled","disabled");
+			 	$('#userid').attr("disabled","disabled");
 			 	$('#username').removeAttr('required');
 			 	$('#userid').removeAttr('required');
 			 	$('.userselector').hide('fade');
+			 	$('#commondoc').val("true");
+			 	
 			 	}
 			 else{
 				 $('#username').removeAttr('disabled');
@@ -119,6 +123,7 @@
 				 $('#username').attr("required","required");
 				 $('#userid').attr("required","required");
 				 $('.userselector').show('fade');
+				 $('#commondoc').val("false");
 			 }
 		} 
 	

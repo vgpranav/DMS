@@ -1612,7 +1612,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	  }
 
 	public List<HashMap<String, Object>> displayDocument(String doctypeid, String userid,
-			List<HashMap<String, Object>> docList) {
+			String societyid, List<HashMap<String, Object>> docList) {
 	    Connection conn = null;
 	    
 	    List<Files> fileList = null;
@@ -1626,7 +1626,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      conn = ConnectionPoolManager.getInstance().getConnection();
 	      ResultSetHandler<List<Files>> rsh = new BeanListHandler<Files>(Files.class);
 	      
-	      fileList =  qr.query(conn,DMSQueries.getDocumentsToDisplay,rsh,doctypeid,userid);
+	      fileList =  qr.query(conn,DMSQueries.getDocumentsToDisplay,rsh,doctypeid,userid,societyid);
 	      
 	      if (fileList.size() > 0) {
 	    	  for (Files file : fileList)
@@ -1705,39 +1705,27 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    String Password = ftp.getPassword();
 	    try { 
 	    	
-	      qr = new QueryRunner();
-	      conn = ConnectionPoolManager.getInstance().getConnection();
-	      ResultSetHandler<List<Files>> rsh = new BeanListHandler<Files>(Files.class);
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<Files>> rsh = new BeanListHandler<Files>(Files.class);
+		      
+		      fileList =  qr.query(conn,DMSQueries.getDocumentsToDisplayByDocId,rsh,documentid);
+		      
+		      if (fileList.size() > 0) {
+		    	  for (Files file : fileList)
+		          {
+		    		  HashMap<String, Object> hmap = new HashMap<String, Object>();
+			            hmap.put("fileid", file.getFilesid());
+			            hmap.put("filename", file.getFilename());
+			            hmap.put("documentid", file.getDocumentid());
+			            hmap.put("contenttype", file.getMimetype());
+			            hmap.put("createdon", file.getCreatedon());
+			            docList.add(hmap);
+		          }
+		    	  
+		    	  } else 
+		    	  System.out.println("No Files");
 	      
-	      fileList =  qr.query(conn,DMSQueries.getDocumentsToDisplayByDocId,rsh,documentid);
-	      
-	      if (fileList.size() > 0) {
-	        if (ftp.connectAndLogin(hostDomain, Id, Password))
-	        {
-	          ftp.setPassiveMode(true);
-	          ftp.binary();
-	          ftp.setBufferSize(1024000);
-	          ftp.changeWorkingDirectory("DMS/");
-	          
-	          for (Files file : fileList)
-	          {
-	            InputStream stream = ftp.retrieveFileStream(file.getFilename());
-	            byte[] bytes = IOUtils.toByteArray(stream);
-	            
-	            //System.out.println("Base64Utils.encode(bytes)" +  new String(Base64Utils.encode(bytes)));
-	            HashMap<String, Object> hmap = new HashMap<String, Object>();
-	            hmap.put("fileid", file.getFilesid());
-	            hmap.put("filename", file.getFilename());
-	            hmap.put("documentid", file.getDocumentid());
-	            hmap.put("contenttype", file.getMimetype());
-	            hmap.put("createdon", file.getCreatedon());
-	            hmap.put("file",  new String(Base64Utils.encode(bytes)));
-	            docList.add(hmap);
-	            ftp.completePendingCommand();
-	          }
-	           
-	        }
-	      } else System.out.println("No Files");
 	    }
 	    catch (Exception e)
 	    {
@@ -2670,6 +2658,92 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      }
 	    }
 	    return photos;
+	  }
+
+	public int addDeleteAuth(User user) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	       
+	      int rowsUpdated = qr.update(conn, DMSQueries.addDeleteAuth,user.getUserid());
+	      
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	public int removeDeleteAuth(User user) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	       
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeDeleteAuth,user.getUserid());
+	      
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return 0;
+	  }
+
+	public Builder getBuilderBySocietyId(Society society) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Builder> rsh = new BeanHandler<Builder>(Builder.class);
+	      return qr.query(conn,DMSQueries.getBuilderBySocietyId,rsh,society.getSocietyid());
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
+	  }
+
+	public Project getProjectBySocietyId(Society society) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Project> rsh = new BeanHandler<Project>(Project.class);
+	      return qr.query(conn,DMSQueries.getProjectBySocietyId,rsh,society.getSocietyid());
+	    } catch (Exception e) {
+	      logger.error("Error getting soc list :: " + e.getMessage());
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        logger.error("Error releasing connection :: " + e.getMessage());
+	      }
+	    }
+	    return null;
 	  }
 
 

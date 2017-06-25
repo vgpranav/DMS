@@ -42,6 +42,8 @@ import com.dms.dao.SocietyDao;
 @Controller
 public class AjaxController
 {
+  private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
+	
   public AjaxController() {}
   
   private static final Logger logger = LoggerFactory.getLogger(AjaxController.class);
@@ -50,6 +52,9 @@ public class AjaxController
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<String> societyAutosuggest(@RequestParam("searchText") String searchText) {
+	  
+	  reqreslogger.info("[REQUEST]"+searchText.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<String> codeList1 = new ArrayList();
     try {
@@ -71,6 +76,9 @@ public class AjaxController
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<String> userAutosuggest(@RequestParam("searchText") String searchText) {
+	  
+	  reqreslogger.info("[REQUEST]"+searchText.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<String> codeList1 = new ArrayList();
     
@@ -94,6 +102,9 @@ public class AjaxController
   @ResponseStatus(HttpStatus.OK)
   @ResponseBody
   public List<String> userAutosuggestForSociety(@RequestParam("searchText") String searchText, @RequestParam("societyid") String societyid) {
+
+	  reqreslogger.info("[REQUEST]"+searchText.toString()+"/"+societyid);
+	  
     SocietyDao societyDao = new SocietyDao();
     List<String> codeList1 = new ArrayList();
     
@@ -111,13 +122,14 @@ public class AjaxController
     }
     return codeList1;
   }
-  
 
-
+   
   @RequestMapping(value={"/saveFormFields"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
   @ResponseBody
   public FormFields saveDocumentType(@ModelAttribute FormFields formFields,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+formFields.toString());
+	  
     DocumentDao documentDao = new DocumentDao();
     User user = null;
     try {
@@ -136,6 +148,9 @@ public class AjaxController
   @ResponseBody
   public List<FormFields> getFieldsForDocSubtype(@ModelAttribute FormFields formField)
   {
+	  
+	  reqreslogger.info("[REQUEST]"+formField.toString());
+	  
     DocumentDao documentDao = new DocumentDao();
     List<FormFields> formFields = null;
     try {
@@ -152,6 +167,8 @@ public class AjaxController
   @ResponseBody
   public List<Doctype> getDoctypeBySocId(@ModelAttribute Society society)
   {
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
     DocumentDao documentDao = new DocumentDao();
     List<Doctype> doctypes = null;
     try {
@@ -168,6 +185,8 @@ public class AjaxController
   @ResponseBody
   public List<DocSubType> getDocSubtypeByDocId(@ModelAttribute DocSubType docSubType)
   {
+	  reqreslogger.info("[REQUEST]"+docSubType.toString());
+	  
     DocumentDao documentDao = new DocumentDao();
     List<DocSubType> docSubTypes = null;
     try {
@@ -184,6 +203,8 @@ public class AjaxController
   @ResponseBody
   public List<Document> getDocumentListForView(@ModelAttribute Document document)
   {
+	  reqreslogger.info("[REQUEST]"+document.toString());
+	  
     DocumentDao documentDao = new DocumentDao();
     List<Document> documents = null;
     try {
@@ -200,6 +221,8 @@ public class AjaxController
   @ResponseBody
   public Userprofile saveMemberDetails(@ModelAttribute Userprofile userprofile,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+userprofile.toString());
+	  
 	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -217,6 +240,8 @@ public class AjaxController
   @ResponseBody
   public List<Userprofile> getMembersForSociety(@ModelAttribute Userprofile userprofile)
   {
+	  reqreslogger.info("[REQUEST]"+userprofile.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<Userprofile> profiles = null;
     try {
@@ -233,6 +258,8 @@ public class AjaxController
   @ResponseBody
   public Committee addCommitteeMember(@ModelAttribute Committee committee)
   {
+	  reqreslogger.info("[REQUEST]"+committee.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
       committee = societyDao.addCommitteeMember(committee);
@@ -248,6 +275,8 @@ public class AjaxController
   @ResponseBody
   public Map<String, List<Committee>> getCommitteMembersForSociety(@ModelAttribute Committee committee)
   {
+	  reqreslogger.info("[REQUEST]"+committee.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     Map<String, List<Committee>> committees = new HashMap();
     try {
@@ -264,6 +293,8 @@ public class AjaxController
   @ResponseBody
   public String removeCommitteeMember(@ModelAttribute Committee committee)
   {
+	  reqreslogger.info("[REQUEST]"+committee.toString());
+	  
     int rowsUpdated = 0;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -281,6 +312,8 @@ public class AjaxController
   @ResponseBody
   public Vendor saveVendorDetails(@ModelAttribute Vendor vendor,HttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  
 	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -297,6 +330,8 @@ public class AjaxController
   @ResponseBody
   public List<Vendor> getVendorsBySocId(@ModelAttribute Vendor vendor)
   {
+	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
      List<Vendor>  vendors = new ArrayList<Vendor>();
     try {
@@ -311,6 +346,8 @@ public class AjaxController
   @ResponseBody
   public Society getSocietyDetailsById(@ModelAttribute Society society)
   {
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	society = societyDao.getSocietyDetailsById(society);
@@ -324,6 +361,8 @@ public class AjaxController
   @ResponseBody
   public Doctype getDocumentTypeById(@ModelAttribute Doctype doctype)
   {
+	  reqreslogger.info("[REQUEST]"+doctype.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	doctype = societyDao.getDocumentTypeById(doctype);
@@ -337,6 +376,8 @@ public class AjaxController
   @ResponseBody
   public DocSubType getDocumentSubTypeById(@ModelAttribute DocSubType docSubType)
   {
+	  reqreslogger.info("[REQUEST]"+docSubType.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	docSubType = societyDao.getDocumentSubTypeById(docSubType);
@@ -350,6 +391,8 @@ public class AjaxController
   @ResponseBody
   public FormFields getFormFieldById(@ModelAttribute FormFields formFields)
   {
+	  reqreslogger.info("[REQUEST]"+formFields.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	formFields = societyDao.getFormFieldsById(formFields);
@@ -364,6 +407,8 @@ public class AjaxController
   @ResponseBody
   public Userprofile getUserDataById(@ModelAttribute Userprofile userprofile)
   {
+	  reqreslogger.info("[REQUEST]"+userprofile.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	userprofile = societyDao.getUserDataById(userprofile);
@@ -377,6 +422,8 @@ public class AjaxController
   @ResponseBody
   public Vendor getVendorDataById(@ModelAttribute Vendor vendor)
   {
+	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	vendor = societyDao.getVendorDataById(vendor);
@@ -391,6 +438,8 @@ public class AjaxController
   @ResponseBody
   public List<Committee> getManagersForSociety(@ModelAttribute Society society)
   {
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<Committee> committees = null;
     try {
@@ -405,6 +454,8 @@ public class AjaxController
   @ResponseBody
   public String removeSocietyManager(@ModelAttribute Committee committee)
   {
+	  reqreslogger.info("[REQUEST]"+committee.toString());
+	  
     int rowsUpdated = 0;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -423,6 +474,8 @@ public class AjaxController
   @ResponseBody
   public Committee addSocietyManager(@ModelAttribute Committee committee)
   {
+	  reqreslogger.info("[REQUEST]"+committee.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
       committee = societyDao.addSocietyManager(committee);
@@ -436,6 +489,8 @@ public class AjaxController
   @ResponseBody
   public Builder getBuilderDetailsById(@ModelAttribute Builder builder)
   {
+	  reqreslogger.info("[REQUEST]"+builder.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	builder = societyDao.getBuilderDetailsById(builder);
@@ -449,6 +504,8 @@ public class AjaxController
   @ResponseBody
   public Project getProjectDetailsById(@ModelAttribute Project project)
   {
+	  reqreslogger.info("[REQUEST]"+project.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	project = societyDao.getProjectDetailsById(project);
@@ -463,6 +520,8 @@ public class AjaxController
   @ResponseBody
   public String removeSocietyDocmapping(@ModelAttribute GenericBean bean)
   {
+	  reqreslogger.info("[REQUEST]"+bean.toString());
+	  
     int rowsUpdated = 0;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -481,6 +540,8 @@ public class AjaxController
   @ResponseBody
   public User editAdminUser(@ModelAttribute User adminUser)
   {
+	  reqreslogger.info("[REQUEST]"+adminUser.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	adminUser = societyDao.editAdminUser(adminUser);
@@ -494,6 +555,8 @@ public class AjaxController
   @ResponseBody
   public List<Userprofile> getNeighborDetails(@ModelAttribute User user)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<Userprofile> profiles = null;
     try {
@@ -511,6 +574,8 @@ public class AjaxController
   @ResponseBody
   public List<CallReference> getContactsByCallRefId(@ModelAttribute CallReference callref)
   {
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<CallReference> profiles = null;
     try {
@@ -526,6 +591,8 @@ public class AjaxController
   @ResponseBody
   public CallReference saveCallrefMeeting(@ModelAttribute CallReference callref)
   {
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	callref = societyDao.saveCallrefMeeting(callref);
@@ -539,6 +606,8 @@ public class AjaxController
   @ResponseBody
   public CallReference saveCallrefContact(@ModelAttribute CallReference callref)
   {
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	callref = societyDao.saveCallrefContact(callref);
@@ -552,6 +621,8 @@ public class AjaxController
   @ResponseBody
   public List<CallReference> getMeetingsByCallRefId(@ModelAttribute CallReference callref)
   {
+	  reqreslogger.info("[REQUEST]"+callref.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<CallReference> profiles = null;
     try {
@@ -566,6 +637,8 @@ public class AjaxController
   @ResponseBody
   public String deleteDocById(@ModelAttribute Document document)
   {
+	  reqreslogger.info("[REQUEST]"+document.toString());
+	  
     int rowsUpdated = 0;
     DocumentDao documentDao = new DocumentDao();
     try {
@@ -585,6 +658,8 @@ public class AjaxController
   @ResponseBody
   public GenericBean saveSocViewMapping(@ModelAttribute GenericBean gbean,HttpServletRequest request)
   {
+	  reqreslogger.info("[REQUEST]"+gbean.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     User user = null;
     try {
@@ -601,6 +676,8 @@ public class AjaxController
   @ResponseBody
   public List<GenericBean> getMappedDocsBySocId(@ModelAttribute GenericBean gbean)
   {
+	  reqreslogger.info("[REQUEST]"+gbean.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<GenericBean> beans = null;
     try {
@@ -616,6 +693,8 @@ public class AjaxController
   @ResponseBody
   public String removeSocDocViewMapping(@ModelAttribute GenericBean bean)
   {
+	  reqreslogger.info("[REQUEST]"+bean.toString());
+	  
     int rowsUpdated = 0;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -634,6 +713,8 @@ public class AjaxController
   @ResponseBody
   public String generateAndSendOTP(@ModelAttribute User user)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString());
+	  
     int rowsUpdated = 0;
     LoginDao loginDao = new LoginDao();
     try {
@@ -657,6 +738,8 @@ public class AjaxController
   @ResponseBody
   public String validateAndSetNewPW(@ModelAttribute User user)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString());
+	  
 	int otpaValid = 0;
 	int passwordSet = 0;
     LoginDao loginDao = new LoginDao();
@@ -678,6 +761,8 @@ public class AjaxController
   @ResponseBody
   public String validateOTPForDocAccess(@ModelAttribute User user)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString());
+	  
 	int otpaValid = 0;
     LoginDao loginDao = new LoginDao();
     try {
@@ -695,6 +780,8 @@ public class AjaxController
   @ResponseBody
   public GenericBean getDesignationById(@ModelAttribute GenericBean gbean)
   {
+	  reqreslogger.info("[REQUEST]"+gbean.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     try {
     	gbean = societyDao.getDesignationById(gbean);
@@ -708,6 +795,8 @@ public class AjaxController
   @ResponseBody
   public GenericBean saveDesignationDetails(@ModelAttribute GenericBean gbean,HttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+gbean.toString());
+	  
 	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -725,6 +814,8 @@ public class AjaxController
   @ResponseBody
   public String deleteDocumentPage(@ModelAttribute Files files)
   {
+	  reqreslogger.info("[REQUEST]"+files.toString());
+	  
     int rowsUpdated = 0;
     DocumentDao docDao = new DocumentDao();
     try {
@@ -742,6 +833,8 @@ public class AjaxController
   @ResponseBody
   public Parking saveMemberparkingDetails(@ModelAttribute Parking parking,HttpServletRequest request, HttpServletResponse response)
   {
+	   reqreslogger.info("[REQUEST]"+parking.toString());
+	   
 	User user = null;
     SocietyDao societyDao = new SocietyDao();
     try {
@@ -759,6 +852,8 @@ public class AjaxController
    @ResponseBody
    public List<Parking> getParkingDetailsForMember(@ModelAttribute Parking parking)
    {
+	   reqreslogger.info("[REQUEST]"+parking.toString());
+	   
      SocietyDao societyDao = new SocietyDao();
      List<Parking> parkingList = null;
      try {
@@ -774,6 +869,8 @@ public class AjaxController
    @ResponseBody
    public String removeParkingData(@ModelAttribute Parking parking)
    {
+	   reqreslogger.info("[REQUEST]"+parking.toString());
+	   
      int rowsUpdated = 0;
      SocietyDao docDao = new SocietyDao();
      try {
@@ -792,6 +889,8 @@ public class AjaxController
    @ResponseBody
    public UserSCNominee addShareCertDetails(@ModelAttribute UserSCNominee userSCNominee,HttpServletRequest request, HttpServletResponse response)
    {
+	   reqreslogger.info("[REQUEST]"+userSCNominee.toString());
+	   
  	User user = null;
      SocietyDao societyDao = new SocietyDao();
      try {
@@ -810,6 +909,8 @@ public class AjaxController
    @ResponseBody
    public List<UserSCNominee> getShareCertDetails(@ModelAttribute UserSCNominee userSCNominee)
    {
+	   reqreslogger.info("[REQUEST]"+userSCNominee.toString());
+	   
      SocietyDao societyDao = new SocietyDao();
      List<UserSCNominee> scList = null;
      try {
@@ -825,6 +926,8 @@ public class AjaxController
    @ResponseBody
    public String removeParkingData(@ModelAttribute UserSCNominee userSCNominee)
    {
+	   reqreslogger.info("[REQUEST]"+userSCNominee.toString());
+	   
      int rowsUpdated = 0;
      SocietyDao docDao = new SocietyDao();
      try {
@@ -842,6 +945,8 @@ public class AjaxController
    @ResponseBody
    public String saveConfDocAccess(@RequestParam("userid") String userid,HttpServletRequest request)
    {
+	   reqreslogger.info("[REQUEST]"+userid.toString());
+	   
      int rowsUpdated = 0;
      SocietyDao docDao = new SocietyDao();
      User user;
@@ -876,6 +981,8 @@ public class AjaxController
    @ResponseBody
    public List<Project> getProjectsByBuilderId(@ModelAttribute Builder builder)
    {
+	   reqreslogger.info("[REQUEST]"+builder.toString());
+	   
      DocumentDao documentDao = new DocumentDao();
      List<Project> docSubTypes = null;
      try {
@@ -890,6 +997,8 @@ public class AjaxController
    @ResponseBody
    public List<Society> getSubProjectsByProjectId(@ModelAttribute Project project)
    {
+	   reqreslogger.info("[REQUEST]"+project.toString());
+	   
      DocumentDao documentDao = new DocumentDao();
      List<Society> docSubTypes = null;
      try {
@@ -905,6 +1014,8 @@ public class AjaxController
    @ResponseBody
    public String genericRemove(@ModelAttribute GenericBean gbean)
    {
+	   reqreslogger.info("[REQUEST]"+gbean.toString());
+	   
      int rowsUpdated = 0;
      SocietyDao societyDao = new SocietyDao();
      try {
@@ -923,6 +1034,8 @@ public class AjaxController
    @ResponseBody
    public String addTenantToHistory(@ModelAttribute User user)
    {
+	   reqreslogger.info("[REQUEST]"+user.toString());
+	   
      int rowsUpdated = 0;
      SocietyDao societyDao = new SocietyDao();
      try {
@@ -940,6 +1053,8 @@ public class AjaxController
    @ResponseBody
    public List<Userprofile> getTenantHistory(@ModelAttribute User user)
    {
+	   reqreslogger.info("[REQUEST]"+user.toString());
+	   
      DocumentDao documentDao = new DocumentDao();
      List<Userprofile> docSubTypes = null;
      try {
@@ -954,6 +1069,8 @@ public class AjaxController
    @ResponseBody
    public String sendDocumentAsMail(@ModelAttribute EmailBean eBean,HttpServletRequest request)
    {
+	   reqreslogger.info("[REQUEST]"+eBean.toString());
+	   
      int rowsUpdated = 0;
      DocumentDao docDao = new DocumentDao();
      User user = null;
@@ -973,6 +1090,58 @@ public class AjaxController
      return "failed";
    }
    
-   //
+   
+   @RequestMapping(value={"/addDeleteAuth"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String addDeleteAuth(@ModelAttribute User user)
+   {
+ 	  reqreslogger.info("[REQUEST]"+user.toString());
+ 	  
+     int rowsUpdated = 0;
+     SocietyDao societyDao = new SocietyDao();
+     try {
+       rowsUpdated = societyDao.addDeleteAuth(user);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   @RequestMapping(value={"/removeDeleteAuth"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public String removeDeleteAuth(@ModelAttribute User user)
+   {
+ 	  reqreslogger.info("[REQUEST]"+user.toString());
+ 	  
+     int rowsUpdated = 0;
+     SocietyDao societyDao = new SocietyDao();
+     try {
+       rowsUpdated = societyDao.removeDeleteAuth(user);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     
+     if (rowsUpdated > 0)
+       return "success";
+     return "failed";
+   }
+   
+   @RequestMapping(value={"/getDeleteAuth"}, method={org.springframework.web.bind.annotation.RequestMethod.GET})
+   @ResponseBody
+   public List<User> getDeleteAuth()
+   {
+	   
+     DocumentDao documentDao = new DocumentDao();
+     List<User> users = null;
+     try {
+    	 users = documentDao.getDeleteAuth(users);
+     } catch (Exception e) {
+       logger.error(e.getMessage());
+     }
+     return users;
+   }
 } //end of class
 

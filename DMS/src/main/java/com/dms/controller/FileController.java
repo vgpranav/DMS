@@ -16,6 +16,8 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +41,7 @@ public class FileController
   private static final int IMG_WIDTH = 100;
   private static final int IMG_HEIGHT = 100;
   private static final String DIR = "SocietyImages";
+  private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
   
   public FileController() {}
   
@@ -46,6 +49,8 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> echoFile(MultipartHttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  
     byte[] bytes = null;
     Long size = null;
     String contentType = null;
@@ -182,6 +187,8 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadMemberPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  
     byte[] bytes = null;
     Long size = null;
     String contentType = null;
@@ -219,12 +226,8 @@ public class FileController
       
       originalImage = ImageIO.read(new ByteArrayInputStream(bytes));
 
-
     }
-    catch (IOException e)
-    {
-
-
+    catch (IOException e) {
       e.printStackTrace();
     }
     
@@ -240,6 +243,8 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getSocietyPhotos(@ModelAttribute Society society)
   {
+	  reqreslogger.info("[REQUEST]"+society.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
     try {
@@ -255,6 +260,8 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getMemberPhotos(@ModelAttribute User user)
   {
+	  reqreslogger.info("[REQUEST]"+user.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
     try {
@@ -269,6 +276,8 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getVendorPhotos(@ModelAttribute Vendor vendor)
   {
+	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
     try {
@@ -283,6 +292,8 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getVendorCards(@ModelAttribute Vendor vendor)
   {
+	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
     try {
@@ -298,6 +309,8 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadVendorPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  
     byte[] bytes = null;
     Long size = null;
     String contentType = null;
@@ -357,6 +370,8 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadVendorCards(MultipartHttpServletRequest request, HttpServletResponse response)
   {
+	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  
     byte[] bytes = null;
     Long size = null;
     String contentType = null;

@@ -33,36 +33,59 @@
                 </div>
                 <div class="x_content">
                   <div class="dashboard-widget-content">
-                  		<div class="row">
-		                  	<div class="col-md-12 col-sm-12 col-xs-12">
-								<c:forEach items="${dataList}" var="myItem" varStatus="loopStatus">
-								 	<div class="col-md-4 col-sm-4 col-xs-12">
-				  						<label class="control-label">${myItem.fieldname}</label>
-				  						<div>${myItem.fieldvalue} </div> 
-				  						<br>
-				  					</div>
-								</c:forEach>                  	
-		                  	</div>
-                  		</div>
-                  
-                    	<div class="row" id="printElement">
-                    		<c:forEach items="${docList}" var="myItem" varStatus="loopStatus">
-                    			<script type="text/javascript">
-                    				picxx.push('${myItem.filename}');
-                    			</script>
-								 <c:if test="${loopStatus.index%6==0}">
-								 	<div class="clearfix"></div><hr>
-								 </c:if>
-						
-				  				 <div id="fileCont${myItem.fileid}" class="col-md-2 col-sm-2 col-xs-12 printable" align="center" style="border: thin solid #ccc">
-									<button class="btn btn-xs btn-danger pull-right" onclick="deletePage('${myItem.fileid}');return false;">x</button>
-									<a class="ionimage2"   href="getFileToDisplay/${myItem.filename}.do">
-										<img  width="200" src="getFileToDisplay/${myItem.filename}.do">
-									</a>
-								 </div> 
-						
-							</c:forEach>
-                    	</div>
+                  		
+                  		 <c:set var="docIdx" value=""></c:set>
+                  		 
+                  		 <c:forEach items="${dataList}" var="myItemX" varStatus="loopStatusX">
+                  		 	<c:if test="${docIdx!=myItemX.documentid}">
+								 <c:set var="docIdx" value="${myItemX.documentid}"></c:set>
+								  	<hr/>	
+								  <div class="row">
+				                  	<div class="col-md-12 col-sm-12 col-xs-12">
+										<c:forEach items="${dataList}" var="myItem" varStatus="loopStatus">
+										 
+										<c:if test="${docIdx==myItem.documentid}">
+											
+											<div class="col-md-4 col-sm-4 col-xs-12">
+						  						<label class="control-label">${myItem.fieldname}</label>
+						  						<div>${myItem.fieldvalue} </div> 
+						  						<br>
+						  					</div>
+						  					
+										</c:if>
+										 	
+										</c:forEach>                  	
+				                  	</div>
+		                  		</div>
+		                  		
+		                  		<hr/>
+ 		                  		<div class="row" id="printElement">
+		                    		<c:forEach items="${docList}" var="myItem1" varStatus="loopStatus">
+ 		                    			<c:if test="${docIdx==myItem1.documentid}">
+		                    				
+		                    				 <script type="text/javascript">
+		                    					picxx.push('${myItem.filename}');
+			                    			 </script>
+			                    			
+											 <c:if test="${loopStatus.index%6==0}">
+											 	<div class="clearfix"></div>
+											 </c:if>
+		                  		
+							  				 <div id="fileCont${myItem1.fileid}" class="col-md-2 col-sm-2 col-xs-12 printable" align="center" style="border: thin solid #ccc">
+												<c:if test="${sessionScope.deleteFlag==1}"><button class="btn btn-xs btn-danger pull-right delBtn" onclick="deletePage('${myItem1.fileid}');return false;">x</button></c:if>
+												<a class="ionimage2"   href="getFileToDisplay/${myItem1.filename}.do">
+													<img  width="200" src="getFileToDisplay/${myItem1.filename}.do">
+												</a>
+											 </div>
+		                    			
+		                    			</c:if>
+								
+									</c:forEach>
+                    			</div>
+                    	
+                  		 	</c:if>
+                  		 </c:forEach>
+                  		
                   </div>
                 </div>
               </div>
@@ -168,7 +191,9 @@
  		$('.printable').addClass('col-md-12');
  		$('.printable').addClass('col-sm-12');
  		$('.printable').attr('align','center');
- 		$('.printable img').attr('width','');
+ 		$('.printable img').attr('width','98%');
+ 		/* $('.delBtn').hide(); */
+ 		
  		/* parent.print(); */
  		printJS('printElement', 'html')
  	}

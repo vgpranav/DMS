@@ -15,8 +15,18 @@ public class Document
     private Date createdon;
     private String doctypename;
     private String docsubtypename;
+    private String commondoc;
+    
+    
+    public String getCommondoc() {
+		return commondoc;
+	}
 
-    public long getDocumentid()
+	public void setCommondoc(String commondoc) {
+		this.commondoc = commondoc;
+	}
+
+	public long getDocumentid()
     {
         return documentid;
     }
@@ -115,9 +125,7 @@ public class Document
 		return "Document [documentid=" + documentid + ", societyid=" + societyid + ", doctypeid=" + doctypeid
 				+ ", userid=" + userid + ", docsubtypeid=" + docsubtypeid + ", description=" + description
 				+ ", createdby=" + createdby + ", createdon=" + createdon + ", doctypename=" + doctypename
-				+ ", docsubtypename=" + docsubtypename + "]";
+				+ ", docsubtypename=" + docsubtypename + ", commondoc=" + commondoc + "]";
 	}
 
-	 
-	
 }

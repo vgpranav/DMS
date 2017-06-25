@@ -4,6 +4,58 @@
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
 
 
+<c:if test="${builder!=null}">
+	
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel tile">
+			<div class="x_title">
+                  <h2>Builder</h2>
+                  <div class="clearfix"></div>
+            </div>
+			<div class="pull-left">
+				<h3>${builder.buildername}</h3> 
+				<em>Address: ${builder.premisesname}</em>
+						<br><em>${builder.streetname}</em>
+						<br><em>${builder.area}, ${builder.city}, ${builder.state}</em>
+						<br><em>${builder.country}</em>
+						<br><em>Pincode: ${builder.pincode}</em>
+						
+			</div>
+		</div>
+	</div>
+
+</c:if>
+
+
+<c:if test="${project!=null}">
+	
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="x_panel tile">
+			<div class="x_title">
+                  <h2>Project</h2>
+                  <div class="clearfix"></div>
+            </div>
+                
+				<div class="col-md-6 col-sm-6 col-xs-12">
+					<h3>${project.projectname}</h3> 
+					<em>Address: ${project.street}, ${project.city}, ${project.state}</em>
+					<br><em>${project.country}</em>
+					<br><em>Pincode: ${project.pincode}</em>
+					<br><em>Reg Date: <fmt:formatDate type = "date" value = "${project.registrationdate}" /></em>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12">
+						<br><em>No. of Towers: ${project.towernos}</em>
+						<br><em>No. of Residence: ${project.resnos}</em>
+						<br><em>No. of Bunglows: ${project.bungnos}</em>
+						<br><em>No. of Penta House: ${project.pentanos}</em>
+						<br><em>No. of Shops: ${project.shopnos}</em>
+						<br><em>No. of Commercial Gala: ${project.galanos}</em>
+				</div>
+		</div>
+	</div>
+
+</c:if>
+
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
 		<div class="pull-left">
@@ -95,7 +147,7 @@
  		<div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Existing Documents</h2>
+                  <h2>Document Repository</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -136,10 +188,10 @@
 		                      	  </div>
 		                     	</div>
                        		</c:if>
-                       		
-                       		<c:if test="${loopStatus.index!=0 && loopStatus.index%3==0}">
+                       		 
+                       		 <%-- <c:if test="${loopStatus.index>3 && loopStatus.index%3==0}">
                        			<div class="clearfix"></div>
-                       		</c:if>
+                       		</c:if>   --%>
                        </c:forEach>
                     </div>
                   </div>
@@ -365,6 +417,25 @@
   
  
  $(document).ready(function(){
+	 
+	 $('.collapse-link').each(function(i, obj) {
+		 var $BOX_PANEL = $(this).closest('.x_panel'),
+         $ICON = $(this).find('i'),
+         $BOX_CONTENT = $BOX_PANEL.find('.x_content');
+     
+	     // fix for some div with hardcoded fix class
+	     if ($BOX_PANEL.attr('style')) {
+	         $BOX_CONTENT.slideToggle(200, function(){
+	             $BOX_PANEL.removeAttr('style');
+	         });
+	     } else {
+	         $BOX_CONTENT.slideToggle(200); 
+	         $BOX_PANEL.css('height', 'auto');  
+	     }
+	
+	     $ICON.toggleClass('fa-chevron-up fa-chevron-down');
+	});
+	 
 	 
 	 $( "#SCDialog" ).dialog({
 	      autoOpen: false,

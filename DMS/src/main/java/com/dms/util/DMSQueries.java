@@ -86,19 +86,19 @@ public class DMSQueries
 	public static String updateAdminUser="Update user set firstname=?, lastname=?, password=?, active=?, mobileNo=?, userroleid=? where  userid=?";
 	public static String getNoticeboardDocBySocid = " SELECT * FROM files where societyid=? and docsubtypeid=999 order by createdon desc,documentid";
 	public static String getDocStubtypesToDispay = "select * from  docsubtype dst, socdocviewmapping dm  where dst.docsubtypeid = dm.docsubtypeid and dm.displayflag=1 and dm.societyid=?";
-	public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.doctypeid=? and d.userid=?";
-	public static String getDocumentDatabyDoctypeIdUserId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
-			    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.doctypeid=? and d.userid=?";
+	public static String getDocumentsToDisplay= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and d.docsubtypeid=? and (d.userid=? or d.userid=9999) and d.societyid=?";
+	public static String getDocumentDatabyDoctypeIdUserId = " SELECT d.documentid,f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+			    									+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.docsubtypeid=? and (d.userid=? or d.userid=9999) and d.societyid=?";
 	  
 	
 	public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and f.documentid=?";
 	
-	public static String getDocumentDatabyDocId = " SELECT f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+	public static String getDocumentDatabyDocId = " SELECT d.documentid,f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
 			+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
 	
 	public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
-			+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst "
-			+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and societyid=? "
+			+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst,societydocmapping sdm "
+			+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and d.societyid=sdm.societyid and sdm.doctypeid=d.doctypeid and d.societyid=? "
 			+ " group by dst.docsubtypename,dt.doctypename order by dt.doctypename,dst.docsubtypename";
 	
 	public static String getNeighborProfile = "SELECT n.*,u.* FROM dms.userprofile o,dms.userprofile n,dms.user u "
@@ -166,6 +166,16 @@ public class DMSQueries
 	public static String getSocietyPolicyDocuments = " SELECT * FROM files where societyid=? and docsubtypeid=995 order by createdon desc,documentid";
 
 	public static String getOnePhotoInfo = "select * from photos where docid=? and isactive=1 and phototype=? limit 1";
+
+	public static String addDeleteAuth = "update user set deleteflag=1 where userid=?";
+
+	public static String removeDeleteAuth = "update user set deleteflag=0 where userid=?";
+
+	public static String getDeleteAuth = "select * from user where deleteflag=1";
+
+	public static String getBuilderBySocietyId="select b.* from builder b,project p,society s where s.projectid=p.projectid and p.builderid=b.builderid and s.societyid=?";
+
+	public static String getProjectBySocietyId="select p.* from project p,society s where s.projectid=p.projectid and s.societyid=?";
 
 
 }
