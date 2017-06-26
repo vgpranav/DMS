@@ -63,7 +63,8 @@ import javax.mail.internet.MimeMessage;
 
 public class DocumentDao
 {
-  private static final Logger logger = LoggerFactory.getLogger(DocumentDao.class);
+   
+  private final static org.slf4j.Logger dblogger = LoggerFactory.getLogger("dblogger");
   
   public DocumentDao() {}
   
@@ -75,13 +76,13 @@ public class DocumentDao
       ResultSetHandler<List<Doctype>> rsh = new BeanListHandler(Doctype.class);
       docTypes = (List)qr.query(conn, DMSQueries.getAllDocumentTypes, rsh);
     } catch (Exception e) {
-      logger.error("Error getAllDocumentTypes :: " + e.getMessage());
+      dblogger.error("Error getAllDocumentTypes :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -90,7 +91,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return docTypes;
@@ -124,13 +125,13 @@ public class DocumentDao
       }
     }
     catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -139,7 +140,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return doctype;
@@ -154,13 +155,13 @@ public class DocumentDao
       ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler<DocSubType>(DocSubType.class);
       docSubType = (List<DocSubType>)qr.query(conn, DMSQueries.getAllDocumentSubTypes, rsh);
     } catch (Exception e) {
-      logger.error("Error authenticating user :: " + e.getMessage());
+      dblogger.error("Error authenticating user :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -169,7 +170,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return docSubType;
@@ -209,13 +210,13 @@ public class DocumentDao
       }
       
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -224,7 +225,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return docSubType;
@@ -264,13 +265,13 @@ public class DocumentDao
        
       	
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -279,7 +280,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return formFields;
@@ -294,13 +295,13 @@ public class DocumentDao
       ResultSetHandler<List<FormFields>> rsh = new BeanListHandler<FormFields>(FormFields.class);
       formFields = (List<FormFields>)qr.query(conn, DMSQueries.getAllDocumentFormFieldsBySubTypes, rsh, new Object[] { Long.valueOf(docSubtypeid) });
     } catch (Exception e) {
-      logger.error("Error fetching form fields :: " + e.getMessage());
+      dblogger.error("Error fetching form fields :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -309,7 +310,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     
@@ -325,13 +326,13 @@ public class DocumentDao
       ResultSetHandler<List<Doctype>> rsh = new BeanListHandler(Doctype.class);
       doctypes = (List)qr.query(conn, DMSQueries.getAllDoctypeFromSocid, rsh, new Object[] { Long.valueOf(societyid) });
     } catch (Exception e) {
-      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+      dblogger.error("Error getting doctypes by soc id :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -340,7 +341,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return doctypes;
@@ -355,13 +356,13 @@ public class DocumentDao
       ResultSetHandler<List<DocSubType>> rsh = new BeanListHandler(DocSubType.class);
       docSubTypes = (List)qr.query(conn, DMSQueries.getAllDocSubTypeFromDocid, rsh, new Object[] { Long.valueOf(doctypeid) });
     } catch (Exception e) {
-      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+      dblogger.error("Error getting doctypes by soc id :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -370,7 +371,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return docSubTypes;
@@ -429,13 +430,13 @@ public class DocumentDao
         conn.rollback();
       }
     } catch (Exception e) {
-      logger.error("Error saving doctypes :: " + e.getMessage());
+      dblogger.error("Error saving doctypes :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -444,7 +445,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return documentId;
@@ -483,13 +484,13 @@ public class DocumentDao
       
     }
     catch (Exception e) {
-      logger.error("Error getDocumentListForView :: " + e.getMessage());
+      dblogger.error("Error getDocumentListForView :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -498,7 +499,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return documents;
@@ -515,13 +516,13 @@ public class DocumentDao
         documentId });
     }
     catch (Exception e) {
-      logger.error("Error getDocumentListForView :: " + e.getMessage());
+      dblogger.error("Error getDocumentListForView :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -530,7 +531,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return docs;
@@ -561,13 +562,13 @@ public class DocumentDao
 
       fieldid = CommomUtility.convertToLong(obj);
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -576,7 +577,7 @@ public class DocumentDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return fieldid;
@@ -601,13 +602,13 @@ public List<Documentdetails> getExistingDocumentDetails(Document document, List<
       
       return documentdetails;
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -616,7 +617,7 @@ public List<Documentdetails> getExistingDocumentDetails(Document document, List<
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return null;
@@ -643,13 +644,13 @@ public GenericBean insertSocDocMapping(GenericBean bean) {
        
     }
     catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -658,7 +659,7 @@ public GenericBean insertSocDocMapping(GenericBean bean) {
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return bean;
@@ -676,13 +677,13 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType,Stri
       
       return docSubType;
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -691,7 +692,7 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType,Stri
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return null;
@@ -709,13 +710,13 @@ public List<GenericBean> getdisplayData(String doctypeid, String userid, String 
       
       return data;
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -724,7 +725,7 @@ public List<GenericBean> getdisplayData(String doctypeid, String userid, String 
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return null;
@@ -743,13 +744,13 @@ public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBe
       
       return data;
     } catch (Exception e) {
-      logger.error("Error Saving Doctype :: " + e.getMessage());
+      dblogger.error("Error Saving Doctype :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -758,7 +759,7 @@ public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBe
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return null;
@@ -772,13 +773,13 @@ public int deleteDocById(Document document) {
       int rowsUpdated = qr.update(conn, DMSQueries.deleteDocumentByDocId,document.getDocumentid());
       return rowsUpdated;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: " , e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return 0;
@@ -792,13 +793,13 @@ public int deleteDocById(Document document) {
       int rowsUpdated = qr.update(conn, DMSQueries.deleteDocumentPage,files.getFilesid());
       return rowsUpdated;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: " , e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     return 0;
@@ -813,13 +814,13 @@ public int deleteDocById(Document document) {
       ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
       formFields = (List<GenericBean>)qr.query(conn, DMSQueries.getAllConfDocAccessList,rsh);
     } catch (Exception e) {
-      logger.error("Error fetching form fields :: " + e.getMessage());
+      dblogger.error("Error fetching form fields :: " , e);
       e.printStackTrace();
       try
       {
         DbUtils.close(conn);
       } catch (SQLException ex) {
-        logger.error("Error releasing connection :: " + ex.getMessage());
+        dblogger.error("Error releasing connection :: " , ex);
       }
     }
     finally
@@ -828,7 +829,7 @@ public int deleteDocById(Document document) {
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: " , e);
       }
     }
     
@@ -844,13 +845,13 @@ public int deleteDocById(Document document) {
 	      ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
 	      docSubTypes =  qr.query(conn, DMSQueries.getProjectsByBuilderId, rsh,builderid);
 	    } catch (Exception e) {
-	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      dblogger.error("Error getting doctypes by soc id :: " , e);
 	      e.printStackTrace();
 	      try
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException ex) {
-	        logger.error("Error releasing connection :: " + ex.getMessage());
+	        dblogger.error("Error releasing connection :: " , ex);
 	      }
 	    }
 	    finally
@@ -859,7 +860,7 @@ public int deleteDocById(Document document) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return docSubTypes;
@@ -874,13 +875,13 @@ public int deleteDocById(Document document) {
 	      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
 	      docSubTypes =  qr.query(conn, DMSQueries.getSubProjectsByProjectId,rsh,projectid);
 	    } catch (Exception e) {
-	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      dblogger.error("Error getting doctypes by soc id :: " , e);
 	      e.printStackTrace();
 	      try
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException ex) {
-	        logger.error("Error releasing connection :: " + ex.getMessage());
+	        dblogger.error("Error releasing connection :: " , ex);
 	      }
 	    }
 	    finally
@@ -889,7 +890,7 @@ public int deleteDocById(Document document) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return docSubTypes;
@@ -904,13 +905,13 @@ public int deleteDocById(Document document) {
 	      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler<Userprofile>(Userprofile.class);
 	      docSubTypes =  qr.query(conn, DMSQueries.getTenantHistory,rsh,userid);
 	    } catch (Exception e) {
-	      logger.error("Error getting doctypes by soc id :: " + e.getMessage());
+	      dblogger.error("Error getting doctypes by soc id :: " , e);
 	      e.printStackTrace();
 	      try
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException ex) {
-	        logger.error("Error releasing connection :: " + ex.getMessage());
+	        dblogger.error("Error releasing connection :: " , ex);
 	      }
 	    }
 	    finally
@@ -919,7 +920,7 @@ public int deleteDocById(Document document) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return docSubTypes;
@@ -987,7 +988,7 @@ public int deleteDocById(Document document) {
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: " , e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -996,7 +997,7 @@ public int deleteDocById(Document document) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -1093,7 +1094,7 @@ public int deleteDocById(Document document) {
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: " , e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1161,13 +1162,13 @@ public int deleteDocById(Document document) {
 	      
 	      return users;
 	    } catch (Exception e) {
-	      logger.error("Error Saving Doctype :: " + e.getMessage());
+	      dblogger.error("Error Saving Doctype :: " , e);
 	      e.printStackTrace();
 	      try
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException ex) {
-	        logger.error("Error releasing connection :: " + ex.getMessage());
+	        dblogger.error("Error releasing connection :: " , ex);
 	      }
 	    }
 	    finally
@@ -1176,7 +1177,7 @@ public int deleteDocById(Document document) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return null;

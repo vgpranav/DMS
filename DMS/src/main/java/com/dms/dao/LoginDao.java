@@ -2,6 +2,7 @@ package com.dms.dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.dbutils.DbUtils;
@@ -15,14 +16,14 @@ import org.slf4j.LoggerFactory;
 import com.dms.beans.Otphandler;
 import com.dms.beans.RoleTransaction;
 import com.dms.beans.User;
-import com.dms.beans.UserSCNominee;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.SmsApi;
 
 public class LoginDao {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(LoginDao.class);
+	private final static org.slf4j.Logger dblogger = LoggerFactory.getLogger("dblogger");
+	
 	QueryRunner qr;
 	
 	public User authenticateUser(User user,User authenticatedUser){
@@ -34,13 +35,13 @@ public class LoginDao {
 			rsh = new BeanHandler<User>(User.class);
 			authenticatedUser = qr.query(conn,DMSQueries.authenticateUser, rsh,user.getMobileNo(),user.getPassword());
 		}catch(Exception e){
-			logger.error("Error authenticating user :: "+e.getMessage());
+			dblogger.error("Error authenticating user :: ",e);
 			e.printStackTrace();
 		}finally{
 			try {
 				DbUtils.close(conn);
 			} catch (SQLException e) {
-				logger.error("Error releasing connection :: "+e.getMessage());
+				dblogger.error("Error releasing connection :: ",e);
 			}
 		}
 		return authenticatedUser;
@@ -60,7 +61,7 @@ public class LoginDao {
 	    	  int rowsUpdated=0;
 	    	  String OTP = RandomStringUtils.randomNumeric(6);
 	    	  
-	    	  int deactAllOldOTP = qr.update(conn, DMSQueries.deactAllOldOTP,  
+	    	  qr.update(conn, DMSQueries.deactAllOldOTP,  
 	    			  user.getMobileNo());
 	    	  
 	    	  rowsUpdated = qr.update(conn, DMSQueries.insertOTPHandler,  
@@ -75,13 +76,13 @@ public class LoginDao {
 	      }
 	     
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: " , e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return 0;
@@ -112,13 +113,13 @@ public class LoginDao {
 	      }
 	     
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: " , e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return 0;
@@ -132,13 +133,13 @@ public class LoginDao {
 	      	conn = ConnectionPoolManager.getInstance().getConnection();
 	    	rowsUpdated = qr.update(conn, DMSQueries.setNewPasswordForUser,user.getPassword(),user.getMobileNo());
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: " , e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return rowsUpdated;
@@ -155,7 +156,7 @@ public class LoginDao {
 		      roleList = qr.query(conn, DMSQueries.getAllTxnRoles, rsh);
 		      
 		    } catch (Exception e) {
-		      logger.error("Error fetching SocType List :: " + e.getMessage());
+		      dblogger.error("Error fetching SocType List :: " , e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -164,7 +165,7 @@ public class LoginDao {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: " , e);
 		      }
 		    }
 		    return roleList;
@@ -183,15 +184,70 @@ public class LoginDao {
 	      		return true;
 	      	
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: " , e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
 	    return false;
+	}
+	
+	
+	public boolean logUserLogin(User user) {
+		Connection conn = null;
+		User userNew = null;
+	    try {
+	    	qr = new QueryRunner();
+	    	ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+	      	conn = ConnectionPoolManager.getInstance().getConnection();
+	      	userNew = qr.insert(conn, DMSQueries.logUserLogin,rsh,
+	      			user.getUserid(),
+	      			user.getLogintime(),
+	      			user.getSessionkey(),
+	      			user.getIpaddress()
+	      			);
+	    	
+	      	if(userNew!= null && userNew.getActive()==1)
+	      		return true;
+	      	
+	    } catch (Exception e) {
+	      dblogger.error("Error getting soc list :: " , e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return false;
+	}
+
+	public void logUserLogout(String sessionKey) {
+		Connection conn = null;
+	    try {
+	    	qr = new QueryRunner();
+	    	ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+	      	conn = ConnectionPoolManager.getInstance().getConnection();
+	      	
+	      	qr.update(conn, DMSQueries.logUserLogout,
+	      			new Date(),
+	      			sessionKey
+	      			);
+	    	
+	    } catch (Exception e) {
+	      dblogger.error("Error getting soc list :: " , e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
 	}
 }

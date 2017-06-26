@@ -48,7 +48,7 @@ import org.springframework.util.Base64Utils;
 
 public class SocietyDao
 {
-  private static final Logger logger = LoggerFactory.getLogger(SocietyDao.class);
+  private final static org.slf4j.Logger dblogger = LoggerFactory.getLogger("dblogger");
   
   public SocietyDao() {}
   
@@ -61,7 +61,7 @@ public class SocietyDao
       ResultSetHandler<List<SocietyType>> rsh = new BeanListHandler<SocietyType>(SocietyType.class);
       docTypes = qr.query(conn, DMSQueries.getAllActiveSocietyTypes, rsh);
     } catch (Exception e) {
-      logger.error("Error fetching SocType List :: " + e.getMessage());
+      dblogger.error("Error fetching SocType List :: ", e);
       e.printStackTrace();
     }
     finally
@@ -70,7 +70,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return docTypes;
@@ -87,13 +87,13 @@ public class SocietyDao
       String SQL = DMSQueries.getAllSociety + " where societyname like '%" + searchText + "%'";
       return qr.query(conn, SQL, rsh);
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -196,13 +196,13 @@ public class SocietyDao
       return society;
     }
     catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -218,7 +218,7 @@ public class SocietyDao
       ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
       societyList = qr.query(conn, DMSQueries.getAllActiveSocietyForUser, rsh);
     } catch (Exception e) {
-      logger.error("Error fetching Society List :: " + e.getMessage());
+      dblogger.error("Error fetching Society List :: ", e);
       e.printStackTrace();
     }
     finally
@@ -227,7 +227,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return societyList;
@@ -431,13 +431,13 @@ public class SocietyDao
       return userprofile;
     }
     catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -454,7 +454,7 @@ public class SocietyDao
       profiles =  qr.query(conn, DMSQueries.getMembersForSociety, rsh,societyid);
     }
     catch (Exception e) {
-      logger.error("Error getMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -463,7 +463,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return profiles;
@@ -479,7 +479,7 @@ public class SocietyDao
       ResultSetHandler<List<CommitteeMaster>> rsh = new BeanListHandler<CommitteeMaster>(CommitteeMaster.class);
       committeeMasterList = qr.query(conn, DMSQueries.getAllCommitteePositions, rsh);
     } catch (Exception e) {
-      logger.error("Error getCommitteeMaster :: " + e.getMessage());
+      dblogger.error("Error getCommitteeMaster :: ", e);
       e.printStackTrace();
     }
     finally
@@ -488,7 +488,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return committeeMasterList;
@@ -509,13 +509,13 @@ public class SocietyDao
         		+ " '%" + searchText.toLowerCase() + "%' or lower(lastName) like '%" + searchText.toLowerCase() + "%') ";
       return qr.query(conn,SQL,rsh);
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -542,13 +542,13 @@ public class SocietyDao
       committee.setCommitteememberid(committeeMemberId);
       return committee;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -573,7 +573,7 @@ public class SocietyDao
       committees.put("inactive", inactiveMembers);
     }
     catch (Exception e) {
-      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getCommitteMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -582,7 +582,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return committees;
@@ -600,13 +600,13 @@ public class SocietyDao
       
       return rowsUpdated;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return 0;
@@ -624,7 +624,7 @@ public class SocietyDao
       
       System.out.println("userid :: "+userid+"/nsocietyList :: "+societyList);
     } catch (Exception e) {
-      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getCommitteMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -633,7 +633,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return societyList;
@@ -685,7 +685,7 @@ public class SocietyDao
     }
     catch (Exception e)
     {
-      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getCommitteMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -694,7 +694,7 @@ public class SocietyDao
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
       try {
         if (ftp.isConnected()) {
@@ -777,13 +777,13 @@ public Vendor saveVendorDetails(Vendor vendor) {
       
       return vendor;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -802,7 +802,7 @@ public  List<Vendor> getVendorsBySocId(long societyid, List<Vendor> vendors) {
      return vendors;
     }
     catch (Exception e) {
-      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getCommitteMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -811,7 +811,7 @@ public  List<Vendor> getVendorsBySocId(long societyid, List<Vendor> vendors) {
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -830,13 +830,13 @@ public Society getSocietyDetailsById(Society society) {
       
       return society;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -855,13 +855,13 @@ public Doctype getDocumentTypeById(Doctype doctype) {
       
       return doctype;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -879,13 +879,13 @@ public DocSubType getDocumentSubTypeById(DocSubType docSubType) {
         );
       return docSubType;
     } catch (Exception e) {
-      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
+      dblogger.error("Error getting getDocumentSubTypeById :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -903,13 +903,13 @@ public FormFields getFormFieldsById(FormFields formFields) {
         );
       return formFields;
     } catch (Exception e) {
-      logger.error("Error in getFormFieldsById :: " + e.getMessage());
+      dblogger.error("Error in getFormFieldsById :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -949,13 +949,13 @@ public Userprofile getUserDataById(Userprofile userprofile) {
        }
       return userprofile;
     } catch (Exception e) {
-      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
+      dblogger.error("Error getting getDocumentSubTypeById :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -973,13 +973,13 @@ public Vendor getVendorDataById(Vendor vendor) {
         );
       return vendor;
     } catch (Exception e) {
-      logger.error("Error getting getDocumentSubTypeById :: " + e.getMessage());
+      dblogger.error("Error getting getDocumentSubTypeById :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -998,7 +998,7 @@ public List<Committee> getManagersForSociety(Society society, List<Committee> co
      return committees;
     }
     catch (Exception e) {
-      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+      dblogger.error("Error getCommitteMembersForSociety :: ", e);
       e.printStackTrace();
     }
     finally
@@ -1007,7 +1007,7 @@ public List<Committee> getManagersForSociety(Society society, List<Committee> co
       {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -1022,13 +1022,13 @@ public int removeSocietyManager(Committee committee) {
     		  committee.getSocietymanagerid());
       return rowsUpdated;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return 0;
@@ -1051,13 +1051,13 @@ public Committee addSocietyManager(Committee committee) {
       committee.setSocietymanagerid(String.valueOf(societyManagerId));
       return committee;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -1128,13 +1128,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
       return builder;
     }
     catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -1149,7 +1149,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      ResultSetHandler<List<Builder>> rsh = new BeanListHandler<Builder>(Builder.class);
 	      builderList = qr.query(conn, DMSQueries.getAllBuilders, rsh);
 	    } catch (Exception e) {
-	      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+	      dblogger.error("Error fetching getAllBuilder List :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1158,7 +1158,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return builderList;
@@ -1176,13 +1176,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	        );
 	      return builder;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1197,7 +1197,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      ResultSetHandler<List<Project>> rsh = new BeanListHandler<Project>(Project.class);
 		      projectList = qr.query(conn, DMSQueries.getAllProjects, rsh);
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllProjects List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1206,7 +1206,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return projectList;
@@ -1224,13 +1224,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	        );
 	      return project;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1308,13 +1308,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return project;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1348,7 +1348,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      
 		      
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllProjects List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1357,7 +1357,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return societyList;
@@ -1374,7 +1374,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      socDocMapping = qr.query(conn, DMSQueries.getAllSocDocMapping, rsh); 
 		      
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllProjects List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllProjects List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1383,7 +1383,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return socDocMapping;
@@ -1399,13 +1399,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    		  bean.getSocietydocmappingid());
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -1420,7 +1420,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
 		      roleList = qr.query(conn, DMSQueries.getAllRoles, rsh);
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllBuilder List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1429,7 +1429,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return roleList;
@@ -1476,13 +1476,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return adminUser;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1497,7 +1497,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      ResultSetHandler<List<User>> rsh = new BeanListHandler<User>(User.class);
 		      adminUsers = qr.query(conn, DMSQueries.getAllAdminUsers, rsh);
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllBuilder List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1506,7 +1506,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return adminUsers;
@@ -1526,13 +1526,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      );
 	      return user;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1588,7 +1588,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1597,7 +1597,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -1671,7 +1671,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1680,7 +1680,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -1729,7 +1729,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1738,7 +1738,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -1761,7 +1761,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
 		      docs = qr.query(conn, DMSQueries.getDocSummaryforAdminpanel,rsh,society.getSocietyid());
 		    } catch (Exception e) {
-		      logger.error("Error fetching getAllBuilder List :: " + e.getMessage());
+		      dblogger.error("Error fetching getAllBuilder List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -1770,7 +1770,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return docs;
@@ -1786,7 +1786,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      profiles =  qr.query(conn, DMSQueries.getNeighborProfile, rsh,userid);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1795,7 +1795,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return profiles;
@@ -1868,13 +1868,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return callref;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1900,13 +1900,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return callref;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1922,7 +1922,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      profiles =  qr.query(conn, DMSQueries.getContactsByCallRefId, rsh,callrefid);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1931,7 +1931,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return profiles;
@@ -1955,13 +1955,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return callref;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -1977,7 +1977,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      profiles =  qr.query(conn, DMSQueries.getMeetingsByCallRefId, rsh,callrefid);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -1986,7 +1986,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return profiles;
@@ -2002,7 +2002,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      calls =  qr.query(conn, DMSQueries.getAllCallRefs, rsh);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2011,7 +2011,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return calls;
@@ -2029,7 +2029,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      count = CommomUtility.convertToLong(countObj);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2038,7 +2038,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return count;
@@ -2069,13 +2069,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      return gbean;
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -2091,7 +2091,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      beans =  qr.query(conn, DMSQueries.getSocDocMappingBySocId, rsh,societyid);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2100,7 +2100,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return beans;
@@ -2115,13 +2115,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	    		  bean.getSocdocviewmappingid());
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2137,7 +2137,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      desigList =  qr.query(conn, DMSQueries.getAllDesignations, rsh);
 	    }
 	    catch (Exception e) {
-	      logger.error("Error getAllDesignations :: " + e.getMessage());
+	      dblogger.error("Error getAllDesignations :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2146,7 +2146,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return desigList;
@@ -2164,13 +2164,13 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	        );
 	      return gbean;
 	    } catch (Exception e) {
-	      logger.error("Error getting getDesignationById :: " + e.getMessage());
+	      dblogger.error("Error getting getDesignationById :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -2214,13 +2214,13 @@ public GenericBean saveDesignationDetails(GenericBean gbean) {
       conn.commit();
       return gbean;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -2248,13 +2248,13 @@ public boolean checkIfNewNoticeAdded(String societyid) {
 	      if(cnt>0)
 	      return true;
 	    } catch (Exception e) {
-	      logger.error("Error getting getDesignationById :: " + e.getMessage());
+	      dblogger.error("Error getting getDesignationById :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return false;
@@ -2277,13 +2277,13 @@ public Parking saveMemberparkingDetails(Parking parking) {
       conn.commit();
       return parking;
     } catch (Exception e) {
-      logger.error("Error getting soc list :: " + e.getMessage());
+      dblogger.error("Error getting soc list :: ", e);
       e.printStackTrace();
     } finally {
       try {
         DbUtils.close(conn);
       } catch (SQLException e) {
-        logger.error("Error releasing connection :: " + e.getMessage());
+        dblogger.error("Error releasing connection :: ", e);
       }
     }
     return null;
@@ -2303,7 +2303,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    	  parkingList = qr.query(conn, DMSQueries.getParkingDetailsForMemberByHashValue, rsh,parking.getRandomHash());
 	      
 	    } catch (Exception e) {
-	      logger.error("Error fetching SocType List :: " + e.getMessage());
+	      dblogger.error("Error fetching SocType List :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2312,7 +2312,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return parkingList;
@@ -2326,13 +2326,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      int rowsUpdated = qr.update(conn, DMSQueries.removeParkingData,parking.getUserparkingdetailsid());
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2361,13 +2361,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      conn.commit();
 	      return userSCNominee;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -2387,7 +2387,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		    	  scList = qr.query(conn, DMSQueries.getShareCertDetailsForMemberByHashValue, rsh,userSCNominee.getRandomHash());
 		      
 		    } catch (Exception e) {
-		      logger.error("Error fetching SocType List :: " + e.getMessage());
+		      dblogger.error("Error fetching SocType List :: ", e);
 		      e.printStackTrace();
 		    }
 		    finally
@@ -2396,7 +2396,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		      {
 		        DbUtils.close(conn);
 		      } catch (SQLException e) {
-		        logger.error("Error releasing connection :: " + e.getMessage());
+		        dblogger.error("Error releasing connection :: ", e);
 		      }
 		    }
 		    return scList;
@@ -2410,13 +2410,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      int rowsUpdated = qr.update(conn, DMSQueries.removeShareCertDetails,userSCNominee.getUserscnomineeid());
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2436,13 +2436,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	        		+ " '%" + searchText.toLowerCase() + "%' or lower(lastName) like '%" + searchText.toLowerCase() + "%') ";
 	      return qr.query(conn,SQL,rsh);
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -2456,13 +2456,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      int rowsUpdated = qr.update(conn, DMSQueries.insertConfDocAccess,userid,createdBy);
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2516,7 +2516,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2525,7 +2525,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -2553,13 +2553,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2575,13 +2575,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2637,7 +2637,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    }
 	    catch (Exception e)
 	    {
-	      logger.error("Error getCommitteMembersForSociety :: " + e.getMessage());
+	      dblogger.error("Error getCommitteMembersForSociety :: ", e);
 	      e.printStackTrace();
 	    }
 	    finally
@@ -2646,7 +2646,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	      try {
 	        if (ftp.isConnected()) {
@@ -2670,13 +2670,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2692,13 +2692,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      return rowsUpdated;
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return 0;
@@ -2713,13 +2713,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      ResultSetHandler<Builder> rsh = new BeanHandler<Builder>(Builder.class);
 	      return qr.query(conn,DMSQueries.getBuilderBySocietyId,rsh,society.getSocietyid());
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;
@@ -2734,13 +2734,13 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      ResultSetHandler<Project> rsh = new BeanHandler<Project>(Project.class);
 	      return qr.query(conn,DMSQueries.getProjectBySocietyId,rsh,society.getSocietyid());
 	    } catch (Exception e) {
-	      logger.error("Error getting soc list :: " + e.getMessage());
+	      dblogger.error("Error getting soc list :: ", e);
 	      e.printStackTrace();
 	    } finally {
 	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
-	        logger.error("Error releasing connection :: " + e.getMessage());
+	        dblogger.error("Error releasing connection :: ", e);
 	      }
 	    }
 	    return null;

@@ -177,5 +177,9 @@ public class DMSQueries
 
 	public static String getProjectBySocietyId="select p.* from project p,society s where s.projectid=p.projectid and s.societyid=?";
 
+	public static String logUserLogin = "insert into loginhistory(userid,logintime,sessionkey,ipaddress) values (?,?,?,?)" ;
 
+	public static String logUserLogout = "update loginhistory set logouttime=? where sessionkey=?";
+
+	
 }

@@ -9,7 +9,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class ConnectionPoolManager {	
 	
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(ConnectionPoolManager.class);
+	private final static org.slf4j.Logger dblogger = LoggerFactory.getLogger("dblogger");
 
 	private static ComboPooledDataSource cpds;
 	
@@ -42,17 +42,18 @@ public class ConnectionPoolManager {
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			dblogger.error("Error creating connection pool",e);
 		}
 		return cpds;
 	}
 	
 	public static ComboPooledDataSource getInstance() throws PropertyVetoException {
 		if(cpds==null){
-			logger.debug("New Connection Pool Created");
+			dblogger.debug("New Connection Pool Created");
 			return createConnectionPool();
 		}
 		else{
-			logger.debug("Using Connection from existing Pool [ "+ cpds.getIdentityToken() +" ]");
+			dblogger.debug("Using Connection from existing Pool [ "+ cpds.getIdentityToken() +" ]");
 			return cpds;
 		}
 	}

@@ -17,7 +17,7 @@ import com.dms.util.DMSQueries;
 
 public class SmsDao {
 
-	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(LoginDao.class);
+	private final static org.slf4j.Logger dblogger = LoggerFactory.getLogger("dblogger");
 	QueryRunner qr;
 	
 	
@@ -38,13 +38,13 @@ public class SmsDao {
 					);
 			
 		}catch(Exception e){
-			logger.error("Error in logSmsToDB :: "+e.getMessage());
+			dblogger.error("Error in logSmsToDB :: ",e);
 			e.printStackTrace();
 		}finally{
 			try {
 				DbUtils.close(conn);
 			} catch (SQLException e) {
-				logger.error("Error releasing connection :: "+e.getMessage());
+				dblogger.error("Error releasing connection :: ",e);
 			}
 		}
 		return smslogger;

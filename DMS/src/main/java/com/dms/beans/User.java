@@ -20,7 +20,45 @@ public class User
     private String otpType;
     private int deleteflag;
     
-    public int getDeleteflag() {
+    private Date logintime;
+    private Date logouttime;
+    private String sessionkey;
+    private String ipaddress;
+    
+    
+    public Date getLogintime() {
+		return logintime;
+	}
+
+	public void setLogintime(Date logintime) {
+		this.logintime = logintime;
+	}
+
+	public Date getLogouttime() {
+		return logouttime;
+	}
+
+	public void setLogouttime(Date logouttime) {
+		this.logouttime = logouttime;
+	}
+
+	public String getSessionkey() {
+		return sessionkey;
+	}
+
+	public void setSessionkey(String sessionkey) {
+		this.sessionkey = sessionkey;
+	}
+
+	public String getIpaddress() {
+		return ipaddress;
+	}
+
+	public void setIpaddress(String ipaddress) {
+		this.ipaddress = ipaddress;
+	}
+
+	public int getDeleteflag() {
 		return deleteflag;
 	}
 
@@ -157,7 +195,8 @@ public class User
 				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
 				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
 				+ ", createdby=" + createdby + ", otp=" + otp + ", otpType=" + otpType + ", deleteflag=" + deleteflag
-				+ "]";
+				+ ", logintime=" + logintime + ", logouttime=" + logouttime + ", sessionkey=" + sessionkey
+				+ ", ipaddress=" + ipaddress + "]";
 	}
 
 }

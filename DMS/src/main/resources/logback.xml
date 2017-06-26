@@ -17,7 +17,7 @@
 		<file>${DEV_HOME}/actions.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss}  %-5level  - %msg%n
 			</Pattern>
 		</encoder>
 
@@ -38,7 +38,7 @@
 			<file>${DEV_HOME}/reqres.log</file>
 			<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 				<Pattern>
-					%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
+					%d{yyyy-MM-dd HH:mm:ss}  %-5level  - %msg%n
 				</Pattern>
 			</encoder>
 	
@@ -54,33 +54,14 @@
 
 	</appender>
 
-	<appender name="FILE-ACTIONS"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${DEV_HOME}/actions.log</file>
-		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
-			</Pattern>
-		</encoder>
-
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>${DEV_HOME}/archived/actions.%d{yyyy-MM-dd}.%i.log
-                        </fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy
-				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>10MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-		</rollingPolicy>
-
-	</appender>
-	<!-- All error Logs go here -->
+	
+		<!-- All error Logs go here -->
 	<appender name="FILE-ERROR"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${DEV_HOME}/error.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>
-				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} %class{36} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss}  %-5level  - %msg%n
 			</Pattern>
 		</encoder>
 
@@ -95,6 +76,28 @@
 
 	</appender>
 
+
+	<appender name="FILE-DB"
+			class="ch.qos.logback.core.rolling.RollingFileAppender">
+			<file>${DEV_HOME}/database.log</file>
+			<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+				<Pattern>
+					%d{yyyy-MM-dd HH:mm:ss}  %-5level  - %msg%n
+				</Pattern>
+			</encoder>
+	
+			<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+				<!-- rollover daily -->
+				<fileNamePattern>${DEV_HOME}/archived/database.%d{yyyy-MM-dd}.%i.log
+	                        </fileNamePattern>
+				<timeBasedFileNamingAndTriggeringPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+					<maxFileSize>10MB</maxFileSize>
+				</timeBasedFileNamingAndTriggeringPolicy>
+			</rollingPolicy>
+
+	</appender>
+	
 	<!-- Send logs to both console and file audit -->
 	<logger name="actionlogger" level="debug"
 		additivity="false">
@@ -104,6 +107,11 @@
 	<logger name="reqreslogger" level="debug"
 		additivity="false">
 		<appender-ref ref="FILE-REQRES" />
+	</logger>
+	
+	<logger name="dblogger" level="debug"
+		additivity="false">
+		<appender-ref ref="FILE-DB" />
 	</logger>
 
 	<root level="error">
