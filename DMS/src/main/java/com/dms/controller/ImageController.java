@@ -40,7 +40,7 @@ public class ImageController {
 		 try{
 			 buffer = documentDao.getPhotoFromFTP(docId,type,folder,false);
 		 }catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error("error",e);
 		 }
 	     response.setContentType("image/jpeg");
 	     InputStream in1 = new ByteArrayInputStream(buffer);
@@ -58,7 +58,7 @@ public class ImageController {
 		 try{
 			 buffer = documentDao.getPhotoFromFTP(docId,type,folder,true);
 		 }catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error("error",e);
 		 }
 	     response.setContentType("image/jpeg");
 	     InputStream in1 = new ByteArrayInputStream(buffer);
@@ -74,7 +74,7 @@ public class ImageController {
 		 try{
 			 buffer = documentDao.getFileToDisplay(filename,false);
 		 }catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error("error",e);
 		 }
 	     response.setContentType("image/jpeg");
 	     InputStream in1 = new ByteArrayInputStream(buffer);
@@ -90,7 +90,7 @@ public class ImageController {
 		 try{
 			 buffer = documentDao.getFileToDisplay(filename,true);
 		 }catch(Exception e){
-			logger.error(e.getMessage());
+			logger.error("error",e);
 		 }
 	     response.setContentType("image/jpeg");
 	     InputStream in1 = new ByteArrayInputStream(buffer);

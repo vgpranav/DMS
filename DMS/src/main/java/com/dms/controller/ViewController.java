@@ -117,7 +117,7 @@ public class ViewController {
 	public ModelAndView showHomepage(ModelMap model, @ModelAttribute User user, HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		LoggingHelper.logMVRequest("showHomepage",user);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"showHomepage",user);
 
 		ModelAndView mv = null;
 		User authenticatedUser = null;
@@ -147,8 +147,8 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = { "/addSociety" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView addSociety() {
-		LoggingHelper.logMVRequest("addSociety","");
+	public ModelAndView addSociety(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addSociety","");
 		ModelAndView mv = null;
 		List<SocietyType> socTypes = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -175,8 +175,8 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = { "/deleteAuth" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView deleteAuth() {
-		LoggingHelper.logMVRequest("deleteAuth","");
+	public ModelAndView deleteAuth(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"deleteAuth","");
 
 		ModelAndView mv = null;
 		try {
@@ -190,8 +190,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createSubProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createSubProject() {
-		LoggingHelper.logMVRequest("createSubProject","");
+	public ModelAndView createSubProject(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createSubProject","");
 
 		ModelAndView mv = null;
 		List<SocietyType> socTypes = null;
@@ -221,7 +221,7 @@ public class ViewController {
 	@RequestMapping(value = { "/saveSociety" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveSociety(@ModelAttribute Society society, HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("saveSociety",society);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveSociety",society);
 
 
 		ModelAndView mv = null;
@@ -255,8 +255,8 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = { "/addDoctype" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView addDoctype() {
-		LoggingHelper.logMVRequest("addDoctype","");
+	public ModelAndView addDoctype(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addDoctype","");
 		ModelAndView mv = null;
 		List<Doctype> docTypes = null;
 		DocumentDao documentDao = new DocumentDao();
@@ -275,7 +275,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveDocumentType(@ModelAttribute Doctype doctype, HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("saveDocumentType",doctype);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveDocumentType",doctype);
 
 		ModelAndView mv = null;
 		List<Doctype> docTypes = null;
@@ -298,8 +298,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addDocSubType" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView addDocSubType() {
-		LoggingHelper.logMVRequest("addDocSubType","");
+	public ModelAndView addDocSubType(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addDocSubType","");
 		ModelAndView mv = null;
 		List<Doctype> docTypes = null;
 		List<DocSubType> docSubType = null;
@@ -320,7 +320,7 @@ public class ViewController {
 	@RequestMapping(value = { "/saveDocumentSubType" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveDocumentType(@ModelAttribute DocSubType docSubType, HttpServletRequest request) {
-		LoggingHelper.logMVRequest("saveDocumentSubType",docSubType);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveDocumentSubType",docSubType);
 
 		ModelAndView mv = null;
 		List<Doctype> docTypes = null;
@@ -346,8 +346,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addFormFields" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView addFormFields() {
-		LoggingHelper.logMVRequest("addFormFields","");
+	public ModelAndView addFormFields(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addFormFields","");
 
 		ModelAndView mv = null;
 		List<DocSubType> docSubType = null;
@@ -373,7 +373,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addDocument1" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addDocument1(HttpServletRequest request) {
-		LoggingHelper.logMVRequest("addDocument1","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addDocument1","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -392,9 +392,9 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addDocument2" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public ModelAndView addDocument2(@ModelAttribute Document document) {
+	public ModelAndView addDocument2(@ModelAttribute Document document,HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("addDocument2",document);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addDocument2",document);
 
 		ModelAndView mv = null;
 		List<FormFields> formFields = null;
@@ -437,7 +437,7 @@ public class ViewController {
 	public ModelAndView addDocument3(@org.springframework.web.bind.annotation.RequestParam Map<String, String> params,
 			HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("addDocument3",params);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addDocument3",params);
 
 		long detailsSaved = 0L;
 		User user = null;
@@ -482,8 +482,8 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = { "/viewDocument" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView viewDocument() {
-		LoggingHelper.logMVRequest("viewDocument","");
+	public ModelAndView viewDocument(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewDocument","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -502,7 +502,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addMember" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addMember(HttpServletRequest request) {
-		LoggingHelper.logMVRequest("addMember","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addMember","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -524,7 +524,7 @@ public class ViewController {
 	@RequestMapping(value = { "/createCommittee" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView createCommittee(HttpServletRequest request) {
-		LoggingHelper.logMVRequest("createCommittee","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createCommittee","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -548,7 +548,7 @@ public class ViewController {
 	@RequestMapping(value = { "/displayAdminPanel" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView displayAdminPanel(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("displayAdminPanel","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displayAdminPanel","");
 
 		ModelAndView mv = null;
 		User user = null;
@@ -584,7 +584,7 @@ public class ViewController {
 	public ModelAndView displayAdminPanelBySocId(@ModelAttribute Society society, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		LoggingHelper.logMVRequest("displayAdminPanelBySocId",society);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displayAdminPanelBySocId",society);
 
 		ModelAndView mv = null;
 		User user = null;
@@ -624,7 +624,7 @@ public class ViewController {
 	@RequestMapping(value = { "/viewCommittee" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView viewCommittee(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("viewCommittee","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewCommittee","");
 		ModelAndView mv = null;
 		try {
 			mv = new ModelAndView("viewCommittee");
@@ -639,7 +639,7 @@ public class ViewController {
 	@RequestMapping(value = { "/addSocietyPhotos" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addSocietyPhotos(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("addSocietyPhotos","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addSocietyPhotos","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -658,7 +658,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createVendor" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView createVendor(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("createVendor","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createVendor","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -677,8 +677,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/societyManagerMapping" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView societyManagerMapping() {
-		LoggingHelper.logMVRequest("societyManagerMapping","");
+	public ModelAndView societyManagerMapping(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"societyManagerMapping","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		List<CommitteeMaster> committeeMasterList = null;
@@ -698,8 +698,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createBuilder" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createBuilder() {
-		LoggingHelper.logMVRequest("createBuilder","");
+	public ModelAndView createBuilder(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createBuilder","");
 
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -717,7 +717,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/saveBuilder" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveBuilder(@ModelAttribute Builder builder, HttpServletRequest request) {
-		LoggingHelper.logMVRequest("saveBuilder",builder);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveBuilder",builder);
 		ModelAndView mv = null;
 		List<Builder> builderList = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -740,8 +740,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createProject() {
-		LoggingHelper.logMVRequest("createProject","");
+	public ModelAndView createProject(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createProject","");
 
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -764,7 +764,7 @@ public class ViewController {
 	@RequestMapping(value = { "/saveProject" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveProject(@ModelAttribute Project project, HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("saveProject",project);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveProject",project);
 
 		ModelAndView mv = null;
 		List<Builder> builderList = null;
@@ -794,8 +794,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/societyDocumentMapping" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView societyDocumentMapping() {
-		LoggingHelper.logMVRequest("societyDocumentMapping","");
+	public ModelAndView societyDocumentMapping(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"societyDocumentMapping","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -824,7 +824,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView addSocDocMapping(@ModelAttribute GenericBean bean, HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("addSocDocMapping",bean);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addSocDocMapping",bean);
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -858,8 +858,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createAdminUser" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createAdminUser() {
-		LoggingHelper.logMVRequest("createAdminUser","");
+	public ModelAndView createAdminUser(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createAdminUser","");
 
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -885,7 +885,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveAdminUser(@ModelAttribute User adminUser, HttpServletRequest request) {
 
-		LoggingHelper.logMVRequest("saveAdminUser",adminUser);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveAdminUser",adminUser);
 		ModelAndView mv = null;
 		List<GenericBean> roleList = null;
 		SocietyDao documentDao = new SocietyDao();
@@ -915,7 +915,7 @@ public class ViewController {
 	@RequestMapping(value = { "/addMemberPhotos" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addMemberPhotos(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("addMemberPhotos","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addMemberPhotos","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -934,7 +934,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addNotice" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addNotice(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("addNotice","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addNotice","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -953,7 +953,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addPolicy" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addPolicy(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("addPolicy","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addPolicy","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -974,7 +974,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView viewNoticeboard(@ModelAttribute Society society, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("viewNoticeboard",society);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewNoticeboard",society);
 		ModelAndView mv = null;
 		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 		SocietyDao sdao = new SocietyDao();
@@ -994,7 +994,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView viewSocietyPolicy(@ModelAttribute Society society, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("viewSocietyPolicy","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewSocietyPolicy","");
 		ModelAndView mv = null;
 		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 		SocietyDao sdao = new SocietyDao();
@@ -1013,7 +1013,7 @@ public class ViewController {
 	@RequestMapping(value = { "/displaySelfSociety" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView displaySelfSociety(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("displaySelfSociety","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displaySelfSociety","");
 		ModelAndView mv = null;
 		Userprofile userprofile = null;
 		SocietyDao sdao = new SocietyDao();
@@ -1037,7 +1037,7 @@ public class ViewController {
 	public ModelAndView displayDocument(@RequestParam("docsubtypeid") String docsubtypeid,
 			@RequestParam("userid") String userid, @RequestParam("societyid") String societyid,
 			HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("displayDocument",request.getParameterMap());
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displayDocument",request.getParameterMap());
 
 		ModelAndView mv = null;
 		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
@@ -1070,7 +1070,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView displayDocumentFromSearch(@RequestParam("documentid") String documentid,
 			HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("displayDocumentFromSearch",request.getParameterMap());
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displayDocumentFromSearch",request.getParameterMap());
 
 		ModelAndView mv = null;
 		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
@@ -1097,7 +1097,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView showDocFromAdminPanel(@ModelAttribute GenericBean bean, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("showDocFromAdminPanel",bean);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"showDocFromAdminPanel",bean);
 		ModelAndView mv = null;
 		try {
 			mv = new ModelAndView("viewDocumentFromAdminPanel");
@@ -1114,7 +1114,7 @@ public class ViewController {
 	@RequestMapping(value = { "/createVendorCards" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView createVendorCards(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("createVendorCards","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createVendorCards","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -1134,7 +1134,7 @@ public class ViewController {
 	@RequestMapping(value = { "/createVendorPhoto" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView createVendorPhoto(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("createVendorPhoto","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createVendorPhoto","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		User user = null;
@@ -1153,7 +1153,7 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addCallRef" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView addCallRef(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("addCallRef","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addCallRef","");
 		ModelAndView mv = null;
 		User user = null;
 		SocietyDao sdao = new SocietyDao();
@@ -1173,7 +1173,7 @@ public class ViewController {
 	@RequestMapping(value = { "/saveCallRef" }, method = { org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveCallRef(@ModelAttribute CallReference callref, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("saveCallRef",callref);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveCallRef",callref);
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
 
@@ -1201,7 +1201,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView saveCallRef3(@ModelAttribute CallReference callref, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("saveCallRef3",callref);
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"saveCallRef3",callref);
 		ModelAndView mv = null;
 		try {
 			mv = new ModelAndView("AddCallReference3");
@@ -1218,7 +1218,7 @@ public class ViewController {
 	@RequestMapping(value = { "/viewAllCallRef" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView viewAllCallRef(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("viewAllCallRef","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewAllCallRef","");
 		ModelAndView mv = null;
 		User user = null;
 		List<CallReference> calls = null;
@@ -1241,7 +1241,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView getRefContactpage(@RequestParam("callrefid") long callrefid, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("getRefContactpage",request.getParameterMap());
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"getRefContactpage",request.getParameterMap());
 
 		CallReference callref = new CallReference();
 		callref.setCallrefid(callrefid);
@@ -1255,7 +1255,7 @@ public class ViewController {
 		} catch (Exception e) {
 			logger.error("Exception : ",e);
 		}
-		LoggingHelper.logMVRequest("getRefContactpage","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"getRefContactpage","");
 
 		return mv;
 	}
@@ -1264,7 +1264,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView getRefMeetingpage(@RequestParam("callrefid") long callrefid, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("getRefMeetingpage",request.getParameterMap());
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"getRefMeetingpage",request.getParameterMap());
 
 		ModelAndView mv = null;
 		try {
@@ -1283,7 +1283,7 @@ public class ViewController {
 	@RequestMapping(value = { "/editUserProfile" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView editUserProfile(HttpServletRequest request) {
-		LoggingHelper.logMVRequest("editUserProfile","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"editUserProfile","");
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -1302,8 +1302,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/deleteDocument" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView deleteDocument() {
-		LoggingHelper.logMVRequest("deleteDocument","");
+	public ModelAndView deleteDocument(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"deleteDocument","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -1322,7 +1322,7 @@ public class ViewController {
 	@RequestMapping(value = { "/managerDocViewAuth" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView managerDocViewAuth(HttpServletRequest request) {
-		LoggingHelper.logMVRequest("managerDocViewAuth","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"managerDocViewAuth","");
 
 		ModelAndView mv = null;
 		List<Society> societyList = null;
@@ -1352,8 +1352,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/manageDesignation" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView manageDesignation() {
-		LoggingHelper.logMVRequest("manageDesignation","");
+	public ModelAndView manageDesignation(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"manageDesignation","");
 		ModelAndView mv = null;
 		List<GenericBean> desigList = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -1369,8 +1369,8 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = { "/createRole" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createRole() {
-		LoggingHelper.logMVRequest("createRole","");
+	public ModelAndView createRole(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createRole","");
 		ModelAndView mv = null;
 		List<RoleTransaction> roleList = null;
 		LoginDao loginDao = new LoginDao();
@@ -1387,8 +1387,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/addConfidentialDocAccess" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView addConfidentialDocAccess() {
-		LoggingHelper.logMVRequest("addConfidentialDocAccess","");
+	public ModelAndView addConfidentialDocAccess(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"addConfidentialDocAccess","");
 		ModelAndView mv = null;
 		List<RoleTransaction> roleList = null;
 		LoginDao loginDao = new LoginDao();
@@ -1405,8 +1405,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createBrochureBuilder" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createBuilderBrochure() {
-		LoggingHelper.logMVRequest("createBrochureBuilder","");
+	public ModelAndView createBuilderBrochure(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createBrochureBuilder","");
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1427,8 +1427,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createBrochureProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createBrochureProject() {
-		LoggingHelper.logMVRequest("createBrochureProject","");
+	public ModelAndView createBrochureProject(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createBrochureProject","");
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1449,8 +1449,8 @@ public class ViewController {
 
 	@RequestMapping(value = { "/createBrochureSubProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public ModelAndView createBrochureSubProject() {
-		LoggingHelper.logMVRequest("createBrochureSubProject","");
+	public ModelAndView createBrochureSubProject(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"createBrochureSubProject","");
 		ModelAndView mv = null;
 		SocietyDao documentDao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1472,7 +1472,7 @@ public class ViewController {
 	@RequestMapping(value = { "/brochureSelectionBuilder" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView brochureSelectionBuilder(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("brochureSelectionBuilder","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"brochureSelectionBuilder","");
 		ModelAndView mv = null;
 		SocietyDao sdao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1493,7 +1493,7 @@ public class ViewController {
 	@RequestMapping(value = { "/brochureSelectionProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView brochureSelectionProject(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("brochureSelectionProject","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"brochureSelectionProject","");
 		ModelAndView mv = null;
 		SocietyDao sdao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1514,7 +1514,7 @@ public class ViewController {
 	@RequestMapping(value = { "/brochureSelectionSubProject" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView brochureSelectionSubProject(HttpServletRequest request, HttpServletResponse response) {
-		LoggingHelper.logMVRequest("brochureSelectionSubProject","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"brochureSelectionSubProject","");
 		ModelAndView mv = null;
 		SocietyDao sdao = new SocietyDao();
 		List<Builder> builderList = null;
@@ -1536,7 +1536,7 @@ public class ViewController {
 			org.springframework.web.bind.annotation.RequestMethod.POST })
 	public ModelAndView viewBuilderBrochure(@ModelAttribute GenericBean gbean, HttpServletRequest request,
 			HttpServletResponse response) {
-		LoggingHelper.logMVRequest("viewBrochure","");
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"viewBrochure","");
 		ModelAndView mv = null;
 		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
 		SocietyDao sdao = new SocietyDao();

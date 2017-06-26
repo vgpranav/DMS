@@ -18,6 +18,7 @@ import com.dms.dao.LoginDao;
 public class LoggingHelper {
 
 	private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
+	private static final Logger actionlogger = LoggerFactory.getLogger("actionlogger");
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(LoggingHelper.class);
 
 	public static void logAction(String userId, String action) {
@@ -25,10 +26,10 @@ public class LoggingHelper {
 	}
 
 	
-	public static void logMVRequest(String Action,Object obj){
-		reqreslogger.info("----------------- [REQUEST]["+Action+"] ----------------- ");
+	public static void logMVRequest(String userid,String Action,Object obj){
+		reqreslogger.info("----------------- [REQUEST]["+Action+"][USER:"+userid+"] ----------------- ");
 		reqreslogger.info(obj.toString());
-		
+		actionlogger.info(userid+" : "+Action);
 	}
 
 	public static void logMVResponse(String Action,ModelAndView mv){
@@ -40,10 +41,10 @@ public class LoggingHelper {
 		}
 	}
 	
-	public static void logAjaxRequest(String Action,Object obj){
-		reqreslogger.info("----------------- [AJAX REQUEST]["+Action+"] ----------------- ");
+	public static void logAjaxRequest(String userid,String Action,Object obj){
+		reqreslogger.info("----------------- [AJAX REQUEST]["+Action+"][USER:"+userid+"] ----------------- ");
 		reqreslogger.info(obj.toString());
-		
+		actionlogger.info(userid+" : "+Action);
 	}
 	
 	public static void logAjaxResponse(String Action,Object obj){

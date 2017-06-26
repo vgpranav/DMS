@@ -48,7 +48,8 @@ public class LoginController {
 	  @RequestMapping(value={"/authenticateUser"}, method={org.springframework.web.bind.annotation.RequestMethod.POST})
 	  public ModelAndView welcome(ModelMap model, @ModelAttribute User user, HttpServletRequest request, HttpServletResponse response)
 	  {
-		reqreslogger.info("[REQUEST]"+user.toString()); 
+		
+		LoggingHelper.logMVRequest("","authenticateUser",user);
 		  
 	    LoginDao loginDao = new LoginDao();
 	    SocietyDao societyddao = new SocietyDao();
@@ -99,6 +100,7 @@ public class LoginController {
 	          request.getSession().setAttribute("modNAme",modNAme);
 	          request.getSession().setAttribute("userObject", authenticatedUser);
 	          request.getSession().setAttribute("deleteFlag", authenticatedUser.getDeleteflag());
+	          request.getSession().setAttribute("userId", authenticatedUser.getUserid());
 	          
 	          mv.addObject("userprofile", userprofile);
 	          
@@ -119,6 +121,7 @@ public class LoginController {
 	    } catch (Exception e) {
 	      logger.error(e.getMessage());
 	    }
+	    LoggingHelper.logMVResponse("authenticateUser",mv);
 	    return mv;
 	  }
 }

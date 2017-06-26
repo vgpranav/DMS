@@ -28,7 +28,7 @@ public class PDFController
     {
 		String documentId = ServletRequestUtils.getStringParameter(request, "documentId");
 		
-		reqreslogger.info("[REQUEST]"+documentId.toString());
+		//reqreslogger.info("[REQUEST]"+documentId.toString());
 		
         String output = "PDF";
         

@@ -49,7 +49,7 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> echoFile(MultipartHttpServletRequest request, HttpServletResponse response)
   {
-	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  //reqreslogger.info("[REQUEST]"+request.getFileNames());
 	  
     byte[] bytes = null;
     Long size = null;
@@ -187,7 +187,7 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadMemberPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
   {
-	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  //reqreslogger.info("[REQUEST]"+request.getFileNames());
 	  
     byte[] bytes = null;
     Long size = null;
@@ -243,7 +243,7 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getSocietyPhotos(@ModelAttribute Society society)
   {
-	  reqreslogger.info("[REQUEST]"+society.toString());
+	  //reqreslogger.info("[REQUEST]"+society.toString());
 	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
@@ -260,7 +260,7 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getMemberPhotos(@ModelAttribute User user)
   {
-	  reqreslogger.info("[REQUEST]"+user.toString());
+	  //reqreslogger.info("[REQUEST]"+user.toString());
 	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
@@ -276,7 +276,7 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getVendorPhotos(@ModelAttribute Vendor vendor)
   {
-	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  //reqreslogger.info("[REQUEST]"+vendor.toString());
 	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
@@ -292,7 +292,7 @@ public class FileController
   @ResponseBody
   public List<HashMap<String, Object>> getVendorCards(@ModelAttribute Vendor vendor)
   {
-	  reqreslogger.info("[REQUEST]"+vendor.toString());
+	  //reqreslogger.info("[REQUEST]"+vendor.toString());
 	  
     SocietyDao societyDao = new SocietyDao();
     List<HashMap<String, Object>> photos = new ArrayList();
@@ -309,7 +309,7 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadVendorPhoto(MultipartHttpServletRequest request, HttpServletResponse response)
   {
-	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  //reqreslogger.info("[REQUEST]"+request.getFileNames());
 	  
     byte[] bytes = null;
     Long size = null;
@@ -370,7 +370,7 @@ public class FileController
   @ResponseBody
   public HashMap<String, Object> uploadVendorCards(MultipartHttpServletRequest request, HttpServletResponse response)
   {
-	  reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  //reqreslogger.info("[REQUEST]"+request.getFileNames());
 	  
     byte[] bytes = null;
     Long size = null;
