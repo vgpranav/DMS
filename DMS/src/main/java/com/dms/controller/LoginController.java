@@ -60,18 +60,32 @@ public class LoginController {
 	    DocumentDao ddao = new DocumentDao();
 		List<DocSubType> docSubType = null;
 		String sessionKey="";
+		String modNAme="DMS";
 	    try {
 	      authenticatedUser = loginDao.authenticateUser(user, authenticatedUser);
 	      if (authenticatedUser != null) {
 	        if (authenticatedUser.getActive() == 1) {
 	          mv = new ModelAndView("home");
-	          
 	          userprofile.setUserid(authenticatedUser.getUserid());
-			  userprofile = societyDao.getUserDataById(userprofile);
-			  docSubType = ddao.getDocStubtypesToDispay(docSubType,userprofile.getSocietyid());
-			  
-			  request.getSession().setAttribute("userprofile", userprofile);
-			  mv.addObject("docSubType", docSubType);
+	          userprofile = societyDao.getUserDataById(userprofile);
+	          request.getSession().setAttribute("userprofile", userprofile);
+	          if(userprofile!=null){
+	        	  docSubType = ddao.getDocStubtypesToDispay(docSubType,userprofile.getSocietyid());
+	        	  mv.addObject("docSubType", docSubType);
+	        	  
+	        	  Society soc = new Society();
+		          soc.setSocietyid(Long.valueOf(userprofile.getSocietyid()));
+		          
+		          soc = societyddao.getSocietyDetailsById(soc);
+		          
+		          if(soc.getSocietytypeid()==2)
+		        	  modNAme = "CS - DMS";
+		          else
+		        	  modNAme="HS - DMS";
+		          
+		          boolean newNoticeAdded = societyddao.checkIfNewNoticeAdded(userprofile.getSocietyid());
+		          mv.addObject("newNoticeAdded", newNoticeAdded);
+	          }
 			  
 	          List<HashMap<String, Object>> photos = new ArrayList<HashMap<String, Object>>();
 	          photos =  societyddao.getSocietyPhotos(authenticatedUser.getUserid(),"user","UserImages",photos);
@@ -85,16 +99,6 @@ public class LoginController {
 	          
 	          long isSocManager = societyddao.checkIfSocietyManager(authenticatedUser.getUserid());
 	          
-	          Society soc = new Society();
-	          soc.setSocietyid(Long.valueOf(userprofile.getSocietyid()));
-	          String modNAme="";
-	          soc = societyddao.getSocietyDetailsById(soc);
-	          
-	          if(soc.getSocietytypeid()==2)
-	        	  modNAme = "CS - DMS";
-	          else
-	        	  modNAme="HS - DMS";
-	          
 	          request.getSession().setAttribute("userroleid", authenticatedUser.getUserroleid());
 	          request.getSession().setAttribute("socmanagercount",isSocManager);
 	          request.getSession().setAttribute("modNAme",modNAme);
@@ -103,9 +107,6 @@ public class LoginController {
 	          request.getSession().setAttribute("userId", authenticatedUser.getUserid());
 	          
 	          mv.addObject("userprofile", userprofile);
-	          
-	          boolean newNoticeAdded = societyddao.checkIfNewNoticeAdded(userprofile.getSocietyid());
-	          mv.addObject("newNoticeAdded", newNoticeAdded);
 	          
 	          sessionKey = LoggingHelper.logUserLogin(authenticatedUser);
 	          request.getSession().setAttribute("sessionKey",sessionKey);

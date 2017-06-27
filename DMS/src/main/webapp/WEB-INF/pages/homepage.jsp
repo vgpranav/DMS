@@ -1,8 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
  
-<input type="hidden" id="societyid" value="${userprofile.societyid}">
+ 
+<c:if test="${userprofile==null}">
+<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="x_panel tile">
+			<h2>Logged in as Admin User</h2> 
+			<div class="clearfix"></div>
+			<input type="hidden" id="userid" name="userid" value="">
+	</div>
+</div>
+</c:if>
 
+<c:if test="${userprofile!=null}">
+<input type="hidden" id="societyid" value="${userprofile.societyid}">
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
 		<div class="x_title">
@@ -430,6 +441,10 @@
 			</div>
 		</div>
 	</div>
+</c:if>
+
+
+
 	
 	
 	<div id="confOTPDialog">
@@ -603,37 +618,43 @@
 		var userid = $('#userid').val();
 		
 		var table = $('#thetablePK').DataTable();
-			
-		
 		table .clear() .draw();
-		 blockUI();
-		$.ajax({
-	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
-	        data :"userid="+userid
-	        		+"&randomHash="+randomHash,
-	        success: function(response){
-	        	var srno=1;
-	        	$.each(response, function(i, item) {
+		
+		if(userid.length>0){
+			
+			 blockUI();
+			 $.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/getParkingDetailsForMember.do",
+		        data :"userid="+userid
+		        		+"&randomHash="+randomHash,
+		        success: function(response){
+		        	var srno=1;
+		        	$.each(response, function(i, item) {
 
-	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
+		        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteParkingData(\'' + item.userparkingdetailsid + '\')"><i class="fa fa-times"></i></a>';
 
-	        		table.row.add( [
-	        			item.vehicletype,
-	        			item.parkingtype,
-	        			item.parkingallotmentno,
-	        			item.vehicleno,
-	        			 
-	                ] ).draw( false );
-	        		srno++;
-	        	 });
-	        	 unblockUI();
-	        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-					 unblockUI();
-				}
-			});
+		        		table.row.add( [
+		        			item.vehicletype,
+		        			item.parkingtype,
+		        			item.parkingallotmentno,
+		        			item.vehicleno,
+		        			 
+		                ] ).draw( false );
+		        		srno++;
+		        	 });
+		        	 unblockUI();
+		        },
+					error : function(e) {
+						notify('error','ERROR','Error occured',2000);
+						 unblockUI();
+					}
+				});
+			
+		}
+		
+		
+		
 	}
 	
 	
@@ -645,164 +666,174 @@
 			
 		
 		table .clear() .draw();
-		 blockUI();
-		$.ajax({
-	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
-	        data :"userid="+userid
-	        		+"&randomHash="+randomHash,
-	        success: function(response){
-	        	var srno=1;
-	        	$.each(response, function(i, item) {
+		
+		if(userid.length>0){
+			blockUI();
+			$.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/getShareCertDetails.do",
+		        data :"userid="+userid
+		        		+"&randomHash="+randomHash,
+		        success: function(response){
+		        	var srno=1;
+		        	$.each(response, function(i, item) {
 
-	        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
+		        		var delBtn = '<a class="btn btn-default btn-sm" onclick="deleteSCData(\'' + item.userscnomineeid + '\')"><i class="fa fa-times"></i></a>';
 
-	        		table.row.add( [
-	        			item.nominee,
-	        			item.percent,
-	        			item.nomineerelation,
-	        			new Date(item.nomineedob).toString("dd MMM yyyy"),
-	        			item.nomineeaddress,
-	                ] ).draw( false );
-	        		srno++;
-	        	 });
-	        	 unblockUI();
-	        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-					 unblockUI();
-				}
-			});
+		        		table.row.add( [
+		        			item.nominee,
+		        			item.percent,
+		        			item.nomineerelation,
+		        			new Date(item.nomineedob).toString("dd MMM yyyy"),
+		        			item.nomineeaddress,
+		                ] ).draw( false );
+		        		srno++;
+		        	 });
+		        	 unblockUI();
+		        },
+					error : function(e) {
+						notify('error','ERROR','Error occured',2000);
+						 unblockUI();
+					}
+				});
+		}
+		 
 	}
 	
 	
 function editUserData(){
 		
 		var userid = $('#userid').val();
-		 blockUI();
-		$.ajax({
-	        type: "GET",
-	        url: "<%=request.getContextPath()%>/getUserDataById.do",
-	        data :"userid="+userid,
-	        success: function(response){
-	        	if(response.userid>0) {
-	        		
-	        		var comptypes = [];
-        			comptypes["prilc"] = "Private Limited Company";
-        			comptypes["publc"] = "Public Limited Company";
-        			comptypes["uc"] = "Unlimited Company";
-        			comptypes["llp"] = "Limited Liability Partnership";
-        			comptypes["p"] = "Partnership";
-        			comptypes["sp"] = "Sole Proprietorship";
-        			comptypes["lo"] = "Liaison Office / Representative Office";
-        			comptypes["po"] = "Project Office";
-        			comptypes["bo"] = "Branch Office";
-        			comptypes["jvc"] = "Joint Venture Company";
-        			comptypes["sc"] = "Subsidiary Company";
- 
-	        		$('#firstName').html(response.firstName);
-	        		$('#middleName').html(response.middleName);
-	        		$('#lastName').html(response.lastName);
-	        		$('#mobileNo').html(response.mobileNo);
-	        		$('#alternateno').html(response.alternateno);
-	        		$('#email').html(response.email);
-	        		$('#aadharno').html(response.aadharno);
-	        		
-	        		$('#password').html(response.password);
-	        		$('#purchasedate').html	(new Date(response.purchasedate).toString("dd/MM/yyyy"));
-	        		$('#possessiondate').html(new Date(response.possessiondate).toString("dd/MM/yyyy"));
-	        		
-	        		$('#occupancy').html(response.occupancy.toUpperCase());
-	        		showhidetenant(response.occupancy);
-	        		
-	        		$('#flatno').html(response.flatno);
-	        		$('#wing').html(response.wing);
-	        		$('#tower').html(response.tower);
-	        		$('#floor').html(response.floor);
-	        		$('#builtuparea').html(response.builtuparea);
-	        		$('#carpetarea').html(response.carpetarea);
-	        		if(response.tenantname!=null && response.tenantname.length>0){
-		        		$('#tenantPVstatus').html(response.tenantPVstatus.toUpperCase());
-	        			$('#tenantname').html(response.tenantname.split(' ')[0]);
-		        		$('#tenantname2').html(response.tenantname.split(' ')[1]);
-		        		$('#tenantname3').html(response.tenantname.split(' ')[2]);
-		        		$('#tenantaddress').html(response.tenantaddress);
-		        		$('#tenantcontactnumber').html(response.tenantcontactnumber);
-		        		$('#tenantaltnumber').html(response.tenantaltnumber);
-		        		$('#tenantemail').html(response.tenantemail);
-		        		$('#tenantaadharno').html(response.tenantaadharno);
-		        		$('#tenantType').html(response.tenantType);
-		        		
-		        		if(response.tenantfrom!="")
-		        		    $('#tenantfrom').html(new Date(response.tenantfrom).toString("dd MMM yyyy"));
-		        		if(response.tenantto!="")
-		        			$('#tenantto').html(new Date(response.tenantto).toString("dd MMM yyyy"));
-	        		}
-	        		
-	        		$('#vehicletype').val(response.vehicletype);
-	        		$('#parkingtype').val(response.parkingtype);
-	        		$('#parkingallotmentno').val(response.parkingallotmentno);
-	        		
-	        		$('#bloodgroup').html(response.bloodgroup.toUpperCase().replace('N',' -ve').replace('P',' +ve'));
-	        		$('#sharecertno').html(response.sharecertno);
-	        		
-	        		$('#membertype').html(response.membertype);
-	        		$('#flattype').html(response.flattype.toUpperCase());
-	        		 
-	        		if(response.membertype=='Commercial'){
+		
+		if(userid.length>0){
+			
+			 blockUI();
+				$.ajax({
+			        type: "GET",
+			        url: "<%=request.getContextPath()%>/getUserDataById.do",
+			        data :"userid="+userid,
+			        success: function(response){
+			        	if(response.userid>0) {
+			        		
+			        		var comptypes = [];
+		        			comptypes["prilc"] = "Private Limited Company";
+		        			comptypes["publc"] = "Public Limited Company";
+		        			comptypes["uc"] = "Unlimited Company";
+		        			comptypes["llp"] = "Limited Liability Partnership";
+		        			comptypes["p"] = "Partnership";
+		        			comptypes["sp"] = "Sole Proprietorship";
+		        			comptypes["lo"] = "Liaison Office / Representative Office";
+		        			comptypes["po"] = "Project Office";
+		        			comptypes["bo"] = "Branch Office";
+		        			comptypes["jvc"] = "Joint Venture Company";
+		        			comptypes["sc"] = "Subsidiary Company";
+		 
+			        		$('#firstName').html(response.firstName);
+			        		$('#middleName').html(response.middleName);
+			        		$('#lastName').html(response.lastName);
+			        		$('#mobileNo').html(response.mobileNo);
+			        		$('#alternateno').html(response.alternateno);
+			        		$('#email').html(response.email);
+			        		$('#aadharno').html(response.aadharno);
+			        		
+			        		$('#password').html(response.password);
+			        		$('#purchasedate').html	(new Date(response.purchasedate).toString("dd/MM/yyyy"));
+			        		$('#possessiondate').html(new Date(response.possessiondate).toString("dd/MM/yyyy"));
+			        		
+			        		$('#occupancy').html(response.occupancy.toUpperCase());
+			        		showhidetenant(response.occupancy);
+			        		
+			        		$('#flatno').html(response.flatno);
+			        		$('#wing').html(response.wing);
+			        		$('#tower').html(response.tower);
+			        		$('#floor').html(response.floor);
+			        		$('#builtuparea').html(response.builtuparea);
+			        		$('#carpetarea').html(response.carpetarea);
+			        		if(response.tenantname!=null && response.tenantname.length>0){
+				        		$('#tenantPVstatus').html(response.tenantPVstatus.toUpperCase());
+			        			$('#tenantname').html(response.tenantname.split(' ')[0]);
+				        		$('#tenantname2').html(response.tenantname.split(' ')[1]);
+				        		$('#tenantname3').html(response.tenantname.split(' ')[2]);
+				        		$('#tenantaddress').html(response.tenantaddress);
+				        		$('#tenantcontactnumber').html(response.tenantcontactnumber);
+				        		$('#tenantaltnumber').html(response.tenantaltnumber);
+				        		$('#tenantemail').html(response.tenantemail);
+				        		$('#tenantaadharno').html(response.tenantaadharno);
+				        		$('#tenantType').html(response.tenantType);
+				        		
+				        		if(response.tenantfrom!="")
+				        		    $('#tenantfrom').html(new Date(response.tenantfrom).toString("dd MMM yyyy"));
+				        		if(response.tenantto!="")
+				        			$('#tenantto').html(new Date(response.tenantto).toString("dd MMM yyyy"));
+			        		}
+			        		
+			        		$('#vehicletype').val(response.vehicletype);
+			        		$('#parkingtype').val(response.parkingtype);
+			        		$('#parkingallotmentno').val(response.parkingallotmentno);
+			        		
+			        		$('#bloodgroup').html(response.bloodgroup.toUpperCase().replace('N',' -ve').replace('P',' +ve'));
+			        		$('#sharecertno').html(response.sharecertno);
+			        		
+			        		$('#membertype').html(response.membertype);
+			        		$('#flattype').html(response.flattype.toUpperCase());
+			        		 
+			        		if(response.membertype=='Commercial'){
 
-	        			$('#compdetails').show();
-	        			$('#tenantComDetails').show();
-	        			$('#companyname').html(response.companyname);
-	        			$('#gumastalicno').html(response.gumastalicno);
-	        			$('#companytype').html(comptypes[response.companytype]);
+			        			$('#compdetails').show();
+			        			$('#tenantComDetails').show();
+			        			$('#companyname').html(response.companyname);
+			        			$('#gumastalicno').html(response.gumastalicno);
+			        			$('#companytype').html(comptypes[response.companytype]);
 
-	        			$('#tenantcompanyname').html(response.tenantcompanyname);
-	        			$('#tenantgumastalicno').html(response.tenantgumastalicno);
-	        			$('#tenantcompanytype').html(comptypes[response.tenantcompanytype]);
-	        		
-	        		}
-	        		
-	        		if(response.membertype=='Commercial'){
-						$('#owndetailsbadge').html("Owner/ Proprietor/ Partner/ Promoters/ Director Details");
-						$('#flatdetailsbadge').html("Office/ Shop/ Workshop Details ");
-						
-					} else {
-						$('#owndetailsbadge').html("Owner Details");
-						$('#flatdetailsbadge').html("Flat Details");
-					}
-	        		
-	        		var strJo='';
-	        		var jointowners = response.jointowners.split(',');
-	        		$(jointowners).each(function( index ) {
-	        			  var jo1 =  jointowners[index].split(' ');
-	        			  
-	        			 	  strJo += '<div class="clearfix"></div>';
-	        			 	 strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
-		        			  strJo += '<sup>First Name</sup>';
-		        			  strJo += '<br>';
-		        			  strJo += '<span class="bigger">'+jo1[0]+'</span>';
-		        			  strJo += '</div>';
-		        			  strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
-		        			  strJo += '<sup>Middle Name</sup>';
-		        			  strJo += '<br>';
-		        			  strJo += '<span class="bigger">'+jo1[1]+'</span>';
-		        			  strJo += '</div>';
-		        			  strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
-		        			  strJo += '<sup>Last Name</sup>';
-		        			  strJo += '<br>';
-		        			  strJo += '<span class="bigger">'+jo1[2]+'</span>';
-		        			  strJo += '</div>';
-	        		});
-	        		$('#joCont').html(strJo);
-	        	}  
-	        	 unblockUI();
-	        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-					 unblockUI();
-				}
-			});
+			        			$('#tenantcompanyname').html(response.tenantcompanyname);
+			        			$('#tenantgumastalicno').html(response.tenantgumastalicno);
+			        			$('#tenantcompanytype').html(comptypes[response.tenantcompanytype]);
+			        		
+			        		}
+			        		
+			        		if(response.membertype=='Commercial'){
+								$('#owndetailsbadge').html("Owner/ Proprietor/ Partner/ Promoters/ Director Details");
+								$('#flatdetailsbadge').html("Office/ Shop/ Workshop Details ");
+								
+							} else {
+								$('#owndetailsbadge').html("Owner Details");
+								$('#flatdetailsbadge').html("Flat Details");
+							}
+			        		
+			        		var strJo='';
+			        		var jointowners = response.jointowners.split(',');
+			        		$(jointowners).each(function( index ) {
+			        			  var jo1 =  jointowners[index].split(' ');
+			        			  
+			        			 	  strJo += '<div class="clearfix"></div>';
+			        			 	 strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
+				        			  strJo += '<sup>First Name</sup>';
+				        			  strJo += '<br>';
+				        			  strJo += '<span class="bigger">'+jo1[0]+'</span>';
+				        			  strJo += '</div>';
+				        			  strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
+				        			  strJo += '<sup>Middle Name</sup>';
+				        			  strJo += '<br>';
+				        			  strJo += '<span class="bigger">'+jo1[1]+'</span>';
+				        			  strJo += '</div>';
+				        			  strJo += '<div class="col-md-3 col-sm-3 col-xs-12">';
+				        			  strJo += '<sup>Last Name</sup>';
+				        			  strJo += '<br>';
+				        			  strJo += '<span class="bigger">'+jo1[2]+'</span>';
+				        			  strJo += '</div>';
+			        		});
+			        		$('#joCont').html(strJo);
+			        	}  
+			        	 unblockUI();
+			        },
+						error : function(e) {
+							notify('error','ERROR','Error occured',2000);
+							 unblockUI();
+						}
+					});
+				
+		}
+		
 	}
 	
 	function getTenantHistory(){
@@ -812,30 +843,36 @@ function editUserData(){
 	var table = $('#thetableTen').DataTable();
 	
 	table .clear() .draw();
-	blockUI();
-	$.ajax({
-        type: "GET",
-        url: "<%=request.getContextPath()%>/getTenantHistory.do",
-        data :"userid="+userid,
-        success: function(response){
-        	var srno=1;
-        	$.each(response, function(i, item) {
+	
+	if(userid.length>0){
+		
+		blockUI();
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/getTenantHistory.do",
+	        data :"userid="+userid,
+	        success: function(response){
+	        	var srno=1;
+	        	$.each(response, function(i, item) {
 
-        		table.row.add( [
-        			item.tenantname,
-        			item.tenantcontactnumber,
-        			new Date(item.tenantfrom).toString("dd MMM yyyy"),
-        			new Date(item.tenantto).toString("dd MMM yyyy"),
-                ] ).draw( false );
-        		srno++;
-        	 });
-        	unblockUI();
-        },
-			error : function(e) {
-				notify('error','ERROR','Error occured',2000);
-				unblockUI();
-			}
-		});
+	        		table.row.add( [
+	        			item.tenantname,
+	        			item.tenantcontactnumber,
+	        			new Date(item.tenantfrom).toString("dd MMM yyyy"),
+	        			new Date(item.tenantto).toString("dd MMM yyyy"),
+	                ] ).draw( false );
+	        		srno++;
+	        	 });
+	        	unblockUI();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+		
+	}
+	
 }
 </script>
 
