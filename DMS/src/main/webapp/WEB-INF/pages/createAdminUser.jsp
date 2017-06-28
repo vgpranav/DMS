@@ -19,16 +19,43 @@
 							method="post">
 
 							<input type="hidden" id="userid" name="userid" value="0">
-									
+							
+							<div class="form-group">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12"
+								for="first-name">User Type<span class="required">*</span>
+							</label>
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<select name="userType" id="userType"
+								class="form-control" onchange="changeUserType()">
+									<option value="existing">Existing</option>
+									<option value="new">New</option>
+							</select>
+							</div>
+							</div>
+							
+							
+							<div class="form-group" id="existinguserdiv">
+							<label class="control-label col-md-4 col-sm-4 col-xs-12"
+								for="first-name">Username <span class="required">*</span>
+							</label>
+							<div class="col-md-8 col-sm-8 col-xs-12">
+								<input type="text" id="username" name="username"  class="form-control col-md-7 col-xs-12">
+							</div>
+							</div>
+							
+							<div id="newuserdiv" style="display: none;">
+
 							<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"
 								for="first-name">First Name <span class="required">*</span>
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input type="text" id="firstName" name="firstName"
-									required="required" class="form-control col-md-7 col-xs-12">
+									 class="form-control col-md-7 col-xs-12">
 							</div>
 							</div>
+							
+							
 							
 							<div class="form-group">
 							<label class="control-label col-md-4 col-sm-4 col-xs-12"
@@ -36,7 +63,7 @@
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input type="text" id="lastName" name="lastName"
-									required="required" class="form-control col-md-7 col-xs-12">
+									 class="form-control col-md-7 col-xs-12">
 							</div>
 							</div>
 							
@@ -46,7 +73,7 @@
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input type="text" id="mobileNo" name="mobileNo"
-									required="required" class="form-control col-md-7 col-xs-12">
+									 class="form-control col-md-7 col-xs-12">
 							</div>
 							</div>
 							
@@ -56,7 +83,7 @@
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
 								<input type="text" id="password" name="password"
-									required="required" class="form-control col-md-7 col-xs-12">
+									 class="form-control col-md-7 col-xs-12">
 							</div>
 							</div>
 							
@@ -84,6 +111,11 @@
 							<input type="radio" name="active" value="0"> Inactive
 						</div>
 					</div>
+
+
+							</div>
+							
+							
 							<div class="form-group" align="right">
 						<button class="btn btn-warning" type="reset">Reset</button>
 						<button class="btn btn-success">Save</button>
@@ -179,6 +211,27 @@
  <script>
  $(document).ready(function(){
 		$('#thetable').DataTable();
+		
+		$( "#username").autocomplete({
+			 source: function (request, response) {
+		            $.getJSON("${pageContext. request. contextPath}/userAutosuggest.do", {
+		            	searchText: request.term,
+		            }, response);
+		        },
+			focus: function () {
+		       // prevent value inserted on focus
+		       return false;
+		   },
+		   select: function (event, ui) {
+		       var thisValue = ui.item.value;
+		       var str = thisValue.split("--");
+		       for (var i = 0; i < str.length; i++) {		       	
+		    	   $('#userid').val(str[0]); 
+		       	   ui.item.value=str[1]; 
+		       }
+			}
+		});
+		
 	});
  
 		 
@@ -198,6 +251,8 @@
 	        		$('#password').val(response.password);
 	        		$('#userroleid option[value="'+response.userroleid+'"]').prop("selected",true).change();
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		
+	        		$('#userType option[value="new"]').prop("selected",true).change();
 	        	}  
 	        	unblockUI();
 	        },
@@ -208,4 +263,20 @@
 			});
 		 
 	}
+ 
+ 
+ function changeUserType(){
+	 var userType = $('#userType').val();
+	 if(userType=='existing'){
+		 $('#existinguserdiv').show();
+		 $('#newuserdiv').hide();
+		 
+	 }else{
+		 $('#existinguserdiv').hide();
+		 $('#newuserdiv').show();
+		 
+	 }
+	 
+	 
+ }
  </script>

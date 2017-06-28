@@ -181,5 +181,7 @@ public class DMSQueries
 
 	public static String logUserLogout = "update loginhistory set logouttime=? where sessionkey=?";
 
+	public static String getUserProfile = "select * from userprofile where userid=?";
 	
+	public static String editAdminRole="Update user set userroleid=? where userid=?";	
 }

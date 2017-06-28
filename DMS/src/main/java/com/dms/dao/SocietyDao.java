@@ -1446,31 +1446,35 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 	      
 	      conn.setAutoCommit(false);
 	      
-	      if(adminUser.getUserid()==0){
-	    	  Object obj = qr.insert(conn, DMSQueries.insertNewAdminUser, rsh, 
-	    			  adminUser.getFirstName(),
-	    			  adminUser.getLastName(),
-	    			  adminUser.getPassword(),
-	    			  adminUser.getMobileNo(),
-	    			  adminUser.getCreatedby(),
-	    			  adminUser.getUserroleid()
-			        );
+	      if(adminUser.getUserType().equalsIgnoreCase("new")){
+	    	  if(adminUser.getUserid()==0){
+		    	  Object obj = qr.insert(conn, DMSQueries.insertNewAdminUser, rsh, 
+		    			  adminUser.getFirstName(),
+		    			  adminUser.getLastName(),
+		    			  adminUser.getPassword(),
+		    			  adminUser.getMobileNo(),
+		    			  adminUser.getCreatedby(),
+		    			  adminUser.getUserroleid()
+				        );
 
-	    	  userid = CommomUtility.convertToLong(obj);
-	    	  adminUser.setUserid(userid);
+		    	  userid = CommomUtility.convertToLong(obj);
+		    	  adminUser.setUserid(userid);
+		      }
+		      else{
+		    	  Object obj = qr.update(conn, DMSQueries.updateAdminUser, 
+		    			  adminUser.getFirstName(),
+		    			  adminUser.getLastName(),
+		    			  adminUser.getPassword(),
+		    			  adminUser.getActive(),
+		    			  adminUser.getMobileNo(),
+		    			  adminUser.getUserroleid(),
+		    			  adminUser.getUserid()
+				        );
+		      }
+	      } else {
+	    	  Object obj = qr.update(conn,DMSQueries.editAdminRole,1,adminUser.getUserid());
 	      }
-	      else{
-	    	  Object obj = qr.update(conn, DMSQueries.updateAdminUser, 
-	    			  adminUser.getFirstName(),
-	    			  adminUser.getLastName(),
-	    			  adminUser.getPassword(),
-	    			  adminUser.getActive(),
-	    			  adminUser.getMobileNo(),
-	    			  adminUser.getUserroleid(),
-	    			  adminUser.getUserid()
-			        );
-	      }
-	    
+	      	    
 	      conn.commit();
 	      
 	      return adminUser;
@@ -2541,15 +2545,21 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 
 	public int genericRemove(GenericBean gbean) {
 	    Connection conn = null;
+	    int rowsUpdated=0;
+	    String SQL=null;
 	    try {
 	      qr = new QueryRunner();
 	      conn = ConnectionPoolManager.getInstance().getConnection();
 	      
-	      String SQL = "delete from "+gbean.getTypeVal()+" where "+gbean.getPkName()+" = '"+gbean.getGenId()+"'"; 
+	      if(gbean.getTypeVal().equalsIgnoreCase("user")){
+	    	  rowsUpdated = removeAdminUser(gbean);
+	      }else{
+	    	  SQL = "delete from "+gbean.getTypeVal()+" where "+gbean.getPkName()+" = '"+gbean.getGenId()+"'"; 
+		      rowsUpdated = qr.update(conn, SQL);  
+	      }
 	      
+
 	      System.out.println("Generic remove SQL: "+SQL);
-	      
-	      int rowsUpdated = qr.update(conn, SQL);
 	      
 	      return rowsUpdated;
 	    } catch (Exception e) {
@@ -2565,6 +2575,39 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    return 0;
 	  }
 
+	
+	public int removeAdminUser(GenericBean gbean){
+		Connection conn = null;
+	    int rowsUpdated=0;
+	    String SQL=null;
+	    Userprofile userProfList=null;
+	    try {
+	    	  ResultSetHandler<Userprofile> rsh = new BeanHandler<Userprofile>(Userprofile.class);
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      userProfList = qr.query(conn,DMSQueries.getUserProfile,rsh,gbean.getGenId());
+		      if(userProfList!=null){
+		    	  rowsUpdated = qr.update(conn, DMSQueries.editAdminRole,0,gbean.getGenId());
+		      }else{
+		    	  SQL = "delete from "+gbean.getTypeVal()+" where "+gbean.getPkName()+" = '"+gbean.getGenId()+"'"; 
+			      rowsUpdated = qr.update(conn, SQL);
+		      }
+		      return rowsUpdated;
+	    } catch (Exception e) {
+		      dblogger.error("Error getting soc list :: ", e);
+		      e.printStackTrace();
+		    } finally {
+		      try {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return 0;
+		
+	}
+	
+	
 	public int addTenantToHistory(User user) {
 	    Connection conn = null;
 	    try {

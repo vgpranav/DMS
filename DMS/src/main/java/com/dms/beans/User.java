@@ -25,8 +25,19 @@ public class User
     private String sessionkey;
     private String ipaddress;
     
+    private String userType;
     
-    public Date getLogintime() {
+    
+    
+    public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Date getLogintime() {
 		return logintime;
 	}
 
@@ -196,7 +207,8 @@ public class User
 				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
 				+ ", createdby=" + createdby + ", otp=" + otp + ", otpType=" + otpType + ", deleteflag=" + deleteflag
 				+ ", logintime=" + logintime + ", logouttime=" + logouttime + ", sessionkey=" + sessionkey
-				+ ", ipaddress=" + ipaddress + "]";
+				+ ", ipaddress=" + ipaddress + ", userType=" + userType + "]";
 	}
+
 
 }
