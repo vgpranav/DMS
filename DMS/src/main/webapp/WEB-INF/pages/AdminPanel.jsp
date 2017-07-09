@@ -4,12 +4,12 @@
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
 
 
-<c:if test="${builder!=null}">
+<%-- <c:if test="${builder!=null}">
 	
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel tile">
 			<div class="x_title">
-                  <h2>Builder</h2>
+                  <h2>Builder &amp; Developer / Architect Profile</h2>
                   <div class="clearfix"></div>
             </div>
 			<div class="pull-left">
@@ -24,10 +24,10 @@
 		</div>
 	</div>
 
-</c:if>
+</c:if> --%>
 
 
-<c:if test="${project!=null}">
+<%-- <c:if test="${project!=null}">
 	
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="x_panel tile">
@@ -38,7 +38,7 @@
                 
 				<div class="col-md-6 col-sm-6 col-xs-12">
 					<h3>${project.projectname}</h3> 
-					<em>Address: ${project.street}, ${project.city}, ${project.state}</em>
+					<em>Site Address: ${project.street}, ${project.city}, ${project.state}</em>
 					<br><em>${project.country}</em>
 					<br><em>Pincode: ${project.pincode}</em>
 					<br><em>Reg Date: <fmt:formatDate type = "date" value = "${project.registrationdate}" /></em>
@@ -49,12 +49,12 @@
 						<br><em>No. of Bunglows: ${project.bungnos}</em>
 						<br><em>No. of Penta House: ${project.pentanos}</em>
 						<br><em>No. of Shops: ${project.shopnos}</em>
-						<br><em>No. of Commercial Gala: ${project.galanos}</em>
+						<br><em>No. of Commercial Workshop: ${project.galanos}</em>
 				</div>
 		</div>
 	</div>
 
-</c:if>
+</c:if> --%>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
@@ -62,17 +62,19 @@
 			<h3>${society.societyname}</h3>
 				    <b>Society Reg. No. ${society.registrationno}</b>
 					<br><b>Estd. on <fmt:formatDate type = "date" value = "${society.estdate}" /></b>
-					<br><br><em>Address: ${society.addressline1}</em>
-					<br><em>${society.addressline2}</em>
-					<%-- <br><em>Landmark : ${society.landmark}</em> --%>
-					<%-- <br><em>City: ${society.city}</em> --%>
-					<br><em>${society.ward}, ${society.district}, ${society.state}</em>
-					<br><em>${society.country}</em>
+					<br><br><em>
+					<c:if test="${project!=null}"> Site</c:if> Address: 
+						${society.addressline1}</em>
+						<br><em>${society.addressline2}</em>
+						<%-- <br><em>Landmark : ${society.landmark}</em> --%>
+						<%-- <br><em>City: ${society.city}</em> --%>
+						<br><em>${society.ward}, ${society.district}, ${society.state}</em>
+						<br><em>${society.country}</em>
 					<br><em>Pincode: ${society.pincode}</em>
 					<c:if test="${society.societytypeid=='1' }">
 						<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
 					</c:if>
-					<br><em>No of Shop/Offices/Gala : ${society.noofshop}</em>
+					<br><em>No of Shop/Offices/Workshop : ${society.noofshop}</em>
 					
 					
 		</div>
@@ -93,7 +95,14 @@
  <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Tenants Summary</h2>
+                
+                <c:if test="${society.societytypeid=='1' }">
+                	<h2>Tenants Summary</h2>
+                </c:if>
+                <c:if test="${society.societytypeid!='1' }">
+                	<h2>Owners Summary</h2>
+                </c:if>
+                  
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
@@ -118,7 +127,17 @@
 							<th class="column-title">Floor</th>
 							<th class="column-title">Type</th>
 							<th class="column-title">Tower</th>
-							<th class="column-title">Tenant&nbsp;Name</th>
+							
+							
+							<c:if test="${society.societytypeid=='1' }">
+			                	<th class="column-title">Tenant Name</th>
+			                	<th class="column-title"></th>
+			                </c:if>
+			                <c:if test="${society.societytypeid!='1' }">
+			                	<th class="column-title">Owner Name</th>
+			                	<th class="column-title">Name of Company</th>
+			                </c:if>
+			                 	
 							<th class="column-title">Mobile&nbsp;No</th>
 							<th class="column-title">Joint&nbsp;Owners</th>
 							<th class="column-title">Occupancy</th>
@@ -352,6 +371,15 @@
 									 <br><span class="bigger" id="tenantemail"></span>
 								</div>
 							</div>
+							
+								<c:if test="${society.societytypeid!='1' }">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<sup class="text-muted">Company Name</sup>
+										 <br><span class="bigger" id="companyname"></span>
+									</div>
+								</c:if>
+							
+							
 							<div class="form-group">
 							
 								<div class="col-md-12 col-sm-12 col-xs-12">
@@ -377,7 +405,7 @@
 								</div>
 							</div>
 							
-							<div class="form-group">
+							   <div class="form-group">
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<sup class="text-muted">From Date</sup>
 									 <br><span class="bigger" id="tenantfrom"></span>
@@ -387,6 +415,13 @@
 									<sup class="text-muted">To Date</sup>
 									 <br><span class="bigger" id="tenantto"></span>
 								</div>
+								
+								<c:if test="${society.societytypeid!='1' }">
+								<div class="col-md-4 col-sm-4 col-xs-12">
+									<sup class="text-muted">To Date</sup>
+									 <br><span class="bigger" id="tenantto"></span>
+								</div>
+								</c:if>
 							
 							</div>
  </div>
@@ -660,12 +695,13 @@
 	        			item.flatno,
 	        			item.wing,
 	        			item.floor,
-	        			item.flattype,
+	        			capAll(item.flattype),
 	        			item.tower,
 	        			item.firstName + ' ' + item.lastName,
+	        			item.companyname,
 	        			item.mobileNo,
 	        			item.jointowners,
-	        			item.occupancy,
+	        			capFirst(item.occupancy),
 	        			item.alternateno,
 	        			item.email,
 	        			item.aadharno,
@@ -894,6 +930,9 @@ function editUserData(userid){
 		        		    $('#tenantfrom').html(new Date(response.tenantfrom).toString("dd MMM yyyy"));
 		        		if(response.tenantto!="")
 		        			$('#tenantto').html(new Date(response.tenantto).toString("dd MMM yyyy"));
+		        		
+		        		$('#companyname').html(response.companyname);
+		        		
 	        		}
 	        	 
 	        	}  

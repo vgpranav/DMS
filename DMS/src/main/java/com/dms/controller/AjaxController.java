@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dms.beans.Builder;
+import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
 import com.dms.beans.Committee;
 import com.dms.beans.DocSubType;
@@ -1311,4 +1312,70 @@ public class AjaxController {
 
 		return users;
 	}
+	
+	
+	
+	@RequestMapping(value = { "/getManagersForBuilder" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<BuilderManager> getManagersForBuilder(@ModelAttribute Builder builder,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getManagersForBuilder",builder);
+
+		SocietyDao societyDao = new SocietyDao();
+		List<BuilderManager> managers = null;
+		try {
+			managers = societyDao.getManagersForBuilder(builder, managers);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getManagersForBuilder",managers);
+
+		return managers;
+	}
+	
+	
+	@RequestMapping(value = { "/removeBuilderManagerByid" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public String removeBuilderManagerByid(@ModelAttribute BuilderManager manager,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeBuilderManagerByid",manager);
+
+		int rowsUpdated = 0;
+		SocietyDao societyDao = new SocietyDao();
+		try {
+			rowsUpdated = societyDao.removeBuilderManagerByid(manager);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+		LoggingHelper.logAjaxResponse("removeBuilderManagerByid",rowsUpdated);
+
+		if (rowsUpdated > 0)
+			return "success";
+		return "failed";
+	}
+
+	
+	@RequestMapping(value = { "/addBuilderManager" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public BuilderManager addBuilderManager(@ModelAttribute BuilderManager manager,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addBuilderManager",manager);
+
+		SocietyDao societyDao = new SocietyDao();
+		try {
+			manager = societyDao.addBuilderManager(manager);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		LoggingHelper.logAjaxResponse("addBuilderManager",manager);
+
+		return manager;
+	}
+	
+	
 } // end of class

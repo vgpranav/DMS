@@ -172,8 +172,7 @@ Our programs will assist you with uploading documents online and accessing them 
 									<li class="" data-wow-offset="0" data-wow-delay="0.7s">&bull; Commercial Society Document Management System (HS-DMS)</li>
 									<li class="" data-wow-offset="0" data-wow-delay="0.9s">&bull; Commercial Society Invoice, Payment and Report System (HS-IPR)</li>
 								</ul>
-							 <br/><br/>The programs developed by Our Digital Society were inspired by the Digital India vision initiated by the Government of India. To support the e-governance plan of the Prime Minister our company decided to create these transparent online documentation programs. 
-							 <br/><br/>These tools make sure that every citizen can experience public accountability which is the primary motive of Digital India vision. Other than this, using our software can also help increase digital literacy around the country and reducing the budget of paper documentation which is another futuristic vision of Digital India.  
+							 <br/><br/>Tools make sure that every citizen can experience public accountability. Other than this, using our software can also help increase digital literacy around the country and reducing the budget of paper documentation which is another futuristic vision of Digital India.  
 							 <br/><br/>If you are ready to get rid of all the risks of traditional documentation system and have a simple and more efficient alternative in your hand, then contact us today!
 					</div>
 				</div>

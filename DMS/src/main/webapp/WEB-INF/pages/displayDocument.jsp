@@ -9,25 +9,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
+    <link href="<%= request.getContextPath() %>/resources/theme/vendors/print.css" rel="stylesheet" media="print">
+    
+    
+    
  <title><tiles:insertAttribute name="title" /> | Document Management System</title>
  <tiles:insertAttribute name="imports" />  
  <script type="text/javascript">
  	var picxx = [];
  </script>
+ 
  </head>
  <body>
  <br>	
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Display Document</h2>
-                  <ul class="nav navbar-right panel_toolbox">
+                  <h2 class="no-print">Display Document</h2>
+                  <ul class="nav navbar-right panel_toolbox no-print">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li> 
                   </ul>
                   <div class="pull-right">
-                  	<button class="btn btn-primary btn-md" onclick="makePrintable()">Print</button>
-                  	<button class="btn btn-primary btn-md" onclick="emailable()">Email</button>
+                  	<button class="btn btn-primary btn-md no-print" onclick="makePrintable()">Print Preview</button>
+                  	<button class="btn btn-primary btn-md no-print" onclick="emailable()">Email</button>
                   </div>
                   <div class="clearfix"></div>
                 </div>
@@ -35,6 +40,7 @@
                   <div class="dashboard-widget-content">
                   		
                   		 <c:set var="docIdx" value=""></c:set>
+                  		 
                   		 
                   		 <c:forEach items="${dataList}" var="myItemX" varStatus="loopStatusX">
                   		 	<c:if test="${docIdx!=myItemX.documentid}">
@@ -72,9 +78,9 @@
 											 </c:if>
 		                  		
 							  				 <div id="fileCont${myItem1.fileid}" class="col-md-2 col-sm-2 col-xs-12 printable" align="center" style="border: thin solid #ccc">
-												<c:if test="${sessionScope.deleteFlag==1}"><button class="btn btn-xs btn-danger pull-right delBtn" onclick="deletePage('${myItem1.fileid}');return false;">x</button></c:if>
+												<c:if test="${sessionScope.deleteFlag==1}"><button class="no-print btn btn-xs btn-danger pull-right delBtn" onclick="deletePage('${myItem1.fileid}');return false;">x</button></c:if>
 												<a class="ionimage2"   href="getFileToDisplay/${myItem1.filename}.do">
-													<img  width="200" src="getFileToDisplay/${myItem1.filename}.do">
+													<img  width="200" src="getFileToDisplayThumb/${myItem1.filename}.do">
 												</a>
 											 </div>
 		                    			
@@ -164,76 +170,47 @@
  	});
  	
  	
- 	/* var imgs = document.images,
-    len = imgs.length,
-    counter = 0;
-
-	[].forEach.call( imgs, function( img ) {
-	    img.addEventListener( 'load', incrementCounter, false );
-	} );
-
-	function incrementCounter() {
-	    counter++;
-	    if ( counter === len ) {
-	    	$(".ionimage2").ionZoom();
-	 		 console.log('iZ called');
-	    }
-	} */
-
+  
  	function emailable(){
- 		/* alert("Error ! No default email id configured for this user") */
 		$( "#emailDialog" ).dialog( "open" );
  	}
  	
- 	function makePrintable(){
- 		$('.printable').removeClass('col-md-2');
+ 	 function makePrintable(){
+ 		/* $('.printable').removeClass('col-md-2');
  		$('.printable').removeClass('col-sm-2');
  		$('.printable').addClass('col-md-12');
  		$('.printable').addClass('col-sm-12');
  		$('.printable').attr('align','center');
- 		$('.printable img').attr('width','98%');
+ 		$('.printable img').attr('width','98%'); */
  		/* $('.delBtn').hide(); */
  		
+		/* var imgs = document.images,
+	    len = imgs.length,
+	    counter = 0;
+	
+		[].forEach.call( imgs, function( img ) {
+		    img.addEventListener( 'load', incrementCounter, false );
+		} ); */
+		
  		/* parent.print(); */
- 		printJS('printElement', 'html')
- 	}
+ 		  /* printJS('printElement', 'html')  */
+ 		/* $('.no-print').hide(); */
+ 		/* $('a.print-preview').trigger('click'); */
+ 		var documentId = $('#documentId').val();
+ 		popitup("<%=request.getContextPath()%>/displayDocumentFromSearchPreview.do?documentid="+documentId,'Print Preview')
+ 		 
+ 	}  
  	
- 	
- 	/* var imgs = document.images;
- 	len = imgs.length;
-    counter = 0;
- 	
-    
- 	function makePrintable(){
- 			
- 		blockUI();
- 		notify('success','Please Wait','Printing will begin shortly',2000);
- 		
-	 		 console.log("picxx :: "+picxx);
-	 		 $('#printElement').html("<div id='printer'></div>");
-		 	 for (var i = 0, len = picxx.length; i < len; i++) {
-		 			$('#printer').append('<div class="col-md-12 col-sm-12" align="center"><img src="getFileToDisplay/'+picxx[i]+'.do"></div>');
-		 	 }
-		 	
-		 	[].forEach.call( imgs, function( img ) {
-			    img.addEventListener( 'load', incrementCounter, false );
-			} );
-	 		
- 	}
- 	
- 	
- 	function incrementCounter() {
+ 	 
+ 
+
+	/* function incrementCounter() {
 	    counter++;
 	    if ( counter === len ) {
-	    	unblockUI();
-	    	printPage();
-	    }
+	 		 alert("All Images loaded");
 	}
- 	
- 	function printPage(){
- 		printJS('printElement', 'html');
- 	}
- 	 */
+	} */
+	
  	function deletePage(filesid){
  		if(confirm('Are you Sure?')){
 			if(filesid.length < 1){
@@ -265,8 +242,16 @@
  		return false;
  	}
  	
+	
+	function popitup(url,windowName) {
+	       newwindow=window.open(url,windowName,'height=600,width=650');
+	       if (window.focus) {newwindow.focus()}
+	       return false;
+	     }
+	
  	
  </script>
-  <tiles:insertAttribute name="importJScript" />  
+  <tiles:insertAttribute name="importJScript" />
+    
  </body>
 </html>

@@ -75,7 +75,7 @@
 			<div class="row">
 				<div class="col-md-12 bg-white">
 					<p>
-						If you own an industrial estate and find it hard to keep track of your documentation, then our amazing tool can help you keep all your documentation up to date. Along with this, it will also save you a lot of time and energy that you spend hiring professionals for the same job.     
+						All our customer care executives go through regular training to keep them up to date with the latest technological development in the industry. This is one of the biggest reasons as to why our customer support executives are able to assist clients on every possible technological issue without having to cross check with the support hierarchy. Also our customer support executives will provide training and guidance to clients on how they can utilize the product in more efficient way.     
 					</p>
 				</div>
 			</div>		
@@ -104,8 +104,8 @@
 				<div class="col-md-4 ">
 						<h4>Address</h4>
 						"Our Digital Solution"
-						<br>Building Number 17
-						<br>B Wing Flat Number 103,
+						<br>Building Number 17,
+						<br>B-Wing, Flat Number 103,
 						<br>Stalag Seventeen CHS,
 						<br>Tilaknagar, Chembur,
 						<br>Mumbai 400089
@@ -120,7 +120,6 @@
 					 <h4>Email Addresses</h4>
 					 	Info@ourdigitalsociety.com
 					<br>Sales@ourdigitalsociety.com
-					<br>rajani@ourdigitalsociety.com
 				</div>
 			</div>		
 			<div class="row">

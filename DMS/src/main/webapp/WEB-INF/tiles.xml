@@ -179,7 +179,7 @@
     </definition> 
     
      <definition name="SocietySelectionForAdmin" extends="base-definition">  
-      <put-attribute name="title" value="Create Admin User" />  
+      <put-attribute name="title" value="Society Selection" />  
       <put-attribute name="body" value="/WEB-INF/pages/SocietySelectionForAdmin.jsp" />   
     </definition> 
     
@@ -254,6 +254,20 @@
       <put-attribute name="title" value="Confidential Document Access" />  
       <put-attribute name="body" value="/WEB-INF/pages/deleteAuth.jsp" />   
     </definition> 
+    
+     <definition name="displayDocumentPreview" template="/WEB-INF/pages/displayDocumentPreview.jsp">  
+      	  <put-attribute name="title" value="View Document" />  
+    </definition>
+    
+     <definition name="builderMapping" extends="base-definition">  
+      <put-attribute name="title" value="Assign Builder to User" />  
+      <put-attribute name="body" value="/WEB-INF/pages/builderMapping.jsp" />   
+    </definition>
+    
+     <definition name="SocietySelectionForBuilder" extends="base-definition">  
+      <put-attribute name="title" value="Society Selection" />  
+      <put-attribute name="body" value="/WEB-INF/pages/SocietySelectionForBuilder.jsp" />   
+    </definition>
     
     
 </tiles-definitions>

@@ -83,7 +83,7 @@ public class FileController
       
       if (flag) {
         DocumentDao ddao = new DocumentDao();
-        ddao.savePhotoInfo("society", societyid, newFileName, "SocietyImages/" + newFileName, contentType,true);
+        ddao.savePhotoInfo("society", societyid, newFileName, "SocietyImages/" + newFileName, contentType,false);
       }
       
       originalImage = ImageIO.read(new ByteArrayInputStream(bytes));

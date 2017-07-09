@@ -1,6 +1,7 @@
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.min.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.cookie.js"></script>
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/jquery/dist/jquery.blockUI.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
 
 
 <!-- Bootstrap -->
@@ -25,6 +26,10 @@
 
 
 <link href="<%= request.getContextPath() %>/resources/theme/vendors/printjs/print.min.css" rel="stylesheet">
+
+
+<%-- <link href="<%= request.getContextPath() %>/resources/theme/vendors/printpreview/css/print-preview.css" rel="stylesheet">
+ --%>
 
 <!-- jQuery -->
 

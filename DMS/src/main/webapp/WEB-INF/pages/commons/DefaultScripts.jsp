@@ -25,8 +25,11 @@
 
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/ionzoom/js/ion-zoom/ion.zoom.js"></script>
 
+<%-- <script src="<%= request.getContextPath() %>/resources/theme/vendors/printpreview/printThis.js"></script>
+ --%>
 
 <script src="<%= request.getContextPath() %>/resources/theme/vendors/printjs/print.min.js"></script>
+
 
 
 <script>
@@ -102,4 +105,18 @@ function notify(type,title,message,delay){
  		return false;
 	}
 
+	function capFirst(string) {
+		if(string!="")
+	    	return string.charAt(0).toUpperCase() + string.slice(1);
+		else
+			return "";
+	}	
+	
+	function capAll(string) {
+		if(string!="")
+	    	return string.toUpperCase();
+		else
+			return "";
+	}
+	
 </script>

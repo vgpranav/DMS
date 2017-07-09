@@ -23,7 +23,7 @@
 					         <li role="presentation"><a href="index.jsp">Home</a></li>
 								<li ><a href="businessarea.jsp">Business Area</a></li>
 								<li ><a href="services.jsp">Services</a></li>
-								<li ><a href="feature.jsp">What We Do</a></li>
+								<!-- <li ><a href="feature.jsp">What We Do</a></li> -->
 								<li ><a href="contactus.jsp">Contact</a></li>
 								<li ><a href="<%= request.getContextPath() %>/login.do">Login</a></li>
 								

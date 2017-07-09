@@ -192,7 +192,7 @@
 					
 					<div class="form-group">
 						<label class="control-label col-md-4 col-sm-4 col-xs-12"
-							for="first-name">No. of Commercial Gala<span class="required">*</span>
+							for="first-name">No. of Commercial Workshop<span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
 							<input type="text" id="galanos" name="galanos"

@@ -49,7 +49,7 @@
 					</div>
 					<div class="col-lg-12">
 						<div class="copyright">
-							<font color="#fff">&copy;Our Digital Society - All right reserved.</font>
+							<font color="#fff">&copy; Our Digital Society - All right reserved.</font>
                             <!-- <div class="credits">
                                 
                                     All the links in the footer should remain intact. 

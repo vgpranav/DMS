@@ -6,30 +6,34 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.ImageOutputStream;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dms.beans.DocSubType;
@@ -49,16 +53,6 @@ import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.FtpWrapper;
-
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 
 public class DocumentDao
@@ -461,7 +455,7 @@ public class DocumentDao
       
       
       String getDocumentListForView = " select GROUP_CONCAT(concat(f.fieldname,' - ',d.datavalue) SEPARATOR  ',' )  as description,d.documentid, "
-      		+ " dt.doctypename,dst.docsubtypename,d.createdby,d.createdon "
+      		+ " dt.doctypename,dst.docsubtypename,getUsername(d.createdby) as createdby,d.createdon "
       		+ " from formstructure f,documentdetails d,document doc,doctype dt,docsubtype dst "
       		+ " where f.fieldid = d.datakey and d.documentid = doc.documentid and doc.doctypeid=dt.doctypeid "
       		+ " and doc.docsubtypeid=dst.docsubtypeid "
@@ -700,13 +694,55 @@ public List<DocSubType> getDocStubtypesToDispay(List<DocSubType> docSubType,Stri
 
 public List<GenericBean> getdisplayData(String doctypeid, String userid, String societyid, List<GenericBean> data) {
     Connection conn = null;
-
+    Userprofile userp = null;
+    String documentId=null;
+    
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
       ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
+      ResultSetHandler<Userprofile> rsh1 = new BeanHandler<Userprofile>(Userprofile.class);
       
       data = qr.query(conn,DMSQueries.getDocumentDatabyDoctypeIdUserId,rsh,doctypeid,userid,societyid);
+      
+      if(data!=null && data.size()>0){
+    	  documentId = data.get(0).getDocumentid();
+    	  
+    	  userp = qr.query(conn,DMSQueries.getUserDataById,rsh1,userid);
+          if(userp!=null){
+        	  
+        	  GenericBean gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Name");
+        	  gbean1.setFieldvalue(userp.getFirstName() + " " +userp.getLastName());
+        	  gbean1.setDocumentid(documentId);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Flat No");
+        	  gbean1.setFieldvalue(userp.getFlatno());
+        	  gbean1.setDocumentid(documentId);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Wing");
+        	  gbean1.setFieldvalue(userp.getWing());
+        	  gbean1.setDocumentid(documentId);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Tower");
+        	  gbean1.setFieldvalue(userp.getTower());
+        	  gbean1.setDocumentid(documentId);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+          }
+    	  
+      }
+      
+      System.out.println("data :: "+data);
       
       return data;
     } catch (Exception e) {
@@ -734,7 +770,8 @@ public List<GenericBean> getdisplayData(String doctypeid, String userid, String 
 
 public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBean> data) {
     Connection conn = null;
-
+    Userprofile userp=null;
+    int userid=0;
     try {
       qr = new QueryRunner();
       conn = ConnectionPoolManager.getInstance().getConnection();
@@ -742,6 +779,46 @@ public List<GenericBean> getdisplayDataByDocId(String documentid, List<GenericBe
       
       data = qr.query(conn,DMSQueries.getDocumentDatabyDocId,rsh,documentid);
       
+      if(data!=null && data.size()>0){
+    	  userid = data.get(0).getUserid();
+    	  
+    	  ResultSetHandler<Userprofile> rsh1 = new BeanHandler<Userprofile>(Userprofile.class);
+          userp = qr.query(conn,DMSQueries.getUserDataById,rsh1,userid);
+          if(userp!=null){
+        	  
+        	  GenericBean gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Name");
+        	  gbean1.setFieldvalue(userp.getFirstName() + " " +userp.getLastName());
+        	  gbean1.setDocumentid(documentid);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Flat No");
+        	  gbean1.setFieldvalue(userp.getFlatno());
+        	  gbean1.setDocumentid(documentid);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Wing");
+        	  gbean1.setFieldvalue(userp.getWing());
+        	  gbean1.setDocumentid(documentid);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+        	  
+        	  gbean1 = new GenericBean();
+        	  gbean1.setFieldname("Tower");
+        	  gbean1.setFieldvalue(userp.getTower());
+        	  gbean1.setDocumentid(documentid);
+        	  data.add(gbean1);
+        	  gbean1 =null;
+          }
+          
+      }
+      
+      System.out.println("data1 :: "+data);
+
       return data;
     } catch (Exception e) {
       dblogger.error("Error Saving Doctype :: " , e);

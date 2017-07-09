@@ -11,8 +11,8 @@ public class DMSQueries
   
   public static String getAllSociety = "select * from society where societytype=?";
   
-  public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,concat(u.firstname,' ',u.lastname) as "
-  											+ " createdby FROM  doctype d, user u where d.createdby=u.userid order by doctypename ";
+  public static String getAllDocumentTypes = "SELECT d.doctypeid,d.doctypename,d.doctypedesc,d.createdon,d.active,getUsername(d.createdby) as "
+  											+ " createdby FROM  doctype d order by doctypename ";
   
   public static String insertNewSociety = "insert into society(societytypeid,societyname,createdby,projectid,societytype) values (?,?,?,?,?)";
   public static String insertNewSocietyProfile = "insert into societyprofile(societyid,addressline1,addressline2,ward,district,state,pincode,createdby,registrationno,estdate,landmark,city,country,noofshop,noofflat,noof1rk,noof1bhk,noof1p5bhk,noof2bhk,noof2p5bhk,noof3bhk,noof3p5bhk) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -93,7 +93,7 @@ public class DMSQueries
 	
 	public static String getDocumentsToDisplayByDocId= " SELECT f.* FROM  document d, files f where d.documentid=f.documentid and f.documentid=?";
 	
-	public static String getDocumentDatabyDocId = " SELECT d.documentid,f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
+	public static String getDocumentDatabyDocId = " SELECT d.userid,d.documentid,f.fieldname as fieldname,dd.datavalue as fieldvalue FROM  formstructure f, documentdetails dd, document d  "
 			+ " where dd.datakey=f.fieldid and d.documentid=dd.documentid and d.documentid=?";
 	
 	public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
@@ -183,5 +183,15 @@ public class DMSQueries
 
 	public static String getUserProfile = "select * from userprofile where userid=?";
 	
-	public static String editAdminRole="Update user set userroleid=? where userid=?";	
+	public static String editAdminRole="Update user set userroleid=? where userid=?";
+
+	public static String getAllActiveBuilders = "select * from builder";
+
+	public static String getAllBuildermanagersByBuilderId = "select buildermanagermappingid,builderid,getUsername(userid) as username,createdon,createdby from buildermanagermapping where builderid=?";
+
+	public static String removeBuilderManagerByid = "delete from buildermanagermapping where buildermanagermappingid=?";
+
+	public static String addBuilderManager = "insert into buildermanagermapping(builderid,userid) values (?,?)";
+
+	public static String getBuilderListByManagerid = "select * from buildermanagermapping where userid=?";
 }

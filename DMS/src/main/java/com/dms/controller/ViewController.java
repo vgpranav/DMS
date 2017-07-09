@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dms.beans.Builder;
+import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
@@ -488,8 +489,11 @@ public class ViewController {
 		ModelAndView mv = null;
 		List<Society> societyList = null;
 		SocietyDao societyDao = new SocietyDao();
+		User user = null;
 		try {
-			societyList = societyDao.getSocietyListforUser(societyList);
+			user = (User) request.getSession().getAttribute("userObject");
+			//societyList = societyDao.getSocietyListforUser(societyList);
+			societyList = societyDao.getSocietyListForManager(user.getUserid(), societyList);
 			mv = new ModelAndView("viewDocument");
 			mv.addObject("societyList", societyList);
 		} catch (Exception e) {
@@ -553,28 +557,75 @@ public class ViewController {
 		ModelAndView mv = null;
 		User user = null;
 		SocietyDao sdao = new SocietyDao();
+		DocumentDao ddao = new DocumentDao();
 		List<Society> societyList = null;
 		List<GenericBean> docs = null;
-
+		List<BuilderManager> buildermanagerList = null;
+		
 		try {
 			user = (User) request.getSession().getAttribute("userObject");
-			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
-
-			if (societyList.size() == 1) {
-				mv = new ModelAndView("adminPanel");
-
-				docs = sdao.getAllExistingDocsForSoc((Society) societyList.get(0), docs);
-
-				mv.addObject("society", (Society) societyList.get(0));
-				mv.addObject("docs", docs);
-			} else {
-				mv = new ModelAndView("SocietySelectionForAdmin");
+			
+			buildermanagerList = sdao.getBuilderListByManagerid(user.getUserid(), buildermanagerList);
+			
+			if(buildermanagerList!=null && buildermanagerList.size() > 0){
+				
+				List<Builder> builderList = new ArrayList<Builder>();
+				List<Project> projectList = new ArrayList<Project>();
+				societyList = new ArrayList<Society>();
+				
+				for(BuilderManager manager : buildermanagerList){
+						Builder builder = new Builder();
+						builder.setBuilderid(manager.getBuilderid());
+						builder = sdao.getBuilderDetailsById(builder);
+						
+						if(builder.getBuildername()!=null){
+							builderList.add(builder);
+							List<Project> projList=null;
+							projList = ddao.getProjectsByBuilderId(builder.getBuilderid(), projList);
+							if(projList!=null){
+								projectList.addAll(projList);
+							}
+						}
+				}
+				
+				for(Project project : projectList){
+					List<Society> sList=null;
+					sList = ddao.getSubProjectsByProjectId(project.getProjectid(), sList);
+					if(sList!=null){
+						societyList.addAll(sList);
+					}
+				}
+				
+				mv = new ModelAndView("SocietySelectionForBuilder");
+				mv.addObject("builderList", builderList);
+				mv.addObject("projectList", projectList);
 				mv.addObject("societyList", societyList);
+				
+			}else{
+				
+				societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+				if (societyList.size() == 1) {
+					mv = new ModelAndView("adminPanel");
+
+					docs = sdao.getAllExistingDocsForSoc((Society) societyList.get(0), docs);
+
+					mv.addObject("society", (Society) societyList.get(0));
+					mv.addObject("docs", docs);
+				} else {
+					mv = new ModelAndView("SocietySelectionForAdmin");
+					mv.addObject("societyList", societyList);
+				}
+				
 			}
+			
+			
+			
+			
 		} catch (Exception e) {
 			logger.error("Exception : ",e);
 			e.printStackTrace();
 		}
+		
 		LoggingHelper.logMVResponse("displayAdminPanel",mv);
 		return mv;
 	}
@@ -696,6 +747,27 @@ public class ViewController {
 		return mv;
 	}
 
+	
+	
+	@RequestMapping(value = { "/builderMapping" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView builderMapping(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"builderMapping","");
+		ModelAndView mv = null;
+		List<Builder> builderList = null;
+		SocietyDao societyDao = new SocietyDao();
+		try {
+			builderList = societyDao.getBuilderList(builderList);
+			mv = new ModelAndView("builderMapping");
+			mv.addObject("builderList", builderList);
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("builderMapping",mv);
+		return mv;
+	}
+	
+	
 	@RequestMapping(value = { "/createBuilder" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView createBuilder(HttpServletRequest request) {
@@ -1093,6 +1165,34 @@ public class ViewController {
 		return mv;
 	}
 
+	
+	@RequestMapping(value = { "/displayDocumentFromSearchPreview" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView displayDocumentFromSearchPreview(@RequestParam("documentid") String documentid,
+			HttpServletRequest request, HttpServletResponse response) {
+		LoggingHelper.logMVRequest(request.getSession().getAttribute("userId").toString(),"displayDocumentFromSearch",request.getParameterMap());
+
+		ModelAndView mv = null;
+		List<HashMap<String, Object>> docList = new ArrayList<HashMap<String, Object>>();
+		List<GenericBean> data = null;
+		SocietyDao sdao = new SocietyDao();
+		DocumentDao ddao = new DocumentDao();
+		try {
+			docList = sdao.displayDocumentFromSearch(documentid, docList);
+			data = ddao.getdisplayDataByDocId(documentid, data);
+
+			mv = new ModelAndView("displayDocumentPreview");
+			mv.addObject("docList", docList);
+			mv.addObject("dataList", data);
+			mv.addObject("documentid", documentid);
+
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("displayDocumentFromSearch",mv);
+		return mv;
+	}
+	
 	@RequestMapping(value = { "/showDocFromAdminPanel" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	public ModelAndView showDocFromAdminPanel(@ModelAttribute GenericBean bean, HttpServletRequest request,

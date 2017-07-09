@@ -21,7 +21,7 @@
 					<c:if test="${society.societytypeid=='1' }">
 						<br><em>No of Falt/Apartments/Rooms : ${society.noofflat}</em>
 					</c:if>
-					<br><em>No of Shop/Offices/Gala : ${society.noofshop}</em>
+					<br><em>No of Shop/Offices/Workshop : ${society.noofshop}</em>
 				</div>
 				<div class="pull-right">
 				<div align="left">

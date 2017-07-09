@@ -23,8 +23,8 @@
 		</div>
 		
 		<div class="container">
-			<div class="row">		
-				<div class="col-md-12 bg-white">
+			<div class="row bg-white">		
+				<div class="col-md-7">
 					<p>The primary service provided by Our Digital Society includes various online tools for document management, which allows you to keep systematic records of all the commercial and noncommercial paperwork of societies, industrial estates, shopping malls, business parks residential apartments, builders & developers, architect firms and much more.
 					<br><br>
 					The software used by Our Digital Society is a cloud-based program that allows you to store your data in a secure way. Apart from being absolutely secure, Our Digital Society tools will also make it easy for you to update, modify or access uploaded files online.
@@ -34,6 +34,11 @@
 					To give you a thorough explanation of our services and how they are beneficial for these societies here is a list of all the available software modules. All modules are also accessible from mobile, tablets, laptops and desktops. 
 					</p>
 				</div> 
+				<div class="col-md-5" align="center">
+				<br/>
+					<img src="<%= request.getContextPath() %>/resources/images/sop.jpg" height="220">
+				</div>
+				
 			</div>
 		</div>
 		
@@ -92,6 +97,26 @@
 			</div>		
 		</div>
 		
+		
+		<div class="breadcrumbs">
+			<h4>Why makes our packages unique</h4>
+		</div>
+		
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 bg-white">
+					<p>Out of all the reason that make our programs unique being a paperless documentation system is the most beneficial. We look forward to creating a complete paperless society one day.  
+					<br><br>
+					Along with this providing complete transparency to all the members is also a big step towards the Digital initiative. Our software has been designed so that it is easy to use and can be accessed from anywhere with the help of internet connection which is another reason as to why our package is considered unique. 
+					<br><br>
+					Our online program is also a cost efficient alternative to the traditional documentation method as it reduces the need of additional manpower and cuts down the cost of materials like stationary items. All in all it is a great way to use high-end digital technology for every type of society and community. 
+					</p>
+				</div>
+			</div>		
+		</div>
+		
+		
+		<br/><br/><br/><br/>
 	</div>
 	
 

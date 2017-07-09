@@ -1,6 +1,7 @@
 package com.dms.dao;
 
 import com.dms.beans.Builder;
+import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
 import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
@@ -2787,6 +2788,127 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      }
 	    }
 	    return null;
+	  }
+
+	public List<Builder> getBuilderList(List<Builder> builderList) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Builder>> rsh = new BeanListHandler<Builder>(Builder.class);
+	      builderList = qr.query(conn, DMSQueries.getAllActiveBuilders, rsh);
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching Society List :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return builderList;
+	  }
+
+	public List<BuilderManager> getManagersForBuilder(Builder builder, List<BuilderManager> managers) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<BuilderManager>> rsh = new BeanListHandler<BuilderManager>(BuilderManager.class);
+	      managers = qr.query(conn, DMSQueries.getAllBuildermanagersByBuilderId, rsh,builder.getBuilderid());
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching Society List :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return managers;
+	  }
+
+	public int removeBuilderManagerByid(BuilderManager manager) {
+	    Connection conn = null;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      int rowsUpdated = qr.update(conn, DMSQueries.removeBuilderManagerByid, 
+	    		  manager.getBuildermanagermappingid());
+	      return rowsUpdated;
+	    } catch (Exception e) {
+	      dblogger.error("Error removeBuilderManagerByid :: ", e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return 0;
+	  }
+
+	public BuilderManager addBuilderManager(BuilderManager manager) {
+	    Connection conn = null;
+	    
+	    long societyManagerId = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      Object obj = qr.insert(conn, DMSQueries.addBuilderManager, rsh, 
+		        Long.valueOf(manager.getBuilderid()),
+		        Long.valueOf(manager.getUserid())
+	        );
+	      societyManagerId = CommomUtility.convertToLong(obj);
+	      manager.setBuildermanagermappingid(societyManagerId);
+	      return manager;
+	    } catch (Exception e) {
+	      dblogger.error("Error getting soc list :: ", e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<BuilderManager> getBuilderListByManagerid(long userid, List<BuilderManager> buildermanagerList) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<BuilderManager>> rsh = new BeanListHandler<BuilderManager>(BuilderManager.class);
+	      buildermanagerList = qr.query(conn, DMSQueries.getBuilderListByManagerid, rsh,userid);
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching Society List :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return buildermanagerList;
 	  }
 
 

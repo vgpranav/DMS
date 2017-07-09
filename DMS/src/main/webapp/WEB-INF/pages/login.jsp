@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ page import="java.util.Calendar" %>
  <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -196,7 +197,10 @@
 
                 <div>
                   <img src="<%= request.getContextPath() %>/resources/images/ods-logo-ws.png" height="45"/>
-                  <p>©20167-18 All Rights Reserved.</p>
+                  <%
+                  int year = Calendar.getInstance().get(Calendar.YEAR);
+                  %>
+                  <p>© <%=year %>-<%= String.valueOf(year+1).substring(2) %> All Rights Reserved.</p>
                 </div>
               </div>
            

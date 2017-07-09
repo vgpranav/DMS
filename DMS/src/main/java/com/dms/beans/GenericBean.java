@@ -33,9 +33,14 @@ public class GenericBean {
 	private String positionname;
 	private String username;
 	private String documentid;
+	private int userid;
 	
-	
-
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
 	public String getDocumentid() {
 		return documentid;
 	}
@@ -203,7 +208,7 @@ public class GenericBean {
 	public void setPkName(String pkName) {
 		this.pkName = pkName;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "GenericBean [societyid=" + societyid + ", doctypeid=" + doctypeid + ", societydocmappingid="
@@ -215,7 +220,7 @@ public class GenericBean {
 				+ ", createdby=" + createdby + ", doctypename=" + doctypename + ", societyname=" + societyname
 				+ ", rolename=" + rolename + ", fieldname=" + fieldname + ", fieldvalue=" + fieldvalue
 				+ ", positionname=" + positionname + ", username=" + username + ", documentid=" + documentid
-				+ ", createdon=" + createdon + "]";
+				+ ", userid=" + userid + ", createdon=" + createdon + "]";
 	}
 	
 }

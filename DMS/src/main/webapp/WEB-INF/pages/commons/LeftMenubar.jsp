@@ -4,11 +4,11 @@
  
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>Menu</h3> 
+                <h3>Menu <font color="#191919">${sessionScope.userObject.userroleid}|${sessionScope.socmanagercount}</font></h3> 
 	                <ul class="nav side-menu">
 	                
 	                <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
-	                
+	                	<c:if test="${sessionScope.userObject.userroleid!=2}">
 	                		  <c:if test="${sessionScope.userObject.userroleid==1}">
 			                      <li>
 			                      	<a><i class="fa fa-wrench"></i> Documents</a>
@@ -21,20 +21,20 @@
 		                      </c:if>
 		                      <c:if test="${sessionScope.userObject.userroleid==1}">
 			                      <li>
-			                      	<a><i class="fa fa-wrench"></i> Builder &amp; Developer</a>
+			                      	<a><i class="fa fa-wrench"></i> Builder &amp; Developer / Architect</a>
 			                      	
 			                      	<ul class="nav child_menu">
-			                      		 <li><a href="createBuilder.do">Create Builder Profile</a></li>
-			                      		 <li><a href="createBrochureBuilder.do">Add Builder Brochure</a></li>
-			                      		 <li><a href="brochureSelectionBuilder.do">View Builder Brochure</a></li>
+			                      		 <li><a href="createBuilder.do">Create Builder &amp; Developer / Architect Profile</a></li>
+			                      		 <!-- <li><a href="createBrochureBuilder.do">Add Builder Brochure</a></li>
+			                      		 <li><a href="brochureSelectionBuilder.do">View Builder Brochure</a></li> -->
 			                      		 
 			                      		<li><a href="createProject.do">Create Project</a></li>
-			                      		<li><a href="createBrochureProject.do">Add Project Brochure</a></li>
-			                      		<li><a href="brochureSelectionProject.do">View Project Brochure</a></li>
+			                      		<!-- <li><a href="createBrochureProject.do">Add Project Brochure</a></li>
+			                      		<li><a href="brochureSelectionProject.do">View Project Brochure</a></li> -->
 			                      		
 			                      		<li><a href="createSubProject.do">Create Sub Project</a></li>
-			                      		<li><a href="createBrochureSubProject.do">Add Sub Project Brochure</a></li>
-			                      		<li><a href="brochureSelectionSubProject.do">View Sub Project Brochure</a></li>
+			                      		<!-- <li><a href="createBrochureSubProject.do">Add Sub Project Brochure</a></li>
+			                      		<li><a href="brochureSelectionSubProject.do">View Sub Project Brochure</a></li> -->
 			                      	</ul>
 			                      	
 			                      </li>
@@ -70,6 +70,7 @@
 			                      	</ul>
 			                      </li>
 		                      </c:if>
+		                   </c:if>
 	                </c:if>
 		                  
 		            <c:if test="${sessionScope.userObject.userroleid==1}">
@@ -82,6 +83,7 @@
 		                    <ul class="nav child_menu">
 		                     <li><a href="manageDesignation.do">Manage Soc. Designations</a></li>
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
+		                      <li><a href="builderMapping.do">Builder Mapping</a></li>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
 		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>
 		                      <li><a href="addConfidentialDocAccess.do">Confidential Doc Access</a></li>
@@ -91,38 +93,50 @@
 		            </c:if>
 		            
 		            
-		             <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">    
+		             <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.userObject.userroleid==2 || sessionScope.socmanagercount>0}">    
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
-		                  		Documents 
+		                  		Add Information 
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                      <li><a href="addDocument1.do">Add Document</a></li>
-		                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
-		                      <li><a href="viewDocument.do">View Document</a></li>
+		                    <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
+		                    	<c:if test="${sessionScope.userObject.userroleid!=2}">
+			                      <li><a href="addDocument1.do">Add Document</a></li>
+			                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
+		                       </c:if>
+		                    </c:if>
+		                      
+		                    <li><a href="viewDocument.do">View Document</a></li>
+		                    
+		                    <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
+		                     <c:if test="${sessionScope.userObject.userroleid!=2}">
 		                      <li><a href="deleteDocument.do">Delete Document</a></li>
 							  <li><a href="addPolicy.do">Add Policy/Amenities</a></li>
+							 </c:if>
+							</c:if>
 		                      
 		                    </ul>
 		                  </li>
 		             </c:if>
 		               
 		              <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">   
-		                   <li>
-		                  	<a>
-		                  		<i class="fa fa-folder"></i> 
-		                  		Administrator 
-		                  		<span class="fa fa-chevron-down"></span>
-		                  	</a>
-		                    <ul class="nav child_menu">
-		                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
-		                      <c:if test="${sessionScope.userObject.userroleid==1}">
-		                      	<li><a href="createAdminUser.do">Create Admin User</a></li>
-		                      </c:if>
-		                    </ul>
-		                  </li>
+		              	   <c:if test="${sessionScope.userObject.userroleid!=2}">
+			                    <li>
+				                  	<a>
+				                  		<i class="fa fa-folder"></i> 
+				                  		Administrator 
+				                  		<span class="fa fa-chevron-down"></span>
+				                  	</a>
+				                    <ul class="nav child_menu">
+				                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
+					                      <c:if test="${sessionScope.userObject.userroleid==1}">
+					                      	<li><a href="createAdminUser.do">Create Admin User</a></li>
+					                      </c:if>
+				                    </ul>
+			                  </li>
+		                  </c:if>
 		             </c:if>     
 		             
 		             
@@ -139,6 +153,8 @@
 		                    </ul>
 		                  </li>
 		             </c:if>     
+		             
+		             <c:if test="${sessionScope.userObject.userroleid==0}">      
 		                    <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -149,6 +165,7 @@
 		                      <li><a href="editUserProfile.do">Edit My Profile</a></li>
 		                    </ul>
 		                  </li>
+		             </c:if>
 	                  </ul>
                   </div>
             </div>
