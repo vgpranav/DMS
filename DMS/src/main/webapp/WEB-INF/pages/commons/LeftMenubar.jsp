@@ -93,7 +93,8 @@
 		            </c:if>
 		            
 		            
-		             <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.userObject.userroleid==2 || sessionScope.socmanagercount>0}">    
+		             <c:if test="${sessionScope.userObject.userroleid==1  || sessionScope.socmanagercount>0}">   
+		             <c:if test="${sessionScope.userObject.userroleid!=2}"> 
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -105,10 +106,11 @@
 		                    	<c:if test="${sessionScope.userObject.userroleid!=2}">
 			                      <li><a href="addDocument1.do">Add Document</a></li>
 			                      <li><a href="addNotice.do">Add Notice Board Document</a></li>
+			                      <li><a href="viewDocument.do">View Document</a></li>
 		                       </c:if>
 		                    </c:if>
 		                      
-		                    <li><a href="viewDocument.do">View Document</a></li>
+		                   
 		                    
 		                    <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
 		                     <c:if test="${sessionScope.userObject.userroleid!=2}">
@@ -119,24 +121,25 @@
 		                      
 		                    </ul>
 		                  </li>
+		                  </c:if>
 		             </c:if>
 		               
-		              <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">   
-		              	   <c:if test="${sessionScope.userObject.userroleid!=2}">
+		              <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0 || sessionScope.userObject.userroleid==2}">   
+		              	   
 			                    <li>
 				                  	<a>
 				                  		<i class="fa fa-folder"></i> 
 				                  		Administrator 
 				                  		<span class="fa fa-chevron-down"></span>
 				                  	</a>
-				                    <ul class="nav child_menu">
-				                      <li><a href="displayAdminPanel.do">Administrative Details</a></li>
+				                    	<ul class="nav child_menu">
+				                      		<li><a href="displayAdminPanel.do">Administrative Details</a></li>
 					                      <c:if test="${sessionScope.userObject.userroleid==1}">
 					                      	<li><a href="createAdminUser.do">Create Admin User</a></li>
 					                      </c:if>
-				                    </ul>
+				                    	</ul>
 			                  </li>
-		                  </c:if>
+		                  
 		             </c:if>     
 		             
 		             

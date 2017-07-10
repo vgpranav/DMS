@@ -640,13 +640,15 @@ public class ViewController {
 		ModelAndView mv = null;
 		User user = null;
 		SocietyDao sdao = new SocietyDao();
+		DocumentDao ddao = new DocumentDao();
 		List<Society> societyList = null;
+		List<DocSubType> docSubType = null;
 		List<GenericBean> docs = null;
 		Builder builder = null;
 		Project project = null;
 		try {
 			user = (User) request.getSession().getAttribute("userObject");
-			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+			societyList = sdao.getAllActiveSocietyDetails(societyList);
 
 			for (Society soc1 : societyList) {
 				if (soc1.getSocietyid() == society.getSocietyid()) {
@@ -656,13 +658,15 @@ public class ViewController {
 
 			builder = sdao.getBuilderBySocietyId(society);
 			project = sdao.getProjectBySocietyId(society);
-
+			docSubType = ddao.getDocStubtypesToDispay(docSubType,String.valueOf(society.getSocietyid()));
+			
 			mv = new ModelAndView("adminPanel");
 			docs = sdao.getAllExistingDocsForSoc(society, docs);
 			mv.addObject("society", society);
 			mv.addObject("builder", builder);
 			mv.addObject("project", project);
 			mv.addObject("docs", docs);
+			mv.addObject("docSubType", docSubType);
 
 		} catch (Exception e) {
 			logger.error("Exception : ",e);

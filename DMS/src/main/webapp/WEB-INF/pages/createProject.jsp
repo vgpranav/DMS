@@ -87,7 +87,7 @@
 							for="first-name">District <span class="required">*</span>
 						</label>
 						<div class="col-md-8 col-sm-8 col-xs-12">
-							<input type="text" id="district " name="district"
+							<input type="text" id="district" name="district"
 								required="required" class="form-control col-md-7 col-xs-12">
 						</div>
 					</div>
@@ -334,6 +334,17 @@
 	        		$('#shopnos').val(response.shopnos);
 	        		$('#galanos').val(response.galanos);
 	        		$('input[name=active][value="'+response.active+'"]').prop("checked","checked").change();
+	        		
+	        		
+	        		$('#street').val(response.street);
+	        		$('#landmark').val(response.landmark);
+	        		$('#area').val(response.area);
+	        		$('#city').val(response.city);
+	        		$('#district').val(response.district);
+	        		$('#state').val(response.state);
+	        		$('#country').val(response.country);
+	        		$('#pincode').val(response.pincode);
+	        		
 	        	}  
 	        	unblockUI();
 	        },

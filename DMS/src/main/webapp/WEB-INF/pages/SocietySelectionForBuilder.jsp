@@ -45,6 +45,7 @@
 							            </div>
 							                
 											<div class="col-md-6 col-sm-6 col-xs-12">
+											
 												<h3>${myItem1.projectname}</h3> 
 												<em>Site Address: ${myItem1.street}, ${myItem1.city}, ${myItem1.state}</em>
 												<br><em>${myItem1.country}</em>

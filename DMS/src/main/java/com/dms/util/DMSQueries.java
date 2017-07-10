@@ -23,6 +23,7 @@ public class DMSQueries
   public static String insertNewFormField = "insert into formstructure(docsubtypeid,fieldname,fieldtype,datatype,sequence,active,createdby) values (?,?,?,?,?,?,?)";
   public static String getAllDocumentFormFieldsBySubTypes = " SELECT fs.fieldid,fs.fieldname,fs.fieldtype,fs.datatype,fs.sequence,fs.active,fs.createdon,fs.docsubtypeid,concat(u.firstname,' ',u.lastname) as createdby FROM formstructure fs, user u where fs.createdby=u.userid and fs.docsubtypeid=?";
   public static String getAllActiveSocietyForUser = "select * from society where isactive=1";
+  public static String getAllActiveSocietyDetails = "select * from society s,societyprofile sp where s.societyid=sp.societyid and s.isactive=1";
   public static String getAllDoctypeFromSocid = "select d.doctypeid,d.doctypename from doctype d,societydocmapping m,society s where d.doctypeid = m.doctypeid and m.societyid = s.societyid and s.isactive = 1 and s.societyid=? ";
   public static String getAllDocSubTypeFromDocid = "select * from docsubtype where doctypeid = ?";
   public static String insertDocDetails = "insert into documentdetails(documentid,datakey,datavalue,createdby) values (?,?,?,?)";
