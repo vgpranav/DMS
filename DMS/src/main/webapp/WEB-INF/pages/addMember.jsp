@@ -1043,6 +1043,11 @@
 			return false;
 		}
 		
+		if(password.length<5){
+			alert("Password Should be min 5 characters");
+			return false;
+		}
+		
 		var datastr = "userid="+userid
 				+"&firstName="+firstName
 				+"&lastName="+lastName

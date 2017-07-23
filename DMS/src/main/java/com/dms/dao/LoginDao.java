@@ -201,9 +201,10 @@ public class LoginDao {
 		Connection conn = null;
 		User userNew = null;
 	    try {
+	    	conn = ConnectionPoolManager.getInstance().getConnection();
 	    	qr = new QueryRunner();
 	    	ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
-	      	conn = ConnectionPoolManager.getInstance().getConnection();
+	      	
 	      	userNew = qr.insert(conn, DMSQueries.logUserLogin,rsh,
 	      			user.getUserid(),
 	      			user.getLogintime(),
@@ -211,7 +212,44 @@ public class LoginDao {
 	      			user.getIpaddress()
 	      			);
 	    	
+	      	updateSessionForUser(user.getSessionkey(),user.getUserid(),1);
+	      	
 	      	if(userNew!= null && userNew.getActive()==1)
+	      		return true;
+	      	
+	    } catch (Exception e) {
+	      dblogger.error("Error getting soc list :: " , e);
+	      e.printStackTrace();
+	      try {
+			conn.rollback();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return false;
+	}
+
+	public boolean updateSessionForUser(String sessionKey,long userid,int sessionactive){
+		Connection conn = null;
+	    try {
+	    	conn = ConnectionPoolManager.getInstance().getConnection();
+	    	qr = new QueryRunner();
+	      	
+	    	int updated = qr.update(conn,DMSQueries.updateSessionForUser,
+	    			sessionKey,
+	    			new Date(),
+	    			sessionactive,
+	    			userid 	
+	    			);
+	      	
+	      	if(updated>0)
 	      		return true;
 	      	
 	    } catch (Exception e) {
@@ -226,8 +264,8 @@ public class LoginDao {
 	    }
 	    return false;
 	}
-
-	public void logUserLogout(String sessionKey) {
+	
+	public void logUserLogout(String sessionKey,String userId) {
 		Connection conn = null;
 	    try {
 	    	qr = new QueryRunner();
@@ -239,6 +277,9 @@ public class LoginDao {
 	      			sessionKey
 	      			);
 	    	
+	      	
+	      	updateSessionForUser(sessionKey,Long.valueOf(userId),0);
+	      	
 	    } catch (Exception e) {
 	      dblogger.error("Error getting soc list :: " , e);
 	      e.printStackTrace();
@@ -249,5 +290,41 @@ public class LoginDao {
 	        dblogger.error("Error releasing connection :: " , e);
 	      }
 	    }
+	}
+	
+	
+	public boolean logActionsToDB(String userid,String action,String payload, String actiontype) {
+		Connection conn = null;
+	    try {
+	    	
+	    	if(payload.length()>4999){
+	    		payload = payload.substring(0, 4999);
+	    	}
+	    	if(userid.length()<1)
+	    		userid="0";
+	    	
+	    	qr = new QueryRunner();
+	    	ResultSetHandler<User> rsh = new BeanHandler<User>(User.class);
+	      	conn = ConnectionPoolManager.getInstance().getConnection();
+	      	qr.insert(conn, DMSQueries.logActionsToDB,rsh,
+	      			userid,
+	      			action,
+	      			payload,
+	      			actiontype
+	      			);
+	    	
+	      	return true;
+	      	
+	    } catch (Exception e) {
+	      dblogger.error("Error Logging action :: " , e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return false;
 	}
 }

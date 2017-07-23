@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dms.beans.User;
 import com.dms.dao.LoginDao;
 
+import javax.servlet.http.HttpSession;
+
 public class LoggingHelper {
 
 	private static final Logger reqreslogger = LoggerFactory.getLogger("reqreslogger");
@@ -26,10 +28,21 @@ public class LoggingHelper {
 	}
 
 	
-	public static void logMVRequest(String userid,String Action,Object obj){
+	public static void logMVRequest(HttpSession session,String userid,String Action,Object obj){
 		reqreslogger.info("----------------- [REQUEST]["+Action+"][USER:"+userid+"] ----------------- ");
 		reqreslogger.info(obj.toString());
 		actionlogger.info(userid+" : "+Action);
+		LoginDao ldao;
+		try{
+			ldao = new LoginDao();
+			ldao.logActionsToDB(userid, Action, obj.toString(),"view");
+			String sessionKey = session.getAttribute("sessionKey")!=null ? session.getAttribute("sessionKey").toString() : "";
+			long userid1 = session.getAttribute("userid")!=null ? Long.valueOf(session.getAttribute("userid").toString()): 0;
+			
+			ldao.updateSessionForUser(sessionKey,userid1,1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	public static void logMVResponse(String Action,ModelAndView mv){
@@ -41,10 +54,20 @@ public class LoggingHelper {
 		}
 	}
 	
-	public static void logAjaxRequest(String userid,String Action,Object obj){
+	public static void logAjaxRequest(HttpSession session,String userid,String Action,Object obj){
 		reqreslogger.info("----------------- [AJAX REQUEST]["+Action+"][USER:"+userid+"] ----------------- ");
 		reqreslogger.info(obj.toString());
 		actionlogger.info(userid+" : "+Action);
+		
+		LoginDao ldao;
+		try{
+			ldao = new LoginDao();
+			ldao.logActionsToDB(userid, Action, obj.toString(),"ajax");
+			String sessionKey = session.getAttribute("sessionKey")!=null ? session.getAttribute("sessionKey").toString() : "";
+			ldao.updateSessionForUser(sessionKey,Long.valueOf(userid),1);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public static void logAjaxResponse(String Action,Object obj){
@@ -72,7 +95,7 @@ public class LoggingHelper {
 			user.setLogintime(new Date());
 			user.setSessionkey(sessionKey);
 			user.setIpaddress(ip);
-
+			user.setSessionactive(1);
 			ldao.logUserLogin(user);
 
 		} catch (Exception e) {
@@ -84,11 +107,11 @@ public class LoggingHelper {
 	}
 
 	
-	public static void logUserLogout(String sessionKey) {
+	public static void logUserLogout(String sessionKey,String userId) {
 		LoginDao ldao;
 		try {
 			ldao = new LoginDao();
-			ldao.logUserLogout(sessionKey);
+			ldao.logUserLogout(sessionKey,userId);
 		} catch (Exception e) {
 			logger.error("error", e);
 			//e.printStackTrace();

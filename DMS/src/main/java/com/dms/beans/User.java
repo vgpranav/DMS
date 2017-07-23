@@ -22,14 +22,25 @@ public class User
     
     private Date logintime;
     private Date logouttime;
-    private String sessionkey;
     private String ipaddress;
     
     private String userType;
+
+    private String sessionkey;
+    private Date sessiontime;
+    private int sessionactive;
     
     
     
-    public String getUserType() {
+    public int getSessionactive() {
+		return sessionactive;
+	}
+
+	public void setSessionactive(int sessionactive) {
+		this.sessionactive = sessionactive;
+	}
+
+	public String getUserType() {
 		return userType;
 	}
 
@@ -200,15 +211,23 @@ public class User
 		this.otp = otp;
 	}
 
+	public Date getSessiontime() {
+		return sessiontime;
+	}
+
+	public void setSessiontime(Date sessiontime) {
+		this.sessiontime = sessiontime;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userid=" + userid + ", firstName=" + firstName + ", lastName=" + lastName + ", userName="
 				+ userName + ", password=" + password + ", createDate=" + createDate + ", active=" + active
 				+ ", mobileNo=" + mobileNo + ", userroleid=" + userroleid + ", userrolename=" + userrolename
 				+ ", createdby=" + createdby + ", otp=" + otp + ", otpType=" + otpType + ", deleteflag=" + deleteflag
-				+ ", logintime=" + logintime + ", logouttime=" + logouttime + ", sessionkey=" + sessionkey
-				+ ", ipaddress=" + ipaddress + ", userType=" + userType + "]";
+				+ ", logintime=" + logintime + ", logouttime=" + logouttime + ", ipaddress=" + ipaddress + ", userType="
+				+ userType + ", sessionkey=" + sessionkey + ", sessiontime=" + sessiontime + ", sessionactive="
+				+ sessionactive + "]";
 	}
-
-
+	
 }

@@ -100,6 +100,7 @@ public class DMSQueries
 	public static String getDocSummaryforAdminpanel = " SELECT count(d.documentid) as doccount,dt.doctypeid,dt.doctypename, "
 			+ " dst.docsubtypeid,dst.docsubtypename FROM dms.document d,dms.doctype dt,dms.docsubtype dst,societydocmapping sdm "
 			+ " where d.doctypeid=dt.doctypeid and d.docsubtypeid=dst.docsubtypeid and d.societyid=sdm.societyid and sdm.doctypeid=d.doctypeid and d.societyid=? "
+			+" and d.docsubtypeid not in (select docsubtypeid from socdocviewmapping where societyid=? and confFlag=1) "
 			+ " group by dst.docsubtypename,dt.doctypename order by dt.doctypename,dst.docsubtypename";
 	
 	public static String getNeighborProfile = "SELECT n.*,u.* FROM dms.userprofile o,dms.userprofile n,dms.user u "
@@ -195,4 +196,10 @@ public class DMSQueries
 	public static String addBuilderManager = "insert into buildermanagermapping(builderid,userid) values (?,?)";
 
 	public static String getBuilderListByManagerid = "select * from buildermanagermapping where userid=?";
+
+	public static String logActionsToDB = "insert into actionlogger(userid,action,payload,actiontype) values (?,?,?,?)";
+	
+	public static String updateSessionForUser = "update user set sessionkey=?,sessiontime=?,sessionactive=? where userid=?";
+
+	public static String getAllUserActivityLog = "";
 }

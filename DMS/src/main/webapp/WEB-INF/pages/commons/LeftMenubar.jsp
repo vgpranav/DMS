@@ -92,6 +92,19 @@
 		                  </li>
 		            </c:if>
 		            
+		            <c:if test="${sessionScope.userObject.userroleid==1}">
+		                  <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		Monitoring 
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                     	<li><a href="viewUserActivity.do">View User Activity</a></li>
+		                     	<li><a href="viewLoginHistory.do">View Login History</a></li>
+		                    </ul>
+		                  </li>
+		            </c:if>
 		            
 		             <c:if test="${sessionScope.userObject.userroleid==1  || sessionScope.socmanagercount>0}">   
 		             <c:if test="${sessionScope.userObject.userroleid!=2}"> 

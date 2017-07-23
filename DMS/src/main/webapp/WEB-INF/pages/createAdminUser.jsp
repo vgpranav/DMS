@@ -16,7 +16,7 @@
                     <div class="col-md-7 col-sm-7 col-xs-12">
 						<form id="addSocietyForm" data-parsley-validate
 							class="form-horizontal form-label-left" action="saveAdminUser.do"
-							method="post">
+							method="post" onsubmit="return validate();">
 
 							<input type="hidden" id="userid" name="userid" value="0">
 							
@@ -209,6 +209,18 @@
  </div>
  
  <script>
+ 
+ 
+ function validate(){
+	 
+	 var password = $('#password').val();
+	 if(password.length<5){
+			alert("Password Should be min 5 characters");
+			return false;
+	 }
+	 return true;
+ }
+ 
  $(document).ready(function(){
 		$('#thetable').DataTable();
 		
@@ -236,6 +248,9 @@
  
 		 
  function editAdminUser(userid){
+	 
+	 
+	 
 	 blockUI();
 		$.ajax({
 	        type: "GET",

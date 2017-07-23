@@ -518,6 +518,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 	        ios=null;
 	       
 	        File tempFileRef  = new File(filepath);
+	        
 	        String name = tempFileRef.getName();
 	        String userSeparator="\\";            
 	        name = name.substring(name.lastIndexOf(userSeparator)+1,name.length());    
@@ -551,8 +552,11 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 		      	  
 				    long insert_st_time = System.currentTimeMillis();
 					
-				    String insertQuery = "insert into files (societyid,doctypeid,docsubtypeid,documentid,filename,filepath,mimetype,createdby)"
-				    				   + " values (?,?,?,?,?,?,?,?)"; 
+				    double fileSize = tempFileRef.length();
+				    
+				    
+				    String insertQuery = "insert into files (societyid,doctypeid,docsubtypeid,documentid,filename,filepath,mimetype,createdby,filesize)"
+				    				   + " values (?,?,?,?,?,?,?,?,?)"; 
 				    
 					PreparedStatement prepStmt = con.prepareStatement(insertQuery);
 					prepStmt.setObject(1,societyid);	
@@ -563,6 +567,7 @@ public class ImageTab extends JPanel implements PropertyChangeListener{
 				    prepStmt.setObject(6,"/DMS/"+unixFileName);	
 				    prepStmt.setObject(7,"");	
 				    prepStmt.setObject(8,userid);	
+				    prepStmt.setObject(9,fileSize);	
 				    
 				   /* if(depid.equals("1200000001")){
 				      	 prepStmt.setObject(6,cbox1.getSelectedItem());

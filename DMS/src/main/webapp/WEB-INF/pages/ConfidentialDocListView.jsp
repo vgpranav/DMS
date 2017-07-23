@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <input type="hidden" name="societyid" id="societyid" value="${society.societyid}">
-<input type="hidden" name="societyidx" id="societyidx" value="${society.societyid}">
 
 
 <%-- <c:if test="${builder!=null}">
@@ -57,7 +56,7 @@
 
 </c:if> --%>
 
-<div class="col-md-12 col-sm-12 col-xs-12">
+<%-- <div class="col-md-12 col-sm-12 col-xs-12">
 	<div class="x_panel tile">
 		<div class="pull-left">
 			<h3>${society.societyname}</h3>
@@ -67,8 +66,8 @@
 					<c:if test="${project!=null}"> Site</c:if> Address: 
 						${society.addressline1}</em>
 						<br><em>${society.addressline2}</em>
-						<%-- <br><em>Landmark : ${society.landmark}</em> --%>
-						<%-- <br><em>City: ${society.city}</em> --%>
+						<br><em>Landmark : ${society.landmark}</em>
+						<br><em>City: ${society.city}</em>
 						<br><em>${society.ward}, ${society.district}, ${society.state}</em>
 						<br><em>${society.country}</em>
 					<br><em>Pincode: ${society.pincode}</em>
@@ -87,13 +86,13 @@
 		</div>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 
  
   	
  
- <div class="col-md-12 col-sm-12 col-xs-12">
+<%--  <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                 
@@ -162,9 +161,9 @@
                   </div>
                 </div>
               </div>
- </div>
+ </div> --%>
  
- 		<div class="col-md-12 col-sm-12 col-xs-12">
+ 		<%-- <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Document Repository</h2>
@@ -209,18 +208,18 @@
 		                     	</div>
                        		</c:if>
                        		 
-                       		 <%-- <c:if test="${loopStatus.index>3 && loopStatus.index%3==0}">
+                       		 <c:if test="${loopStatus.index>3 && loopStatus.index%3==0}">
                        			<div class="clearfix"></div>
-                       		</c:if>   --%>
+                       		</c:if>  
                        </c:forEach>
                     </div>
                   </div>
                 </div>
               </div>
- 		</div>
+ 		</div> --%>
  
  
- 		<div class="col-md-12 col-sm-12 col-xs-12" id="committeeSection" style="display: none;">
+ 	<!-- 	<div class="col-md-12 col-sm-12 col-xs-12" id="committeeSection" style="display: none;">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Committee Members</h2>
@@ -260,10 +259,10 @@
                   </div>
                 </div>
               </div>
- 		</div>
+ 		</div> -->
  
  
- <div class="col-md-12 col-sm-12 col-xs-12">
+ <!-- <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Vendor Details</h2>
@@ -299,10 +298,10 @@
                   </div>
                 </div>
               </div>
- </div>
+ </div> -->
  
  
-<%--  <div class="col-md-12 col-sm-12 col-xs-12">
+ <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
                   <h2>Documents</h2>
@@ -331,11 +330,11 @@
                   </div>
                 </div>
               </div>
- </div> --%>
+ </div>
  
  <div class="clearfix"></div>
  
- <div id="SCDialog">
+<!--  <div id="SCDialog">
  		<div class="table-responsive  col-sm-12 col-md-12 col-xs-12"  >
 			<table class="table table-striped jambo_table bulk_action"
 				id="thetableSC">
@@ -352,9 +351,9 @@
 				</tbody>
 			</table>
 		</div>
- </div>
+ </div> -->
  
- <div id="PKDialog">
+<!--  <div id="PKDialog">
   <table class="table table-striped jambo_table bulk_action"
 									id="thetablePK">
 									<thead>
@@ -368,11 +367,11 @@
 									<tbody>
 									</tbody>
 								</table>
- </div>
+ </div> -->
  
  
  
- <div id="TDialog">
+ <%-- <div id="TDialog">
  		<div class="clearfix"></div>
 							<div class="form-group">
 								<div class="col-md-4 col-sm-4 col-xs-12">
@@ -458,7 +457,7 @@
 								</c:if>
 							
 							</div>
- </div>
+ </div> --%>
  
  <div id="IMGDialog">
  
@@ -508,7 +507,7 @@
  
  $(document).ready(function(){
 	 
-	 $('.collapse-link').each(function(i, obj) {
+/* 	 $('.collapse-link').each(function(i, obj) {
 		 var $BOX_PANEL = $(this).closest('.x_panel'),
          $ICON = $(this).find('i'),
          $BOX_CONTENT = $BOX_PANEL.find('.x_content');
@@ -524,7 +523,7 @@
 	     }
 	
 	     $ICON.toggleClass('fa-chevron-up fa-chevron-down');
-	});
+	}); */
 	 
 	 
 	 $( "#SCDialog" ).dialog({

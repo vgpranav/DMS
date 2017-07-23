@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.dms.beans.Actionlogger;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
@@ -29,6 +30,7 @@ import com.dms.beans.EmailBean;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.Loginhistory;
 import com.dms.beans.Parking;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
@@ -57,7 +59,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<String> societyAutosuggest(@RequestParam("searchText") String searchText,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"societyAutosuggest", searchText);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"societyAutosuggest", searchText);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<String> codeList1 = new ArrayList();
@@ -84,7 +86,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<String> userAutosuggest(@RequestParam("searchText") String searchText,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"userAutosuggest",searchText);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"userAutosuggest",searchText);
 
 
 		SocietyDao societyDao = new SocietyDao();
@@ -113,7 +115,7 @@ public class AjaxController {
 	public List<String> userAutosuggestForSociety(@RequestParam("searchText") String searchText,
 			@RequestParam("societyid") String societyid,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"userAutosuggestForSociety",searchText);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"userAutosuggestForSociety",searchText);
 
 
 		SocietyDao societyDao = new SocietyDao();
@@ -140,7 +142,7 @@ public class AjaxController {
 	@ResponseBody
 	public FormFields saveDocumentType(@ModelAttribute FormFields formFields, HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveFormFields",formFields);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveFormFields",formFields);
 
 		DocumentDao documentDao = new DocumentDao();
 		User user = null;
@@ -162,7 +164,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<FormFields> getFieldsForDocSubtype(@ModelAttribute FormFields formField,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getFieldsForDocSubtype",formField);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getFieldsForDocSubtype",formField);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<FormFields> formFields = null;
@@ -181,7 +183,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Doctype> getDoctypeBySocId(@ModelAttribute Society society,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDoctypeBySocId",society);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDoctypeBySocId",society);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<Doctype> doctypes = null;
@@ -201,7 +203,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<DocSubType> getDocSubtypeByDocId(@ModelAttribute DocSubType docSubType,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDocSubtypeByDocId",docSubType);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDocSubtypeByDocId",docSubType);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<DocSubType> docSubTypes = null;
@@ -221,7 +223,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Document> getDocumentListForView(@ModelAttribute Document document,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDocumentListForView",document);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDocumentListForView",document);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<Document> documents = null;
@@ -241,7 +243,7 @@ public class AjaxController {
 	@ResponseBody
 	public Userprofile saveMemberDetails(@ModelAttribute Userprofile userprofile, HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveMemberDetails",userprofile);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveMemberDetails",userprofile);
 
 		User user = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -262,7 +264,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Userprofile> getMembersForSociety(@ModelAttribute Userprofile userprofile,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getMembersForSociety",userprofile);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getMembersForSociety",userprofile);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<Userprofile> profiles = null;
@@ -281,7 +283,7 @@ public class AjaxController {
 	@ResponseBody
 	public Committee addCommitteeMember(@ModelAttribute Committee committee,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addCommitteeMember",committee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addCommitteeMember",committee);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -300,7 +302,7 @@ public class AjaxController {
 	@ResponseBody
 	public Map<String, List<Committee>> getCommitteMembersForSociety(@ModelAttribute Committee committee,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getCommitteMembersForSociety",committee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getCommitteMembersForSociety",committee);
 
 		SocietyDao societyDao = new SocietyDao();
 		Map<String, List<Committee>> committees = new HashMap();
@@ -320,7 +322,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeCommitteeMember(@ModelAttribute Committee committee,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeCommitteeMember",committee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeCommitteeMember",committee);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -343,7 +345,7 @@ public class AjaxController {
 	public Vendor saveVendorDetails(@ModelAttribute Vendor vendor, HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveVendorDetails",vendor);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveVendorDetails",vendor);
 
 		User user = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -365,7 +367,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Vendor> getVendorsBySocId(@ModelAttribute Vendor vendor,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getVendorsBySocId",vendor);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getVendorsBySocId",vendor);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<Vendor> vendors = new ArrayList<Vendor>();
@@ -385,7 +387,7 @@ public class AjaxController {
 	@ResponseBody
 	public Society getSocietyDetailsById(@ModelAttribute Society society,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getSocietyDetailsById",society);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getSocietyDetailsById",society);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -403,7 +405,7 @@ public class AjaxController {
 	@ResponseBody
 	public Doctype getDocumentTypeById(@ModelAttribute Doctype doctype,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDocumentTypeById",doctype);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDocumentTypeById",doctype);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -422,7 +424,7 @@ public class AjaxController {
 	@ResponseBody
 	public DocSubType getDocumentSubTypeById(@ModelAttribute DocSubType docSubType,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDocumentSubTypeById",docSubType);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDocumentSubTypeById",docSubType);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -440,7 +442,7 @@ public class AjaxController {
 	@ResponseBody
 	public FormFields getFormFieldById(@ModelAttribute FormFields formFields,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getFormFieldById",formFields);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getFormFieldById",formFields);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -458,7 +460,7 @@ public class AjaxController {
 	@ResponseBody
 	public Userprofile getUserDataById(@ModelAttribute Userprofile userprofile,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getUserDataById",userprofile);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getUserDataById",userprofile);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -476,7 +478,7 @@ public class AjaxController {
 	@ResponseBody
 	public Vendor getVendorDataById(@ModelAttribute Vendor vendor,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getVendorDataById",vendor);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getVendorDataById",vendor);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -494,7 +496,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Committee> getManagersForSociety(@ModelAttribute Society society,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getManagersForSociety",society);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getManagersForSociety",society);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<Committee> committees = null;
@@ -513,7 +515,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeSocietyManager(@ModelAttribute Committee committee,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeSocietyManager",committee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeSocietyManager",committee);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -535,7 +537,7 @@ public class AjaxController {
 	@ResponseBody
 	public Committee addSocietyManager(@ModelAttribute Committee committee,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addSocietyManager",committee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addSocietyManager",committee);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -554,7 +556,7 @@ public class AjaxController {
 	@ResponseBody
 	public Builder getBuilderDetailsById(@ModelAttribute Builder builder,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getBuilderDetailsById",builder);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getBuilderDetailsById",builder);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -573,7 +575,7 @@ public class AjaxController {
 	@ResponseBody
 	public Project getProjectDetailsById(@ModelAttribute Project project,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getProjectDetailsById",project);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getProjectDetailsById",project);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -591,7 +593,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeSocietyDocmapping(@ModelAttribute GenericBean bean,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeSocietyDocmapping",bean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeSocietyDocmapping",bean);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -613,7 +615,7 @@ public class AjaxController {
 	@ResponseBody
 	public User editAdminUser(@ModelAttribute User adminUser,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"editAdminUser",adminUser);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"editAdminUser",adminUser);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -632,7 +634,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Userprofile> getNeighborDetails(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getNeighborDetails",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getNeighborDetails",user);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<Userprofile> profiles = null;
@@ -652,7 +654,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<CallReference> getContactsByCallRefId(@ModelAttribute CallReference callref,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getContactsByCallRefId",callref);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getContactsByCallRefId",callref);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<CallReference> profiles = null;
@@ -672,7 +674,7 @@ public class AjaxController {
 	@ResponseBody
 	public CallReference saveCallrefMeeting(@ModelAttribute CallReference callref,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveCallrefMeeting",callref);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveCallrefMeeting",callref);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -691,7 +693,7 @@ public class AjaxController {
 	@ResponseBody
 	public CallReference saveCallrefContact(@ModelAttribute CallReference callref,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveCallrefContact",callref);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveCallrefContact",callref);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -709,7 +711,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<CallReference> getMeetingsByCallRefId(@ModelAttribute CallReference callref,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getMeetingsByCallRefId",callref);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getMeetingsByCallRefId",callref);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<CallReference> profiles = null;
@@ -729,7 +731,7 @@ public class AjaxController {
 	@ResponseBody
 	public String deleteDocById(@ModelAttribute Document document,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"deleteDocById",document);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"deleteDocById",document);
 
 		int rowsUpdated = 0;
 		DocumentDao documentDao = new DocumentDao();
@@ -751,7 +753,7 @@ public class AjaxController {
 	@ResponseBody
 	public GenericBean saveSocViewMapping(@ModelAttribute GenericBean gbean, HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveSocViewMapping",gbean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveSocViewMapping",gbean);
 
 		SocietyDao societyDao = new SocietyDao();
 		User user = null;
@@ -773,7 +775,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<GenericBean> getMappedDocsBySocId(@ModelAttribute GenericBean gbean,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getMappedDocsBySocId",gbean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getMappedDocsBySocId",gbean);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<GenericBean> beans = null;
@@ -793,7 +795,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeSocDocViewMapping(@ModelAttribute GenericBean bean,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeSocDocViewMapping",bean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeSocDocViewMapping",bean);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -815,7 +817,7 @@ public class AjaxController {
 	@ResponseBody
 	public String generateAndSendOTP(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"generateAndSendOTP",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"generateAndSendOTP",user);
 
 		int rowsUpdated = 0;
 		LoginDao loginDao = new LoginDao();
@@ -844,7 +846,7 @@ public class AjaxController {
 	@ResponseBody
 	public String validateAndSetNewPW(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"validateAndSetNewPW",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"validateAndSetNewPW",user);
 
 		int otpaValid = 0;
 		int passwordSet = 0;
@@ -871,7 +873,7 @@ public class AjaxController {
 	@ResponseBody
 	public String validateOTPForDocAccess(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"validateOTPForDocAccess",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"validateOTPForDocAccess",user);
 
 		int otpaValid = 0;
 		LoginDao loginDao = new LoginDao();
@@ -893,7 +895,7 @@ public class AjaxController {
 	@ResponseBody
 	public GenericBean getDesignationById(@ModelAttribute GenericBean gbean,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDesignationById",gbean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDesignationById",gbean);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -912,7 +914,7 @@ public class AjaxController {
 	public GenericBean saveDesignationDetails(@ModelAttribute GenericBean gbean, HttpServletRequest request,
 			HttpServletResponse response) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveDesignationDetails",gbean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveDesignationDetails",gbean);
 
 		User user = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -933,7 +935,7 @@ public class AjaxController {
 	@ResponseBody
 	public String deleteDocumentPage(@ModelAttribute Files files,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"deleteDocumentPage",files);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"deleteDocumentPage",files);
 
 		int rowsUpdated = 0;
 		DocumentDao docDao = new DocumentDao();
@@ -956,7 +958,7 @@ public class AjaxController {
 	public Parking saveMemberparkingDetails(@ModelAttribute Parking parking, HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveMemberparkingDetails",parking);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveMemberparkingDetails",parking);
 
 		User user = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -978,7 +980,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Parking> getParkingDetailsForMember(@ModelAttribute Parking parking,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getParkingDetailsForMember",parking);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getParkingDetailsForMember",parking);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<Parking> parkingList = null;
@@ -998,7 +1000,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeParkingData(@ModelAttribute Parking parking,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeParkingData",parking);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeParkingData",parking);
 
 		int rowsUpdated = 0;
 		SocietyDao docDao = new SocietyDao();
@@ -1021,7 +1023,7 @@ public class AjaxController {
 	public UserSCNominee addShareCertDetails(@ModelAttribute UserSCNominee userSCNominee, HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addShareCertDetails",userSCNominee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addShareCertDetails",userSCNominee);
 
 		User user = null;
 		SocietyDao societyDao = new SocietyDao();
@@ -1042,7 +1044,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<UserSCNominee> getShareCertDetails(@ModelAttribute UserSCNominee userSCNominee,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getShareCertDetails",userSCNominee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getShareCertDetails",userSCNominee);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<UserSCNominee> scList = null;
@@ -1061,7 +1063,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeParkingData(@ModelAttribute UserSCNominee userSCNominee,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeShareCertDetails",userSCNominee);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeShareCertDetails",userSCNominee);
 
 		int rowsUpdated = 0;
 		SocietyDao docDao = new SocietyDao();
@@ -1083,7 +1085,7 @@ public class AjaxController {
 	@ResponseBody
 	public String saveConfDocAccess(@RequestParam("userid") String userid, HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"saveConfDocAccess",userid);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveConfDocAccess",userid);
 
 		int rowsUpdated = 0;
 		SocietyDao docDao = new SocietyDao();
@@ -1107,7 +1109,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<GenericBean> getConfDocAccessList(HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getConfDocAccessList","");
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getConfDocAccessList","");
 
 		DocumentDao documentDao = new DocumentDao();
 		List<GenericBean> formFields = null;
@@ -1127,7 +1129,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Project> getProjectsByBuilderId(@ModelAttribute Builder builder,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getProjectsByBuilderId",builder);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getProjectsByBuilderId",builder);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<Project> docSubTypes = null;
@@ -1146,7 +1148,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<Society> getSubProjectsByProjectId(@ModelAttribute Project project,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getSubProjectsByProjectId",project);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getSubProjectsByProjectId",project);
 
 		DocumentDao documentDao = new DocumentDao();
 		List<Society> docSubTypes = null;
@@ -1166,7 +1168,7 @@ public class AjaxController {
 	@ResponseBody
 	public String genericRemove(@ModelAttribute GenericBean gbean,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"genericRemove",gbean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"genericRemove",gbean);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -1188,7 +1190,7 @@ public class AjaxController {
 	@ResponseBody
 	public String addTenantToHistory(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addTenantToHistory",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addTenantToHistory",user);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -1226,7 +1228,7 @@ public class AjaxController {
 	@ResponseBody
 	public String sendDocumentAsMail(@ModelAttribute EmailBean eBean, HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"sendDocumentAsMail",eBean);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"sendDocumentAsMail",eBean);
 
 		int rowsUpdated = 0;
 		DocumentDao docDao = new DocumentDao();
@@ -1254,7 +1256,7 @@ public class AjaxController {
 	@ResponseBody
 	public String addDeleteAuth(@ModelAttribute User user,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addDeleteAuth",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addDeleteAuth",user);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -1276,7 +1278,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeDeleteAuth(@ModelAttribute User user,HttpServletRequest request) {
 		
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeDeleteAuth",user);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeDeleteAuth",user);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -1298,7 +1300,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<User> getDeleteAuth(HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getDeleteAuth","");
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getDeleteAuth","");
 
 		DocumentDao documentDao = new DocumentDao();
 		List<User> users = null;
@@ -1320,7 +1322,7 @@ public class AjaxController {
 	@ResponseBody
 	public List<BuilderManager> getManagersForBuilder(@ModelAttribute Builder builder,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"getManagersForBuilder",builder);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getManagersForBuilder",builder);
 
 		SocietyDao societyDao = new SocietyDao();
 		List<BuilderManager> managers = null;
@@ -1340,7 +1342,7 @@ public class AjaxController {
 	@ResponseBody
 	public String removeBuilderManagerByid(@ModelAttribute BuilderManager manager,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"removeBuilderManagerByid",manager);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"removeBuilderManagerByid",manager);
 
 		int rowsUpdated = 0;
 		SocietyDao societyDao = new SocietyDao();
@@ -1363,7 +1365,7 @@ public class AjaxController {
 	@ResponseBody
 	public BuilderManager addBuilderManager(@ModelAttribute BuilderManager manager,HttpServletRequest request) {
 
-		LoggingHelper.logAjaxRequest(request.getSession().getAttribute("userId").toString(),"addBuilderManager",manager);
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBuilderManager",manager);
 
 		SocietyDao societyDao = new SocietyDao();
 		try {
@@ -1378,4 +1380,41 @@ public class AjaxController {
 	}
 	
 	
+	@RequestMapping(value = { "/getUserActivityLog" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<Actionlogger> getUserActivityLog(@ModelAttribute User user,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getUserActivityLog",user);
+
+		SocietyDao societyDao = new SocietyDao();
+		List<Actionlogger> actions = null;
+		try {
+			actions = societyDao.getUserActivityLog(user, actions);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getUserActivityLog",actions);
+
+		return actions;
+	}
+	
+	@RequestMapping(value = { "/getUserLoginHistory" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<Loginhistory> getUserLoginHistory(@ModelAttribute User user,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getUserActivityLog",user);
+
+		SocietyDao societyDao = new SocietyDao();
+		List<Loginhistory> actions = null;
+		try {
+			actions = societyDao.getUserLoginHistory(user, actions);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getUserActivityLog",actions);
+
+		return actions;
+	}
 } // end of class

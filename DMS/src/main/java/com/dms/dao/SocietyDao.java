@@ -1,5 +1,27 @@
 package com.dms.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+//import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.dbutils.DbUtils;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.Base64Utils;
+
+import com.dms.beans.Actionlogger;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
@@ -7,10 +29,10 @@ import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
-import com.dms.beans.Document;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.Loginhistory;
 import com.dms.beans.Parking;
 import com.dms.beans.Photos;
 import com.dms.beans.Project;
@@ -24,28 +46,6 @@ import com.dms.util.CommomUtility;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.FtpWrapper;
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.util.Base64Utils;
 
 public class SocietyDao
 {
@@ -1358,7 +1358,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      ResultSetHandler<List<Society>> rsh = new BeanListHandler<Society>(Society.class);
 		      tempSocietyList = qr.query(conn, DMSQueries.getAllSociety, rsh,societytype);
 		      
-		      System.out.println("tempSocietyList :: "+tempSocietyList);
+		      //System.out.println("tempSocietyList :: "+tempSocietyList);
 		      
 		      for(Society society : tempSocietyList){
 		    	  
@@ -1791,7 +1791,7 @@ public Builder insertOrUpdateBuilder(Builder builder) {
 		      qr = new QueryRunner();
 		      conn = ConnectionPoolManager.getInstance().getConnection();
 		      ResultSetHandler<List<GenericBean>> rsh = new BeanListHandler<GenericBean>(GenericBean.class);
-		      docs = qr.query(conn, DMSQueries.getDocSummaryforAdminpanel,rsh,society.getSocietyid());
+		      docs = qr.query(conn, DMSQueries.getDocSummaryforAdminpanel,rsh,society.getSocietyid(),society.getSocietyid());
 		    } catch (Exception e) {
 		      dblogger.error("Error fetching getAllBuilder List :: ", e);
 		      e.printStackTrace();
@@ -2267,9 +2267,10 @@ public boolean checkIfNewNoticeAdded(String societyid) {
 	      conn = ConnectionPoolManager.getInstance().getConnection();
 	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
 	      
-	      LocalDate today = LocalDate.now();
+	      //LocalDate today = LocalDate.now();
 		  //LocalDate yesterday = today.minusDays(1);
-		  
+	      Date today = new Date();
+	      
 		  String dateStr = today + " 00:00:00";
 	      
 	      Object obj  = qr.query(conn, DMSQueries.checkIfNewNoticeAdded, rsh, societyid,dateStr);
@@ -2938,6 +2939,86 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    return buildermanagerList;
 	  }
 
+	public List<Actionlogger> getUserActivityLog(User user, List<Actionlogger> actions) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Actionlogger>> rsh = new BeanListHandler<Actionlogger>(Actionlogger.class);
+	      
+	      String SQL = "select actionloggerid,userid,action,payload,actiondate,getUsername(userid) as username from actionlogger where actiontype='view' and userid="+user.getUserid();
+	      
+	      if(user.getFirstName()!=null){
+	    	  //System.out.println(user.getFirstName());
+	    	  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+	    	  SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd"); 
+	    	  Date strDate= formatter.parse(user.getFirstName());
+	    	  
+	    	  SQL += " and date(actiondate) = '"+formatter1.format(strDate)+"'";
+	      }
+	    	  
+	      SQL += " order by actiondate desc";
+	      
+	      //System.out.println("UserActivityLog "+SQL);
+	      
+	      actions = qr.query(conn,SQL,rsh);
+	      
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching UserActivityLog :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return actions;
+	  }
 
-
+	
+	public List<Loginhistory> getUserLoginHistory(User user, List<Loginhistory> actions) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Loginhistory>> rsh = new BeanListHandler<Loginhistory>(Loginhistory.class);
+	      
+	      String SQL = "select loginhistoryid,userid,logintime,logouttime,ipaddress,getUsername(userid) as username from loginhistory where  userid="+user.getUserid();
+	      
+	      if(user.getFirstName()!=null){
+	    	  //System.out.println(user.getFirstName());
+	    	  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+	    	  SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd"); 
+	    	  Date strDate= formatter.parse(user.getFirstName());
+	    	  
+	    	  SQL += " and date(logintime) = '"+formatter1.format(strDate)+"'";
+	      }
+	    	  
+	      SQL += " order by logintime desc";
+	      
+	      //System.out.println("UserActivityLog "+SQL);
+	      
+	      actions = qr.query(conn,SQL,rsh);
+	      
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching UserActivityLog :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return actions;
+	  }
 }

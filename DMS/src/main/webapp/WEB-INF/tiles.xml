@@ -269,5 +269,19 @@
       <put-attribute name="body" value="/WEB-INF/pages/SocietySelectionForBuilder.jsp" />   
     </definition>
     
+     <definition name="ConfidentialDocListView" extends="base-definition">  
+      <put-attribute name="title" value="Confidential Doc View" />  
+      <put-attribute name="body" value="/WEB-INF/pages/ConfidentialDocListView.jsp" />   
+    </definition>
+    
+    <definition name="viewUserActivity" extends="base-definition">  
+      <put-attribute name="title" value="View User Activity" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewUserActivity.jsp" />   
+    </definition>
+    
+    <definition name="viewLoginHistory" extends="base-definition">  
+      <put-attribute name="title" value="View User Activity" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewLoginHistory.jsp" />   
+    </definition>
     
 </tiles-definitions>
