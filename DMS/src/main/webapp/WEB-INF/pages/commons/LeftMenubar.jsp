@@ -102,6 +102,7 @@
 		                    <ul class="nav child_menu">
 		                     	<li><a href="viewUserActivity.do">View User Activity</a></li>
 		                     	<li><a href="viewLoginHistory.do">View Login History</a></li>
+		                     	<li><a href="fileMonitoring.do">File Monitoring</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

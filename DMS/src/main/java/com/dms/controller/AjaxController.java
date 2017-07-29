@@ -27,6 +27,7 @@ import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.EmailBean;
+import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
@@ -1151,7 +1152,7 @@ public class AjaxController {
 		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getSubProjectsByProjectId",project);
 
 		DocumentDao documentDao = new DocumentDao();
-		List<Society> docSubTypes = null;
+		List<Society> docSubTypes = new ArrayList<Society>();
 		try {
 			docSubTypes = documentDao.getSubProjectsByProjectId(project.getProjectid(), docSubTypes);
 		} catch (Exception e) {
@@ -1163,6 +1164,26 @@ public class AjaxController {
 		return docSubTypes;
 	}
 
+	@RequestMapping(value = { "/getSocietyList" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<Society> getSocietyList(HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getSocietyList","");
+
+		SocietyDao documentDao = new SocietyDao();
+		List<Society> societyList = new ArrayList<Society>();
+		try {
+			 societyList = documentDao.getAllSociety(societyList, "society");
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+
+		LoggingHelper.logAjaxResponse("getSocietyList",societyList);
+
+		return societyList;
+	}
+	
 	@RequestMapping(value = { "/genericRemove" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
 	@ResponseBody
@@ -1417,4 +1438,25 @@ public class AjaxController {
 
 		return actions;
 	}
+	
+	
+	@RequestMapping(value = { "/getFileStats" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public FileMonitoring getFileStats(@ModelAttribute FileMonitoring fileMonitoring,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getFileStats",fileMonitoring);
+
+		SocietyDao societyDao = new SocietyDao();
+		FileMonitoring  fm = null;
+		try {
+			fm = societyDao.getFileStats(fileMonitoring);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getFileStats",fm);
+
+		return fm;
+	}
+	
 } // end of class

@@ -29,6 +29,7 @@ import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
@@ -233,6 +234,8 @@ public class SocietyDao
     }
     return societyList;
   }
+  
+  
   
   
   
@@ -3021,4 +3024,72 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    }
 	    return actions;
 	  }
+
+	public FileMonitoring getFileStats(FileMonitoring fileMonitoring) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<FileMonitoring> q1rsh = new BeanHandler<FileMonitoring>(FileMonitoring.class);
+	      ResultSetHandler<List<FileMonitoring>> rsh = new BeanListHandler<FileMonitoring>(FileMonitoring.class);
+	      
+	      FileMonitoring fm1 = null;
+	      FileMonitoring fm2 = null;
+	      
+	      String SQL = "select soc.societyid from ";
+	      
+	      if(fileMonitoring.getSocietyid()!=0)
+	    	  SQL += " society soc where soc.societyid="+fileMonitoring.getSocietyid();
+	      else if(fileMonitoring.getProjectid()!=0)
+	    	  SQL += " society soc,project proj where soc.projectid=proj.projectid and proj.projectid="+fileMonitoring.getProjectid(); 
+	      else if(fileMonitoring.getBuilderid()!=0)
+	    	  SQL+= " society soc,project proj,builder bul where soc.projectid=proj.projectid "
+	    	  		+ " and proj.builderid=bul.builderid and bul.builderid="+fileMonitoring.getBuilderid();
+	      else
+	    	  SQL += " society soc";
+	      
+	      
+	      String SQL1 = " select GROUP_CONCAT(documentid) as docstring,count(documentid) as documentcount from document doc where doc.documentid is not null ";
+	      
+	      if(fileMonitoring.getDoctypeid()!=0)
+	    	  SQL1+=" and doc.doctypeid="+fileMonitoring.getDoctypeid();
+	      if(fileMonitoring.getDocsubtypeid()!=0)
+	    	  SQL1+=" and doc.docsubtypeid="+fileMonitoring.getDocsubtypeid();
+	      
+	      SQL1 += " and doc.societyid in ("+SQL+") "; 
+	    	  
+	      if(fileMonitoring.getUserid()!=0)
+	    	  SQL1+= " and doc.userid="+fileMonitoring.getUserid();
+	      
+	      
+	      fm1 = qr.query(conn,SQL1,q1rsh);
+	      
+	      if(fm1!=null){
+	    	  
+	    	  String SQL2 = " select count(filesid) as pagecount,sum(filesize) as size from files where documentid in ("+ fm1.getDocstring() +")";
+	    	  fm2 = qr.query(conn,SQL2,q1rsh);
+	    	  
+	    	  if(fm2!=null){
+	    		  fm2.setDocumentcount(fm1.getDocumentcount());
+	    		  return fm2;
+	    	  }
+	      }
+	      
+	    } catch (Exception e) {
+	      dblogger.error("Error fetching getFileStats :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return null;
+	  }
+	 
 }

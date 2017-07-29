@@ -1739,4 +1739,32 @@ public class ViewController {
 		LoggingHelper.logMVResponse("viewLoginHistory",mv);
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = { "/fileMonitoring" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView FileMonitoring(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"fileMonitoring","");
+		ModelAndView mv = null;
+		List<SocietyType> societyTypeList = null;
+		List<Builder> builderList = null;
+		List<Doctype> docTypes = null;
+		SocietyDao sdao = new SocietyDao();
+		DocumentDao documentDao = new DocumentDao();
+		try {
+			societyTypeList = sdao.getAllActiveSocietyTypes(societyTypeList);
+			builderList = sdao.getBuilderList(builderList);
+			docTypes = documentDao.getAllDocumentTypes(docTypes);
+				
+			mv = new ModelAndView("FileMonitoring");
+			mv.addObject("builderList",builderList);
+			mv.addObject("societyTypeList",societyTypeList);
+			mv.addObject("docTypesList", docTypes);
+			
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("fileMonitoring",mv);
+		return mv;
+	}
 } // End Of class

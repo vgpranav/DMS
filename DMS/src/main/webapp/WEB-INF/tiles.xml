@@ -284,4 +284,9 @@
       <put-attribute name="body" value="/WEB-INF/pages/viewLoginHistory.jsp" />   
     </definition>
     
+    <definition name="FileMonitoring" extends="base-definition">  
+      <put-attribute name="title" value="File Monitoring" />  
+      <put-attribute name="body" value="/WEB-INF/pages/FileMonitoring.jsp" />   
+    </definition>
+    
 </tiles-definitions>
