@@ -19,7 +19,7 @@
 			                      	</ul>
 			                      </li>
 		                      </c:if>
-		                      <c:if test="${sessionScope.userObject.userroleid==1}">
+		                      <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.userObject.userroleid==3}">
 			                      <li>
 			                      	<a><i class="fa fa-wrench"></i> Builder &amp; Developer / Architect</a>
 			                      	
@@ -73,7 +73,7 @@
 		                   </c:if>
 	                </c:if>
 		                  
-		            <c:if test="${sessionScope.userObject.userroleid==1}">
+		            <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.userObject.userroleid==3 || sessionScope.userObject.userroleid==4}">
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
@@ -81,13 +81,18 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
-		                     <li><a href="manageDesignation.do">Manage Soc. Designations</a></li>
+		                    <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.userObject.userroleid==4}">
+		                      <li><a href="manageDesignation.do">Manage Soc. Designations</a></li>
 		                      <li><a href="societyManagerMapping.do">Society Manager Mapping</a></li>
-		                      <li><a href="builderMapping.do">Builder Mapping</a></li>
+		                      <c:if test="${sessionScope.userObject.userroleid==1}">
+			                      <li><a href="builderMapping.do">Builder Mapping</a></li>
+			                      <li><a href="deleteAuth.do">Delete Authorization</a></li>
+		                      </c:if>
 		                      <li><a href="societyDocumentMapping.do">Society Document Mapping</a></li>
+		                      
+		                    </c:if>
 		                      <li><a href="managerDocViewAuth.do">Document View Access</a></li>
 		                      <li><a href="addConfidentialDocAccess.do">Confidential Doc Access</a></li>
-		                      <li><a href="deleteAuth.do">Delete Authorization</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>
@@ -128,7 +133,9 @@
 		                    
 		                    <c:if test="${sessionScope.userObject.userroleid==1 || sessionScope.socmanagercount>0}">
 		                     <c:if test="${sessionScope.userObject.userroleid!=2}">
-		                      <li><a href="deleteDocument.do">Delete Document</a></li>
+		    	               	  <c:if test="${sessionScope.userObject.userroleid==1}">
+				                      <li><a href="deleteDocument.do">Delete Document</a></li>
+			                      </c:if>
 							  <li><a href="addPolicy.do">Add Policy/Amenities</a></li>
 							 </c:if>
 							</c:if>

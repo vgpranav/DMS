@@ -82,7 +82,7 @@
 								for="first-name">Password <span class="required">*</span>
 							</label>
 							<div class="col-md-8 col-sm-8 col-xs-12">
-								<input type="text" id="password" name="password"
+								<input type="password" id="password" name="password"
 									 class="form-control col-md-7 col-xs-12">
 							</div>
 							</div>
