@@ -24,7 +24,8 @@
 									</label>
 			                    	<div class="col-md-2 col-sm-2 col-xs-12">
 				                    	<select name="builderid" id="builderid" class="form-control " onchange="getProjects()">
-				                    	<option value="">-- None --</option>
+				                    	<option value="">-- Select --</option>
+				                    	<option value=""> - Individual Societies - </option>
 											<c:forEach items="${builderList}" var="myItem" varStatus="loopStatus">
 												<option value="${myItem.builderid}">${myItem.buildername}</option>
 											</c:forEach>
@@ -285,6 +286,14 @@ function getDocSubTypes(){
 function getSubProjects(){
 	var projectid = $('#projectid').val();
 	var societytypeid = $('#societytypeid').val();
+	var builderid = $('#builderid').val();
+	
+	if(builderid=="")
+		getProjects();
+	
+	if(!projectid.length>0 && !societytypeid.length>0)
+		return false;
+	
 	blockUI();
 	$.ajax({
         type: "GET",

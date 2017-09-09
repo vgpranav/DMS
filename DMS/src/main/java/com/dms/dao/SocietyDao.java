@@ -2952,18 +2952,21 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      String SQL = "select actionloggerid,userid,action,payload,actiondate,getUsername(userid) as username from actionlogger where actiontype='view' and userid="+user.getUserid();
 	      
-	      if(user.getFirstName()!=null){
+	      if(user.getFirstName()!=null && user.getLastName()!=null){
 	    	  //System.out.println(user.getFirstName());
 	    	  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
 	    	  SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd"); 
 	    	  Date strDate= formatter.parse(user.getFirstName());
+	    	  Date strDateTo= formatter.parse(user.getLastName());
 	    	  
-	    	  SQL += " and date(actiondate) = '"+formatter1.format(strDate)+"'";
+	    	  SQL += " and date(actiondate) between  '"+formatter1.format(strDate)+"' and '"+formatter1.format(strDateTo)+"'";
 	      }
+	      
+	        
 	    	  
 	      SQL += " order by actiondate desc";
 	      
-	      //System.out.println("UserActivityLog "+SQL);
+	      System.out.println("UserActivityLog "+SQL);
 	      
 	      actions = qr.query(conn,SQL,rsh);
 	      
@@ -2994,14 +2997,17 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      
 	      String SQL = "select loginhistoryid,userid,logintime,logouttime,ipaddress,getUsername(userid) as username from loginhistory where  userid="+user.getUserid();
 	      
-	      if(user.getFirstName()!=null){
+	      
+	      if(user.getFirstName()!=null && user.getLastName()!=null){
 	    	  //System.out.println(user.getFirstName());
 	    	  SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
 	    	  SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd"); 
 	    	  Date strDate= formatter.parse(user.getFirstName());
+	    	  Date strDateTo= formatter.parse(user.getLastName());
 	    	  
-	    	  SQL += " and date(logintime) = '"+formatter1.format(strDate)+"'";
+	    	  SQL += " and date(logintime) between  '"+formatter1.format(strDate)+"' and '"+formatter1.format(strDateTo)+"'";
 	      }
+	      
 	    	  
 	      SQL += " order by logintime desc";
 	      

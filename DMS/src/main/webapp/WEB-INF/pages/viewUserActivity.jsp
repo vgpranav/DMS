@@ -41,8 +41,9 @@
 								</div> 
 								</div>
 								
+								<div class="form-group">
 								<label class="control-label col-md-4 col-sm-4 col-xs-12"
-									for="first-name">Date </label>
+									for="first-name">From Date </label>
 								<div class="col-md-8 col-sm-8 col-xs-12">
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<input type="text" id="actiondate" name="actiondate"
@@ -50,7 +51,19 @@
 											readonly="readonly">
 									</div>
 								</div>
+								</div>
 								
+								<div class="form-group">
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"
+									for="first-name">To Date </label>
+								<div class="col-md-8 col-sm-8 col-xs-12">
+									<div class="col-md-12 col-sm-12 col-xs-12">
+										<input type="text" id="actiondateTo" name="actiondateTo"
+											class="form-control col-md-12 col-xs-12 customdatepicker"
+											readonly="readonly">
+									</div>
+								</div>
+								</div>
 								
 								
 								<div class="form-group" align="center">
@@ -143,14 +156,30 @@ function getUserActivityLog(){
 	var userid = $('#userid').val();
 	var table = $('#thetableUA').DataTable();
 	var actiondate = $('#actiondate').val();
+	var actiondateTo = $('#actiondateTo').val();
+	var swtch=0;
 	
 	if(userid.length<1)
 		return false;
 	
 	var reqStr = "userid="+userid;
 	
-	if(actiondate.length>0)
+	if(actiondate.length>0){
 		reqStr += "&firstName="+actiondate;
+		swtch++;
+	}
+		
+	if(actiondateTo.length>0){
+		reqStr += "&lastName="+actiondateTo;
+		swtch++;
+	}
+		
+	if(swtch!=0 && swtch!=2){
+		alert("Please enter both dates");
+		return false;
+	}
+		
+
 	
 	table.clear().draw();
 	
