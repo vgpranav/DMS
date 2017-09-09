@@ -190,6 +190,23 @@
 		                    </ul>
 		                  </li>
 		             </c:if>
+		             
+		             
+		              <c:if test="${sessionScope.userObject.userroleid==1}">
+		                  <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		IPR 
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                     	<li><a href="createBillStructure.do">Create Bill Structure</a></li>
+		                     	<li><a href="viewLoginHistory.do">View Login History</a></li>
+		                     	<li><a href="fileMonitoring.do">File Monitoring</a></li>
+		                    </ul>
+		                  </li>
+		            </c:if>
+		            
 	                  </ul>
                   </div>
             </div>

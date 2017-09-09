@@ -202,4 +202,10 @@ public class DMSQueries
 	public static String updateSessionForUser = "update user set sessionkey=?,sessiontime=?,sessionactive=? where userid=?";
 
 	public static String getAllUserActivityLog = "";
+
+	public static String getAllActiveExpenseMaster="select * from IPR_ExpenseMaster where isactive=1";
+
+	public static String saveBillStructure = "insert into IPR_billstructure(billstructurecode,societyid,year,billcycletype,billcyclevalue,createdby) values (?,?,?,?,?,?)";
+
+	public static String saveBillComponents = "insert into IPR_billcomponents(billstructureid,expenseid) values (?,?)";
 }

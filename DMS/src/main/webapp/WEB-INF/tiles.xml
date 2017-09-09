@@ -289,4 +289,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/FileMonitoring.jsp" />   
     </definition>
     
+    <definition name="createBillStructure" extends="base-definition">  
+      <put-attribute name="title" value="Create Bill Structure" />  
+      <put-attribute name="body" value="/WEB-INF/pages/CreateBillStructure.jsp" />   
+    </definition>
+    
+    
 </tiles-definitions>

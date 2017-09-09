@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
@@ -30,6 +31,7 @@ import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.Documentdetails;
+import com.dms.beans.ExpenseMaster;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Project;
@@ -1767,4 +1769,80 @@ public class ViewController {
 		LoggingHelper.logMVResponse("fileMonitoring",mv);
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = { "/createBillStructure" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView createBillStructure(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"createBillStructure","");
+		ModelAndView mv = null;
+		List<ExpenseMaster> expenseList = null;
+		List<Society> societyList = null;
+		String minYear="";
+		String maxYear="";
+		
+		SocietyDao sdao = new SocietyDao();
+		User user=null;
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			expenseList = sdao.getAllActiveExpenses(expenseList);
+			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+			 
+				
+			mv = new ModelAndView("createBillStructure"); 
+			mv.addObject("expenseList",expenseList);
+			mv.addObject("societyList", societyList);
+			
+			minYear = CommomUtility.getConfig("iprminyear");
+			maxYear = CommomUtility.getConfig("iprmaxyear");
+			
+			mv.addObject("minYear", minYear);
+			mv.addObject("maxYear", maxYear);
+
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("createBillStructure",mv);
+		return mv;
+	}
+
+	@RequestMapping(value = { "/saveBillStructure" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView saveBillStructure(@ModelAttribute BillStructure billstructure, HttpServletRequest request,
+			HttpServletResponse response) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveBillStructure","");
+		ModelAndView mv = null;
+		boolean flag=false;
+		SocietyDao sdao = new SocietyDao();
+		List<ExpenseMaster> expenseList = null;
+		List<Society> societyList = null;
+		String minYear="";
+		String maxYear="";
+		User user=null;
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			expenseList = sdao.getAllActiveExpenses(expenseList);
+			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+			
+			billstructure.setCreatedby(user.getUserid());
+			
+			billstructure = sdao.saveBillStructure(billstructure);
+			mv = new ModelAndView("createBillStructure"); 
+			mv.addObject("expenseList",expenseList);
+			mv.addObject("societyList", societyList);
+			
+			minYear = CommomUtility.getConfig("iprminyear");
+			maxYear = CommomUtility.getConfig("iprmaxyear");
+			
+			mv.addObject("minYear", minYear);
+			mv.addObject("maxYear", maxYear);
+			mv.addObject("billstructureid", billstructure.getBillstructureid());
+
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("saveBillStructure",mv);
+		return mv;
+	}
+
 } // End Of class

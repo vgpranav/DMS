@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
@@ -29,6 +30,7 @@ import com.dms.beans.Committee;
 import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
+import com.dms.beans.ExpenseMaster;
 import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
@@ -3090,6 +3092,89 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    {
 	      try
 	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return null;
+	  }
+
+	public List<ExpenseMaster> getAllActiveExpenses(List<ExpenseMaster> expenseList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<ExpenseMaster>> rsh = new BeanListHandler<ExpenseMaster>(ExpenseMaster.class);
+		      expenseList = qr.query(conn, DMSQueries.getAllActiveExpenseMaster, rsh);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching expenseListy :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return expenseList;
+		  }
+
+	public BillStructure saveBillStructure(BillStructure billstructure) {
+	    Connection conn = null;
+	    
+	    long billstructureid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      String billcyclevalue="";
+	      if(billstructure.getBillcycletype()==1)
+	    	  billcyclevalue = billstructure.getBillcyclevalue();
+	      else
+	    	  billcyclevalue = billstructure.getBillcyclevalue1();
+	      
+	      String billStructureCode = "ODS/"
+	    		  						+billstructure.getSocietyid()
+	    		  						+"/"+billstructure.getYear()
+	    		  						+"/"+billstructure.getBillcycletype()
+	    		  						+"/"+billcyclevalue
+	    		  						+"/"+billstructure.getCreatedby();
+	      								
+	      conn.setAutoCommit(false);
+	      
+	      Object obj = qr.insert(conn, DMSQueries.saveBillStructure, rsh, 
+	    		  billStructureCode,
+	    		  billstructure.getSocietyid(),
+	    		  billstructure.getYear(),
+	    		  billstructure.getBillcycletype(),
+	    		  billcyclevalue,
+	    		  billstructure.getCreatedby()
+	        );
+	      billstructureid = CommomUtility.convertToLong(obj);
+	      billstructure.setBillstructureid(billstructureid);
+	      
+	      String[] billComps = billstructure.getBillcomponents().split(",");
+	      for(String billcom : billComps){
+	    	 
+	    	    qr.insert(conn, DMSQueries.saveBillComponents, rsh, 
+	    			  billstructure.getBillstructureid(),
+	    			  billcom
+		        );
+	    	  
+	      }
+	      conn.commit();
+	      
+	      return billstructure;
+	    } catch (Exception e) {
+	      dblogger.error("Error getting soc list :: ", e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
 	        DbUtils.close(conn);
 	      } catch (SQLException e) {
 	        dblogger.error("Error releasing connection :: ", e);
