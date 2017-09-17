@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.BillParamData;
+import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
 import com.dms.beans.CallReference;
@@ -1459,4 +1461,60 @@ public class AjaxController {
 		return fm;
 	}
 	
+	
+	@RequestMapping(value = { "/fetchOldComponentsForBill" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public BillStructure fetchOldComponentsForBill(@ModelAttribute BillStructure billstructure,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"fetchOldComponentsForBill",billstructure);
+
+		SocietyDao societyDao = new SocietyDao();
+		BillStructure  bs = null;
+		try {
+			bs = societyDao.fetchOldComponentsForBill(billstructure,bs);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("fetchOldComponentsForBill",bs);
+
+		return bs;
+	}
+
+	@RequestMapping(value = { "/fetchAllBills" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<BillStructure> fetchAllBills(@ModelAttribute BillStructure billstructure,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"fetchAllBills",billstructure);
+
+		SocietyDao societyDao = new SocietyDao();
+		List<BillStructure>  bs = null;
+		try {
+			bs = societyDao.fetchAllBills(billstructure,bs);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("fetchAllBills",bs);
+
+		return bs;
+	}
+	
+	
+	@RequestMapping(value = { "/getBillParamsByStructureid" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public BillParamData getBillParamsByStructureid(@ModelAttribute BillParamData billParamData,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getBillParamsByStructureid",billParamData);
+		SocietyDao sdao = new SocietyDao();
+		try {
+			billParamData = sdao.getBillParamsByStructureid(billParamData.getBillstructureid(),billParamData);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getBillParamsByStructureid",billParamData);
+
+		return billParamData;
+	}
 } // end of class

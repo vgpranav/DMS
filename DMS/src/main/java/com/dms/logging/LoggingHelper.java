@@ -72,7 +72,8 @@ public class LoggingHelper {
 	
 	public static void logAjaxResponse(String Action,Object obj){
 		reqreslogger.info("----------------- [AJAX RESPONSE]["+Action+"] -----------------");
-		 reqreslogger.info(obj.toString());
+		if(obj!=null)
+			reqreslogger.info(obj.toString());
 	}
 	
 	public static String logUserLogin(User user) {

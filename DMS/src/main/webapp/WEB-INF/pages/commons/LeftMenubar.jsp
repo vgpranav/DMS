@@ -201,8 +201,7 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                     	<li><a href="createBillStructure.do">Create Bill Structure</a></li>
-		                     	<li><a href="viewLoginHistory.do">View Login History</a></li>
-		                     	<li><a href="fileMonitoring.do">File Monitoring</a></li>
+		                     	<li><a href="addCommonBillData.do">Add Bill Data</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

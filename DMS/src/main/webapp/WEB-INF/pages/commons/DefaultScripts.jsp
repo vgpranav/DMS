@@ -119,4 +119,19 @@ function notify(type,title,message,delay){
 			return "";
 	}
 	
+	function resolveMonth(monthDigit){
+		if(monthDigit.length<1)
+			return "";
+		
+		var months = "blank,January,February,March,April,May,June,July,August,September,October,November,December".split(",");
+		return months[monthDigit];
+	}
+
+	function validateNumber(numbero){
+		 var regexp = /^\d+(?:\.\d{1,2})?$/;
+		 if(numbero.length>0)
+		 	return regexp.test(numbero);
+		 else
+			 return false;
+	 }
 </script>

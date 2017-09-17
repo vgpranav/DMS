@@ -34,7 +34,7 @@ var interval = setInterval(function() {
 	  if(timer2=="5:00")
 		  notify('warning','Warning','Your Session will expire in 5 Mins',2000);
 	  
-	  if(timer2=="0:05")
+	  //if(timer2=="0:05")
 		  //logoutUser();
 }, 1000);
 

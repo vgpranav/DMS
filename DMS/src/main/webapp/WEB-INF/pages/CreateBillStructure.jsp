@@ -112,7 +112,11 @@ String[] months = {"blank","January",
 									for="first-name">Select Bill Components<span class="required">*</span>
 								</label>
 								<div class="col-md-8 col-sm-8 col-xs-12">
+									
 									<hr/>
+										<input type="button" value="Copy Components from Previous Bill" onclick="fetchOldComponents()" class="btn btn-primary">
+									<hr/>
+									
 									<c:forEach items="${expenseList}" var="myItem" varStatus="loopStatus">
 										<c:if test="${myItem.expensetypeid==1 || myItem.expensetypeid==3}">
 											<input type="checkbox" name="expense" value="${myItem.expenseid}"> <strong>${myItem.expensename}</strong><br/>									
@@ -122,20 +126,24 @@ String[] months = {"blank","January",
 							</div>
 							
 							<input type="hidden" name="billcomponents" id="billcomponents">
-							
+
+							<br/><br/>
 							<div class="form-group" align="center">
 								<button class="btn btn-warning" type="reset">Reset</button>
 								<button class="btn btn-success">Save</button>
 							</div>
 							
-							<c:if test="${not empty billstructureid}">
-								   <script>
-						                $(document).ready(function(){
-						                	notify('success','SUCCESS','Bill Structure Added',2000);
-						                });
-								  </script>
-								  <div class="text-success">Bill Structure Added</div>	
-							</c:if>
+							<div class="form-group" align="center">
+							 
+								<c:if test="${billstructure.billstructurecode!=null}">
+									   <script>
+							                $(document).ready(function(){
+							                	notify('success','SUCCESS','Bill Structure Added with code ${billstructure.billstructurecode}',2000);
+							                });
+									  </script>
+									  <div class="text-success">Bill Structure created with code ${billstructure.billstructurecode}</div>	
+								</c:if>
+							</div>
 						</form>
 					</div>
 				</div>
@@ -161,7 +169,13 @@ function validate(){
 	});
 	console.log("Test : "+str);
 	$("#billcomponents").val(str);
-	return true;
+	
+	if(str.length<1){
+		alert("Please Select Components");
+		return false;
+	}  
+	else
+		return true;
 }
 
 function changeBC(){
@@ -174,4 +188,41 @@ function changeBC(){
 		$('#bc').hide();
 	}
 }
+
+
+
+function fetchOldComponents(){
+	var societyid =$('#societyid').val();
+	if(societyid.length<1)
+		return false;
+	
+	$('input[type=checkbox]').each(function () {
+		this.checked=false; 
+	});
+	blockUI();
+	$.ajax({
+        type: "GET",
+        url: "<%=request.getContextPath()%>/fetchOldComponentsForBill.do",
+        data :"societyid="+societyid,
+        success: function(response){
+        	if(response.billcomponents.length>0) {
+        		var bcs = response.billcomponents.split(",");
+        		//console.log("bcs "+bcs); 
+        		$.each(bcs, function( i, l ){
+        			//console.log(l); 
+        			$("input[type=checkbox][value="+l+"]").prop("checked",true);
+        		 }); 
+        	} 
+        	unblockUI();
+        },
+			error : function(e) {
+				notify('error','ERROR','Error occured',2000);
+				unblockUI();
+			}
+		});
+	
+}
 </script>
+
+
+

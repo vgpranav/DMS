@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
@@ -3157,6 +3158,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	        );
 	      billstructureid = CommomUtility.convertToLong(obj);
 	      billstructure.setBillstructureid(billstructureid);
+	      billstructure.setBillstructurecode(billStructureCode);
 	      
 	      String[] billComps = billstructure.getBillcomponents().split(",");
 	      for(String billcom : billComps){
@@ -3182,5 +3184,159 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    }
 	    return null;
 	  }
+
+	public BillStructure fetchOldComponentsForBill(BillStructure billstructure, BillStructure bs) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<BillStructure> rsh = new BeanHandler<BillStructure>(BillStructure.class);
+		      bs = qr.query(conn, DMSQueries.fetchOldComponentsForBill, rsh, billstructure.getSocietyid());
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching expenseListy :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return bs;
+		  }
+
+	public List<BillStructure> fetchAllBills(BillStructure billstructure, List<BillStructure> bs) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<BillStructure>> rsh = new BeanListHandler<BillStructure>(BillStructure.class);
+		      bs = qr.query(conn, DMSQueries.fetchAllBillsBySocietyId, rsh, billstructure.getSocietyid());
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return bs;
+		  }
+
+	public BillParamData addBillParamData(long userid, BillParamData billParamData) {
+	    Connection conn = null;
+	     
+	    long billparamdataid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      conn.setAutoCommit(false);
+	      
+	      //Insert new
+	      if(billParamData.getBillparamdataid()==0){
+	    	  
+	    	  Object obj = qr.insert(conn, DMSQueries.addBillParamData, rsh, 
+	    			  billParamData.getBillstructureid(),
+	    			  billParamData.getPcdelayval(),
+	    			  billParamData.getPcdelaykey(),
+	    			  billParamData.getNocval(),
+	    			  billParamData.getOp4w(),
+	    			  billParamData.getOp3w(),
+	    			  billParamData.getOp2w(),
+	    			  billParamData.getSp4w(),
+	    			  billParamData.getSp3w(),
+	    			  billParamData.getSp2w(),
+	    			  billParamData.getMtpsqft(),
+	    			  billParamData.getShop(),
+	    			  billParamData.getMt3p5bhk(),
+	    			  billParamData.getMt3bhk(),
+	    			  billParamData.getMt2p5bhk(),
+	    			  billParamData.getMt2bhk(),
+	    			  billParamData.getMt1p5bhk(),
+	    			  billParamData.getMt1bhk(),
+	    			  billParamData.getMt1rk(),
+	    			  billParamData.getMttype()
+			        );
+ 
+	    	  billparamdataid = CommomUtility.convertToLong(obj);  
+	      }
+	      	else {
+	      		qr.update(conn,DMSQueries.updateBillParamData,
+	      				billParamData.getPcdelayval(),
+		    			  billParamData.getPcdelaykey(),
+		    			  billParamData.getNocval(),
+		    			  billParamData.getOp4w(),
+		    			  billParamData.getOp3w(),
+		    			  billParamData.getOp2w(),
+		    			  billParamData.getSp4w(),
+		    			  billParamData.getSp3w(),
+		    			  billParamData.getSp2w(),
+		    			  billParamData.getMtpsqft(),
+		    			  billParamData.getShop(),
+		    			  billParamData.getMt3p5bhk(),
+		    			  billParamData.getMt3bhk(),
+		    			  billParamData.getMt2p5bhk(),
+		    			  billParamData.getMt2bhk(),
+		    			  billParamData.getMt1p5bhk(),
+		    			  billParamData.getMt1bhk(),
+		    			  billParamData.getMt1rk(),
+		    			  billParamData.getMttype()
+	      				 );
+	    	   
+	      } 
+	      conn.commit();
+	      
+	      billParamData.setBillparamdataid(billparamdataid);
+	      
+	      return billParamData;
+	    }
+	    catch (Exception e) {
+	      dblogger.error("Error getting soc list :: ", e);
+	      e.printStackTrace();
+	    } finally {
+	      try {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return null;
+	  }
+
+	public BillParamData getBillParamsByStructureid(long billstructureid, BillParamData billParamData) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<BillParamData> rsh = new BeanHandler<BillParamData>(BillParamData.class);
+		      billParamData = qr.query(conn, DMSQueries.getBillParamsByStructureid, rsh, billstructureid);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return billParamData;
+		  }
 	 
 }

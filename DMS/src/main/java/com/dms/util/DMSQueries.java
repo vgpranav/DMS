@@ -208,4 +208,15 @@ public class DMSQueries
 	public static String saveBillStructure = "insert into IPR_billstructure(billstructurecode,societyid,year,billcycletype,billcyclevalue,createdby) values (?,?,?,?,?,?)";
 
 	public static String saveBillComponents = "insert into IPR_billcomponents(billstructureid,expenseid) values (?,?)";
+
+	public static String fetchOldComponentsForBill = "select GROUP_CONCAT(expenseid) as billcomponents from IPR_billcomponents "
+			+ "where billstructureid = (SELECT billstructureid FROM IPR_billstructure "
+			+ "where createdon = (select max(createdon) from IPR_billstructure where societyid=? and isactive=1))";
+
+	public static String fetchAllBillsBySocietyId = "select billstructureid,billstructurecode,societyid,year,billcycletype,billcyclevalue,isactive,getUsername(createdby) as username,createdon from IPR_billstructure where societyid=? order by billstructurecode desc";
+
+	public static String addBillParamData = "insert into IPR_billparamdata(billstructureid,pcdelayval,pcdelaykey,nocval,op4w,op3w,op2w,sp4w,sp3w,sp2w,mtpsqft,shop,mt3p5bhk,mt3bhk,mt2p5bhk,mt2bhk,mt1p5bhk,mt1bhk,mt1rk,mttype) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String updateBillParamData= "update IPR_billparamdata set pcdelayval=?,pcdelaykey=?,nocval=?,op4w=?,op3w=?,op2w=?,sp4w=?,sp3w=?,sp2w=?,mtpsqft=?,shop=?,mt3p5bhk=?,mt3bhk=?,mt2p5bhk=?,mt2bhk=?,mt1p5bhk=?,mt1bhk=?,mt1rk=?,mttype=? where billparamdataid=?"; 
+	
+	public static String getBillParamsByStructureid = "select * from IPR_billparamdata where billstructureid=?";
 }

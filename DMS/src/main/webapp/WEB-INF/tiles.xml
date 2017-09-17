@@ -294,5 +294,14 @@
       <put-attribute name="body" value="/WEB-INF/pages/CreateBillStructure.jsp" />   
     </definition>
     
+    <definition name="addCommonBillData" extends="base-definition">  
+      <put-attribute name="title" value="Add Common Bill Data" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addCommonBillData.jsp" />   
+    </definition>
     
-</tiles-definitions>
+    <definition name="addBillParamaters" extends="base-definition">  
+      <put-attribute name="title" value="Add Common Bill Paramaters" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addBillParamaters.jsp" />   
+    </definition>
+    
+</tiles-definitions> 

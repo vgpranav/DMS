@@ -15,7 +15,7 @@ public class BillStructure {
 	private Date createdon;
 	private String billcomponents;
 	private String year;
-	
+	private String username;
 	
 	public long getBillstructureid() {
 		return billstructureid;
@@ -85,12 +85,22 @@ public class BillStructure {
 	public void setYear(String year) {
 		this.year = year;
 	}
+	 
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
 	@Override
 	public String toString() {
 		return "BillStructure [billstructureid=" + billstructureid + ", billstructurecode=" + billstructurecode
 				+ ", societyid=" + societyid + ", billcycletype=" + billcycletype + ", billcyclevalue=" + billcyclevalue
 				+ ", billcyclevalue1=" + billcyclevalue1 + ", isactive=" + isactive + ", createdby=" + createdby
-				+ ", createdon=" + createdon + ", billcomponents=" + billcomponents + ", year=" + year + "]";
+				+ ", createdon=" + createdon + ", billcomponents=" + billcomponents + ", year=" + year + ", username="
+				+ username + "]";
 	}
 
+	
 }

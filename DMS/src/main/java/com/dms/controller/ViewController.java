@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
 import com.dms.beans.BuilderManager;
@@ -1836,7 +1837,7 @@ public class ViewController {
 			
 			mv.addObject("minYear", minYear);
 			mv.addObject("maxYear", maxYear);
-			mv.addObject("billstructureid", billstructure.getBillstructureid());
+			mv.addObject("billstructure", billstructure);
 
 		} catch (Exception e) {
 			logger.error("Exception : ",e);
@@ -1844,5 +1845,69 @@ public class ViewController {
 		LoggingHelper.logMVResponse("saveBillStructure",mv);
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = { "/addCommonBillData" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView addCommonBillData(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addCommonBillData","");
+		ModelAndView mv = null;
+		List<Society> societyList = null;
+		
+		SocietyDao sdao = new SocietyDao();
+		User user=null;
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+				
+			mv = new ModelAndView("addCommonBillData"); 
+			mv.addObject("societyList", societyList);
+			
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("addCommonBillData",mv);
+		return mv;
+	}
 
+	
+	@RequestMapping(value = { "/addBillParamaters" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView addBillParamaters(@ModelAttribute BillStructure billstructure,HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillParamaters","");
+		ModelAndView mv = null;
+		try {
+			mv = new ModelAndView("addBillParamaters"); 
+			mv.addObject("billstructureid",billstructure.getBillstructureid());
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("addBillParamaters",mv);
+		return mv;
+	}
+
+	@RequestMapping(value = { "/addBillParamData" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView addBillParamData(@ModelAttribute BillParamData billParamData,HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillParamData","");
+		ModelAndView mv = null;
+		SocietyDao sdao = new SocietyDao();
+		User user=null;
+		try {
+				
+				user = (User) request.getSession().getAttribute("userObject");
+				billParamData = sdao.addBillParamData(user.getUserid(), billParamData);
+				mv = new ModelAndView("addBillParamaters"); 
+				mv.addObject("billstructureid",billParamData.getBillstructureid());
+				mv.addObject("billParamData", billParamData);
+				
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("addBillParamData",mv);
+		return mv;
+	}
+		
+		
+		
 } // End Of class
