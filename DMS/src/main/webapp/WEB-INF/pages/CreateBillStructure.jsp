@@ -205,14 +205,16 @@ function fetchOldComponents(){
         url: "<%=request.getContextPath()%>/fetchOldComponentsForBill.do",
         data :"societyid="+societyid,
         success: function(response){
-        	if(response.billcomponents.length>0) {
+        	if(response.billcomponents!=null && response.billcomponents.length>0) {
         		var bcs = response.billcomponents.split(",");
         		//console.log("bcs "+bcs); 
         		$.each(bcs, function( i, l ){
         			//console.log(l); 
         			$("input[type=checkbox][value="+l+"]").prop("checked",true);
         		 }); 
-        	} 
+        	} else
+        		notify('error','ERROR','Previous Data not Found',3000);
+        	
         	unblockUI();
         },
 			error : function(e) {

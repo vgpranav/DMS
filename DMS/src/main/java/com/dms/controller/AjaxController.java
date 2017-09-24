@@ -1517,4 +1517,26 @@ public class AjaxController {
 
 		return billParamData;
 	}
+	
+	
+	@RequestMapping(value = { "/generateBillForBillStructure" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public String generateBillForBillStructure(@ModelAttribute BillParamData billParamData,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"generateBillForBillStructure",billParamData);
+		SocietyDao sdao = new SocietyDao();
+		int rowsUpdated=0;
+		try {
+			rowsUpdated = sdao.generateBillForBillStructure(billParamData.getBillstructureid(),billParamData);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("generateBillForBillStructure",billParamData);
+
+		if (rowsUpdated > 0)
+			return "success";
+		return "failed";
+	}
+	
 } // end of class

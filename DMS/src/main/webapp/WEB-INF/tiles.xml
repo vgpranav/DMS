@@ -304,4 +304,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/addBillParamaters.jsp" />   
     </definition>
     
+    <definition name="generateBill" extends="base-definition">  
+      <put-attribute name="title" value="Generate Bill" />  
+      <put-attribute name="body" value="/WEB-INF/pages/generateBill.jsp" />   
+    </definition>
+    
+    
 </tiles-definitions> 

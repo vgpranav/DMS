@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.dms.beans.BillComponents;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
@@ -1876,9 +1877,14 @@ public class ViewController {
 	public ModelAndView addBillParamaters(@ModelAttribute BillStructure billstructure,HttpServletRequest request) {
 		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillParamaters","");
 		ModelAndView mv = null;
+		List<ExpenseMaster> comps =null;
+		SocietyDao sdao = new SocietyDao();
 		try {
+			comps = sdao.getBillCompsByStructid(billstructure.getBillstructureid(), comps);
 			mv = new ModelAndView("addBillParamaters"); 
 			mv.addObject("billstructureid",billstructure.getBillstructureid());
+			mv.addObject("billcomponenets",comps);
+			
 		} catch (Exception e) {
 			logger.error("Exception : ",e);
 		}
@@ -1892,14 +1898,18 @@ public class ViewController {
 		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillParamData","");
 		ModelAndView mv = null;
 		SocietyDao sdao = new SocietyDao();
+		List<ExpenseMaster> comps =null;
 		User user=null;
 		try {
 				
 				user = (User) request.getSession().getAttribute("userObject");
 				billParamData = sdao.addBillParamData(user.getUserid(), billParamData);
+				comps = sdao.getBillCompsByStructid(billParamData.getBillstructureid(), comps);
 				mv = new ModelAndView("addBillParamaters"); 
 				mv.addObject("billstructureid",billParamData.getBillstructureid());
 				mv.addObject("billParamData", billParamData);
+				mv.addObject("billcomponenets",comps);
+				mv.addObject("error", "Bill Parameters Added");
 				
 		} catch (Exception e) {
 			logger.error("Exception : ",e);
@@ -1908,6 +1918,26 @@ public class ViewController {
 		return mv;
 	}
 		
+	@RequestMapping(value = { "/generateBill" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView generateBill(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"generateBill","");
+		ModelAndView mv = null;
+		List<Society> societyList = null;
 		
-		
+		SocietyDao sdao = new SocietyDao();
+		User user=null;
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+				
+			mv = new ModelAndView("generateBill"); 
+			mv.addObject("societyList", societyList);
+			
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("generateBill",mv);
+		return mv;
+	}
 } // End Of class

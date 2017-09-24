@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.BillComponents;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
@@ -3235,7 +3236,9 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 
 	public BillParamData addBillParamData(long userid, BillParamData billParamData) {
 	    Connection conn = null;
-	     
+	    String[] extraValuesArr = null;
+	    int oldExtraValDeleted = -1;
+	    
 	    long billparamdataid = 0L;
 	    try {
 	      qr = new QueryRunner();
@@ -3243,6 +3246,11 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
 	      
 	      conn.setAutoCommit(false);
+	      
+	      String extraValues = billParamData.getExtraValues();
+	      if(extraValues.length()>2){
+	    	  extraValuesArr = extraValues.split(",");  
+	      }
 	      
 	      //Insert new
 	      if(billParamData.getBillparamdataid()==0){
@@ -3267,10 +3275,24 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    			  billParamData.getMt1p5bhk(),
 	    			  billParamData.getMt1bhk(),
 	    			  billParamData.getMt1rk(),
-	    			  billParamData.getMttype()
+	    			  billParamData.getMttype(),
+	    			  userid
 			        );
  
-	    	  billparamdataid = CommomUtility.convertToLong(obj);  
+	    	  billparamdataid = CommomUtility.convertToLong(obj); 
+	    	  
+	    	  oldExtraValDeleted = qr.update(conn, DMSQueries.deleteAllOldExtraValues,billParamData.getBillstructureid());
+	    	  if(oldExtraValDeleted>-1){
+	    		  for(String eval : extraValuesArr){
+	    			  String[] arr = eval.split("=");
+	    			  qr.insert(conn, DMSQueries.addNewExtraValues,new ScalarHandler<Object>(),
+	    					  billParamData.getBillstructureid(),
+	    					  arr[0],
+	    					  arr[1],
+	    					  userid);
+	    		  }
+	    	  }
+	    	  
 	      }
 	      	else {
 	      		qr.update(conn,DMSQueries.updateBillParamData,
@@ -3292,9 +3314,22 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		    			  billParamData.getMt1p5bhk(),
 		    			  billParamData.getMt1bhk(),
 		    			  billParamData.getMt1rk(),
-		    			  billParamData.getMttype()
+		    			  billParamData.getMttype(),
+		    			  userid,
+		    			  billParamData.getBillparamdataid()
 	      				 );
-	    	   
+	      		
+	      		oldExtraValDeleted = qr.update(conn, DMSQueries.deleteAllOldExtraValues,billParamData.getBillstructureid());
+		    	  if(oldExtraValDeleted>-1){
+		    		  for(String eval : extraValuesArr){
+		    			  String[] arr = eval.split("=");
+		    			  qr.insert(conn, DMSQueries.addNewExtraValues,new ScalarHandler<Object>(),
+		    					  billParamData.getBillstructureid(),
+		    					  arr[0],
+		    					  arr[1],
+		    					  userid);
+		    		  }
+		    	  }
 	      } 
 	      conn.commit();
 	      
@@ -3317,12 +3352,20 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 
 	public BillParamData getBillParamsByStructureid(long billstructureid, BillParamData billParamData) { 
 		  Connection conn = null;
+		  String extraValues = "";
 		    try
 		    {
 		      qr = new QueryRunner();
 		      conn = ConnectionPoolManager.getInstance().getConnection();
 		      ResultSetHandler<BillParamData> rsh = new BeanHandler<BillParamData>(BillParamData.class);
 		      billParamData = qr.query(conn, DMSQueries.getBillParamsByStructureid, rsh, billstructureid);
+		      
+		      ResultSetHandler<String> rsh1 = new ScalarHandler<String>();
+		      extraValues = qr.query(conn, DMSQueries.getExistingExtraValsByBillStructId, rsh1, billstructureid);
+		      
+		      billParamData.setExtraValues(extraValues);
+		      
+		      
 		    } catch (Exception e) {
 		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
 		      e.printStackTrace();
@@ -3337,6 +3380,77 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		      }
 		    }
 		    return billParamData;
+		  }
+
+	public List<ExpenseMaster> getBillCompsByStructid(long billstructureid, List<ExpenseMaster> comps) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<ExpenseMaster>> rsh = new BeanListHandler<ExpenseMaster>(ExpenseMaster.class);
+		      comps = qr.query(conn, DMSQueries.getBillCompsByStructid, rsh, billstructureid);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return comps;
+		  }
+
+	public int generateBillForBillStructure(long billstructureid, BillParamData billParamData) { 
+		  Connection conn = null;
+		  int rowsUpdated=0;
+		  BillStructure billStructure;
+		  List<User> users;
+		  
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      
+		      ResultSetHandler<BillStructure> rsh = new BeanHandler<BillStructure>(BillStructure.class);
+		      ResultSetHandler<List<User>> rsh1 = new BeanListHandler<User>(User.class);
+
+		      billStructure = qr.query(conn,DMSQueries.getBillStructureById, rsh);
+		      if(billStructure!=null){
+			      users = qr.query(conn,DMSQueries.getMembersForSociety, rsh1,billStructure.getSocietyid());
+			      
+			      for(User usr : users){
+			    	  
+			    	  
+			    	  
+			    	  
+			      }
+		    	  
+		    	  
+		    	  
+		      }
+		       
+		      rowsUpdated = qr.update(conn, DMSQueries.getBillCompsByStructid, billstructureid);
+		      
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return rowsUpdated;
 		  }
 	 
 }

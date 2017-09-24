@@ -202,6 +202,7 @@
 		                    <ul class="nav child_menu">
 		                     	<li><a href="createBillStructure.do">Create Bill Structure</a></li>
 		                     	<li><a href="addCommonBillData.do">Add Bill Data</a></li>
+		                     	<li><a href="generateBill.do">Generate Bill</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

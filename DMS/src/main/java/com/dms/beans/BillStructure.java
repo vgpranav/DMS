@@ -16,6 +16,7 @@ public class BillStructure {
 	private String billcomponents;
 	private String year;
 	private String username;
+	private int isgenerated;
 	
 	public long getBillstructureid() {
 		return billstructureid;
@@ -92,6 +93,13 @@ public class BillStructure {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	 
+	public int getIsgenerated() {
+		return isgenerated;
+	}
+	public void setIsgenerated(int isgenerated) {
+		this.isgenerated = isgenerated;
+	}
 	
 	@Override
 	public String toString() {
@@ -99,8 +107,7 @@ public class BillStructure {
 				+ ", societyid=" + societyid + ", billcycletype=" + billcycletype + ", billcyclevalue=" + billcyclevalue
 				+ ", billcyclevalue1=" + billcyclevalue1 + ", isactive=" + isactive + ", createdby=" + createdby
 				+ ", createdon=" + createdon + ", billcomponents=" + billcomponents + ", year=" + year + ", username="
-				+ username + "]";
+				+ username + ", isgenerated=" + isgenerated + "]";
 	}
 
-	
 }

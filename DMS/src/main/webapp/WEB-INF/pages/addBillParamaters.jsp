@@ -18,10 +18,11 @@
 			
                      <form id="addBillParamForm" data-parsley-validate
 					class="form-horizontal form-label-left" action="addBillParamData.do"
-					method="post" onsubmit="return saveFormFields()">	
+					method="post" onsubmit="return appendAllExtraValues()">	
 					
 					<input type="hidden" id="billstructureid" name="billstructureid" value="${billstructureid}">
 					<input type="hidden" id="billparamdataid" name="billparamdataid" value="0">
+					<input type="hidden" id="extraValues" name="extraValues" value="0">
 					
 					<div class="form-group">
 						<div class=" pull-right">
@@ -201,9 +202,22 @@
 					 
 						<div class="col-md-4 col-sm-4 col-xs-12">
 							<input type="text" id="pcdelayval" name="pcdelayval"
-								 class="form-control col-md-7 col-xs-12" value="0">
+								 class="numeric form-control col-md-7 col-xs-12" value="0">
 						</div>
 					</div>
+					
+					<c:forEach items="${billcomponenets}" var="myItem" varStatus="loopStatus">
+						<div class="form-group">
+							<hr/>
+							<label class="control-label col-md-4 col-sm-4 col-xs-12"
+								for="first-name">${myItem.expensename}
+							</label>
+							<div class="col-md-4 col-sm-4 col-xs-12">
+							<input type="text" id="exp${myItem.expenseid}" name="exp${myItem.expenseid}"
+								 class="numeric form-control col-md-7 col-xs-12 extraVal" value="0">
+							</div>
+						</div>
+					</c:forEach>
 					
 					<div class="form-group" align="right">
 					<br/><br/><br/>
@@ -263,7 +277,7 @@
 	        url: "<%=request.getContextPath()%>/getBillParamsByStructureid.do",
 	        data :"billstructureid="+billstructureid,
 	        success: function(response){
-				if(response.length>0){
+				if(response.billparamdataid>0){
 					
 					$('#billparamdataid').val(response.billparamdataid);
 					$('#billstructureid').val(response.billstructureid);
@@ -287,6 +301,17 @@
 					 
 					$('#mttype option[value="'+response.mttype+'"]').prop("selected",true).change();
 					$('#pcdelaykey option[value="'+response.pcdelaykey+'"]').prop("selected",true).change();
+					
+					if(response.extraValues.length>0){
+						var extraVals = response.extraValues.split(",");
+						$.each(extraVals, function( i, vals ){
+		        			var eval = vals.split("=");
+		        			$('#exp'+eval[0]).val(eval[1]);
+		        		 }); 
+					}
+					
+					
+					
 				}
 	        	unblockUI();
 	        },
@@ -296,5 +321,29 @@
 				}
 			});
 }
+ 
+ 
+ function appendAllExtraValues(){
+	 $('#extraValues').val('0');
+	 
+	 var str="";
+	 $('.extraVal').each(function () { 
+		var nme =  $(this).attr('name').replace('exp','');
+		var expval = $(this).val();
+		
+		if(nme.length>0 && expval.length>0){
+			if(str.length<1)
+				str+=nme + '=' +$(this).val();
+			 else
+				str+=","+nme + '=' +$(this).val();
+		}
+		
+	 });
+	 
+	 $('#extraValues').val(str);
+	 
+	 return true; 
+ }
+ 
  
  </script>

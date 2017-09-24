@@ -30,7 +30,8 @@
                             <th class="column-title">Bill Cycle</th>
                             <th class="column-title">Created On</th>
                             <th class="column-title">Created By</th>
-                            <th class="column-title">Action </th>
+                            <th class="column-title">Bill Status</th>
+                            <th class="column-title">Generate Bill</th>
                           </tr>
                         </thead>
 
@@ -46,12 +47,14 @@
  <script>
  
  $(document).ready(function(){
+	 var table = $('#thetable').DataTable();
 	 getCommonBillData();
  });
  
  function getCommonBillData(){
 	 
 	 var table = $('#thetable').DataTable();
+	 
 	 var societyid = $('#societyid').val();
 	 
 	 if(societyid.length<1)
@@ -68,7 +71,7 @@
 		        if(response.length>0){
 		        	$.each(response, function(i, item) {
 		  
-		        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.billstructureid + '\')"><i class="fa fa-edit"></i></a>';
+		        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.billstructureid + '\',\'' + item.isgenerated + '\')"><i class="fa fa-exchange"></i></a>';
 		        		var billCycle="";
 		        		if(item.billcycletype==1){
 		        			billCycle = resolveMonth(item.billcyclevalue)+" "+item.year;
@@ -76,11 +79,19 @@
 		        			billCycle = capAll(item.billcyclevalue)+" "+item.year;
 		        		} 
 		        		
+		        		var isgen="";
+		        		if(item.isgenerated==1){
+		        			isgen = '<span class="label label-success">Generated</span>';
+		        		}else{
+		        			isgen = '<span class="label label-danger">Pending</span>';
+		        		}
+		        		
 		        		table.row.add( [
 		        			capAll(item.billstructurecode)	,
 		        			billCycle, 
 		        			new Date(item.createdon).toString("dd MMM yyyy"),
 		        			item.username,
+		        			isgen,
 		        			editBtn,
 		                ] ).draw( false );
 		        	    
@@ -95,9 +106,42 @@
 			});	 
  }
  
- function editFormField(billstructureid){
-	 //alert(billstructureid);
-	 location.href = "<%=request.getContextPath()%>/addBillParamaters.do?billstructureid="+billstructureid;
+ function editFormField(billstructureid,isgenerated){
+	 
+	 if(isgenerated==1){
+		 if(confirm("Bill is already generated\n\nDo you wish to delete and Re-Generate?\n")){
+			 generateBill(billstructureid);
+		 }
+	 }else{
+		 if(confirm("Generate Bill?")){
+			 generateBill(billstructureid);
+		 }
+	 }
  }
-    
+  
+ function generateBill(billstructureid){
+	 
+	 
+	 blockUI();
+	 $.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/generateBillForBillStructure.do",
+	        data :"billstructureid="+billstructureid,
+	        success: function(response){
+		        
+		        if(response.length>0){
+		        	$.each(response, function(i, item) {
+		  
+		        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.billstructureid + '\',\'' + item.isgenerated + '\')"><i class="fa fa-exchange"></i></a>';
+		        	    
+		        	  });
+		        	}
+		        unblockUI();
+		        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});
+ }
  </script>

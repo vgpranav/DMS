@@ -213,10 +213,21 @@ public class DMSQueries
 			+ "where billstructureid = (SELECT billstructureid FROM IPR_billstructure "
 			+ "where createdon = (select max(createdon) from IPR_billstructure where societyid=? and isactive=1))";
 
-	public static String fetchAllBillsBySocietyId = "select billstructureid,billstructurecode,societyid,year,billcycletype,billcyclevalue,isactive,getUsername(createdby) as username,createdon from IPR_billstructure where societyid=? order by billstructurecode desc";
+	public static String fetchAllBillsBySocietyId = "select billstructureid,billstructurecode,societyid,year,billcycletype,billcyclevalue,isactive,getUsername(createdby) as username,createdon,isgenerated from IPR_billstructure where societyid=? order by isgenerated desc,billstructurecode desc";
 
-	public static String addBillParamData = "insert into IPR_billparamdata(billstructureid,pcdelayval,pcdelaykey,nocval,op4w,op3w,op2w,sp4w,sp3w,sp2w,mtpsqft,shop,mt3p5bhk,mt3bhk,mt2p5bhk,mt2bhk,mt1p5bhk,mt1bhk,mt1rk,mttype) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	public static String updateBillParamData= "update IPR_billparamdata set pcdelayval=?,pcdelaykey=?,nocval=?,op4w=?,op3w=?,op2w=?,sp4w=?,sp3w=?,sp2w=?,mtpsqft=?,shop=?,mt3p5bhk=?,mt3bhk=?,mt2p5bhk=?,mt2bhk=?,mt1p5bhk=?,mt1bhk=?,mt1rk=?,mttype=? where billparamdataid=?"; 
+	public static String addBillParamData = "insert into IPR_billparamdata(billstructureid,pcdelayval,pcdelaykey,nocval,op4w,op3w,op2w,sp4w,sp3w,sp2w,mtpsqft,shop,mt3p5bhk,mt3bhk,mt2p5bhk,mt2bhk,mt1p5bhk,mt1bhk,mt1rk,mttype,createdby) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+	public static String updateBillParamData= "update IPR_billparamdata set pcdelayval=?,pcdelaykey=?,nocval=?,op4w=?,op3w=?,op2w=?,sp4w=?,sp3w=?,sp2w=?,mtpsqft=?,shop=?,mt3p5bhk=?,mt3bhk=?,mt2p5bhk=?,mt2bhk=?,mt1p5bhk=?,mt1bhk=?,mt1rk=?,mttype=?,createdby=? where billparamdataid=?"; 
 	
 	public static String getBillParamsByStructureid = "select * from IPR_billparamdata where billstructureid=?";
+
+	public static String getBillCompsByStructid = "select em.expenseid,em.expensename from IPR_ExpenseMaster em ,IPR_billcomponents bc where bc.expenseid=em.expenseid and bc.billstructureid=?";
+
+	public static String deleteAllOldExtraValues = "delete from IPR_billcomponentsdata where billstructureid=?";
+
+	public static String addNewExtraValues = "insert into IPR_billcomponentsdata(billstructureid,expenseid,expensevalue,createdby) values (?,?,?,?)";
+
+	public static String getExistingExtraValsByBillStructId = "select GROUP_CONCAT(concat(expenseid,'=',expensevalue)) from IPR_billcomponentsdata where billstructureid=?";
+
+	public static String getBillStructureById = "select billstructureid,billstructurecode,societyid,year,billcycletype,billcyclevalue,isactive,getUsername(createdby) as username,createdon,isgenerated from IPR_billstructure where billstructureid=?";
+	
 }

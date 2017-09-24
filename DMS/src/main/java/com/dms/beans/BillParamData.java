@@ -1,5 +1,7 @@
 package com.dms.beans;
 
+import java.util.Date;
+
 public class BillParamData {
 	
 	private long billparamdataid;
@@ -23,7 +25,11 @@ public class BillParamData {
 	private double mt1bhk;
 	private double mt1rk;
 	private String mttype;
-	
+	private String extraValues;
+	private long createdby;
+	private Date createdon;
+	private int isactive;
+	 
 	public double getPcdelayval() {
 		return pcdelayval;
 	}
@@ -149,8 +155,32 @@ public class BillParamData {
 	}
 	public void setBillstructureid(long billstructureid) {
 		this.billstructureid = billstructureid;
+	} 
+	public String getExtraValues() {
+		return extraValues;
 	}
-	
+	public void setExtraValues(String extraValues) {
+		this.extraValues = extraValues;
+	}
+	public long getCreatedby() {
+		return createdby;
+	}
+	public void setCreatedby(long createdby) {
+		this.createdby = createdby;
+	}
+	public Date getCreatedon() {
+		return createdon;
+	}
+	public void setCreatedon(Date createdon) {
+		this.createdon = createdon;
+	}
+	public int getIsactive() {
+		return isactive;
+	}
+	public void setIsactive(int isactive) {
+		this.isactive = isactive;
+	}
+
 	@Override
 	public String toString() {
 		return "BillParamData [billparamdataid=" + billparamdataid + ", billstructureid=" + billstructureid
@@ -158,6 +188,7 @@ public class BillParamData {
 				+ ", op3w=" + op3w + ", op2w=" + op2w + ", sp4w=" + sp4w + ", sp3w=" + sp3w + ", sp2w=" + sp2w
 				+ ", mtpsqft=" + mtpsqft + ", shop=" + shop + ", mt3p5bhk=" + mt3p5bhk + ", mt3bhk=" + mt3bhk
 				+ ", mt2p5bhk=" + mt2p5bhk + ", mt2bhk=" + mt2bhk + ", mt1p5bhk=" + mt1p5bhk + ", mt1bhk=" + mt1bhk
-				+ ", mt1rk=" + mt1rk + ", mttype=" + mttype + "]";
+				+ ", mt1rk=" + mt1rk + ", mttype=" + mttype + ", extraValues=" + extraValues + ", createdby="
+				+ createdby + ", createdon=" + createdon + ", isactive=" + isactive + "]";
 	}
 }
