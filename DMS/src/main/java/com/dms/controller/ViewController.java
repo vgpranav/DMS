@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dms.beans.BillComponents;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
@@ -34,6 +33,7 @@ import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.Documentdetails;
 import com.dms.beans.ExpenseMaster;
+import com.dms.beans.ExpenseType;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Project;
@@ -2026,4 +2026,61 @@ public class ViewController {
 		return mv;
 	}
 	
+	@RequestMapping(value = { "/addBillComponent.do" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView addBillComponent(HttpServletRequest request) {
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillComponent","");
+		ModelAndView mv = null;
+		List<ExpenseType> ExpenseTypeList = null;
+		List<ExpenseMaster> ExpenseMasterList = null;
+		
+		SocietyDao sdao = new SocietyDao();
+		User user=null;
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			ExpenseTypeList = sdao.getActiveExpenseTypeList(user.getUserid(), ExpenseTypeList);
+			ExpenseMasterList = sdao.getActiveExpenseMasterList(user.getUserid(), ExpenseMasterList);
+				
+			mv = new ModelAndView("addBillComponent"); 
+			mv.addObject("ExpenseTypeList", ExpenseTypeList);
+			mv.addObject("ExpenseMasterList", ExpenseMasterList);
+			
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("addBillComponent",mv);
+		return mv;
+	}
+	
+	
+	@RequestMapping(value = { "/saveBillComponent" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.POST })
+	public ModelAndView saveBillComponent(@ModelAttribute ExpenseMaster emaster, HttpServletRequest request) {
+
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"saveBillComponent",emaster);
+
+		ModelAndView mv = null; 
+		User user = null;
+		List<ExpenseType> ExpenseTypeList = null;
+		List<ExpenseMaster> ExpenseMasterList = null;
+		SocietyDao sdao = new SocietyDao();
+		try {
+			user = (User) request.getSession().getAttribute("userObject");
+			//emaster.setCreatedby(String.valueOf(user.getUserid()));
+			emaster = sdao.insertOrUpdateBillComponent(emaster);
+			
+			ExpenseTypeList = sdao.getActiveExpenseTypeList(user.getUserid(), ExpenseTypeList);
+			ExpenseMasterList = sdao.getActiveExpenseMasterList(user.getUserid(), ExpenseMasterList);
+				
+			mv = new ModelAndView("addBillComponent"); 
+			mv.addObject("ExpenseTypeList", ExpenseTypeList);
+			mv.addObject("ExpenseMasterList", ExpenseMasterList);
+			mv.addObject("error", "Doctype Added");
+			 
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("saveBillComponent.do",mv);
+		return mv;
+	}
 } // End Of class

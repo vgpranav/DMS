@@ -200,6 +200,7 @@
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
+		                     	<li><a href="addBillComponent.do">Bill Component Master</a></li>
 		                     	<li><a href="createBillStructure.do">Create Bill Structure</a></li>
 		                     	<li><a href="deleteBillStructure.do">Delete Bill Structure</a></li>
 		                     	<li><a href="addCommonBillData.do">Add Bill Data</a></li>

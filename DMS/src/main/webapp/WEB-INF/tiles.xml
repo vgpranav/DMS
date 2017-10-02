@@ -330,4 +330,10 @@
       <put-attribute name="body" value="/WEB-INF/pages/deleteBillStructure.jsp" />   
     </definition>
     
+     <definition name="addBillComponent" extends="base-definition">  
+      <put-attribute name="title" value="Add Bill Component" />  
+      <put-attribute name="body" value="/WEB-INF/pages/addBillComponent.jsp" />   
+    </definition>
+    
+    
 </tiles-definitions> 

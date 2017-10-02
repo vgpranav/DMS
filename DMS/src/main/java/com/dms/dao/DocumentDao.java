@@ -41,6 +41,7 @@ import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.Documentdetails;
 import com.dms.beans.EmailBean;
+import com.dms.beans.ExpenseMaster;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
@@ -1238,6 +1239,36 @@ public int deleteDocById(Document document) {
 	      users = qr.query(conn,DMSQueries.getDeleteAuth,rsh);
 	      
 	      return users;
+	    } catch (Exception e) {
+	      dblogger.error("Error Saving Doctype :: " , e);
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        dblogger.error("Error releasing connection :: " , ex);
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return null;
+	  }
+
+	public ExpenseMaster getExpenseByid(long expenseid, ExpenseMaster em) {
+	    Connection conn = null; 
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<ExpenseMaster> rsh = new BeanHandler<ExpenseMaster>(ExpenseMaster.class);
+	      em = qr.query(conn,DMSQueries.getExpenseByid,rsh,expenseid);
+	      return em;
 	    } catch (Exception e) {
 	      dblogger.error("Error Saving Doctype :: " , e);
 	      e.printStackTrace();

@@ -30,6 +30,7 @@ import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.Document;
 import com.dms.beans.EmailBean;
+import com.dms.beans.ExpenseMaster;
 import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
@@ -1605,5 +1606,24 @@ public class AjaxController {
 			return "success";
 		return "failed";
 	}
+	
+	
+	
+	@RequestMapping(value = { "/getExpenseByid" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public ExpenseMaster getExpenseByid(@ModelAttribute ExpenseMaster emaster,HttpServletRequest request) {
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getExpenseByid",emaster);
+		DocumentDao documentDao = new DocumentDao();
+		ExpenseMaster em = null;
+		try {
+			em = documentDao.getExpenseByid(emaster.getExpenseid(), em);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("getExpenseByid",em);
+		return em;
+	}
+	
 	
 } // end of class

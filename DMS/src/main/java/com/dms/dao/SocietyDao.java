@@ -23,7 +23,6 @@ import org.springframework.util.Base64Utils;
 
 import com.dms.beans.Actionlogger;
 import com.dms.beans.Bill;
-import com.dms.beans.BillComponents;
 import com.dms.beans.BillData;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
@@ -35,6 +34,7 @@ import com.dms.beans.CommitteeMaster;
 import com.dms.beans.DocSubType;
 import com.dms.beans.Doctype;
 import com.dms.beans.ExpenseMaster;
+import com.dms.beans.ExpenseType;
 import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
@@ -50,7 +50,6 @@ import com.dms.beans.UserSCNominee;
 import com.dms.beans.Userprofile;
 import com.dms.beans.Vendor;
 import com.dms.util.CommomUtility;
-import com.dms.util.CommonDA;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.FtpWrapper;
@@ -3849,5 +3848,100 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		    }
 		    return rowsUpdated;
 		  }
+
+	public List<ExpenseType> getActiveExpenseTypeList(long userid, List<ExpenseType> expenseList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<ExpenseType>> rsh = new BeanListHandler<ExpenseType>(ExpenseType.class);
+		      expenseList = qr.query(conn,DMSQueries.getActiveExpenseTypeList,rsh);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return expenseList;
+		  }
+
+	public List<ExpenseMaster> getActiveExpenseMasterList(long userid, List<ExpenseMaster> expenseList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<ExpenseMaster>> rsh = new BeanListHandler<ExpenseMaster>(ExpenseMaster.class);
+		      expenseList = qr.query(conn,DMSQueries.getActiveExpenseMasterList,rsh);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return expenseList;
+		  }
+
+	public ExpenseMaster insertOrUpdateBillComponent(ExpenseMaster emaster) { 
+		
+		Connection conn = null;
+	    
+	    long emasterid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      if(emaster.getExpenseid()==0){
+	    	  Object obj = qr.insert(conn, DMSQueries.insertNewBillComponent, rsh, 
+	    			  emaster.getExpensename(),
+	    			  emaster.getExpensetypeid()
+	    			  ); 
+	    	  		  emasterid = CommomUtility.convertToLong(obj);
+	    	  		  emaster.setExpenseid(emasterid);
+	      }else{
+	    	  qr.insert(conn, DMSQueries.updateBillComponent, rsh, 
+	    			  emaster.getExpensename(),
+	    			  emaster.getExpensetypeid(),
+	    			  emaster.getExpenseid()
+	    			  );
+	      }
+	    }
+	    catch (Exception e) {
+	      dblogger.error("Error in insertOrUpdateBillComponent :: " , e);
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        dblogger.error("Error releasing connection :: " , ex);
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return emaster;
+	  }
 	 
 }

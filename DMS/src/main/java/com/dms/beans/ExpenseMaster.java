@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class ExpenseMaster {
 
-	private int expenseid; 
+	private long expenseid; 
 	private String expensename; 
 	private int expensetypeid; 
 	private int isactive;
@@ -18,10 +18,10 @@ public class ExpenseMaster {
 	public void setExpensevalue(double expensevalue) {
 		this.expensevalue = expensevalue;
 	}
-	public int getExpenseid() {
+	public long getExpenseid() {
 		return expenseid;
 	}
-	public void setExpenseid(int expenseid) {
+	public void setExpenseid(long expenseid) {
 		this.expenseid = expenseid;
 	}
 	public String getExpensename() {

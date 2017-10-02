@@ -258,4 +258,14 @@ public class DMSQueries
 
 	public static String deleteBillStructureById = "delete from IPR_billstructure where billstructureid =?";
 
+	public static String getActiveExpenseMasterList = "select * from IPR_ExpenseMaster where isactive=1 ";
+
+	public static String getActiveExpenseTypeList = "select * from IPR_ExpenseType where isactive=1 ";
+
+	public static String getExpenseByid = "select * from IPR_ExpenseMaster where expenseid=?";
+
+	public static String insertNewBillComponent = " insert into IPR_ExpenseMaster(expensename,expensetypeid) values (?,?)";
+
+	public static String updateBillComponent = "update IPR_ExpenseMaster set expensename=?, expensetypeid=? where expenseid=?";
+	
 }
