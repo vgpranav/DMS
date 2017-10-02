@@ -22,7 +22,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.Base64Utils;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.Bill;
 import com.dms.beans.BillComponents;
+import com.dms.beans.BillData;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
@@ -48,6 +50,7 @@ import com.dms.beans.UserSCNominee;
 import com.dms.beans.Userprofile;
 import com.dms.beans.Vendor;
 import com.dms.util.CommomUtility;
+import com.dms.util.CommonDA;
 import com.dms.util.ConnectionPoolManager;
 import com.dms.util.DMSQueries;
 import com.dms.util.FtpWrapper;
@@ -3406,37 +3409,431 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		    return comps;
 		  }
 
-	public int generateBillForBillStructure(long billstructureid, BillParamData billParamData) { 
+	public int generateBillForBillStructure(long billstructureid, BillParamData billParamData, String userid) { 
 		  Connection conn = null;
 		  int rowsUpdated=0;
 		  BillStructure billStructure;
-		  List<User> users;
-		  
+		  List<Userprofile> users;
+		  List<ExpenseMaster> expenses;
+		  BillParamData billparams;
+		  List <Bill> oldbills=null;
 		    try
 		    {
 		      qr = new QueryRunner();
 		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      int counter = 0;
 		      
 		      ResultSetHandler<BillStructure> rsh = new BeanHandler<BillStructure>(BillStructure.class);
-		      ResultSetHandler<List<User>> rsh1 = new BeanListHandler<User>(User.class);
-
-		      billStructure = qr.query(conn,DMSQueries.getBillStructureById, rsh);
+		      ResultSetHandler<List<Userprofile>> rsh1 = new BeanListHandler<Userprofile>(Userprofile.class);
+		      ResultSetHandler<List<ExpenseMaster>> rshexp = new BeanListHandler<ExpenseMaster>(ExpenseMaster.class);
+		      ResultSetHandler<BillParamData> rshparms = new BeanHandler<BillParamData>(BillParamData.class);
+		      ResultSetHandler<Bill> rshbill = new BeanHandler<Bill>(Bill.class);
+		      ResultSetHandler<List<Bill>> rsholdbills = new BeanListHandler<Bill>(Bill.class);
+		      
+		      
+		      oldbills = qr.query(conn,DMSQueries.getBillByStructureid,rsholdbills,billstructureid);
+		      if(oldbills!=null && oldbills.size()>0){
+		    	  for(Bill oldbill : oldbills){
+		    		  qr.update(conn,DMSQueries.deleteBillHeadersByStructId,oldbill.getBillid());
+				      qr.update(conn,DMSQueries.deleteBillDataByStructId,oldbill.getBillid());
+		    	  }
+		      }
+		        
+		      billStructure = qr.query(conn,DMSQueries.getBillStructureById, rsh,billstructureid);
+		      expenses = qr.query(conn,DMSQueries.getExpensesBuStructId, rshexp,billstructureid);
+		      billparams = qr.query(conn,DMSQueries.getBillParamsByStructureid, rshparms,billstructureid);
+		      
+		      
 		      if(billStructure!=null){
+		    	  counter++;
+		    	  if(expenses!=null){
+		    		  counter++;
+		    		  if(billparams!=null){
+		    			  counter++;
+		    		  }
+		    	  }
+		      } 
+		       
+		      
+		      if(counter==3){
 			      users = qr.query(conn,DMSQueries.getMembersForSociety, rsh1,billStructure.getSocietyid());
 			      
-			      for(User usr : users){
+			      for(Userprofile usr : users){
+			    	  double parkingCharges = 0;
+			    	  double nocCharges = 0;
+			    	  double mtCharges = 0;
+			    	  double delaypenalty=0;
+			    	  
+			    	//----------------- Generate parking charges ------------------------// 
 			    	  
 			    	  
+			    	  String ptype = usr.getParkingtype() != null ? usr.getParkingtype() : ""; 
+			    	  String pvehicletype = usr.getVehicletype() != null ? usr.getVehicletype() : "";	 
 			    	  
 			    	  
+			    	  switch(ptype){
+					    	  case "SLIT":{
+						    		  switch(pvehicletype.trim().toUpperCase()){
+							    		  	case "2-WHEELER":{
+							    		  		parkingCharges = billparams.getSp2w();
+							    		  		break;
+							    		  	}
+							    		  	case "3-WHEELER":{
+							    		  		parkingCharges = billparams.getSp3w();
+							    		  		break;
+							    		  	}
+							    		  	case "4-WHEELER":{
+							    		  		parkingCharges = billparams.getSp4w();
+							    		  		break;
+							    		  	}
+							    		  	default:{
+							    		  		parkingCharges = 0;
+							    		  		break;
+							    		  	}
+						    		  }
+						    		  break;
+					    	  }
+					    	  case "OPEN":{
+						    		  switch(pvehicletype.trim().toUpperCase()){
+							    		  	case "2-WHEELER":{
+							    		  		parkingCharges = billparams.getOp2w();
+							    		  		break;
+							    		  	}
+							    		  	case "3-WHEELER":{
+							    		  		parkingCharges = billparams.getOp3w();
+							    		  		break;
+							    		  	}
+							    		  	case "4-WHEELER":{
+							    		  		parkingCharges = billparams.getOp4w();
+							    		  		break;
+							    		  	}
+							    		  	default:{
+							    		  		parkingCharges = 0;
+							    		  		break;
+							    		  	}
+							    		  }
+						    		  break;
+					    	  }
+					    	  default:{ 
+					    		  parkingCharges = 0;
+					    		  break;
+					    	  }
+			      }
+			    	   
+			    	  //----------------- Generate NOC charges ------------------------// 
+			    	  
+			    	  if(usr.getOccupancy()!=null && usr.getOccupancy().trim().equalsIgnoreCase("leased")){
+			    		  nocCharges = billparams.getNocval();
+			    	  }
+			    	  
+			    	  
+			    	  //----------------- Generate Maintenance charges ------------------------// 
+			    	  if(usr.getBuiltuparea()!=null && usr.getBuiltuparea().trim().length()>0){
+			    		
+			    		  if(billparams.getMttype().trim().equalsIgnoreCase("mtarea")){
+			    			  try{
+			    				  double area = Double.valueOf(usr.getBuiltuparea().trim()) ;
+					    		  mtCharges = billparams.getMtpsqft() * area;  
+			    			  }catch(Exception e){
+			    				  mtCharges=0;
+			    			  }
+				    		  
+				    	  }else if(billparams.getMttype().trim().equalsIgnoreCase("mtlumpsum")){
+				    		  
+				    		  switch(usr.getFlattype().trim().toUpperCase()){
+					    		  case "1RK" :{
+					    			  mtCharges = billparams.getMt1rk();
+					    			  break;
+					    		  }
+					    		  case "1BHK" :{
+					    			  mtCharges = billparams.getMt1bhk();
+					    			  break;
+					    		  }
+					    		  case "1.5BHK" :{
+					    			  mtCharges = billparams.getMt1p5bhk();
+									  break;
+					    		  }
+					    		  case "2BHK" :{
+					    			  mtCharges = billparams.getMt2bhk();
+									  break;
+					    		  }
+					    		  case "2.5BHK" :{
+					    			  mtCharges = billparams.getMt2p5bhk();
+									  break;
+					    		  }
+					    		  case "3BHK" :{
+					    			  mtCharges = billparams.getMt3bhk();
+									  break;
+					    		  }
+					    		  case "3.5BHK" :{
+					    			  mtCharges = billparams.getMt3p5bhk();
+					    			  break;
+					    		  }
+					    		  case "SHOP" :{
+					    			  mtCharges = billparams.getShop();
+					    			  break;
+					    		  }
+					    		  default :{
+					    			  mtCharges=0;
+					    			  break;
+					    		  }
+				    		  } 
+				    	  }
+				    	  else
+				    		  mtCharges=0; 
+			    	  }
+			    	  else
+			    		  mtCharges=0;
+			    	  
+			    	  
+			    	//----------------- Generate penalty charges ------------------------//
+			    	  Bill userLastBill =  qr.query(conn,DMSQueries.getLastUserBillByUserId, rshbill,usr.getUserid(),usr.getUserid());
+			    	  int penaltyPeriod = Integer.parseInt(CommomUtility.getConfig("mtpenaltyperiodindays"));
+			    	  
+			    	  if(userLastBill!=null){
+			    		  if(userLastBill.getIspaid()!=1){
+			    			  Date now = new Date();
+				 	        	 if(now.getTime() - userLastBill.getCreatedon().getTime() > penaltyPeriod*24*60*60*1000){
+				 	        		 switch(billparams.getPcdelaykey().trim().toUpperCase()){
+					 	        		 case "PERCENT" :{
+					 	        			 try{
+					 	        				delaypenalty = (billparams.getPcdelayval() * userLastBill.getPayamount())/100;
+					 	        			 }catch(Exception e){
+					 	        				delaypenalty = 0;
+					 	        			 }
+					 	        			 break;
+					 	        		 }
+					 	        		 case "AMOUNT" :{
+					 	        			 	delaypenalty = billparams.getPcdelayval();
+					 	        			 break;
+					 	        		 }
+					 	        		 default:{
+					 	        			 delaypenalty=0;
+					 	        		 } 
+				 	        		 }
+				 	             }
+			    		  }else{
+			    			  delaypenalty=0;
+			    		  }
+			    	  }else{
+			    		  delaypenalty=0;
+			    	  }
+			    	 
+			    	  conn.setAutoCommit(false);
+			    	   
+			    	  Object obj = qr.insert(conn, DMSQueries.insertBillGeneratedHeaders, new ScalarHandler<Object>(),
+			    			  billstructureid,
+			    			  usr.getUserid(),
+			    			  usr.getSocietyid(),
+			    			  userid
+			    			  );
+			    	  
+			    	  long billid = CommomUtility.convertToLong(obj);
+			    	  
+			    	  if(mtCharges>0){
+			    		  qr.insert(conn, DMSQueries.insertBillGeneratedData, new ScalarHandler<Object>(),
+				    			  billid,
+				    			  "Maintenance Charges",
+				    			  mtCharges,
+				    			  userid
+				    			  );
+			    	  }
+			    	  
+			    	  if(parkingCharges>0){
+			    		  qr.insert(conn, DMSQueries.insertBillGeneratedData, new ScalarHandler<Object>(),
+				    			  billid,
+				    			  "Parking Charges",
+				    			  parkingCharges,
+				    			  userid
+				    			  );
+			    	  }
+			    	  
+			    	  if(nocCharges>0){
+			    		  qr.insert(conn, DMSQueries.insertBillGeneratedData, new ScalarHandler<Object>(),
+				    			  billid,
+				    			  "Non Occupancy Charges",
+				    			  nocCharges,
+				    			  userid
+				    			  );
+			    	  }
+			    	  
+			    	  if(delaypenalty>0){
+			    		  qr.insert(conn, DMSQueries.insertBillGeneratedData, new ScalarHandler<Object>(),
+				    			  billid,
+				    			  "Penalty Charges",
+				    			  nocCharges,
+				    			  userid
+				    			  );
+			    	  }
+			    	  
+			    	  double sum = 0;
+			    	  for(ExpenseMaster emaster : expenses){
+
+			    		  if(emaster!=null && emaster.getExpensevalue()>0){
+			    			  qr.insert(conn, DMSQueries.insertBillGeneratedData, new ScalarHandler<Object>(),
+					    			  billid,
+					    			  emaster.getExpensename(),
+					    			  emaster.getExpensevalue(),
+					    			  userid
+					    			  );
+			    			  sum += emaster.getExpensevalue();
+			    		  }
+			    		  
+			    	  }
+			    	  
+			    	  sum = sum + mtCharges + parkingCharges + nocCharges + delaypenalty;
+			    	  
+			    	  qr.update(conn,DMSQueries.updateBillGeneratedHeaders,sum,billid);
+			    	  
+			    	  conn.commit();
+			    	  
+			    	  rowsUpdated++;  
 			      }
 		    	  
-		    	  
-		    	  
-		      }
-		       
-		      rowsUpdated = qr.update(conn, DMSQueries.getBillCompsByStructid, billstructureid);
+			      qr.update(conn,DMSQueries.updateBillStructure,1,billstructureid); 
+			      
+		      } else {
+		    	  rowsUpdated=0;
+		      }  
 		      
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return rowsUpdated;
+		  }
+
+	public List<Userprofile> viewBillUsersForSociety(long billstructureid, List<Userprofile> profiles) {
+	    Connection conn = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<List<Userprofile>> rsh = new BeanListHandler<Userprofile>(Userprofile.class);
+	      profiles =  qr.query(conn, DMSQueries.getMembersWithBillGeneratedByStructid, rsh,billstructureid);
+	    }
+	    catch (Exception e) {
+	      dblogger.error("Error getMembersForSociety :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return profiles;
+	  }
+
+	public Map<String,Object> getMemberBillbyId(BillParamData billParamData, Map<String,Object> billValues, String userid) {
+	    Connection conn = null;
+	    Userprofile userprofile = null;
+	    Society society = null;
+	    Bill bill = null;
+	    List<BillData> billdata = null;
+	    BillStructure billStrut = null;
+	    try
+	    {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      
+	      ResultSetHandler<Userprofile> rshuserprofile = new BeanHandler<Userprofile>(Userprofile.class);
+	      userprofile = qr.query(conn, DMSQueries.getUserDataById, rshuserprofile, 
+	    		  billParamData.getCreatedby()
+	        );
+	      
+	      
+	      ResultSetHandler<Society> rshsociety = new BeanHandler<Society>(Society.class);
+	      society = qr.query(conn, DMSQueries.getSocietyDetailsById, rshsociety, 
+	    		  userprofile.getSocietyid()
+	        );
+	      
+	      
+	      ResultSetHandler<BillStructure> rshbillStrut = new BeanHandler<BillStructure>(BillStructure.class);
+	      billStrut = qr.query(conn, DMSQueries.getBillStructureById, rshbillStrut, 
+	    		  billParamData.getBillstructureid()
+	        );
+	      
+	      
+	      ResultSetHandler<Bill> rshbill = new BeanHandler<Bill>(Bill.class);
+	      bill = qr.query(conn, DMSQueries.getBillByUseridStrutId, rshbill, 
+	    		  billParamData.getBillstructureid(),
+	    		  billParamData.getCreatedby()
+	        );
+	      
+	      ResultSetHandler<List<BillData>> rshbillData = new BeanListHandler<BillData>(BillData.class);
+	      billdata = qr.query(conn, DMSQueries.getBillDataByBillid, rshbillData, 
+	    		  bill.getBillid()
+	        );
+	       
+	      
+	      billValues.put("user", userprofile);
+	      billValues.put("society", society);
+	      billValues.put("bill", bill); 
+	      billValues.put("billStrut", billStrut);
+	      billValues.put("billdata", billdata);
+	      
+	    }
+	    catch (Exception e) {
+	      dblogger.error("Error getMemberBillbyId :: ", e);
+	      e.printStackTrace();
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: ", e);
+	      }
+	    }
+	    return billValues;
+	  }
+
+	public List<Bill> fetchAllBillsForUser(BillStructure billstructure, List<Bill> bill) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<Bill>> rsh = new BeanListHandler<Bill>(Bill.class);
+		      bill = qr.query(conn, DMSQueries.fetchAllBillsForUser, rsh, billstructure.getCreatedby());
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return bill;
+		  }
+
+	public int deleteBillStructureById(long billstructureid, String userid) { 
+		  Connection conn = null;
+		  int rowsUpdated=0;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      rowsUpdated = qr.update(conn, DMSQueries.deleteBillStructureById,billstructureid);
 		    } catch (Exception e) {
 		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
 		      e.printStackTrace();

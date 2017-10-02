@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.dms.beans.Actionlogger;
+import com.dms.beans.Bill;
 import com.dms.beans.BillParamData;
 import com.dms.beans.BillStructure;
 import com.dms.beans.Builder;
@@ -1526,13 +1527,79 @@ public class AjaxController {
 
 		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"generateBillForBillStructure",billParamData);
 		SocietyDao sdao = new SocietyDao();
+		String userid = request.getSession().getAttribute("userId").toString();
 		int rowsUpdated=0;
 		try {
-			rowsUpdated = sdao.generateBillForBillStructure(billParamData.getBillstructureid(),billParamData);
+			rowsUpdated = sdao.generateBillForBillStructure(billParamData.getBillstructureid(),billParamData,userid);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 		LoggingHelper.logAjaxResponse("generateBillForBillStructure",billParamData);
+
+		if (rowsUpdated > 0)
+			return "success";
+		return "failed";
+	}
+	
+	
+	@RequestMapping(value = { "/getMemberBillbyId" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public Map<String,Object> getMemberBillbyId(@ModelAttribute BillParamData billParamData,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"getMemberBillbyId",billParamData);
+		
+		SocietyDao sdao = new SocietyDao();
+		Map<String,Object> billValues = new HashMap<>();
+		
+		String userid = request.getSession().getAttribute("userId").toString();
+		try {
+			billValues = sdao.getMemberBillbyId(billParamData,billValues,userid);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		LoggingHelper.logAjaxResponse("getMemberBillbyId",billParamData);
+		 
+		return billValues;
+	}
+	
+	
+	 
+	@RequestMapping(value = { "/fetchAllBillsForUser" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public List<Bill> fetchAllBillsForUser(@ModelAttribute BillStructure billstructure,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"fetchAllBillsForUser",billstructure);
+
+		SocietyDao societyDao = new SocietyDao();
+		List<Bill>  bill = null;
+		try {
+			bill = societyDao.fetchAllBillsForUser(billstructure,bill);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("fetchAllBillsForUser",bill);
+
+		return bill;
+	}
+	
+	@RequestMapping(value = { "/deleteBillStructureById" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public String deleteBillStructureById(@ModelAttribute BillParamData billParamData,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"deleteBillStructureById",billParamData);
+		SocietyDao sdao = new SocietyDao();
+		String userid = request.getSession().getAttribute("userId").toString();
+		int rowsUpdated=0;
+		try {
+			rowsUpdated = sdao.deleteBillStructureById(billParamData.getBillstructureid(),userid);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("deleteBillStructureById",billParamData);
 
 		if (rowsUpdated > 0)
 			return "success";

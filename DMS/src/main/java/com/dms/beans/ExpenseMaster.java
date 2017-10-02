@@ -9,7 +9,15 @@ public class ExpenseMaster {
 	private int expensetypeid; 
 	private int isactive;
 	private Date createdon;
+	private double expensevalue;
 	
+	 
+	public double getExpensevalue() {
+		return expensevalue;
+	}
+	public void setExpensevalue(double expensevalue) {
+		this.expensevalue = expensevalue;
+	}
 	public int getExpenseid() {
 		return expenseid;
 	}
@@ -40,11 +48,11 @@ public class ExpenseMaster {
 	public void setCreatedon(Date createdon) {
 		this.createdon = createdon;
 	}
-
 	@Override
 	public String toString() {
 		return "ExpenseMaster [expenseid=" + expenseid + ", expensename=" + expensename + ", expensetypeid="
-				+ expensetypeid + ", isactive=" + isactive + ", createdon=" + createdon + "]";
+				+ expensetypeid + ", isactive=" + isactive + ", createdon=" + createdon + ", expensevalue="
+				+ expensevalue + "]";
 	}
-	
+
 }

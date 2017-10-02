@@ -3,7 +3,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Add Bill Data</h2>
+                  <h2>View Bills</h2>
                   <div class="pull-right">
 						<select name="societyid" id="societyid" class="form-control"
 							onchange="getCommonBillData()">
@@ -86,15 +86,19 @@
 		        			isgen = '<span class="label label-danger">Pending</span>';
 		        		}
 		        		
-		        		table.row.add( [
-		        			capAll(item.billstructurecode)	,
-		        			billCycle, 
-		        			new Date(item.createdon).toString("dd MMM yyyy"),
-		        			item.username,
-		        			isgen,
-		        			editBtn,
-		                ] ).draw( false );
-		        	    
+		        		
+		        		if(item.isgenerated==1){
+			        		table.row.add( [
+			        			capAll(item.billstructurecode)	,
+			        			billCycle, 
+			        			new Date(item.createdon).toString("dd MMM yyyy"),
+			        			item.username,
+			        			isgen,
+			        			editBtn,
+			                ] ).draw( false );
+		        		}
+		        		
+		        		
 		        	  });
 		        	}
 		        unblockUI();
@@ -105,42 +109,10 @@
 				}
 			});	 
  }
- 
- function editFormField(billstructureid,isgenerated){
-	 
-	 if(isgenerated==1){
-		 if(confirm("Bill is already generated\n\nDo you wish to delete and Re-Generate?\n")){
-			 generateBill(billstructureid);
-		 }
-	 }else{
-		 if(confirm("Generate Bill?")){
-			 generateBill(billstructureid);
-		 }
-	 }
- }
   
- function generateBill(billstructureid){
-	 
-	 
-	 blockUI();
-	 notify('warning','PLEASE NOTE','Bill Generation Will take a few Minutes to finish !!',10000);
-	 $.ajax({
-	        type: "GET",
-	        url: "<%=request.getContextPath()%>/generateBillForBillStructure.do",
-	        data :"billstructureid="+billstructureid,
-	        success: function(response){ 
-		        if(response=='success'){
-		        	getCommonBillData();
-		        	notify('success','SUCCESS','Bill Generated Successfully',3000);
-		        }else {
-		        	notify('error','ERROR','Failed to Generate Bill',2000);
-		        }
-		        unblockUI();
-		        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-					unblockUI();
-				}
-			});
+ 
+ function editFormField(billstructureid){
+	 var societyid = $('#societyid').val();
+	 location.href = "<%=request.getContextPath()%>/viewBillsForSociety.do?billstructureid="+billstructureid+"&societyid="+societyid;
  }
  </script>

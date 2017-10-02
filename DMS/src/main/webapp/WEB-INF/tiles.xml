@@ -309,5 +309,25 @@
       <put-attribute name="body" value="/WEB-INF/pages/generateBill.jsp" />   
     </definition>
     
+     <definition name="viewBill" extends="base-definition">  
+      <put-attribute name="title" value="View Bill" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewBills.jsp" />   
+    </definition>
+    
+    <definition name="viewBillsForSociety" extends="base-definition">  
+      <put-attribute name="title" value="View Bill" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewBillsForSociety.jsp" />   
+    </definition>
+    
+    <definition name="viewMyBills" extends="base-definition">  
+      <put-attribute name="title" value="View My Bills" />  
+      <put-attribute name="body" value="/WEB-INF/pages/viewMyBills.jsp" />   
+    </definition>
+    
+    
+    <definition name="deleteBillStructure" extends="base-definition">  
+      <put-attribute name="title" value="View My Bills" />  
+      <put-attribute name="body" value="/WEB-INF/pages/deleteBillStructure.jsp" />   
+    </definition>
     
 </tiles-definitions> 

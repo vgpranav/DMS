@@ -3,11 +3,10 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>Add Bill Data</h2>
+                  <h2>Delete Bill Structure</h2>
                   <div class="pull-right">
 						<select name="societyid" id="societyid" class="form-control"
-							onchange="getCommonBillData()">
-							<option value="">-- select society --</option>
+							onchange="getCommonBillData()"> 
 							<c:forEach items="${societyList}" var="myItem"
 								varStatus="loopStatus">
 								<option value="${myItem.societyid}">${myItem.societyname}</option>
@@ -30,8 +29,8 @@
                             <th class="column-title">Bill Cycle</th>
                             <th class="column-title">Created On</th>
                             <th class="column-title">Created By</th>
-                            <th class="column-title">Bill Status</th>
-                            <th class="column-title">Generate Bill</th>
+                            <th class="column-title">Status</th>
+                            <th class="column-title">Delete</th>
                           </tr>
                         </thead>
 
@@ -47,14 +46,12 @@
  <script>
  
  $(document).ready(function(){
-	 var table = $('#thetable').DataTable();
 	 getCommonBillData();
  });
  
  function getCommonBillData(){
 	 
 	 var table = $('#thetable').DataTable();
-	 
 	 var societyid = $('#societyid').val();
 	 
 	 if(societyid.length<1)
@@ -71,7 +68,7 @@
 		        if(response.length>0){
 		        	$.each(response, function(i, item) {
 		  
-		        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.billstructureid + '\',\'' + item.isgenerated + '\')"><i class="fa fa-exchange"></i></a>';
+		        		var editBtn = '<a class="btn btn-default btn-sm" onclick="editFormField(\'' + item.billstructureid + '\')"><i class="fa fa-edit"></i></a>';
 		        		var billCycle="";
 		        		if(item.billcycletype==1){
 		        			billCycle = resolveMonth(item.billcyclevalue)+" "+item.year;
@@ -106,41 +103,32 @@
 			});	 
  }
  
- function editFormField(billstructureid,isgenerated){
-	 
-	 if(isgenerated==1){
-		 if(confirm("Bill is already generated\n\nDo you wish to delete and Re-Generate?\n")){
-			 generateBill(billstructureid);
-		 }
-	 }else{
-		 if(confirm("Generate Bill?")){
-			 generateBill(billstructureid);
-		 }
+ function editFormField(billstructureid){
+	  
+	 if(confirm("Do you wish to delete this bill structure? ")){
+		 blockUI();
+		 $.ajax({
+		        type: "GET",
+		        url: "<%=request.getContextPath()%>/deleteBillStructureById.do",
+		        data :"billstructureid="+billstructureid,
+		        success: function(response){
+			        
+			        if(response=='success'){
+			        	notify('success','Success','Deleted Successfully',2000);
+			        	getCommonBillData();
+			        }else{
+			        	notify('error','ERROR',response,2000);
+			        } 
+			        unblockUI();
+			        },
+					error : function(e) {
+						notify('error','ERROR','Error occured',2000);
+						unblockUI();
+					}
+				});
+		 
 	 }
- }
-  
- function generateBill(billstructureid){
 	 
-	 
-	 blockUI();
-	 notify('warning','PLEASE NOTE','Bill Generation Will take a few Minutes to finish !!',10000);
-	 $.ajax({
-	        type: "GET",
-	        url: "<%=request.getContextPath()%>/generateBillForBillStructure.do",
-	        data :"billstructureid="+billstructureid,
-	        success: function(response){ 
-		        if(response=='success'){
-		        	getCommonBillData();
-		        	notify('success','SUCCESS','Bill Generated Successfully',3000);
-		        }else {
-		        	notify('error','ERROR','Failed to Generate Bill',2000);
-		        }
-		        unblockUI();
-		        },
-				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
-					unblockUI();
-				}
-			});
  }
+    
  </script>

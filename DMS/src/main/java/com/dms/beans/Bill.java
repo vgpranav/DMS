@@ -15,8 +15,12 @@ public class Bill {
 	private int ispaid;
 	private Date ispaidon;
 	private String paymode;
-	private double payamount;
-	
+	private double payamount; 
+	private String year;
+	private String billcycletype;
+	private String billcyclevalue;
+	private String billstructurecode;
+	 
 	public long getBillid() {
 		return billid;
 	}
@@ -89,13 +93,39 @@ public class Bill {
 	public void setPayamount(double payamount) {
 		this.payamount = payamount;
 	}
-
+	public String getYear() {
+		return year;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getBillcycletype() {
+		return billcycletype;
+	}
+	public void setBillcycletype(String billcycletype) {
+		this.billcycletype = billcycletype;
+	}
+	public String getBillcyclevalue() {
+		return billcyclevalue;
+	}
+	public void setBillcyclevalue(String billcyclevalue) {
+		this.billcyclevalue = billcyclevalue;
+	}
+	public String getBillstructurecode() {
+		return billstructurecode;
+	}
+	public void setBillstructurecode(String billstructurecode) {
+		this.billstructurecode = billstructurecode;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Bill [billid=" + billid + ", billstructureid=" + billstructureid + ", userid=" + userid + ", societyid="
 				+ societyid + ", billdataid=" + billdataid + ", createdby=" + createdby + ", createdon=" + createdon
 				+ ", isactive=" + isactive + ", ispaid=" + ispaid + ", ispaidon=" + ispaidon + ", paymode=" + paymode
-				+ ", payamount=" + payamount + "]";
+				+ ", payamount=" + payamount + ", year=" + year + ", billcycletype=" + billcycletype
+				+ ", billcyclevalue=" + billcyclevalue + ", billstructurecode=" + billstructurecode + "]";
 	}
 	
 }

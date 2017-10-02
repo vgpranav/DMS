@@ -229,5 +229,33 @@ public class DMSQueries
 	public static String getExistingExtraValsByBillStructId = "select GROUP_CONCAT(concat(expenseid,'=',expensevalue)) from IPR_billcomponentsdata where billstructureid=?";
 
 	public static String getBillStructureById = "select billstructureid,billstructurecode,societyid,year,billcycletype,billcyclevalue,isactive,getUsername(createdby) as username,createdon,isgenerated from IPR_billstructure where billstructureid=?";
+
+	public static String getExpensesBuStructId = " SELECT em.expenseid,em.expensename,bcd.expensevalue FROM IPR_billstructure bs,IPR_billcomponentsdata bcd,IPR_ExpenseMaster em where bcd.billstructureid=bs.billstructureid and bcd.expenseid=em.expenseid and bs.billstructureid=?";
+
+	public static String getLastUserBillByUserId = "SELECT * FROM IPR_Bill where userid = ? and createdon = (SELECT max(createdon) FROM IPR_Bill where userid = ?)";
+
+	public static String insertBillGeneratedHeaders = "insert into IPR_Bill(billstructureid,userid,societyid,createdby) values (?,?,?,?)" ;
+
+	public static String insertBillGeneratedData = "insert into IPR_billdata(billid,componenetname,componenetvalue,createdby) values (?,?,?,?)";
+
+	public static String updateBillGeneratedHeaders = "update IPR_Bill set payamount=? where billid=?" ;
+
+	public static String updateBillStructure = "update IPR_billstructure set isgenerated=? where billstructureid=?";
+
+	public static String getBillByStructureid = "SELECT * FROM IPR_Bill where billstructureid =?";
 	
+	public static String deleteBillHeadersByStructId = "delete from IPR_Bill where billid=?";
+
+	public static String deleteBillDataByStructId = "delete from IPR_billdata where billid=?";
+
+	public static String getMembersWithBillGeneratedByStructid = "select u.firstname,u.lastname,up.* from user u,userprofile up,IPR_Bill b where up.userid=b.userid and up.userid=u.userid and b.billstructureid=?";
+
+	public static String getBillDataByBillid = "select * from IPR_billdata where billid=?";
+
+	public static String getBillByUseridStrutId = "SELECT * FROM IPR_Bill where billstructureid =? and userid=?";
+
+	public static String fetchAllBillsForUser = "select * from IPR_Bill b,IPR_billstructure bs where bs.billstructureid=b.billstructureid and b.userid=?";
+
+	public static String deleteBillStructureById = "delete from IPR_billstructure where billstructureid =?";
+
 }

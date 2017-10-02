@@ -201,8 +201,11 @@
 		                  	</a>
 		                    <ul class="nav child_menu">
 		                     	<li><a href="createBillStructure.do">Create Bill Structure</a></li>
+		                     	<li><a href="deleteBillStructure.do">Delete Bill Structure</a></li>
 		                     	<li><a href="addCommonBillData.do">Add Bill Data</a></li>
 		                     	<li><a href="generateBill.do">Generate Bill</a></li>
+		                     	<li><a href="viewAllBills.do">View All Bills</a></li>
+		                     	<li><a href="viewMyBills.do">View My Bills</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

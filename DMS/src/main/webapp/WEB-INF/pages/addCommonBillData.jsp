@@ -30,7 +30,7 @@
                             <th class="column-title">Bill Cycle</th>
                             <th class="column-title">Created On</th>
                             <th class="column-title">Created By</th>
-                            <th class="column-title">Action </th>
+                            <th class="column-title">Add Data</th>
                           </tr>
                         </thead>
 
