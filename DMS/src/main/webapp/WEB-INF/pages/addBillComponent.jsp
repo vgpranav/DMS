@@ -109,7 +109,7 @@
                             <th class="column-title">Delete</th> 
                           </tr>
                         </thead>
-
+  
                         <tbody>
                         	<c:forEach items="${ExpenseMasterList}" var="myItem" varStatus="loopStatus">
 								
