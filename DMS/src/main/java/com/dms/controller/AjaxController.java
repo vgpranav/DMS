@@ -37,6 +37,7 @@ import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Loginhistory;
 import com.dms.beans.Parking;
+import com.dms.beans.PaymentBean;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
 import com.dms.beans.User;
@@ -1625,5 +1626,24 @@ public class AjaxController {
 		return em;
 	}
 	
-	
+	@RequestMapping(value = { "/addBillPaymentByAdmin" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public String addBillPaymentByAdmin(@ModelAttribute PaymentBean pbean,HttpServletRequest request) {
+
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addBillPaymentByAdmin",pbean);
+		SocietyDao sdao = new SocietyDao();
+		String userid = request.getSession().getAttribute("userId").toString();
+		int rowsUpdated=0;
+		try {
+			rowsUpdated = sdao.addBillPaymentByAdmin(pbean,userid);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("addBillPaymentByAdmin",pbean);
+
+		if (rowsUpdated > 0)
+			return "success";
+		return "failed";
+	}
 } // end of class

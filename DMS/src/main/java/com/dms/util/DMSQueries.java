@@ -260,12 +260,19 @@ public class DMSQueries
 
 	public static String getActiveExpenseMasterList = "select * from IPR_ExpenseMaster where isactive=1 ";
 
+	public static String getExpenseMasterList = "select * from IPR_ExpenseMaster";
+	
 	public static String getActiveExpenseTypeList = "select * from IPR_ExpenseType where isactive=1 ";
 
 	public static String getExpenseByid = "select * from IPR_ExpenseMaster where expenseid=?";
 
-	public static String insertNewBillComponent = " insert into IPR_ExpenseMaster(expensename,expensetypeid) values (?,?)";
+	public static String insertNewBillComponent = " insert into IPR_ExpenseMaster(expensename,expensetypeid,isactive) values (?,?,?)";
 
-	public static String updateBillComponent = "update IPR_ExpenseMaster set expensename=?, expensetypeid=? where expenseid=?";
+	public static String updateBillComponent = "update IPR_ExpenseMaster set expensename=?, expensetypeid=?, isactive=? where expenseid=?";
+
+	public static String addBillPaymentByAdmin = "insert into IPR_BillPayments(billid,paymode,bankname,accountno,chequeno,amount,createdby) values (?,?,?,?,?,?,?)";
+	
+	public static String updateBillStatus = "update IPR_Bill set ispaid=?,ispaidon=?,paymode=? where billid=?";
+	
 	
 }

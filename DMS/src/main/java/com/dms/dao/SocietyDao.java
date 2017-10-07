@@ -41,6 +41,7 @@ import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
 import com.dms.beans.Loginhistory;
 import com.dms.beans.Parking;
+import com.dms.beans.PaymentBean;
 import com.dms.beans.Photos;
 import com.dms.beans.Project;
 import com.dms.beans.Society;
@@ -3897,6 +3898,32 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 		    return expenseList;
 		  }
 
+	
+	public List<ExpenseMaster> getExpenseMasterList(long userid, List<ExpenseMaster> expenseList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<ExpenseMaster>> rsh = new BeanListHandler<ExpenseMaster>(ExpenseMaster.class);
+		      expenseList = qr.query(conn,DMSQueries.getExpenseMasterList,rsh);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching AllBillsBySocietyId  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return expenseList;
+		  }
+
+	
 	public ExpenseMaster insertOrUpdateBillComponent(ExpenseMaster emaster) { 
 		
 		Connection conn = null;
@@ -3910,7 +3937,8 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	      if(emaster.getExpenseid()==0){
 	    	  Object obj = qr.insert(conn, DMSQueries.insertNewBillComponent, rsh, 
 	    			  emaster.getExpensename(),
-	    			  emaster.getExpensetypeid()
+	    			  emaster.getExpensetypeid(),
+	    			  emaster.getIsactive()
 	    			  ); 
 	    	  		  emasterid = CommomUtility.convertToLong(obj);
 	    	  		  emaster.setExpenseid(emasterid);
@@ -3918,6 +3946,7 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    	  qr.insert(conn, DMSQueries.updateBillComponent, rsh, 
 	    			  emaster.getExpensename(),
 	    			  emaster.getExpensetypeid(),
+	    			  emaster.getIsactive(),
 	    			  emaster.getExpenseid()
 	    			  );
 	      }
@@ -3943,5 +3972,46 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 	    }
 	    return emaster;
 	  }
-	 
+	   
+	public int addBillPaymentByAdmin(PaymentBean pbean, String userid) {
+		Connection conn = null;
+		int rowsUpdated = 0;
+		try {
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+			
+			conn.setAutoCommit(false);
+			
+			rowsUpdated = qr.update(conn, DMSQueries.addBillPaymentByAdmin, 
+					pbean.getBillid(),
+					pbean.getPayMode(),
+					pbean.getBankName(),
+					pbean.getAccountNo(),
+					pbean.getChequeNo(),
+					pbean.getAmount(),
+					userid
+					);
+
+			qr.update(conn, DMSQueries.updateBillStatus, 
+					1,
+					new Date(),
+					pbean.getPayMode(),
+					pbean.getBillid()
+					);
+			
+			conn.commit();
+			
+		} catch (Exception e) {
+			dblogger.error("Error addBillPaymentByAdmin  :: ", e);
+			e.printStackTrace();
+		} finally {
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				dblogger.error("Error releasing connection :: ", e);
+			}
+		}
+		return rowsUpdated;
+	}
+
 }

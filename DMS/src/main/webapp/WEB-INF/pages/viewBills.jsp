@@ -3,7 +3,7 @@
 <div class="col-md-12 col-sm-12 col-xs-12">
               <div class="x_panel tile">
                 <div class="x_title">
-                  <h2>View Bills</h2>
+                  <h2>View/Pay Bills</h2>
                   <div class="pull-right">
 						<select name="societyid" id="societyid" class="form-control"
 							onchange="getCommonBillData()">
@@ -31,7 +31,7 @@
                             <th class="column-title">Created On</th>
                             <th class="column-title">Created By</th>
                             <th class="column-title">Bill Status</th>
-                            <th class="column-title">Generate Bill</th>
+                            <th class="column-title">View Bills</th>
                           </tr>
                         </thead>
 

@@ -121,7 +121,7 @@
 								</c:if>
 								 
 									<td class=" ">${myItem.expensename}</td>
-									<td class=" ">${ExpenseTypeList[myItem.expensetypeid].expensetypename}</td> 
+									<td class=" ">${ExpenseTypeList[myItem.expensetypeid-1].expensetypename}</td> 
 									<td class=" "><fmt:formatDate type = "date" value = "${myItem.createdon}" /></td>
 									<td class=" ">
 									<c:if test="${myItem.isactive==1}">

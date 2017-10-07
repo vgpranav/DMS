@@ -2039,7 +2039,7 @@ public class ViewController {
 		try {
 			user = (User) request.getSession().getAttribute("userObject");
 			ExpenseTypeList = sdao.getActiveExpenseTypeList(user.getUserid(), ExpenseTypeList);
-			ExpenseMasterList = sdao.getActiveExpenseMasterList(user.getUserid(), ExpenseMasterList);
+			ExpenseMasterList = sdao.getExpenseMasterList(user.getUserid(), ExpenseMasterList);
 				
 			mv = new ModelAndView("addBillComponent"); 
 			mv.addObject("ExpenseTypeList", ExpenseTypeList);
@@ -2075,7 +2075,7 @@ public class ViewController {
 			mv = new ModelAndView("addBillComponent"); 
 			mv.addObject("ExpenseTypeList", ExpenseTypeList);
 			mv.addObject("ExpenseMasterList", ExpenseMasterList);
-			mv.addObject("error", "Doctype Added");
+			mv.addObject("error", "Bill Component Added");
 			 
 		} catch (Exception e) {
 			logger.error("Exception : ",e);

@@ -65,11 +65,182 @@
               </div>
  </div>
  
- 
- 
+ <div id="confOTPDialog">
+ 	<div class="row">
+ 		<div class="col-sm-10">
+ 		<br><br>
+ 		   
+ 		<form id="addDocSubTypeForm" data-parsley-validate
+					class="form-horizontal form-label-left" action="saveDocumentSubType.do"
+					method="post">
+			
+			 <input type="hidden" id="billIdTopay" value="">		
+			
+			 <div class="form-group">
+				<label class="control-label col-md-4 col-sm-4 col-xs-12"
+					for="first-name">Mode of payment<span class="required">*</span>
+				</label>
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					<select name="payMode" id="payMode" class="form-control" onchange="changePayType()">
+						 <option value="cheque">Cheque</option>
+						 <option value="cash">Cash</option>
+						 <option value="netbanking">Netbanking</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group"  id="ROWbankName">
+				<label class="control-label col-md-4 col-sm-4 col-xs-12"
+					for="first-name">Name of Bank
+				</label>
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					 <input type="text" id="bankName" name="bankName"
+								required="required" class="form-control col-md-7 col-xs-12">
+				</div>
+			</div>
+			
+			<div class="form-group"  id="ROWaccountNo">
+				<label class="control-label col-md-4 col-sm-4 col-xs-12"
+					for="first-name">Account Number
+				</label>
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					 <input type="text" id="accountNo" name="accountNo"
+								required="required" class="form-control col-md-7 col-xs-12">
+				</div>
+			</div>
+			
+			<div class="form-group"  id="ROWchequeNo">
+				<label class="control-label col-md-4 col-sm-4 col-xs-12"
+					for="first-name">Cheque Number
+				</label>
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					 <input type="text" id="chequeNo" name="chequeNo"
+								required="required" class="form-control col-md-7 col-xs-12">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="control-label col-md-4 col-sm-4 col-xs-12"
+					for="first-name">Amount<span class="required">*</span>
+				</label>
+				<div class="col-md-8 col-sm-8 col-xs-12">
+					 <input type="text" id="amount" name="amount"
+								required="required" class="form-control col-md-7 col-xs-12" readonly="readonly">
+				</div>
+			</div>
+			 
+			<div class="form-group" align="right">
+				<button class="btn btn-success" onclick="payBill();return false;">Confirm Payment</button>
+			</div>
+			
+		</form>
+		
+ 		</div>
+ 	</div>
+ </div>
  
  
  <script>
+ 
+ 
+ $(document).ready(function(){
+		 
+			$( "#confOTPDialog" ).dialog({
+				  autoOpen: false,
+				  modal: true,
+				  title: "Payment Details",
+				  width: 600,
+				  height: 400
+			});
+			
+ });			
+
+ 
+ function changePayType(){
+	 var payMode = $('#payMode').val();
+	 if(payMode=='cheque'){
+		 $('#ROWbankName').show();
+		 $('#ROWaccountNo').show();
+		 $('#ROWchequeNo').show();
+	 }else if(payMode=='cash'){
+		 $('#ROWbankName').hide();
+		 $('#ROWaccountNo').hide();
+		 $('#ROWchequeNo').hide();
+	 }else if(payMode=='netbanking'){
+		 $('#ROWbankName').show();
+		 $('#ROWaccountNo').show();
+		 $('#ROWchequeNo').hide();
+	 }
+ }
+ 
+ 
+ function payBillByBillId(billid,payamount){
+	 $('#billIdTopay').val(billid);
+	 $('#amount').val(payamount);
+	 $("#confOTPDialog").dialog("open");
+ }
+ 
+ function payBill(){
+	 
+	 var billIdTopay = $('#billIdTopay').val();
+	 var payMode = $('#payMode').val();
+	 var bankName = $('#bankName').val();
+	 var accountNo = $('#accountNo').val();
+	 var chequeNo = $('#chequeNo').val();
+	 var amount = $('#amount').val();
+	 
+	 var dataText = 'billid='+billIdTopay;
+	  	 dataText += '&payMode='+payMode;
+
+	 if(payMode=='cheque'){
+		  
+		  if(bankName.length>0 && accountNo.length>0 && chequeNo.length>0 && amount.length>0){
+			  dataText += '&bankName='+bankName;
+			  dataText += '&accountNo='+accountNo;
+			  dataText += '&chequeNo='+chequeNo;
+			  dataText += '&amount='+amount;
+		  }else
+			  return false;
+		  
+	 	}else if(payMode=='cash'){
+		 
+		 if(amount.length>0){
+			  dataText += '&amount='+amount;
+		  }else
+			  return false;
+		 
+	 	}else if(payMode=='netbanking'){
+		 
+		 if(bankName.length>0 && accountNo.length>0 && amount.length>0){
+			 dataText += '&bankName='+bankName;
+			 dataText += '&accountNo='+accountNo;
+			 dataText += '&amount='+amount;
+		  }else
+			  return false; 
+	 }
+	 
+	 console.log(dataText);
+	 blockUI();
+		$.ajax({
+	        type: "GET",
+	        url: "<%=request.getContextPath()%>/addBillPaymentByAdmin.do",
+	        data : dataText,
+	        success: function(response){
+	        	if(response=='success') {
+	        		getMemberBillbyId();
+	        		$("#confOTPDialog").dialog("close");
+	        		notify('success','SUCCESS','Payment Added Successfully',2000);
+	        	}  
+	        	unblockUI();
+	        },
+				error : function(e) {
+					notify('error','ERROR','Error occured',2000);
+					unblockUI();
+				}
+			});	 
+	 return false;
+		 
+ }
  
  function getMemberBillbyId(){
 	 
@@ -205,6 +376,14 @@
 	        			billHTML += "</tr>"; 
 		        		
 		        	billHTML += "</table>";
+		        	
+		        	var paybtn="";
+		        	if(response.bill.ispaid!=1)
+		        		paybtn = '<a class="btn btn-success btn-sm" onclick="payBillByBillId(\'' + response.bill.billid + '\',\'' + response.bill.payamount + '\')"> <i class="fa fa-play"></i> Pay Now</a>';
+		        		else
+		        			paybtn = '<font class="text-success">Already paid</font>';
+		        	billHTML += "<br/><div align='center'>"+paybtn+"</div>";
+		        	
 		        	$('#billHTML').html(billHTML)
 		        	
 		        	 

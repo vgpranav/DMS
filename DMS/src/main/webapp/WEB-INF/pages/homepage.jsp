@@ -572,7 +572,7 @@
 		        	 unblockUI();
 		        },
 					error : function(e) {
-						notify('error','ERROR','Error occured',2000);
+						//notify('error','ERROR','Error occured',2000);
 						 unblockUI();
 					}
 				});
@@ -602,7 +602,7 @@
 				        	 unblockUI();
 				        },
 							error : function(e) {
-								notify('error','ERROR','Error occured',2000);
+								//notify('error','ERROR','Error occured',2000);
 								 unblockUI();
 							}
 						});
@@ -646,7 +646,7 @@
 		        	 unblockUI();
 		        },
 					error : function(e) {
-						notify('error','ERROR','Error occured',2000);
+						//notify('error','ERROR','Error occured',2000);
 						 unblockUI();
 					}
 				});
@@ -692,7 +692,7 @@
 		        	 unblockUI();
 		        },
 					error : function(e) {
-						notify('error','ERROR','Error occured',2000);
+						//notify('error','ERROR','Error occured',2000);
 						 unblockUI();
 					}
 				});
@@ -827,7 +827,7 @@ function editUserData(){
 			        	 unblockUI();
 			        },
 						error : function(e) {
-							notify('error','ERROR','Error occured',2000);
+							//notify('error','ERROR','Error occured',2000);
 							 unblockUI();
 						}
 					});
@@ -866,7 +866,7 @@ function editUserData(){
 	        	unblockUI();
 	        },
 				error : function(e) {
-					notify('error','ERROR','Error occured',2000);
+					//notify('error','ERROR','Error occured',2000);
 					unblockUI();
 				}
 			});
