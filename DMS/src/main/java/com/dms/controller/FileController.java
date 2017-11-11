@@ -427,4 +427,66 @@ public class FileController
     return map;
   }
   
+  
+  
+  
+ 
+  @RequestMapping(value={"/uploadIPRFiles"}, method={org.springframework.web.bind.annotation.RequestMethod.POST}, produces={"application/json"})
+  @ResponseBody
+  public HashMap<String, Object> uploadIPRFiles(MultipartHttpServletRequest request, HttpServletResponse response)
+  {
+	  //reqreslogger.info("[REQUEST]"+request.getFileNames());
+	  
+    byte[] bytes = null;
+    Long size = null;
+    String contentType = null;
+    BufferedImage resizedImage = null;
+    MultipartFile multipartFile = null;
+    BufferedImage originalImage = null;
+    String ogFilename = "";
+    int type = 0;
+    String randomHash = "";
+    String fileType="";
+    User user = null;
+    long fileId = 0L;
+    
+    try {
+    	
+    	user = (User) request.getSession().getAttribute("userObject");
+    	randomHash = request.getParameter("randomHash");
+    	fileType = request.getParameter("fileType");
+    	multipartFile = request.getFile(fileType+"File");
+       
+    	size = Long.valueOf(multipartFile.getSize());
+    	contentType = multipartFile.getContentType();
+    	InputStream stream = multipartFile.getInputStream();
+    	ogFilename = multipartFile.getOriginalFilename();
+    	bytes = IOUtils.toByteArray(stream);
+    	InputStream in = new ByteArrayInputStream(bytes);
+    	String newFileName = System.currentTimeMillis() + "-" + ogFilename;
+    	boolean flag = saveToFileSystem(newFileName, in,"IPR_"+fileType);
+    	 
+    	if (flag) {
+    		DocumentDao ddao = new DocumentDao();
+    		fileId = ddao.saveIPRFileInfo(randomHash,fileType,newFileName,"IPR_"+fileType+"/"+newFileName,contentType,size,user.getUserid());
+    	}
+       
+    } catch (IOException e) { 
+      e.printStackTrace();
+    }
+    
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("fileoriginalsize", size);
+    map.put("contenttype", contentType);
+    map.put("fileId", fileId);
+    map.put("filename", multipartFile.getOriginalFilename());
+    
+    return map;
+  }
+  
+  
+  
+  
+  
+  
 }

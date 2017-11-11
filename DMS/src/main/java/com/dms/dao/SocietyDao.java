@@ -39,6 +39,7 @@ import com.dms.beans.FileMonitoring;
 import com.dms.beans.Files;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.IncomeExpenseMaster;
 import com.dms.beans.Loginhistory;
 import com.dms.beans.Parking;
 import com.dms.beans.PaymentBean;
@@ -4001,6 +4002,54 @@ public List<Parking> getParkingDetailsForMember(Parking parking, List<Parking> p
 			
 			conn.commit();
 			
+		} catch (Exception e) {
+			dblogger.error("Error addBillPaymentByAdmin  :: ", e);
+			e.printStackTrace();
+		} finally {
+			try {
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				dblogger.error("Error releasing connection :: ", e);
+			}
+		}
+		return rowsUpdated;
+	}
+
+	public List<IncomeExpenseMaster> getIncExpMasterList(String type, String subtype, int isactive, List<IncomeExpenseMaster> returnList) { 
+		  Connection conn = null;
+		    try
+		    {
+		      qr = new QueryRunner();
+		      conn = ConnectionPoolManager.getInstance().getConnection();
+		      ResultSetHandler<List<IncomeExpenseMaster>> rsh = new BeanListHandler<IncomeExpenseMaster>(IncomeExpenseMaster.class);
+		      returnList = qr.query(conn,DMSQueries.getIncExpMasterList,rsh,type,subtype,isactive);
+		    } catch (Exception e) {
+		      dblogger.error("Error fetching getIncExpMasterList  :: ", e);
+		      e.printStackTrace();
+		    }
+		    finally
+		    {
+		      try
+		      {
+		        DbUtils.close(conn);
+		      } catch (SQLException e) {
+		        dblogger.error("Error releasing connection :: ", e);
+		      }
+		    }
+		    return returnList;
+		  }
+
+	public int deleteIPRFileByFileId(long filesid, String userid) {
+		Connection conn = null;
+		int rowsUpdated = 0;
+		try {
+			qr = new QueryRunner();
+			conn = ConnectionPoolManager.getInstance().getConnection();
+		 		
+			rowsUpdated = qr.update(conn, DMSQueries.deleteIPRFileByFileId, 
+					filesid
+					);
+  		
 		} catch (Exception e) {
 			dblogger.error("Error addBillPaymentByAdmin  :: ", e);
 			e.printStackTrace();

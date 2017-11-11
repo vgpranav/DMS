@@ -1767,7 +1767,7 @@ if (typeof NProgress != 'undefined') {
 			$('.customdatepicker1').val("");
 			
 			$('.customdatepicker1').on('apply.daterangepicker', function(ev, picker) {
- 				  $(this).val(picker.startDate.format('YYYY/MM/DD'));
+ 				  $(this).val(picker.startDate.format('DD/MM/YYYY'));
 				});
 			
 			$('.customdatepicker').datepicker({
@@ -1779,7 +1779,7 @@ if (typeof NProgress != 'undefined') {
 			});
 			
 			$('.customdatepicker').removeAttr('readonly');
-			$('.customdatepicker').attr('placeholder','yyyy/mm/dd');
+			$('.customdatepicker').attr('placeholder','dd/mm/yyyy');
 		}
 		
 		 

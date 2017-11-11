@@ -1290,4 +1290,51 @@ public int deleteDocById(Document document) {
 	    }
 	    return null;
 	  }
+
+	public long saveIPRFileInfo(String randomHash, String fileType, String filename, String filepath,
+			String contentType, Long size, long userid) {
+	    Connection conn = null;
+	    
+	    long fieldid = 0L;
+	    try {
+	      qr = new QueryRunner();
+	      conn = ConnectionPoolManager.getInstance().getConnection();
+	      ResultSetHandler<Object> rsh = new ScalarHandler<Object>();
+	      
+	      conn.setAutoCommit(false);
+	       
+	      Object obj = qr.insert(conn, DMSQueries.insertIPRFile, rsh,
+	    		  fileType,
+	    		  filename,
+	    		  filepath,
+	    		  userid,
+	    		  randomHash,
+	    		  contentType,
+	    		  size
+	    		  );
+	      
+	      conn.commit();
+
+	      fieldid = CommomUtility.convertToLong(obj);
+	    } catch (Exception e) {
+	      dblogger.error("Error Saving Doctype :: " , e);
+	      e.printStackTrace();
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException ex) {
+	        dblogger.error("Error releasing connection :: " , ex);
+	      }
+	    }
+	    finally
+	    {
+	      try
+	      {
+	        DbUtils.close(conn);
+	      } catch (SQLException e) {
+	        dblogger.error("Error releasing connection :: " , e);
+	      }
+	    }
+	    return fieldid;
+	  }
 }

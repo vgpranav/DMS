@@ -196,7 +196,7 @@
 		                  <li>
 		                  	<a>
 		                  		<i class="fa fa-folder"></i> 
-		                  		IPR 
+		                  		IPR - Bills
 		                  		<span class="fa fa-chevron-down"></span>
 		                  	</a>
 		                    <ul class="nav child_menu">
@@ -207,6 +207,20 @@
 		                     	<li><a href="generateBill.do">Generate Bill</a></li>
 		                     	<li><a href="viewAllBills.do">View/Pay All Bills</a></li>
 		                     	<li><a href="viewMyBills.do">View My Bills</a></li>
+		                    </ul>
+		                  </li>
+		            </c:if>
+		            
+		            
+		            <c:if test="${sessionScope.userObject.userroleid==1}">
+		                  <li>
+		                  	<a>
+		                  		<i class="fa fa-folder"></i> 
+		                  		IPR - Income/Expense
+		                  		<span class="fa fa-chevron-down"></span>
+		                  	</a>
+		                    <ul class="nav child_menu">
+		                     	<li><a href="addIncomeEntry.do">Add Income Entry</a></li>
 		                    </ul>
 		                  </li>
 		            </c:if>

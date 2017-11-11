@@ -1646,4 +1646,40 @@ public class AjaxController {
 			return "success";
 		return "failed";
 	}
+
+
+	@RequestMapping(value = { "/deleteIPRFileByFileId" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	@ResponseBody
+	public String deleteIPRFileByFileId(@ModelAttribute Files file,HttpServletRequest request) {
+		LoggingHelper.logAjaxRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"deleteIPRFileByFileId",file);
+		
+		SocietyDao sdao = new SocietyDao();
+		String userid = request.getSession().getAttribute("userId").toString();
+		int rowsUpdated=0;
+		try {
+			rowsUpdated = sdao.deleteIPRFileByFileId(file.getFilesid(),userid);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		LoggingHelper.logAjaxResponse("deleteIPRFileByFileId",rowsUpdated);
+
+		if (rowsUpdated > 0)
+			return "success";
+		return "failed";
+	}
+
+
+
+
+
+
+
+
 } // end of class
+
+
+
+
+
+

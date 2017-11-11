@@ -36,6 +36,7 @@ import com.dms.beans.ExpenseMaster;
 import com.dms.beans.ExpenseType;
 import com.dms.beans.FormFields;
 import com.dms.beans.GenericBean;
+import com.dms.beans.IncomeExpenseMaster;
 import com.dms.beans.Project;
 import com.dms.beans.RoleTransaction;
 import com.dms.beans.Society;
@@ -2083,4 +2084,49 @@ public class ViewController {
 		LoggingHelper.logMVResponse("saveBillComponent.do",mv);
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = { "/addIncomeEntry" }, method = {
+			org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView addIncomeEntry(HttpServletRequest request) {
+
+		LoggingHelper.logMVRequest(request.getSession(),request.getSession().getAttribute("userId").toString(),"addIncomeEntry","");
+
+		ModelAndView mv = null; 
+		User user = null;
+		List<IncomeExpenseMaster> ledgerList = null;
+		List<IncomeExpenseMaster> headList = null;
+		List<IncomeExpenseMaster> postingHeadList = null;
+		List<IncomeExpenseMaster> taxList = null;
+		List<Society> societyList = null;
+		
+		SocietyDao sdao = new SocietyDao();
+		try {
+			
+			user = (User) request.getSession().getAttribute("userObject");
+			societyList = sdao.getSocietyListForManager(user.getUserid(), societyList);
+			
+			ledgerList = sdao.getIncExpMasterList("income","ledger",1,ledgerList);
+			headList = sdao.getIncExpMasterList("income","head",1,headList);
+			postingHeadList = sdao.getIncExpMasterList("income","postinghead",1,postingHeadList);
+			taxList = sdao.getIncExpMasterList("income","tax",1,taxList);
+					
+			mv = new ModelAndView("addIncomeEntry"); 
+			mv.addObject("ledgerList", ledgerList);
+			mv.addObject("headList", headList);
+			mv.addObject("postingHeadList", postingHeadList);
+			mv.addObject("taxList", taxList);
+			mv.addObject("societyList", societyList);  
+			mv.addObject("randomHash", RandomStringUtils.randomAlphanumeric(10));
+			
+		} catch (Exception e) {
+			logger.error("Exception : ",e);
+		}
+		LoggingHelper.logMVResponse("addIncomeEntry",mv);
+		return mv;
+	}
+	
+	
+	
+	
 } // End Of class

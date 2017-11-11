@@ -273,6 +273,12 @@ public class DMSQueries
 	public static String addBillPaymentByAdmin = "insert into IPR_BillPayments(billid,paymode,bankname,accountno,chequeno,amount,createdby) values (?,?,?,?,?,?,?)";
 	
 	public static String updateBillStatus = "update IPR_Bill set ispaid=?,ispaidon=?,paymode=? where billid=?";
+
+	public static String getIncExpMasterList = "select * from IPR_INCEXP_Master where type=? and subtype=? and isactive=?";
+
+	public static String insertIPRFile = "insert into IPR_Files (filetype,filename,filepath,createdby,randomhash,contenttype,filesize) values (?,?,?,?,?,?,?)";
+
+	public static String deleteIPRFileByFileId = "delete from IPR_Files where iprfileid=?";
 	
 	
 }
